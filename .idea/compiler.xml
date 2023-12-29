@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.7">
+      <module name="AndroidStudioProjects.MediSupport.presentation.bmi" target="17" />
+      <module name="MediSupport.app" target="17" />
+      <module name="MediSupport.core.local" target="17" />
+      <module name="MediSupport.core.remote" target="17" />
+      <module name="MediSupport.presentation.about" target="17" />
+      <module name="MediSupport.presentation.article" target="17" />
+      <module name="MediSupport.presentation.auth" target="17" />
+      <module name="MediSupport.presentation.bloodPressure" target="17" />
+      <module name="MediSupport.presentation.bloodSugar" target="17" />
+      <module name="MediSupport.presentation.bmi" target="17" />
+      <module name="MediSupport.presentation.booking" target="17" />
+      <module name="MediSupport.presentation.chat" target="17" />
+      <module name="MediSupport.presentation.contactUs" target="17" />
+      <module name="MediSupport.presentation.heartPrediction" target="17" />
+      <module name="MediSupport.presentation.heartRate" target="17" />
+      <module name="MediSupport.presentation.history" target="17" />
+      <module name="MediSupport.presentation.profile" target="17" />
+      <module name="MediSupport.presentation.reminder" target="17" />
+      <module name="MediSupport.presentation.sharedUi" target="17" />
+      <module name="MediSupport.repository.article" target="17" />
+      <module name="MediSupport.repository.auth" target="17" />
+      <module name="MediSupport.repository.bloodPressure" target="17" />
+      <module name="MediSupport.repository.bloodSuger" target="17" />
+      <module name="MediSupport.repository.bmi" target="17" />
+      <module name="MediSupport.repository.booking" target="17" />
+      <module name="MediSupport.repository.chat" target="17" />
+      <module name="MediSupport.repository.contactUs" target="17" />
+      <module name="MediSupport.repository.heartPrediction" target="17" />
+      <module name="MediSupport.repository.heartRate" target="17" />
+      <module name="MediSupport.repository.history" target="17" />
+      <module name="MediSupport.repository.profile" target="17" />
+      <module name="MediSupport.repository.reminder" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

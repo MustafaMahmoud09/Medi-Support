@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MediSupport</string>
+    <string name="medi">Medi</string>
+    <string name="support">Support</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+    <string name="skip">Skip</string>
+    <string name="password">Password</string>
+    <string name="your_password">Your Password</string>
+</resources>

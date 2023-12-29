@@ -1,0 +1,59 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "MediSupport"
+include ':app'
+include ':presentation:auth'
+include ':presentation:booking'
+include ':presentation:chat'
+include ':presentation:reminder'
+include ':presentation:article'
+include ':presentation:bloodSugar'
+include ':presentation:bloodPressure'
+include ':presentation:bmi'
+include ':presentation:heartRate'
+include ':presentation:profile'
+include ':presentation:about'
+include ':presentation:contactUs'
+include ':presentation:history'
+include ':presentation:heartPrediction'
+include ':presentation:sharedUi'
+include ':domain:auth'
+include ':domain:booking'
+include ':domain:bloodPressure'
+include ':domain:article'
+include ':domain:bloodSuger'
+include ':domain:bmi'
+include ':domain:chat'
+include ':domain:contactUs'
+include ':domain:heartPrediction'
+include ':domain:heartRate'
+include ':domain:history'
+include ':domain:profile'
+include ':domain:reminder'
+include ':repository:auth'
+include ':repository:article'
+include ':repository:bloodPressure'
+include ':repository:bloodSuger'
+include ':repository:bmi'
+include ':repository:booking'
+include ':repository:chat'
+include ':repository:contactUs'
+include ':repository:heartRate'
+include ':repository:heartPrediction'
+include ':repository:history'
+include ':repository:profile'
+include ':repository:reminder'
+include ':core:local'
+include ':core:remote'

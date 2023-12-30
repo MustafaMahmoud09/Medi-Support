@@ -23,7 +23,8 @@ internal fun NavGraphBuilder.authNavGraph(
     navigateToForgotPasswordNavGraph: () -> Unit,
     popForgotPasswordNavGraph: () -> Unit,
     navigateToCodeDestination: () -> Unit,
-    navigateToNewPasswordDestination: () -> Unit
+    navigateToNewPasswordDestination: () -> Unit,
+    backToLoginNavGraph: () -> Unit
 ) {
 
     navigation(
@@ -44,7 +45,8 @@ internal fun NavGraphBuilder.authNavGraph(
             navigateToForgotPasswordNavGraph = navigateToForgotPasswordNavGraph,
             popForgotPasswordNavGraph = popForgotPasswordNavGraph,
             navigateToCodeDestination = navigateToCodeDestination,
-            navigateToNewPasswordDestination = navigateToNewPasswordDestination
+            navigateToNewPasswordDestination = navigateToNewPasswordDestination,
+            backToLoginNavGraph = backToLoginNavGraph
         )
 
         registerDestination(

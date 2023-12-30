@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeOut
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.FORGOT_PASSWORD_NAV_GRAPH
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.forgotPasswordNavGraph
 import com.example.auth.uiElement.screens.login.LOGIN_DESTINATION_ROUTE
 import com.example.auth.uiElement.screens.login.loginDestination
@@ -37,13 +38,30 @@ internal fun NavHostController.navigateToLoginNavGraph() {
 
 }//end navigateToLoginNavGraph
 
+internal fun NavHostController.backToLoginNavGraph() {
+
+    navigate(
+        route = LOGIN_NAV_GRAPH_ROUTE
+    ) {
+
+        popUpTo(
+            route = FORGOT_PASSWORD_NAV_GRAPH
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToLoginNavGraph
+
 internal fun NavGraphBuilder.loginNavGraph(
     navHostController: NavHostController,
     navigateToRegisterDestination: () -> Unit,
     navigateToForgotPasswordNavGraph: () -> Unit,
     popForgotPasswordNavGraph: () -> Unit,
     navigateToCodeDestination: () -> Unit,
-    navigateToNewPasswordDestination: () -> Unit
+    navigateToNewPasswordDestination: () -> Unit,
+    backToLoginNavGraph: () -> Unit
 ) {
 
     navigation(
@@ -64,7 +82,8 @@ internal fun NavGraphBuilder.loginNavGraph(
             navHostController = navHostController,
             popForgotPasswordNavGraph = popForgotPasswordNavGraph,
             navigateToCodeDestination = navigateToCodeDestination,
-            navigateToNewPasswordDestination = navigateToNewPasswordDestination
+            navigateToNewPasswordDestination = navigateToNewPasswordDestination,
+            backToLoginNavGraph = backToLoginNavGraph
         )
 
     }//end navigation

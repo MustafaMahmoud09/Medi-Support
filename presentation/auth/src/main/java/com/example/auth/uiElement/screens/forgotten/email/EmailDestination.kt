@@ -22,7 +22,8 @@ fun NavGraphBuilder.emailDestination(
 
     composable(
         route = EMAIL_DESTINATION_ROUTE,
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popExitTransition = { exitTransition() }
     ) {
         EmailScreen(
             navHostController = navHostController,

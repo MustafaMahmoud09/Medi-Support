@@ -16,5 +16,6 @@ data class CustomTheme(
     val redMedium: Color,
     val grayLight: Color,
     val grayLineLight: Color,
-    val visibleGray: Color
+    val visibleGray: Color,
+    val greenLight: Color
 )

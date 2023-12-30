@@ -32,17 +32,21 @@ fun NavHostController.navigateToNewPasswordDestination() {
 }//end navigateToNewPasswordDestination
 
 fun NavGraphBuilder.newPasswordDestination(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    backToLoginNavGraph: () -> Unit
 ) {
 
     composable(
         route = NEW_PASSWORD_DESTINATION_ROUTE,
         enterTransition = { enterTransition() }
     ) {
+
         NewPasswordScreen(
-            navHostController = navHostController
+            navHostController = navHostController,
+            backToLoginNavGraph = backToLoginNavGraph
         )
-    }
+    }//end composable
+
 }//end newPasswordDestination
 
 private fun AnimatedContentScope<NavBackStackEntry>.enterTransition(): EnterTransition? {

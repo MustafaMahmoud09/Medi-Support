@@ -7,4 +7,6 @@
     <string name="skip">Skip</string>
     <string name="password">Password</string>
     <string name="your_password">Your Password</string>
+    <string name="done">Done</string>
+    <string name="go_to_back">Go To Back</string>
 </resources>

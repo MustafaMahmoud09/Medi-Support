@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.AUTH_NAV_GRAPH_ROUTE
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.authNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.backToLoginNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.navigateToForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.popForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraph
@@ -60,7 +61,8 @@ fun RootNavGraph(
                     navigateToForgotPasswordNavGraph = navHostController::navigateToForgotPasswordNavGraph,
                     popForgotPasswordNavGraph = navHostController::popForgotPasswordNavGraph,
                     navigateToCodeDestination = navHostController::navigateToCodeDestination,
-                    navigateToNewPasswordDestination = navHostController::navigateToNewPasswordDestination
+                    navigateToNewPasswordDestination = navHostController::navigateToNewPasswordDestination,
+                    backToLoginNavGraph = navHostController::backToLoginNavGraph
                 )
 
             }//end AnimatedNavHost

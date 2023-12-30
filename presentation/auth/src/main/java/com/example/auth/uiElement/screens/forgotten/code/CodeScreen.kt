@@ -55,7 +55,7 @@ private fun CodeContent(
                     color = theme.background
                 )
         ) {
-            val (title, message, rowNumberInput, verifyButton) = createRefs()
+            val (title, message, rowCodeFaileds, verifyButton) = createRefs()
 
             TextBoldBlackView(
                 theme = theme,
@@ -111,7 +111,7 @@ private fun CodeContent(
 
             Row(
                 modifier = Modifier
-                    .constrainAs(rowNumberInput) {
+                    .constrainAs(rowCodeFaileds) {
                         start.linkTo(
                             parent.start,
                             dimen.dimen_2.dp
@@ -178,7 +178,7 @@ private fun CodeContent(
                             dimen.dimen_2.dp
                         )
                         top.linkTo(
-                            rowNumberInput.bottom,
+                            rowCodeFaileds.bottom,
                             dimen.dimen_3_5.dp
                         )
                         width = Dimension.fillToConstraints

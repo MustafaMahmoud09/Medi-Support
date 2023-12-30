@@ -40,7 +40,8 @@ internal fun NavGraphBuilder.forgotPasswordNavGraph(
     navHostController: NavHostController,
     popForgotPasswordNavGraph: () -> Unit,
     navigateToCodeDestination: () -> Unit,
-    navigateToNewPasswordDestination: () -> Unit
+    navigateToNewPasswordDestination: () -> Unit,
+    backToLoginNavGraph: () -> Unit
 ) {
 
     navigation(
@@ -62,7 +63,8 @@ internal fun NavGraphBuilder.forgotPasswordNavGraph(
         )
 
         newPasswordDestination(
-            navHostController = navHostController
+            navHostController = navHostController,
+            backToLoginNavGraph = backToLoginNavGraph
         )
 
     }

@@ -11,15 +11,14 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 
 const val LOGIN_DESTINATION_ROUTE = "loginDestination"
 
 fun NavGraphBuilder.loginDestination(
-    navHostController: NavHostController,
     navigateToRegisterDestination: () -> Unit,
-    navigateToForgotPasswordNavGraph: () -> Unit
+    navigateToForgotPasswordNavGraph: () -> Unit,
+    navigateToBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -28,9 +27,9 @@ fun NavGraphBuilder.loginDestination(
         popEnterTransition = { enterTransition() }
     ) {
         LoginScreen(
-            navHostController = navHostController,
             navigateToRegisterDestination = navigateToRegisterDestination,
-            navigateToForgotPasswordNavGraph = navigateToForgotPasswordNavGraph
+            navigateToForgotPasswordNavGraph = navigateToForgotPasswordNavGraph,
+            navigateToBottomDestination = navigateToBottomDestination
         )
     }//end composable
 

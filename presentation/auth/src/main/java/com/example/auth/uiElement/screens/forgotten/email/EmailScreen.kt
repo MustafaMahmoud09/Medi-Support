@@ -26,7 +26,6 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun EmailScreen(
-    navHostController: NavHostController,
     popForgotPasswordNavGraph: () -> Unit,
     navigateToCodeDestination: () -> Unit
 ) {

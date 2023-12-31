@@ -3,6 +3,7 @@
 package com.damanhour.Graduation.medisupport.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -14,6 +15,8 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.backT
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.navigateToForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.popForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.bottomDestination
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.navigateToBottomDestination
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
@@ -45,6 +48,9 @@ fun RootNavGraph(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(
+                    color = theme.background
+                )
         ) {
 
             AnimatedNavHost(
@@ -53,7 +59,6 @@ fun RootNavGraph(
             ) {
 
                 authNavGraph(
-                    navHostController = navHostController,
                     navigateToWelcomeDestination = navHostController::navigateToWelcomeDestination,
                     navigateToLoginNavGraph = navHostController::navigateToLoginNavGraph,
                     navigateToRegisterDestination = navHostController::navigateToRegisterDestination,
@@ -62,8 +67,11 @@ fun RootNavGraph(
                     popForgotPasswordNavGraph = navHostController::popForgotPasswordNavGraph,
                     navigateToCodeDestination = navHostController::navigateToCodeDestination,
                     navigateToNewPasswordDestination = navHostController::navigateToNewPasswordDestination,
-                    backToLoginNavGraph = navHostController::backToLoginNavGraph
+                    backToLoginNavGraph = navHostController::backToLoginNavGraph,
+                    navigateToBottomDestination = navHostController::navigateToBottomDestination
                 )
+
+                bottomDestination()
 
             }//end AnimatedNavHost
 

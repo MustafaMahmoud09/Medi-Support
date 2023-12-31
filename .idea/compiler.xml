@@ -6,7 +6,11 @@
       <module name="MediSupport.app" target="17" />
       <module name="MediSupport.core.local" target="17" />
       <module name="MediSupport.core.remote" target="17" />
+      <module name="MediSupport.domain.setting" target="17" />
+      <module name="MediSupport.domain.setting.main" target="17" />
+      <module name="MediSupport.domain.setting.test" target="17" />
       <module name="MediSupport.presentation.about" target="17" />
+      <module name="MediSupport.presentation.activity" target="17" />
       <module name="MediSupport.presentation.article" target="17" />
       <module name="MediSupport.presentation.auth" target="17" />
       <module name="MediSupport.presentation.bloodPressure" target="17" />
@@ -17,10 +21,11 @@
       <module name="MediSupport.presentation.contactUs" target="17" />
       <module name="MediSupport.presentation.heartPrediction" target="17" />
       <module name="MediSupport.presentation.heartRate" target="17" />
-      <module name="MediSupport.presentation.history" target="17" />
       <module name="MediSupport.presentation.profile" target="17" />
       <module name="MediSupport.presentation.reminder" target="17" />
+      <module name="MediSupport.presentation.setting" target="17" />
       <module name="MediSupport.presentation.sharedUi" target="17" />
+      <module name="MediSupport.repository.activity" target="17" />
       <module name="MediSupport.repository.article" target="17" />
       <module name="MediSupport.repository.auth" target="17" />
       <module name="MediSupport.repository.bloodPressure" target="17" />
@@ -34,6 +39,7 @@
       <module name="MediSupport.repository.history" target="17" />
       <module name="MediSupport.repository.profile" target="17" />
       <module name="MediSupport.repository.reminder" target="17" />
+      <module name="MediSupport.repository.setting" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

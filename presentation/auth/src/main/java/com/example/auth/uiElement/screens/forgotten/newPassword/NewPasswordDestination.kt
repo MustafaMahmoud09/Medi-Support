@@ -32,7 +32,6 @@ fun NavHostController.navigateToNewPasswordDestination() {
 }//end navigateToNewPasswordDestination
 
 fun NavGraphBuilder.newPasswordDestination(
-    navHostController: NavHostController,
     backToLoginNavGraph: () -> Unit
 ) {
 
@@ -42,7 +41,6 @@ fun NavGraphBuilder.newPasswordDestination(
     ) {
 
         NewPasswordScreen(
-            navHostController = navHostController,
             backToLoginNavGraph = backToLoginNavGraph
         )
     }//end composable

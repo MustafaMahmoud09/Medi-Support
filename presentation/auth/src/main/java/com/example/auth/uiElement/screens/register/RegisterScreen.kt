@@ -31,7 +31,6 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun RegisterScreen(
-    navHostController: NavHostController,
     popRegisterDestination: () -> Unit
 ) {
 

@@ -55,13 +55,13 @@ internal fun NavHostController.backToLoginNavGraph() {
 }//end navigateToLoginNavGraph
 
 internal fun NavGraphBuilder.loginNavGraph(
-    navHostController: NavHostController,
     navigateToRegisterDestination: () -> Unit,
     navigateToForgotPasswordNavGraph: () -> Unit,
     popForgotPasswordNavGraph: () -> Unit,
     navigateToCodeDestination: () -> Unit,
     navigateToNewPasswordDestination: () -> Unit,
-    backToLoginNavGraph: () -> Unit
+    backToLoginNavGraph: () -> Unit,
+    navigateToBottomDestination: () -> Unit
 ) {
 
     navigation(
@@ -73,13 +73,12 @@ internal fun NavGraphBuilder.loginNavGraph(
     ) {
 
         loginDestination(
-            navHostController = navHostController,
             navigateToRegisterDestination = navigateToRegisterDestination,
-            navigateToForgotPasswordNavGraph = navigateToForgotPasswordNavGraph
+            navigateToForgotPasswordNavGraph = navigateToForgotPasswordNavGraph,
+            navigateToBottomDestination = navigateToBottomDestination
         )
 
         forgotPasswordNavGraph(
-            navHostController = navHostController,
             popForgotPasswordNavGraph = popForgotPasswordNavGraph,
             navigateToCodeDestination = navigateToCodeDestination,
             navigateToNewPasswordDestination = navigateToNewPasswordDestination,

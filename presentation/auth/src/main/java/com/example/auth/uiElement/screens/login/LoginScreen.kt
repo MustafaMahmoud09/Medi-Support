@@ -16,7 +16,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.NavHostController
 import com.example.sharedui.uiElement.components.composable.CircleProgressView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -45,14 +44,15 @@ import kotlinx.coroutines.delay
 
 @Composable
 internal fun LoginScreen(
-    navHostController: NavHostController,
     navigateToRegisterDestination: () -> Unit,
-    navigateToForgotPasswordNavGraph: () -> Unit
+    navigateToForgotPasswordNavGraph: () -> Unit,
+    navigateToBottomDestination: () -> Unit
 ) {
 
     LoginContent(
         onClickCreateAccount = { navigateToRegisterDestination() },
-        onClickForgotPassword = { navigateToForgotPasswordNavGraph() }
+        onClickForgotPassword = { navigateToForgotPasswordNavGraph() },
+        onClickLogin = { navigateToBottomDestination() }
     )
 }//end LoginScreen
 
@@ -61,7 +61,8 @@ private fun LoginContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickCreateAccount: () -> Unit,
-    onClickForgotPassword: () -> Unit
+    onClickForgotPassword: () -> Unit,
+    onClickLogin: () -> Unit
 ) {
     var state by rememberSaveable {
         mutableStateOf(true)
@@ -279,7 +280,7 @@ private fun LoginContent(
                     text = stringResource(
                         id = R.string.log_in
                     ),
-                    onClick = { /*TODO*/ },
+                    onClick = onClickLogin,
                     fontSize = dimen.dimen_2_5,
                     modifier = Modifier
                         .constrainAs(loginButton) {

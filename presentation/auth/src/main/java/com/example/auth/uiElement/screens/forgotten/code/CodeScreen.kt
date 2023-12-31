@@ -26,7 +26,6 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun CodeScreen(
-    navHostController: NavHostController,
     navigateToNewPasswordDestination: () -> Unit
 ) {
 

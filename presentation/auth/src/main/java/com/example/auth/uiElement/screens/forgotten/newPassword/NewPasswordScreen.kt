@@ -35,7 +35,6 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun NewPasswordScreen(
-    navHostController: NavHostController,
     backToLoginNavGraph: () -> Unit
 ) {
 

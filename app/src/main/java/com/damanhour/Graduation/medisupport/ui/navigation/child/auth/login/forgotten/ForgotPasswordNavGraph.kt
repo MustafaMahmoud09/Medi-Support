@@ -37,7 +37,6 @@ internal fun NavHostController.popForgotPasswordNavGraph() {
 }//end popForgotPasswordNavGraph
 
 internal fun NavGraphBuilder.forgotPasswordNavGraph(
-    navHostController: NavHostController,
     popForgotPasswordNavGraph: () -> Unit,
     navigateToCodeDestination: () -> Unit,
     navigateToNewPasswordDestination: () -> Unit,
@@ -52,18 +51,15 @@ internal fun NavGraphBuilder.forgotPasswordNavGraph(
     ) {
 
         emailDestination(
-            navHostController = navHostController,
             popForgotPasswordNavGraph = popForgotPasswordNavGraph,
             navigateToCodeDestination = navigateToCodeDestination
         )
 
         codeDestination(
-            navHostController = navHostController,
             navigateToNewPasswordDestination = navigateToNewPasswordDestination
         )
 
         newPasswordDestination(
-            navHostController = navHostController,
             backToLoginNavGraph = backToLoginNavGraph
         )
 

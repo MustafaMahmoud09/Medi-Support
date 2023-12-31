@@ -9,13 +9,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 
 const val EMAIL_DESTINATION_ROUTE = "emailDestination"
 
 fun NavGraphBuilder.emailDestination(
-    navHostController: NavHostController,
     popForgotPasswordNavGraph: () -> Unit,
     navigateToCodeDestination: () -> Unit
 ) {
@@ -26,7 +24,6 @@ fun NavGraphBuilder.emailDestination(
         popExitTransition = { exitTransition() }
     ) {
         EmailScreen(
-            navHostController = navHostController,
             popForgotPasswordNavGraph = popForgotPasswordNavGraph,
             navigateToCodeDestination = navigateToCodeDestination
         )

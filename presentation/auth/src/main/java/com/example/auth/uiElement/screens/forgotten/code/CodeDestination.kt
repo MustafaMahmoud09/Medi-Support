@@ -41,7 +41,6 @@ fun NavHostController.navigateToCodeDestination() {
 }//end navigateToCodeDestination
 
 fun NavGraphBuilder.codeDestination(
-    navHostController: NavHostController,
     navigateToNewPasswordDestination: () -> Unit
 ) {
 
@@ -51,7 +50,6 @@ fun NavGraphBuilder.codeDestination(
         exitTransition = { exitTransition() }
     ) {
         CodeScreen(
-            navHostController = navHostController,
             navigateToNewPasswordDestination = navigateToNewPasswordDestination
         )
     }

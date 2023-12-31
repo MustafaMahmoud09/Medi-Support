@@ -34,7 +34,6 @@ fun NavHostController.popRegisterDestination() {
 }//end popRegisterDestination
 
 fun NavGraphBuilder.registerDestination(
-    navHostController: NavHostController,
     popRegisterDestination: () -> Unit
 ) {
 
@@ -45,7 +44,6 @@ fun NavGraphBuilder.registerDestination(
     ) {
 
         RegisterScreen(
-            navHostController = navHostController,
             popRegisterDestination = popRegisterDestination
         )
 

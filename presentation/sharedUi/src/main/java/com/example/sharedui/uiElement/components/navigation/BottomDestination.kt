@@ -1,0 +1,8 @@
+package com.example.sharedui.uiElement.components.navigation
+
+
+data class BottomDestination(
+    val route: String,
+    val icon: Int,
+    val title: Int
+)

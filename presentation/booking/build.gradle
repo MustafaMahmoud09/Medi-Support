@@ -38,6 +38,9 @@ android {
 
 dependencies {
 
+    //project
+    implementation(project(':presentation:sharedUi'))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 

@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom
+package com.example.activity.uiElement.screens.activity
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition
@@ -12,44 +12,36 @@ import androidx.compose.animation.fadeOut
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.AUTH_NAV_GRAPH_ROUTE
+import com.example.sharedui.uiElement.components.navigation.BottomDestination
 import com.google.accompanist.navigation.animation.composable
 
-const val BOTTOM_DESTINATION_ROUTE = "bottomDestination"
+val ACTIVITY_DESTINATION_DATA = BottomDestination(
+    route = "activityDestination",
+    icon = com.example.sharedui.R.drawable.activity,
+    title = com.example.sharedui.R.string.activity
+)
 
-internal fun NavHostController.navigateToBottomDestination() {
+fun NavHostController.navigateToActivityDestination() {
 
     navigate(
-        route = BOTTOM_DESTINATION_ROUTE
-    ) {
+        route = ACTIVITY_DESTINATION_DATA.route
+    )
 
-        popUpTo(
-            route = AUTH_NAV_GRAPH_ROUTE
-        ) {
-            inclusive = true
-        }//end popUpTo
+}//end navigateToActivityDestination
 
-    }//end navigate
-
-}//en navigateToBottomDestination
-
-internal fun NavGraphBuilder.bottomDestination(
-    navigateToActivityDestination: () -> Unit
-) {
+fun NavGraphBuilder.activityDestination() {
 
     composable(
-        route = BOTTOM_DESTINATION_ROUTE,
+        route = ACTIVITY_DESTINATION_DATA.route,
         enterTransition = { enterTransition() },
-        exitTransition = { exitTransition() },
-        popEnterTransition = { enterTransition() }
+        popExitTransition = { exitTransition() }
     ) {
 
-        BottomScreen(
-            navigateToActivityDestination = navigateToActivityDestination
-        )
+        ActivityScreen()
+
     }//end composable
 
-}//end bottomDestination
+}//end activityDestination
 
 
 private fun AnimatedContentScope<NavBackStackEntry>.enterTransition(): EnterTransition {

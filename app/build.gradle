@@ -54,15 +54,19 @@ android {
 dependencies {
 
     //project
-   // implementation(project(':presentation:bmi'))
+    //implementation(project(':presentation:bmi'))
     implementation(project(':presentation:auth'))
-//    implementation(project(':presentation:bloodSugar'))
+    //implementation(project(':presentation:bloodSugar'))
     implementation(project(':presentation:bloodPressure'))
     implementation(project(':presentation:heartRate'))
     implementation(project(':presentation:heartPrediction'))
-   // implementation(project(':presentation:reminder'))
+    //implementation(project(':presentation:reminder'))
     implementation(project(':presentation:booking'))
     implementation(project(':presentation:chat'))
+    implementation(project(':presentation:profile'))
+    implementation(project(':presentation:article'))
+    implementation(project(':presentation:activity'))
+    implementation(project(':presentation:setting'))
     implementation(project(':presentation:sharedUi'))
 
 

@@ -128,7 +128,8 @@ private fun LoginContent(
                     )
             ) {
                 val (loginTitle, emailFailed, passwordFailed, textPermission, rememberSection,
-                    forgotPassword, loginButton, googleButton, facebookButton, line, donHaveAccount) = createRefs()
+                    forgotPassword, loginButton, googleButton, facebookButton, line, donHaveAccount
+                ) = createRefs()
 
                 TextBoldBlackView(
                     theme = theme,
@@ -153,8 +154,12 @@ private fun LoginContent(
                 FailedHintSection(
                     theme = theme,
                     dimen = dimen,
-                    title = stringResource(R.string.email_address),
-                    hint = stringResource(R.string.your_email),
+                    title = stringResource(
+                        R.string.email_address
+                    ),
+                    hint = stringResource(
+                        R.string.your_email
+                    ),
                     value = "",
                     onChange = {},
                     modifier = Modifier

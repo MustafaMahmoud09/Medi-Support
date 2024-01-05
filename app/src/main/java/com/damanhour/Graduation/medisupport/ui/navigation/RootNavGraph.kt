@@ -17,6 +17,8 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgo
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.bottomDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.navigateToBottomDestination
+import com.example.activity.uiElement.screens.activity.activityDestination
+import com.example.activity.uiElement.screens.activity.navigateToActivityDestination
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
@@ -71,7 +73,11 @@ fun RootNavGraph(
                     navigateToBottomDestination = navHostController::navigateToBottomDestination
                 )
 
-                bottomDestination()
+                bottomDestination(
+                    navigateToActivityDestination = navHostController::navigateToActivityDestination
+                )
+
+                activityDestination()
 
             }//end AnimatedNavHost
 

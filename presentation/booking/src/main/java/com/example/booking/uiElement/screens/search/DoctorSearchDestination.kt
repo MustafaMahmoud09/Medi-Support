@@ -5,6 +5,8 @@ package com.example.booking.uiElement.screens.search
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.example.sharedui.uiElement.components.navigation.BottomDestination
+import com.example.sharedui.uiElement.components.navigation.enterTransition
+import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 
@@ -17,7 +19,9 @@ val DOCTOR_SEARCH_DESTINATION_DATA = BottomDestination(
 fun NavGraphBuilder.doctorSearchDestination() {
 
     composable(
-        route = DOCTOR_SEARCH_DESTINATION_DATA.route
+        route = DOCTOR_SEARCH_DESTINATION_DATA.route,
+        enterTransition = { enterTransition() },
+        exitTransition = { exitTransition() }
     ) {
 
         DoctorSearchScreen()

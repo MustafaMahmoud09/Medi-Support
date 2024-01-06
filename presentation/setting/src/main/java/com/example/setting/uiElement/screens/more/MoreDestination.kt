@@ -15,7 +15,7 @@ fun NavGraphBuilder.moreDestination() {
         route = MORE_DESTINATION_ROUTE
     ) {
 
-        AboutScreen()
+        MoreScreen()
     }//end composable
 
 }//end moreDestination

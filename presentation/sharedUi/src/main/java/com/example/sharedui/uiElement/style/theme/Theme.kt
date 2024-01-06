@@ -1,6 +1,7 @@
 package com.example.sharedui.uiElement.style.theme
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 //Dark Mode
 private val DarkColor = CustomTheme(
@@ -19,7 +20,11 @@ private val DarkColor = CustomTheme(
     grayLineLight = GrayLineLight,
     visibleGray = VisibleGray,
     greenLight = greenLight,
-    hintIconBottom = hintIconBottom
+    hintIconBottom = hintIconBottom,
+    redDarkDash = RedDarkDash,
+    white = White,
+    transparent = Color.Transparent,
+    green = green
 )
 
 //Light Mode
@@ -39,7 +44,11 @@ private val LightColor = CustomTheme(
     grayLineLight = GrayLineLight,
     visibleGray = VisibleGray,
     greenLight = greenLight,
-    hintIconBottom = hintIconBottom
+    hintIconBottom = hintIconBottom,
+    redDarkDash = RedDarkDash,
+    white = White,
+    transparent = Color.Transparent,
+    green = green
 )
 
 @Composable

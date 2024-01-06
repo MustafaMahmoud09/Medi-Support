@@ -15,7 +15,7 @@ fun NavGraphBuilder.contactUsDestination() {
         route = CONTACT_US_DESTINATION_ROUTE
     ) {
 
-        AboutScreen()
+        ContactUsScreen()
     }//end composable
 
 }//end contactUsDestination

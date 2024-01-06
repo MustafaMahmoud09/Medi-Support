@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -23,7 +24,6 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
-
 @Composable
 fun RowScope.BottomNavigationSection(
     navController: NavHostController,
@@ -32,6 +32,8 @@ fun RowScope.BottomNavigationSection(
     ifRouteNull: () -> Unit = {},
     dimen: CustomDimen,
     theme: CustomTheme,
+    selectedContentColor: Color = theme.redDark,
+    unselectedContentColor: Color = theme.hintIconBottom
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -74,22 +76,43 @@ fun RowScope.BottomNavigationSection(
                 }//end Box
 
             },//end label
-            selectedContentColor = theme.redDark,
-            unselectedContentColor = theme.hintIconBottom,
+            selectedContentColor = selectedContentColor,
+            unselectedContentColor = unselectedContentColor,
             selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
             onClick = {
 
                 if (screen.route != routeNull) {
+                    val lastDestinationRoute = navController.backQueue.last().destination.route
 
-                    navController.popBackStack(
-                        route = screen.route,
-                        inclusive = true
-                    )
+                    if (
+                        lastDestinationRoute != screen.route &&
+                        screen.childList?.contains(lastDestinationRoute) != true
+                    ) {
 
-                    navController.navigate(
-                        route = screen.route
-                    )
+                        navController.navigate(
+                            route = screen.route
+                        ) {
+
+                            popUpTo(
+                                route = screen.route
+                            ) {
+                                inclusive = true
+                            }//end popUpTo
+
+                        }//end navigate
+
+                    }//end if
+
                 } else {
+
+                    for (count in 1 until items.size) {
+
+                        navController.popBackStack(
+                            route = items[count].route,
+                            inclusive = true
+                        )
+
+                    }//end for
 
                     ifRouteNull()
                 }

@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 val White = Color(0xFFFFFFFF)
 val RedDark = Color(0xFFBE0202)
+val RedDarkDash = Color(0xFFBE0202)
 val RedIcon = Color(0xFFD16565)
 val BlueDark = Color(0xFF090E1D)
 val BlackLight = Color(0xFF2E2E2E)
@@ -18,3 +19,4 @@ val VisibleGray = Color(0xFFA4A2A2)
 val RedMedium = Color(0xFFE52D27)
 val greenLight = Color(0xFF00D261)
 val hintIconBottom = Color(0xFF393939)
+val green = Color(0xFF4A963D)

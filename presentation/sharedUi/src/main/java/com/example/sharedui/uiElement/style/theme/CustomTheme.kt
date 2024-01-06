@@ -18,5 +18,9 @@ data class CustomTheme(
     val grayLineLight: Color,
     val visibleGray: Color,
     val greenLight: Color,
-    val hintIconBottom: Color
+    val hintIconBottom: Color,
+    val redDarkDash: Color,
+    val white: Color,
+    val transparent: Color,
+    val green: Color
 )

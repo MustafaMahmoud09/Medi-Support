@@ -6,12 +6,14 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.BottomAppBar
-import androidx.compose.material.BottomNavigation
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,6 +25,7 @@ import com.example.activity.uiElement.screens.activity.ACTIVITY_DESTINATION_DATA
 import com.example.article.uiElement.screens.articles.ARTICLES_DESTINATION_DATA
 import com.example.booking.uiElement.screens.search.DOCTOR_SEARCH_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.PROFILE_DESTINATION_DATA
+import com.example.profile.uiElement.screens.profile.popProfileDestination
 import com.example.sharedui.uiElement.components.items.BottomNavigationSection
 import com.example.sharedui.uiElement.components.navigation.BottomDestination
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -80,29 +83,26 @@ private fun BottomContent(
                 BottomAppBar(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(
+                            dimen.dimen_8_5.dp
+                        )
                         .background(
                             color = theme.background
                         ),
+                    contentPadding = PaddingValues(
+                        dimen.dimen_0.dp
+                    ),
                     backgroundColor = theme.background,
                 ) {
 
-                    BottomNavigation(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        backgroundColor = theme
-                            .background,
-                    ) {
-
-                        BottomNavigationSection(
-                            navController = navHostController,
-                            routeNull= ACTIVITY_DESTINATION_DATA.route,
-                            ifRouteNull = navigateToActivityDestination,
-                            items = items,
-                            dimen = dimen,
-                            theme = theme
-                        )
-
-                    }//end BottomNavigation
+                    BottomNavigationSection(
+                        navController = navHostController,
+                        routeNull = ACTIVITY_DESTINATION_DATA.route,
+                        ifRouteNull = navigateToActivityDestination,
+                        items = items,
+                        dimen = dimen,
+                        theme = theme
+                    )
 
                 }//end BottomAppBar
 
@@ -117,12 +117,13 @@ private fun BottomContent(
                         color = theme.background
                     )
                     .padding(
-                        bottom = dimen.dimen_7.dp
+                        bottom = dimen.dimen_8_5.dp
                     )
             ) {
 
                 BottomNavGraph(
-                    navHostController = navHostController
+                    navHostController = navHostController,
+                    popProfileDestination = navHostController::popProfileDestination
                 )
 
             }//end Box

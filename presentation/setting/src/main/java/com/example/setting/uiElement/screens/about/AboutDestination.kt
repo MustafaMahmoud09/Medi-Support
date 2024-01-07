@@ -4,17 +4,43 @@ package com.example.setting.uiElement.screens.about
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import com.example.sharedui.uiElement.components.navigation.enterTransition
+import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 const val ABOUT_DESTINATION_ROUTE = "aboutDestination"
 
-fun NavGraphBuilder.aboutDestination() {
+fun NavHostController.navigateToAboutDestination() {
+
+    navigate(
+        route = ABOUT_DESTINATION_ROUTE
+    )
+
+}//end navigateToAboutDestination
+
+fun NavHostController.popAboutDestination() {
+
+    popBackStack(
+        route = ABOUT_DESTINATION_ROUTE,
+        inclusive = true
+    )
+
+}//end popAboutDestination
+
+fun NavGraphBuilder.aboutDestination(
+    popAboutDestination: () -> Unit
+) {
 
     composable(
-        route = ABOUT_DESTINATION_ROUTE
+        route = ABOUT_DESTINATION_ROUTE,
+        enterTransition = { enterTransition() },
+        popExitTransition = { exitTransition() }
     ) {
 
-        AboutScreen()
+        AboutScreen(
+            popAboutDestination = popAboutDestination
+        )
     }//end composable
 
 }//end aboutDestination

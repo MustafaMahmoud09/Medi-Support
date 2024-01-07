@@ -12,11 +12,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavHostController
 import com.example.auth.R
 import com.example.auth.uiElement.components.composable.NumberFailedView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
-import com.example.sharedui.uiElement.components.composable.TextBoldBlackView
+import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -56,7 +55,7 @@ private fun CodeContent(
         ) {
             val (title, message, rowCodeFaileds, verifyButton) = createRefs()
 
-            TextBoldBlackView(
+            TextBoldView(
                 theme = theme,
                 dimen = dimen,
                 text = stringResource(
@@ -183,7 +182,7 @@ private fun CodeContent(
                         width = Dimension.fillToConstraints
                     }
                     .height(
-                        dimen.dimen_7.dp
+                        dimen.dimen_6_5.dp
                     )
             )
 

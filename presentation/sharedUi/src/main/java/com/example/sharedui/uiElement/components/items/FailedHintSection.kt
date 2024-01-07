@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,7 +42,10 @@ fun FailedHintSection(
     title: String,
     hint: String,
     value: String,
+    height: Float = dimen.dimen_6_5,
+    maxLines: Int = 1,
     password: Boolean = false,
+    contentCenter: Boolean = true,
     visibleIconColor: Color = theme.redDark,
     onChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -70,7 +72,7 @@ fun FailedHintSection(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(dimen.dimen_7.dp)
+                .height(height.dp)
                 .clip(
                     shape = RoundedCornerShape(
                         dimen.dimen_1_25.dp
@@ -134,11 +136,20 @@ fun FailedHintSection(
                         .constrainAs(boxFailed) {
                             start.linkTo(parent.start)
                             end.linkTo(passwordVisible.start)
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
+
+                            if (contentCenter) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                            } else {
+                                top.linkTo(
+                                    parent.top,
+                                    dimen.dimen_2.dp
+                                )
+                            }
+
                             width = Dimension.fillToConstraints
                         },
-                    maxLines = 1
+                    maxLines = maxLines
                 )
 
             } else {
@@ -155,8 +166,17 @@ fun FailedHintSection(
                         .constrainAs(boxFailed) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
+
+                            if (contentCenter) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                            } else {
+                                top.linkTo(
+                                    parent.top,
+                                    dimen.dimen_2.dp
+                                )
+                            }
+
                             width = Dimension.fillToConstraints
                         },
                     maxLines = 1
@@ -175,8 +195,17 @@ fun FailedHintSection(
                         .constrainAs(hintId) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
+
+                            if (contentCenter) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                            } else {
+                                top.linkTo(
+                                    parent.top,
+                                    dimen.dimen_2.dp
+                                )
+                            }
+
                             width = Dimension.fillToConstraints
                         }
                 )

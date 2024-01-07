@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="more">More</string>
+    <string name="email_address">Email Address</string>
+    <string name="your_email">Your Email</string>
+    <string name="send">Send</string>
 </resources>

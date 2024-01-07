@@ -15,4 +15,22 @@
     <string name="profile">Profile</string>
     <string name="more">More</string>
     <string name="save">Save</string>
+    <string name="about">About</string>
+    <string name="details_of_booking_doctor">Details of booking doctor</string>
+    <string name="contact_us">Contact us</string>
+    <string name="log_out">Log Out</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us_ca">Contact Us</string>
+    <string name="name">Name</string>
+    <string name="your_name">Your Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="your_email">Your Email</string>
+    <string name="send">Send</string>
+    <string name="message">Message</string>
+    <string name="your_message">Your Message</string>
+    <string name="about_info">Welcome to MediSupport, where we envision a world where health is effortlessly accessible and actively managed. Our commitment is to empower individuals on their journey to well-being by providing a comprehensive health management platform that seamlessly integrates technology with personalized care.</string>
+    <string name="medisupport">MediSupport</string>
+    <string name="our_features">Our Features</string>
+    <string name="our_developer">Our Developer</string>
 </resources>

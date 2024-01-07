@@ -16,7 +16,12 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 @Composable
 internal fun BottomNavGraph(
     navHostController: NavHostController,
-    popProfileDestination: () -> Unit
+    popProfileDestination: () -> Unit,
+    popMoreNavGraph: () -> Unit,
+    navigateToAboutDestination: () -> Unit,
+    navigateToContactUsDestination: () -> Unit,
+    popAboutDestination: () -> Unit,
+    popContactUsDestination: () -> Unit
 ) {
 
     AnimatedNavHost(
@@ -32,7 +37,13 @@ internal fun BottomNavGraph(
             popProfileDestination = popProfileDestination
         )
 
-        moreNavGraph()
+        moreNavGraph(
+            popMoreNavGraph = popMoreNavGraph,
+            navigateToAboutDestination = navigateToAboutDestination,
+            navigateToContactUsDestination = navigateToContactUsDestination,
+            popAboutDestination = popAboutDestination,
+            popContactUsDestination = popContactUsDestination
+        )
 
     }//end AnimatedNavHost
 

@@ -35,7 +35,7 @@ import com.example.auth.uiElement.components.items.MultiTextColorSection
 import com.example.auth.uiElement.components.items.RememberSection
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
-import com.example.sharedui.uiElement.components.composable.TextBoldBlackView
+import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalGrayDarkView
 import com.example.sharedui.uiElement.components.composable.TextNormalRedView
 import com.example.sharedui.uiElement.components.items.FailedHintSection
@@ -131,7 +131,7 @@ private fun LoginContent(
                     forgotPassword, loginButton, googleButton, facebookButton, line, donHaveAccount
                 ) = createRefs()
 
-                TextBoldBlackView(
+                TextBoldView(
                     theme = theme,
                     dimen = dimen,
                     text = stringResource(
@@ -304,7 +304,7 @@ private fun LoginContent(
                             width = Dimension.fillToConstraints
                         }
                         .height(
-                            dimen.dimen_7.dp
+                            dimen.dimen_6_5.dp
                         )
                 )
 

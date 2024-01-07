@@ -3,9 +3,7 @@
 package com.example.sharedui.uiElement.components.items
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
@@ -14,16 +12,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
-import com.example.sharedui.uiElement.components.composable.TextBoldBlackView
+import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -78,7 +74,7 @@ fun DialogBasicSection(
                         .size(dimen.dimen_10.dp)
                 )
 
-                TextBoldBlackView(
+                TextBoldView(
                     theme = theme,
                     dimen = dimen,
                     text = proText,

@@ -24,7 +24,10 @@ private val DarkColor = CustomTheme(
     redDarkDash = RedDarkDash,
     white = White,
     transparent = Color.Transparent,
-    green = green
+    green = green,
+    coolGray = CoolGray,
+    redDarkTR50 = RedDarkTR50,
+    green2BEF4A = green2BEF4A
 )
 
 //Light Mode
@@ -48,7 +51,10 @@ private val LightColor = CustomTheme(
     redDarkDash = RedDarkDash,
     white = White,
     transparent = Color.Transparent,
-    green = green
+    green = green,
+    coolGray = CoolGray,
+    redDarkTR50 = RedDarkTR50,
+    green2BEF4A = green2BEF4A
 )
 
 @Composable

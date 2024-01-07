@@ -10,11 +10,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.NavHostController
 import com.example.auth.R
 import com.example.sharedui.uiElement.components.composable.BackButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
-import com.example.sharedui.uiElement.components.composable.TextBoldBlackView
+import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.items.FailedHintSection
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -77,7 +76,7 @@ private fun EmailContent(
                     }
             )
 
-            TextBoldBlackView(
+            TextBoldView(
                 theme = theme,
                 dimen = dimen,
                 text = stringResource(
@@ -178,7 +177,7 @@ private fun EmailContent(
                         width = Dimension.fillToConstraints
                     }
                     .height(
-                        dimen.dimen_7.dp
+                        dimen.dimen_6_5.dp
                     )
             )
 

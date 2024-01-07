@@ -28,7 +28,7 @@ internal fun IconStartButtonView(
     dimen: CustomDimen,
     icon: Painter,
     text: String,
-    height: Float = dimen.dimen_7,
+    height: Float = dimen.dimen_6_5,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

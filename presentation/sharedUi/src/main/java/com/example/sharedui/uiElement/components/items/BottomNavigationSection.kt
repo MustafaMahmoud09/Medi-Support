@@ -81,41 +81,13 @@ fun RowScope.BottomNavigationSection(
             selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
             onClick = {
 
-                if (screen.route != routeNull) {
-                    val lastDestinationRoute = navController.backQueue.last().destination.route
-
-                    if (
-                        lastDestinationRoute != screen.route &&
-                        screen.childList?.contains(lastDestinationRoute) != true
-                    ) {
-
-                        navController.navigate(
-                            route = screen.route
-                        ) {
-
-                            popUpTo(
-                                route = screen.route
-                            ) {
-                                inclusive = true
-                            }//end popUpTo
-
-                        }//end navigate
-
-                    }//end if
-
-                } else {
-
-                    for (count in 1 until items.size) {
-
-                        navController.popBackStack(
-                            route = items[count].route,
-                            inclusive = true
-                        )
-
-                    }//end for
-
-                    ifRouteNull()
-                }
+                clickOnItemInBottomNavigation(
+                    navController = navController,
+                    screen = screen,
+                    routeNull = routeNull,
+                    items = items,
+                    ifRouteNull = ifRouteNull
+                )
 
             }//end onClick
         )
@@ -123,3 +95,49 @@ fun RowScope.BottomNavigationSection(
     }//end forEach
 
 }//end BottomNavigation
+
+
+private fun clickOnItemInBottomNavigation(
+    navController: NavHostController,
+    screen: BottomDestination,
+    routeNull: String,
+    items: List<BottomDestination>,
+    ifRouteNull: () -> Unit
+) {
+
+    if (screen.route != routeNull) {
+        val lastDestinationRoute = navController.backQueue.last().destination.route
+        if (
+            lastDestinationRoute != screen.route &&
+            screen.childList?.contains(lastDestinationRoute) != true
+        ) {
+
+            navController.navigate(
+                route = screen.route
+            ) {
+
+                popUpTo(
+                    route = screen.route
+                ) {
+                    inclusive = true
+                }//end popUpTo
+
+            }//end navigate
+
+        }//end if
+
+    } else {
+
+        for (count in 1 until items.size) {
+
+            navController.popBackStack(
+                route = items[count].route,
+                inclusive = true
+            )
+
+        }//end for
+
+        ifRouteNull()
+    }//end else
+
+}//end clickOnItemInBottomNavigation

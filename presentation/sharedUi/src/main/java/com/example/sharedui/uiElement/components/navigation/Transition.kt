@@ -16,7 +16,7 @@ fun AnimatedContentScope<NavBackStackEntry>.enterTransition(): EnterTransition {
 
     return fadeIn(
         animationSpec = tween(
-            durationMillis = 300
+            durationMillis = 100
         )
     )
 

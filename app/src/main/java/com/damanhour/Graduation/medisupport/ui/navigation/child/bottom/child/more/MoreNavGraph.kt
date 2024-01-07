@@ -4,6 +4,7 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.mo
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.example.setting.uiElement.screens.about.ABOUT_DESTINATION_ROUTE
 import com.example.setting.uiElement.screens.about.aboutDestination
 import com.example.setting.uiElement.screens.contactUs.CONTACT_US_DESTINATION_ROUTE
@@ -19,10 +20,29 @@ val MORE_VAV_GRAPH_DATA = BottomDestination(
     route = "moreNavGraph",
     icon = com.example.sharedui.R.drawable.more,
     title = com.example.sharedui.R.string.more,
-    childList = listOf(MORE_DESTINATION_ROUTE, ABOUT_DESTINATION_ROUTE, CONTACT_US_DESTINATION_ROUTE)
+    childList = listOf(
+        MORE_DESTINATION_ROUTE,
+        ABOUT_DESTINATION_ROUTE,
+        CONTACT_US_DESTINATION_ROUTE
+    )
 )
 
-internal fun NavGraphBuilder.moreNavGraph() {
+internal fun NavHostController.popMoreNavGraph() {
+
+    popBackStack(
+        route = MORE_VAV_GRAPH_DATA.route,
+        inclusive = true
+    )
+
+}//end popMoreNavGraph
+
+internal fun NavGraphBuilder.moreNavGraph(
+    popMoreNavGraph: () -> Unit,
+    navigateToAboutDestination: () -> Unit,
+    navigateToContactUsDestination: () -> Unit,
+    popAboutDestination: () -> Unit,
+    popContactUsDestination: () -> Unit
+) {
 
     navigation(
         route = MORE_VAV_GRAPH_DATA.route,
@@ -31,11 +51,19 @@ internal fun NavGraphBuilder.moreNavGraph() {
         exitTransition = { exitTransition() }
     ) {
 
-        moreDestination()
+        moreDestination(
+            popMoreNavGraph = popMoreNavGraph,
+            navigateToAboutDestination = navigateToAboutDestination,
+            navigateToContactUsDestination = navigateToContactUsDestination
+        )
 
-        aboutDestination()
+        aboutDestination(
+            popAboutDestination = popAboutDestination
+        )
 
-        contactUsDestination()
+        contactUsDestination(
+            popContactUsDestination = popContactUsDestination
+        )
 
     }//end navigation
 

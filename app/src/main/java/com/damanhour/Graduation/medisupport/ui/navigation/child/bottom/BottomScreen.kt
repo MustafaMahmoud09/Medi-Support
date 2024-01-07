@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.BottomAppBar
@@ -21,11 +20,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.BottomNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.more.MORE_VAV_GRAPH_DATA
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.more.popMoreNavGraph
 import com.example.activity.uiElement.screens.activity.ACTIVITY_DESTINATION_DATA
 import com.example.article.uiElement.screens.articles.ARTICLES_DESTINATION_DATA
 import com.example.booking.uiElement.screens.search.DOCTOR_SEARCH_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.PROFILE_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.popProfileDestination
+import com.example.setting.uiElement.screens.about.navigateToAboutDestination
+import com.example.setting.uiElement.screens.about.popAboutDestination
+import com.example.setting.uiElement.screens.contactUs.navigateToContactUsDestination
+import com.example.setting.uiElement.screens.contactUs.popContactUsDestination
 import com.example.sharedui.uiElement.components.items.BottomNavigationSection
 import com.example.sharedui.uiElement.components.navigation.BottomDestination
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -123,7 +127,12 @@ private fun BottomContent(
 
                 BottomNavGraph(
                     navHostController = navHostController,
-                    popProfileDestination = navHostController::popProfileDestination
+                    popProfileDestination = navHostController::popProfileDestination,
+                    popMoreNavGraph = navHostController::popMoreNavGraph,
+                    navigateToAboutDestination = navHostController::navigateToAboutDestination,
+                    navigateToContactUsDestination = navHostController::navigateToContactUsDestination,
+                    popAboutDestination = navHostController::popAboutDestination,
+                    popContactUsDestination = navHostController::popContactUsDestination
                 )
 
             }//end Box

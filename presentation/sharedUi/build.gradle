@@ -43,7 +43,7 @@ android {
 dependencies {
 
     //constraint layout
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
     //compose
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -61,7 +61,7 @@ dependencies {
     implementation "androidx.compose.ui:ui-graphics:$compose_version"
 
     //material 3
-    implementation 'androidx.compose.material3:material3:1.1.2'
+    implementation "androidx.compose.material3:material3:$material3_versoin"
 
     //accompanist
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"

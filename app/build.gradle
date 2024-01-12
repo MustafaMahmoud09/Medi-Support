@@ -60,7 +60,7 @@ dependencies {
     implementation(project(':presentation:bloodPressure'))
     implementation(project(':presentation:heartRate'))
     implementation(project(':presentation:heartPrediction'))
-    //implementation(project(':presentation:reminder'))
+    implementation(project(':presentation:reminder'))
     implementation(project(':presentation:booking'))
     implementation(project(':presentation:chat'))
     implementation(project(':presentation:profile'))
@@ -69,9 +69,8 @@ dependencies {
     implementation(project(':presentation:setting'))
     implementation(project(':presentation:sharedUi'))
 
-
     //constraint layout
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
     //compose
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -92,6 +91,5 @@ dependencies {
 
     //navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
-
 
 }

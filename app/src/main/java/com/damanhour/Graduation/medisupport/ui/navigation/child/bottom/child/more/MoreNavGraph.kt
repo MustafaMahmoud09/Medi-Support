@@ -12,7 +12,7 @@ import com.example.setting.uiElement.screens.contactUs.contactUsDestination
 import com.example.setting.uiElement.screens.more.MORE_DESTINATION_ROUTE
 import com.example.setting.uiElement.screens.more.moreDestination
 import com.example.sharedui.uiElement.components.navigation.BottomDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransition
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
@@ -47,7 +47,7 @@ internal fun NavGraphBuilder.moreNavGraph(
     navigation(
         route = MORE_VAV_GRAPH_DATA.route,
         startDestination = MORE_DESTINATION_ROUTE,
-        enterTransition = { enterTransition() },
+        enterTransition = { enterTransitionZero() },
         exitTransition = { exitTransition() }
     ) {
 

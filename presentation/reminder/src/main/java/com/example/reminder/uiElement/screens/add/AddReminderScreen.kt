@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 
 @Composable
-internal fun AddReminderScreen(
-    navHostController: NavHostController
-) {
+internal fun AddReminderScreen() {
 
     AddReminderContent()
 }//end AddReminderScreen

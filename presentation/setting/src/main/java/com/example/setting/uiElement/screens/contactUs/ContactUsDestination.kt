@@ -5,7 +5,7 @@ package com.example.setting.uiElement.screens.contactUs
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.sharedui.uiElement.components.navigation.enterTransition
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -34,7 +34,7 @@ fun NavGraphBuilder.contactUsDestination(
 
     composable(
         route = CONTACT_US_DESTINATION_ROUTE,
-        enterTransition = { enterTransition() },
+        enterTransition = { enterTransitionZero() },
         popExitTransition = { exitTransition() }
     ) {
 

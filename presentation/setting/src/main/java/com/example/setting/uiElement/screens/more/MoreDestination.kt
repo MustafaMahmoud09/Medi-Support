@@ -4,7 +4,7 @@ package com.example.setting.uiElement.screens.more
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import com.example.sharedui.uiElement.components.navigation.enterTransition
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -18,7 +18,7 @@ fun NavGraphBuilder.moreDestination(
 
     composable(
         route = MORE_DESTINATION_ROUTE,
-        popEnterTransition = { enterTransition() },
+        popEnterTransition = { enterTransitionZero() },
         exitTransition = { exitTransition() }
     ) {
 

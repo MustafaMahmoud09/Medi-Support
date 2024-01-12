@@ -19,11 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.BottomNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.home.HOME_VAV_GRAPH_DATA
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.more.MORE_VAV_GRAPH_DATA
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.more.popMoreNavGraph
 import com.example.activity.uiElement.screens.activity.ACTIVITY_DESTINATION_DATA
 import com.example.article.uiElement.screens.articles.ARTICLES_DESTINATION_DATA
-import com.example.booking.uiElement.screens.search.DOCTOR_SEARCH_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.PROFILE_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.popProfileDestination
 import com.example.setting.uiElement.screens.about.navigateToAboutDestination
@@ -46,7 +46,7 @@ internal fun BottomScreen(
 ) {
 
     val items = listOf(
-        DOCTOR_SEARCH_DESTINATION_DATA,
+        HOME_VAV_GRAPH_DATA,
         ACTIVITY_DESTINATION_DATA,
         ARTICLES_DESTINATION_DATA,
         PROFILE_DESTINATION_DATA,

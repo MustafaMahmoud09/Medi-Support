@@ -42,7 +42,7 @@ dependencies {
     implementation(project(':presentation:sharedUi'))
 
     //constraint layout
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
     //compose
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -59,7 +59,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
     //material 3
-    implementation 'androidx.compose.material3:material3:1.1.2'
+    implementation "androidx.compose.material3:material3:$material3_versoin"
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"

@@ -9,16 +9,12 @@ import com.google.accompanist.navigation.animation.composable
 
 const val REMINDER_RECORDS_DESTINATION_ROUTE = "reminderRecordsDestination"
 
-fun NavGraphBuilder.reminderRecordsDestination(
-    navHostController: NavHostController
-) {
+fun NavGraphBuilder.reminderRecordsDestination() {
 
     composable(
         route = REMINDER_RECORDS_DESTINATION_ROUTE
     ) {
 
-        ReminderRecordsScreen(
-            navHostController = navHostController
-        )
+        ReminderRecordsScreen()
     }
 }//end reminderRecordsDestination

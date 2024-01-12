@@ -12,15 +12,15 @@ import androidx.compose.animation.fadeOut
 import androidx.navigation.NavBackStackEntry
 
 
-fun AnimatedContentScope<NavBackStackEntry>.enterTransition(): EnterTransition {
+fun AnimatedContentScope<NavBackStackEntry>.enterTransitionZero(): EnterTransition {
 
     return fadeIn(
         animationSpec = tween(
-            durationMillis = 100
+            durationMillis = 0
         )
     )
 
-}//end enterTransition
+}//end enterTransitionZero
 
 
 fun AnimatedContentScope<NavBackStackEntry>.exitTransition(): ExitTransition {

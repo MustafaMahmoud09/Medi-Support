@@ -303,9 +303,6 @@ private fun LoginContent(
                             )
                             width = Dimension.fillToConstraints
                         }
-                        .height(
-                            dimen.dimen_6_5.dp
-                        )
                 )
 
                 IconStartButtonView(

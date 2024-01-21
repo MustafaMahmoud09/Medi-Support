@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -20,6 +21,7 @@ fun BasicButtonView(
     dimen: CustomDimen,
     theme: CustomTheme,
     text: String,
+    height: Float = dimen.dimen_6_5,
     color: Color = theme.redDark,
     onClick: () -> Unit,
     fontSize: Float = dimen.dimen_2_25,
@@ -29,6 +31,9 @@ fun BasicButtonView(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
+            .height(
+                height = height.dp
+            )
             .clip(
                 shape = RoundedCornerShape(
                     dimen.dimen_1_25.dp

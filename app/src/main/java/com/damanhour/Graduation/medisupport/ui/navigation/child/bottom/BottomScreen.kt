@@ -18,11 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.ACTIVITY_NAV_GRAPH_DATA
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.BottomNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.home.HOME_VAV_GRAPH_DATA
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.more.MORE_VAV_GRAPH_DATA
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.more.popMoreNavGraph
-import com.example.activity.uiElement.screens.activity.ACTIVITY_DESTINATION_DATA
 import com.example.article.uiElement.screens.articles.ARTICLES_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.PROFILE_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.popProfileDestination
@@ -47,7 +47,7 @@ internal fun BottomScreen(
 
     val items = listOf(
         HOME_VAV_GRAPH_DATA,
-        ACTIVITY_DESTINATION_DATA,
+        ACTIVITY_NAV_GRAPH_DATA,
         ARTICLES_DESTINATION_DATA,
         PROFILE_DESTINATION_DATA,
         MORE_VAV_GRAPH_DATA
@@ -101,7 +101,7 @@ private fun BottomContent(
 
                     BottomNavigationSection(
                         navController = navHostController,
-                        routeNull = ACTIVITY_DESTINATION_DATA.route,
+                        routeNull = ACTIVITY_NAV_GRAPH_DATA.route,
                         ifRouteNull = navigateToActivityDestination,
                         items = items,
                         dimen = dimen,

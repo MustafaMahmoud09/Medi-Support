@@ -176,9 +176,6 @@ private fun EmailContent(
                         )
                         width = Dimension.fillToConstraints
                     }
-                    .height(
-                        dimen.dimen_6_5.dp
-                    )
             )
 
         }//end ConstraintLayout

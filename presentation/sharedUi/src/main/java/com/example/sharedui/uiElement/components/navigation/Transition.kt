@@ -22,6 +22,15 @@ fun AnimatedContentScope<NavBackStackEntry>.enterTransitionZero(): EnterTransiti
 
 }//end enterTransitionZero
 
+fun AnimatedContentScope<NavBackStackEntry>.enterTransitionMain(): EnterTransition {
+
+    return fadeIn(
+        animationSpec = tween(
+            durationMillis = 300
+        )
+    )
+
+}//end enterTransitionMain
 
 fun AnimatedContentScope<NavBackStackEntry>.exitTransition(): ExitTransition {
 

@@ -135,7 +135,7 @@ private fun ContactUsContent(
                     end.linkTo(parent.end)
                     top.linkTo(
                         title.bottom,
-                        dimen.dimen_4.dp
+                        dimen.dimen_2.dp
                     )
                     bottom.linkTo(parent.bottom)
                     height = Dimension.fillToConstraints
@@ -144,7 +144,8 @@ private fun ContactUsContent(
             contentPadding = PaddingValues(
                 start = dimen.dimen_2.dp,
                 end = dimen.dimen_2.dp,
-                bottom = dimen.dimen_2.dp
+                bottom = dimen.dimen_2.dp,
+                top = dimen.dimen_2.dp
             ),
             verticalArrangement = Arrangement.spacedBy(
                 dimen.dimen_3.dp
@@ -230,9 +231,6 @@ private fun ContactUsContent(
                     onClick = { stateDialog = !stateDialog },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(
-                            dimen.dimen_6_5.dp
-                        )
                 )
 
             }//end item

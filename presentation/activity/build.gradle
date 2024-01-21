@@ -63,4 +63,10 @@ dependencies {
 
     //material 3
     implementation "androidx.compose.material3:material3:$material3_versoin"
+
+    //vico chart library
+    implementation("com.patrykandpatrick.vico:compose:$vico_version")
+    implementation("com.patrykandpatrick.vico:compose-m2:$vico_version")
+    implementation("com.patrykandpatrick.vico:compose-m3:$vico_version")
+    implementation("com.patrykandpatrick.vico:core:$vico_version")
 }

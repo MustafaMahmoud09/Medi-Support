@@ -96,13 +96,16 @@ private fun AboutContent(
                 .constrainAs(content) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    top.linkTo(title.bottom)
+                    top.linkTo(
+                        title.bottom,
+                        dimen.dimen_2.dp
+                    )
                     bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
                 },
             contentPadding = PaddingValues(
-                top = dimen.dimen_4.dp,
+                top = dimen.dimen_2.dp,
                 bottom = dimen.dimen_2.dp,
             ),
             verticalArrangement = Arrangement.spacedBy(
@@ -289,7 +292,7 @@ private fun AboutContent(
                 Box(
                     modifier = Modifier
                         .padding(
-                           horizontal = dimen.dimen_2.dp
+                            horizontal = dimen.dimen_2.dp
                         )
                 ) {
 

@@ -16,7 +16,7 @@ fun LineView(
     theme: CustomTheme,
     height: Float = dimen.dimen_0_125,
     color: Color = theme.grayLineLight,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
 
     Spacer(

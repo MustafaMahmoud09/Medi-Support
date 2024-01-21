@@ -192,7 +192,7 @@ private fun ProfileContent(
                     end.linkTo(parent.end)
                     top.linkTo(
                         editInfo.bottom,
-                        dimen.dimen_4.dp
+                        dimen.dimen_2.dp
                     )
                     bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
@@ -201,7 +201,8 @@ private fun ProfileContent(
             contentPadding = PaddingValues(
                 bottom = dimen.dimen_2.dp,
                 start = dimen.dimen_2.dp,
-                end = dimen.dimen_2.dp
+                end = dimen.dimen_2.dp,
+                top = dimen.dimen_2.dp
             ),
             verticalArrangement = Arrangement.spacedBy(
                 dimen.dimen_2.dp
@@ -286,7 +287,6 @@ private fun ProfileContent(
                     onClick = { stateDialog = !stateDialog },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(dimen.dimen_6_5.dp)
                 )
 
             }//end item

@@ -4,7 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
@@ -18,6 +18,7 @@ fun TextNormalView(
     dimen: CustomDimen,
     text: String,
     size: Float,
+    weigh: Int = 400,
     defineLine: Boolean = false,
     maxLines:Int = Int.MAX_VALUE,
     fontColor: Color = theme.blackLight,
@@ -32,6 +33,7 @@ fun TextNormalView(
             color = fontColor,
             fontFamily = robotoRegular,
             modifier = modifier,
+            fontWeight = FontWeight(weigh),
             textAlign = TextAlign.Center
         )
     }else{
@@ -44,6 +46,7 @@ fun TextNormalView(
             overflow = TextOverflow.Ellipsis,
             fontFamily = robotoRegular,
             modifier = modifier,
+            fontWeight = FontWeight(weigh),
             textAlign = TextAlign.Center
         )
     }

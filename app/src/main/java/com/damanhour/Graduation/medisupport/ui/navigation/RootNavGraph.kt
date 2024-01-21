@@ -2,6 +2,8 @@
 
 package com.damanhour.Graduation.medisupport.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.activityNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.AUTH_NAV_GRAPH_ROUTE
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.authNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.backToLoginNavGraph
@@ -17,8 +20,10 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgo
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.bottomDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.navigateToBottomDestination
-import com.example.activity.uiElement.screens.activity.activityDestination
-import com.example.activity.uiElement.screens.activity.navigateToActivityDestination
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.popActivityNavGraph
+import com.example.activity.uiElement.screens.history.navigateToHistoryDestination
+import com.example.activity.uiElement.screens.history.popHistoryDestination
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
@@ -27,15 +32,9 @@ import com.example.auth.uiElement.screens.welcome.navigateToWelcomeDestination
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-//import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodPressureNavGraph
-//import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
-//import com.damanhour.Graduation.medisupport.ui.navigation.child.bmiNavGraph
-//import com.damanhour.Graduation.medisupport.ui.navigation.child.bookingNavGraph
-//import com.damanhour.Graduation.medisupport.ui.navigation.child.heartPredictionNavGraph
-//import com.damanhour.Graduation.medisupport.ui.navigation.child.heartRateNavGraph
-//import com.damanhour.Graduation.medisupport.ui.navigation.child.reminderNavGraph
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RootNavGraph(
     navHostController: NavHostController,
@@ -74,10 +73,14 @@ fun RootNavGraph(
                 )
 
                 bottomDestination(
-                    navigateToActivityDestination = navHostController::navigateToActivityDestination
+                    navigateToActivityDestination = navHostController::navigateToActivityNavGraph
                 )
 
-                activityDestination()
+                activityNavGraph(
+                    popActivityNavGraph = navHostController::popActivityNavGraph,
+                    popHistoryDestination = navHostController::popHistoryDestination,
+                    navigateToHistoryDestination = navHostController::navigateToHistoryDestination
+                )
 
             }//end AnimatedNavHost
 

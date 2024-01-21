@@ -3,7 +3,7 @@ buildscript {
         compose_version = '1.4.2'
         accompanist_version = '0.30.1'
         nav_version = "2.5.3"
-        vico_version = "1.11.2"
+        vico_version = "1.9.1"
         material3_versoin = "1.1.2"
         constraint_layout_version = "1.0.1"
     }

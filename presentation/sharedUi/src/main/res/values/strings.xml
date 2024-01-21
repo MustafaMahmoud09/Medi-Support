@@ -33,4 +33,13 @@
     <string name="medisupport">MediSupport</string>
     <string name="our_features">Our Features</string>
     <string name="our_developer">Our Developer</string>
+    <string name="bmi">BMI</string>
+    <string name="blood_pressure">Blood Pressure</string>
+    <string name="blood_suger">Blood Sugar</string>
+    <string name="heart_rate">Heart Rate</string>
+    <string name="add_record">Add Record</string>
+    <string name="history">History</string>
+    <string name="see_all">See All</string>
+    <string name="recommended_reading">Recommended Reading</string>
+    <string name="all_history">All History</string>
 </resources>

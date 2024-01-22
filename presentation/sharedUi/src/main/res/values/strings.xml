@@ -42,4 +42,7 @@
     <string name="see_all">See All</string>
     <string name="recommended_reading">Recommended Reading</string>
     <string name="all_history">All History</string>
+    <string name="upper_bound">Upper bound</string>
+    <string name="lower_bound">Lower bound</string>
+    <string name="mmhg">mmHG</string>
 </resources>

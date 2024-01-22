@@ -171,7 +171,11 @@ private fun ActivityContent(
                     }
 
                     1 -> {
-                        BloodPressureScreen()
+                        BloodPressureScreen(
+                            theme = theme,
+                            dimen = dimen,
+                            navigateToHistoryDestination = navigateToHistoryDestination
+                        )
                     }
 
                     2 -> {
@@ -183,7 +187,11 @@ private fun ActivityContent(
                     }
 
                     3 -> {
-                        HeartRateScreen()
+                        HeartRateScreen(
+                            theme = theme,
+                            dimen = dimen,
+                            navigateToHistoryDestination = navigateToHistoryDestination
+                        )
                     }
                 }//end when
 

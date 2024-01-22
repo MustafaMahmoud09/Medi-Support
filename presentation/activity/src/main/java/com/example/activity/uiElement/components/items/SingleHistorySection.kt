@@ -82,7 +82,7 @@ internal fun SingleHistorySection(
         TextBoldView(
             theme = theme,
             dimen = dimen,
-            text = "80",
+            text = "65",
             size = dimen.dimen_1_75,
             color = theme.black
         )
@@ -97,7 +97,7 @@ internal fun SingleHistorySection(
         TextSemiBoldView(
             theme = theme,
             dimen = dimen,
-            text = "Kg",
+            text = "PBM",
             size = dimen.dimen_1_75,
             fontColor = theme.black
         )

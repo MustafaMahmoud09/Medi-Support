@@ -73,4 +73,7 @@ dependencies {
     implementation("com.patrykandpatrick.vico:compose-m3:$vico_version")
     implementation("com.patrykandpatrick.vico:core:$vico_version")
 
+    //chart
+    implementation("io.github.thechance101:chart:$latest_release")
+
 }

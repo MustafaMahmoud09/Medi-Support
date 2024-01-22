@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -107,7 +108,7 @@ fun DropDownMenuPagerSection(
             Box(
                 modifier = Modifier
                     .constrainAs(dropDownMenuId) {
-                        end.linkTo(iconSelectedId.end)
+                        end.linkTo(parent.end)
                         top.linkTo(
                             iconSelectedId.bottom,
                             dimen.dimen_1.dp
@@ -121,6 +122,7 @@ fun DropDownMenuPagerSection(
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
+                    offset = DpOffset((-1 * dropDownMenuWidth).dp, dimen.dimen_0.dp),
                     modifier = Modifier
                         .background(
                             color = theme.white,
@@ -139,7 +141,7 @@ fun DropDownMenuPagerSection(
                                     dimen = dimen,
                                     text = options[count],
                                     size = textItemSize,
-                                    fontColor = theme.black
+                                    fontColor = theme.black,
                                 )
                             },
                             onClick = {

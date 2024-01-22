@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -14,6 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.activity.uiElement.screens.history.child.BMIHistoryScreen
+import com.example.activity.uiElement.screens.history.child.BloodPressureHistoryScreen
+import com.example.activity.uiElement.screens.history.child.BloodSugarHistoryScreen
+import com.example.activity.uiElement.screens.history.child.HeartRateHistoryScreen
 import com.example.sharedui.uiElement.components.composable.BackButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.DropDownMenuPagerSection
@@ -35,6 +40,7 @@ internal fun HistoryScreen(
     )
 }//end HistoryScreen
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HistoryContent(
     dimen: CustomDimen = MediSupportAppDimen(),
@@ -56,8 +62,8 @@ private fun HistoryContent(
                     color = theme.background
                 )
         ) {
-            val (backButtonId, titleId, dropDownMenuId) = createRefs()
-            val guideFromStart136 = createGuidelineFromStart(dimen.dimen_17.dp)
+            val (backButtonId, titleId, dropDownMenuId, historyPageId) = createRefs()
+            val guideFromStart156DP = createGuidelineFromStart(dimen.dimen_21_5.dp)
 
             BackButtonView(
                 dimen = dimen,
@@ -115,20 +121,75 @@ private fun HistoryContent(
                 textSelectedSize = dimen.dimen_2,
                 textItemSize = dimen.dimen_1_75,
                 pagerState = pagerState,
+                dropDownMenuWidth = dimen.dimen_19_5,
                 modifier = Modifier
                     .constrainAs(dropDownMenuId) {
                         start.linkTo(
                             parent.start,
                             dimen.dimen_1.dp
                         )
-                        end.linkTo(guideFromStart136)
+                        end.linkTo(guideFromStart156DP)
                         top.linkTo(
-                            titleId.bottom,
+                            backButtonId.bottom,
                             dimen.dimen_4.dp
                         )
                         width = Dimension.fillToConstraints
                     }
             )
+
+            HorizontalPager(
+                state = pagerState,
+                pageCount = 4,
+                userScrollEnabled = false,
+                modifier = Modifier
+                    .constrainAs(historyPageId) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(
+                            parent.top,
+                            dimen.dimen_13_5.dp
+                        )
+                        bottom.linkTo(parent.bottom)
+                        height = Dimension.fillToConstraints
+                        width = Dimension.fillToConstraints
+                    }
+            ) { page ->
+
+                when (page) {
+                    0 -> {
+
+                        BMIHistoryScreen(
+                            theme = theme,
+                            dimen = dimen
+                        )
+                    }
+
+                    1 -> {
+
+                        BloodPressureHistoryScreen(
+                            theme = theme,
+                            dimen = dimen
+                        )
+                    }
+
+                    2 -> {
+
+                        BloodSugarHistoryScreen(
+                            theme = theme,
+                            dimen = dimen
+                        )
+                    }
+
+                    3 -> {
+
+                        HeartRateHistoryScreen(
+                            theme = theme,
+                            dimen = dimen
+                        )
+                    }
+                }//end when
+
+            }//end HorizontalPager
 
         }//end ConstraintLayout
 

@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.example.auth.uiElement.screens.forgotten.code.CODE_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.google.accompanist.navigation.animation.composable
 
 const val NEW_PASSWORD_DESTINATION_ROUTE = "newPasswordDestination"
@@ -33,7 +34,7 @@ fun NavGraphBuilder.newPasswordDestination(
 
     composable(
         route = NEW_PASSWORD_DESTINATION_ROUTE,
-        enterTransition = { enterTransitionMain() }
+        enterTransition = { enterTransitionZero() },
     ) {
 
         NewPasswordScreen(

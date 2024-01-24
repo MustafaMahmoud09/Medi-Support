@@ -1,5 +1,9 @@
 package com.example.setting.uiElement.screens.more
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,6 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -14,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.setting.R
+import com.example.setting.uiElement.components.items.CancelDialogSection
 import com.example.sharedui.uiElement.components.composable.BackButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.EndIconButtonSection
@@ -47,6 +56,8 @@ private fun MoreContent(
     onClickAbout: () -> Unit
 ) {
 
+    var isShowDialog by rememberSaveable { mutableStateOf(false) }
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +65,52 @@ private fun MoreContent(
                 color = theme.background
             )
     ) {
-        val (backButton, title, buttonsId) = createRefs()
+        val (backButton, title, buttonsId, deleteAccountDialogId) = createRefs()
+
+
+        AnimatedVisibility(
+            visible = isShowDialog,
+            enter = fadeIn(
+                animationSpec = tween(
+                    durationMillis = 150
+                )
+            ),
+            exit = fadeOut(
+                animationSpec = tween(
+                    durationMillis = 150
+                )
+            )
+        ) {
+
+            CancelDialogSection(
+                onDismissRequest = { /*TODO*/ },
+                dimen = dimen,
+                theme = theme,
+                onClickOnCancel = { isShowDialog = false },
+                logo = painterResource(
+                    id = com.example.sharedui.R.drawable.delete_icon
+                ),
+                title = stringResource(
+                    id = com.example.sharedui.R.string.delete_account
+                ),
+                message = stringResource(
+                    id = com.example.sharedui.R.string.the_account_will_be_completely_deleted
+                ),
+                buttonTitle = stringResource(
+                    id = com.example.sharedui.R.string.delete
+                ),
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .constrainAs(deleteAccountDialogId) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                    }
+            )
+
+        }//end AnimatedVisibility
 
         BackButtonView(
             dimen = dimen,
@@ -211,7 +267,9 @@ private fun MoreContent(
                     iconStart = painterResource(
                         id = com.example.sharedui.R.drawable.delete_icon
                     ),
-                    onClick = {},
+                    onClick = {
+                        isShowDialog = true
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                 )

@@ -6,6 +6,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -34,7 +35,7 @@ fun NavGraphBuilder.registerDestination(
 
     composable(
         route = REGISTER_DESTINATION_ROUTE,
-        enterTransition = { enterTransitionMain() },
+        enterTransition = { enterTransitionZero() },
         popExitTransition = { exitTransition() }
     ) {
 

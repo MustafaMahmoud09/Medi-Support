@@ -4,22 +4,23 @@ package com.example.article.uiElement.screens.articles
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import com.example.sharedui.uiElement.components.navigation.BottomDestination
 import com.google.accompanist.navigation.animation.composable
 
-val ARTICLES_DESTINATION_DATA = BottomDestination(
-    route = "articlesDestination",
-    icon = com.example.sharedui.R.drawable.article,
-    title = com.example.sharedui.R.string.articles
-)
+const val ARTICLES_DESTINATION_ROUTE = "articlesDestination"
 
-fun NavGraphBuilder.articlesDestination() {
+fun NavGraphBuilder.articlesDestination(
+    popArticleNavGraph: () -> Unit,
+    navigateToSingleDestination: () -> Unit
+) {
 
     composable(
-        route = ARTICLES_DESTINATION_DATA.route
+        route = ARTICLES_DESTINATION_ROUTE
     ) {
 
-        ArticlesScreen()
+        ArticlesScreen(
+            popArticleNavGraph = popArticleNavGraph,
+            navigateToSingleDestination = navigateToSingleDestination
+        )
 
     }//end composable
 

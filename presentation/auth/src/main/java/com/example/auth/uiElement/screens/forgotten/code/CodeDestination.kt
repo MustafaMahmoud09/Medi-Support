@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import com.example.auth.uiElement.screens.forgotten.email.EMAIL_DESTINATION_ROUTE
 import com.example.auth.uiElement.screens.login.LOGIN_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -41,7 +42,7 @@ fun NavGraphBuilder.codeDestination(
 
     composable(
         route = CODE_DESTINATION_ROUTE,
-        enterTransition = { enterTransitionMain() },
+        enterTransition = { enterTransitionZero() },
         exitTransition = { exitTransition() }
     ) {
         CodeScreen(

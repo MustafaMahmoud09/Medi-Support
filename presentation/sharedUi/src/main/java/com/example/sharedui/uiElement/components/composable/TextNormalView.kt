@@ -22,6 +22,7 @@ fun TextNormalView(
     defineLine: Boolean = false,
     maxLines:Int = Int.MAX_VALUE,
     fontColor: Color = theme.blackLight,
+    textAlign: TextAlign? = TextAlign.Center,
     modifier: Modifier = Modifier
 ) {
 
@@ -34,7 +35,7 @@ fun TextNormalView(
             fontFamily = robotoRegular,
             modifier = modifier,
             fontWeight = FontWeight(weigh),
-            textAlign = TextAlign.Center
+            textAlign = textAlign
         )
     }else{
 
@@ -47,7 +48,7 @@ fun TextNormalView(
             fontFamily = robotoRegular,
             modifier = modifier,
             fontWeight = FontWeight(weigh),
-            textAlign = TextAlign.Center
+            textAlign = textAlign
         )
     }
 }//end TextNormalBackLightView

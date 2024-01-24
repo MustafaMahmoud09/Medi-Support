@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.R
@@ -127,9 +128,10 @@ fun DropDownMenuPagerSection(
                         .background(
                             color = theme.white,
                             shape = RectangleShape
-                        ).width(
-                            dropDownMenuWidth.dp
                         )
+                        .width(
+                            dropDownMenuWidth.dp
+                        ),
                 ) {
 
                     for (count in options.indices)

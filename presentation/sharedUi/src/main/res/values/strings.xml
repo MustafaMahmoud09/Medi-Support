@@ -45,4 +45,7 @@
     <string name="upper_bound">Upper bound</string>
     <string name="lower_bound">Lower bound</string>
     <string name="mmhg">mmHG</string>
+    <string name="the_account_will_be_completely_deleted">The Account will be completely deleted</string>
+    <string name="delete">Delete</string>
+    <string name="read_now">Read Now</string>
 </resources>

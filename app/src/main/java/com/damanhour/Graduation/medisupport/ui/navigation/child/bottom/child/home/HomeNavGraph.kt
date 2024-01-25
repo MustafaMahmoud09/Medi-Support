@@ -17,6 +17,8 @@ import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
+//create object from bottom destination class have icon and title for show in bottom navigation bar and route name
+//child list have child destinations to home nav graph to organize bottom nav graph
 val HOME_VAV_GRAPH_DATA = BottomDestination(
     route = "homeNavGraph",
     icon = R.drawable.home,
@@ -28,8 +30,9 @@ val HOME_VAV_GRAPH_DATA = BottomDestination(
     )
 )
 
+//function for pop home nav graph from root nav graph
 internal fun NavHostController.popHomeNavGraph() {
-
+    //pop home nav graph
     popBackStack(
         route = HOME_VAV_GRAPH_DATA.route,
         inclusive = true
@@ -37,15 +40,16 @@ internal fun NavHostController.popHomeNavGraph() {
 
 }//end popHomeNavGraph
 
+//function for create home nav graph and add destination to it and define start destination to it
 internal fun NavGraphBuilder.homeNavGraph() {
-
+    //create home nav graph
     navigation(
-        route = HOME_VAV_GRAPH_DATA.route,
-        startDestination = DOCTOR_SEARCH_DESTINATION_ROUTE,
-        enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        route = HOME_VAV_GRAPH_DATA.route,//define home nav graph name
+        startDestination = DOCTOR_SEARCH_DESTINATION_ROUTE,//define start destination to home nav graph
+        enterTransition = { enterTransitionZero() },//define enter transition method
+        exitTransition = { exitTransition() }//define exit transition method
     ) {
-
+        //add destinations to home nav graph
         doctorSearchDestination()
 
         addReminderDestination()

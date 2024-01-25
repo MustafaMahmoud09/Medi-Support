@@ -10,14 +10,16 @@ import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
+//destination name
 const val BOTTOM_DESTINATION_ROUTE = "bottomDestination"
 
-internal fun NavHostController.navigateToBottomDestination() {
-
+//function for add bottom destination to top root nav graph and pop auth nav graph from back stack
+internal fun NavHostController.navigateToBottomDestinationWithPopAuthNavGraph() {
+    //navigate to bottom nav graph
     navigate(
         route = BOTTOM_DESTINATION_ROUTE
     ) {
-
+        //pop auth nav graph
         popUpTo(
             route = AUTH_NAV_GRAPH_ROUTE
         ) {
@@ -26,19 +28,20 @@ internal fun NavHostController.navigateToBottomDestination() {
 
     }//end navigate
 
-}//en navigateToBottomDestination
+}//end navigateToBottomDestinationWithPopAuthNavGraph
 
+//function for create bottom destination and add bottom screen to it
 internal fun NavGraphBuilder.bottomDestination(
     navigateToActivityDestination: () -> Unit
 ) {
-
+    //create bottom destination
     composable(
-        route = BOTTOM_DESTINATION_ROUTE,
-        enterTransition = { enterTransitionMain() },
-        exitTransition = { exitTransition() },
-        popEnterTransition = { enterTransitionMain() }
+        route = BOTTOM_DESTINATION_ROUTE,//define bottom destination name
+        enterTransition = { enterTransitionMain() },//define enter transition method
+        exitTransition = { exitTransition() },//define exit transition method
+        popEnterTransition = { enterTransitionMain() }//define pop enter transition method
     ) {
-
+        //add bottom screen to bottom destination
         BottomScreen(
             navigateToActivityDestination = navigateToActivityDestination
         )

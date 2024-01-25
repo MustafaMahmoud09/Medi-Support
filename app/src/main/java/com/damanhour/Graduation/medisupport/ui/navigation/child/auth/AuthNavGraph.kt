@@ -11,8 +11,10 @@ import com.example.auth.uiElement.screens.start.startDestination
 import com.example.auth.uiElement.screens.welcome.welcomeDestination
 import com.google.accompanist.navigation.animation.navigation
 
+//nav graph name
 internal const val AUTH_NAV_GRAPH_ROUTE = "authNavGraph"
 
+//function for create auth nav graph and add destinations to it and define start destination to it
 internal fun NavGraphBuilder.authNavGraph(
     navigateToWelcomeDestination: () -> Unit,
     navigateToLoginNavGraph: () -> Unit,
@@ -25,12 +27,12 @@ internal fun NavGraphBuilder.authNavGraph(
     backToLoginNavGraph: () -> Unit,
     navigateToBottomDestination: () -> Unit
 ) {
-
+    //create auth nav graph
     navigation(
-        route = AUTH_NAV_GRAPH_ROUTE,
-        startDestination = START_DESTINATION_ROUTE
+        route = AUTH_NAV_GRAPH_ROUTE,//define name nav graph
+        startDestination = START_DESTINATION_ROUTE,//define start destination to auth nav graph
     ) {
-
+        //add destinations to auth nav graph
         startDestination(
             navigateToWelcomeDestination = navigateToWelcomeDestination
         )

@@ -14,12 +14,12 @@ import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activityNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.AUTH_NAV_GRAPH_ROUTE
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.authNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.backToLoginNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraphWithPopForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.navigateToForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.popForgotPasswordNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraphWithPopWelcomeDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.bottomDestination
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.navigateToBottomDestination
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.navigateToBottomDestinationWithPopAuthNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToActivityNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.popActivityNavGraph
 import com.example.activity.uiElement.screens.history.navigateToHistoryDestination
@@ -61,15 +61,15 @@ fun RootNavGraph(
 
                 authNavGraph(
                     navigateToWelcomeDestination = navHostController::navigateToWelcomeDestination,
-                    navigateToLoginNavGraph = navHostController::navigateToLoginNavGraph,
+                    navigateToLoginNavGraph = navHostController::navigateToLoginNavGraphWithPopWelcomeDestination,
                     navigateToRegisterDestination = navHostController::navigateToRegisterDestination,
                     popRegisterDestination = navHostController::popRegisterDestination,
                     navigateToForgotPasswordNavGraph = navHostController::navigateToForgotPasswordNavGraph,
                     popForgotPasswordNavGraph = navHostController::popForgotPasswordNavGraph,
                     navigateToCodeDestination = navHostController::navigateToCodeDestination,
                     navigateToNewPasswordDestination = navHostController::navigateToNewPasswordDestination,
-                    backToLoginNavGraph = navHostController::backToLoginNavGraph,
-                    navigateToBottomDestination = navHostController::navigateToBottomDestination
+                    backToLoginNavGraph = navHostController::navigateToLoginNavGraphWithPopForgotPasswordNavGraph,
+                    navigateToBottomDestination = navHostController::navigateToBottomDestinationWithPopAuthNavGraph
                 )
 
                 bottomDestination(

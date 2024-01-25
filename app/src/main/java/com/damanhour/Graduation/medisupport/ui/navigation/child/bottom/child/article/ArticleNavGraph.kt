@@ -15,6 +15,8 @@ import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
+//create object from bottom destination class have icon and title for show in bottom navigation bar and route name
+//child list have child destinations to article nav graph to organize bottom nav graph
 internal val ARTICLE_NAV_GRAPH_DATA = BottomDestination(
     route = "articleNavGraph",
     icon = R.drawable.article,
@@ -25,8 +27,9 @@ internal val ARTICLE_NAV_GRAPH_DATA = BottomDestination(
     )
 )
 
+//function for pop article nav graph from root nav graph
 internal fun NavHostController.popArticleNavGraph() {
-
+    //pop article nav graph
     popBackStack(
         route = ARTICLE_NAV_GRAPH_DATA.route,
         inclusive = true
@@ -34,19 +37,20 @@ internal fun NavHostController.popArticleNavGraph() {
 
 }//end popArticleNavGraph
 
+//function for create article nav graph and add destination to it and define start destination to it
 internal fun NavGraphBuilder.articleNavGraph(
     popArticleNavGraph: () -> Unit,
     navigateToSingleDestination: () -> Unit,
     popSingleArticleDestination: () -> Unit
 ) {
-
+    //create article nav graph
     navigation(
-        route = ARTICLE_NAV_GRAPH_DATA.route,
-        startDestination = ARTICLES_DESTINATION_ROUTE,
-        enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        route = ARTICLE_NAV_GRAPH_DATA.route,//define article nav graph name
+        startDestination = ARTICLES_DESTINATION_ROUTE,//define start destination to article nav graph
+        enterTransition = { enterTransitionZero() },//define enter transition method
+        exitTransition = { exitTransition() }//define exit transition method
     ) {
-
+        //add destinations to article nav graph
         articlesDestination(
             popArticleNavGraph = popArticleNavGraph,
             navigateToSingleDestination = navigateToSingleDestination

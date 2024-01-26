@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.sharedui.R
@@ -15,23 +16,25 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-fun BackButtonView(
+fun IconButtonView(
+    icon: Painter = painterResource(
+        id = R.drawable.back_icon
+    ),
     dimen: CustomDimen,
     theme: CustomTheme,
     onClick: () -> Unit,
+    size: Float = dimen.dimen_3_5,
     tint: Color = theme.black,
     modifier: Modifier = Modifier
 ) {
 
     Icon(
-        painter = painterResource(
-            id = R.drawable.back_icon
-        ),
+        painter = icon,
         tint = tint,
         contentDescription = "back_icon",
         modifier = modifier
             .size(
-                size = dimen.dimen_3_5.dp
+                size = size.dp
             )
             .clickable(
                 interactionSource = remember {

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.R
-import com.example.sharedui.uiElement.components.composable.BackButtonView
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.CropImageView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
@@ -51,7 +51,7 @@ private fun SingleArticleContent(
     ) {
         val (backButtonId, titleId, contentId) = createRefs()
 
-        BackButtonView(
+        IconButtonView(
             dimen = dimen,
             theme = theme,
             onClick = onClickBack,

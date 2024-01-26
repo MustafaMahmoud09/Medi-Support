@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -28,6 +29,8 @@ fun IconTextSection(
     icon: Painter,
     iconSize: Float,
     iconTint: Color,
+    overflow: TextOverflow = TextOverflow.Clip,
+    maxLines: Int = Int.MAX_VALUE,
     modifier: Modifier = Modifier
 ) {
 
@@ -57,6 +60,8 @@ fun IconTextSection(
             text = text,
             fontFamily = fontFamily,
             color = fontColor,
+            overflow = overflow,
+            maxLines = maxLines,
             fontSize = fontSize.sp,
         )
 

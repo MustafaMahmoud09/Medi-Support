@@ -20,8 +20,8 @@ import com.example.setting.R
 import com.example.setting.uiElement.components.items.DeveloperSection
 import com.example.setting.uiElement.components.items.EmailIconSection
 import com.example.setting.uiElement.components.items.FeatureSection
-import com.example.setting.uiElement.components.items.TwoColorTextSection
-import com.example.sharedui.uiElement.components.composable.BackButtonView
+import com.example.setting.uiElement.components.composable.TwoColorTextSection
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.IconTextSection
@@ -56,7 +56,7 @@ private fun AboutContent(
     ) {
         val (backButton, title, content) = createRefs()
 
-        BackButtonView(
+        IconButtonView(
             dimen = dimen,
             theme = theme,
             onClick = onClickBack,

@@ -36,7 +36,7 @@ import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-fun FailedHintSection(
+fun FieldHintSection(
     theme: CustomTheme,
     dimen: CustomDimen,
     title: String,

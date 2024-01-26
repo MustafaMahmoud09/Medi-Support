@@ -21,7 +21,7 @@ import com.example.activity.uiElement.screens.activity.child.BMIScreen
 import com.example.activity.uiElement.screens.activity.child.BloodPressureScreen
 import com.example.activity.uiElement.screens.activity.child.BloodSugarScreen
 import com.example.activity.uiElement.screens.activity.child.HeartRateScreen
-import com.example.sharedui.uiElement.components.composable.BackButtonView
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.items.DropDownMenuPagerSection
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -74,7 +74,7 @@ private fun ActivityContent(
             val guideFromStart25P = createGuidelineFromStart(.25f)
             val guideFromEnd25P = createGuidelineFromEnd(.25f)
 
-            BackButtonView(
+            IconButtonView(
                 dimen = dimen,
                 theme = theme,
                 onClick = onClickBack,

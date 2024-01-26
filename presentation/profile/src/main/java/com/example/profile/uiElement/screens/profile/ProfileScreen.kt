@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,18 +24,17 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.profile.R
 import com.example.profile.uiElement.components.items.UserProfileSection
-import com.example.sharedui.uiElement.components.composable.BackButtonView
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
-import com.example.sharedui.uiElement.components.items.FailedHintSection
+import com.example.sharedui.uiElement.components.items.FieldHintSection
 import com.example.sharedui.uiElement.components.items.TransparentDialogSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun ProfileScreen(
@@ -96,7 +94,7 @@ private fun ProfileContent(
 
         }
 
-        BackButtonView(
+        IconButtonView(
             dimen = dimen,
             theme = theme,
             onClick = onClickBack,
@@ -213,7 +211,7 @@ private fun ProfileContent(
                 key = 1
             ) {
 
-                FailedHintSection(
+                FieldHintSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -234,7 +232,7 @@ private fun ProfileContent(
                 key = 2
             ) {
 
-                FailedHintSection(
+                FieldHintSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -256,7 +254,7 @@ private fun ProfileContent(
                 key = 3
             ) {
 
-                FailedHintSection(
+                FieldHintSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(

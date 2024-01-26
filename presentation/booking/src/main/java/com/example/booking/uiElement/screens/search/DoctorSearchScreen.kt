@@ -1,27 +1,84 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.example.booking.uiElement.screens.search
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import com.example.booking.uiElement.components.items.SearchSection
+import com.example.booking.uiElement.screens.search.child.HomeScreen
+import com.example.booking.uiElement.screens.search.child.SearchScreen
+import com.example.booking.uiElement.screens.search.child.SeeAllDoctorScreen
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import kotlinx.coroutines.launch
 
+//function for collect state and execute action from view model
 @Composable
 internal fun DoctorSearchScreen() {
+    val pagerState = rememberPagerState(initialPage = 0)
+    val coroutineScope = rememberCoroutineScope()
+    var isFocused = rememberSaveable {
+        mutableStateOf(false)
+    }
 
-    DoctorSearchContent()
+    DoctorSearchContent(
+        pagerState = pagerState,
+        onClickSeeAll = {
+            coroutineScope.launch {
+                pagerState.scrollToPage(2)
+            }
+        },
+        onClickBack = {
+            coroutineScope.launch {
+                isFocused.value = false
+                pagerState.scrollToPage(0)
+            }
+        },
+        focusOnSearch = isFocused
+    )
+
+    LaunchedEffect(isFocused.value) {
+        if (isFocused.value) {
+            coroutineScope.launch {
+                pagerState.scrollToPage(1)
+            }
+        }
+    }//end LaunchedEffect
+
 }//end DoctorSearchScreen
 
+//function for observe state and draw components
 @Composable
 private fun DoctorSearchContent(
     theme: CustomTheme = MediSupportAppTheme(),
-    dimen: CustomDimen = MediSupportAppDimen()
+    dimen: CustomDimen = MediSupportAppDimen(),
+    pagerState: PagerState,
+    onClickSeeAll: () -> Unit,
+    onClickBack: () -> Unit,
+    focusOnSearch: MutableState<Boolean>
 ) {
 
+    //create container here
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -29,6 +86,134 @@ private fun DoctorSearchContent(
                 color = theme.background
             )
     ) {
+        //create ids to screen components
+        val (buttonBackId, searchId, reminderButtonId, searchPagerId) = createRefs()
+
+        //create search field here
+        SearchSection(
+            dimen = dimen,
+            theme = theme,
+            key = "",
+            hint = stringResource(
+                com.example.sharedui.R.string.search
+            ),
+            onChange = {},
+            onFocus = focusOnSearch,
+            modifier = Modifier
+                .constrainAs(searchId) {
+                    start.linkTo(
+                        parent.start,
+                        //if exist in page 0
+                        if (pagerState.currentPage == 0) {
+                            dimen.dimen_2.dp
+                        }//end if
+                        //if exist in page 1 or 2
+                        else {
+                            dimen.dimen_6_25.dp
+                        }//end else
+                    )
+                    end.linkTo(
+                        parent.end,
+                        dimen.dimen_6_25.dp
+                    )
+                    top.linkTo(
+                        parent.top,
+                        dimen.dimen_2_5.dp
+                    )
+                    width = Dimension.fillToConstraints
+                }
+        )
+
+        //create back button here
+        IconButtonView(
+            dimen = dimen,
+            theme = theme,
+            onClick = onClickBack,
+            size =
+            /**if exist in page 0**/
+            if (pagerState.currentPage == 0) {
+                dimen.dimen_0
+            }
+            /**if exist in page 1 or 2**/
+            else {
+                dimen.dimen_3_5
+            },
+            modifier = Modifier
+                .constrainAs(buttonBackId) {
+                    start.linkTo(
+                        parent.start,
+                        dimen.dimen_2.dp
+                    )
+                    top.linkTo(searchId.top)
+                    bottom.linkTo(searchId.bottom)
+                }
+        )
+
+        //create reminder button here
+        IconButtonView(
+            icon = painterResource(
+                id = com.example.sharedui.R.drawable.reminder_icon
+            ),
+            dimen = dimen,
+            theme = theme,
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .constrainAs(reminderButtonId) {
+                    end.linkTo(
+                        parent.end,
+                        dimen.dimen_2.dp
+                    )
+                    top.linkTo(searchId.top)
+                    bottom.linkTo(searchId.bottom)
+                }
+        )
+
+        //create horizontal pager here
+        HorizontalPager(
+            state = pagerState,
+            pageCount = 3,
+            userScrollEnabled = false,
+            modifier = Modifier
+                .constrainAs(searchPagerId) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(searchId.bottom)
+                    bottom.linkTo(parent.bottom)
+                    height = Dimension.fillToConstraints
+                    width = Dimension.fillToConstraints
+                }//end constrainAs
+        ) { page ->
+            //condition for show pages
+            when (page) {
+                //if page is 0 show home screen
+                0 -> {
+
+                    HomeScreen(
+                        dimen = dimen,
+                        theme = theme,
+                        onClickSeeAll = onClickSeeAll
+                    )
+                }//end case
+                //if page is 1 show search screen
+                1 -> {
+
+                    SearchScreen(
+                        dimen = dimen,
+                        theme = theme
+                    )
+                }//end case
+                //if page is 2 show see all doctor screen
+                2 -> {
+
+                    SeeAllDoctorScreen(
+                        dimen = dimen,
+                        theme = theme
+                    )
+                }//end case
+
+            }//end when
+
+        }//end HorizontalPager
 
     }//end ConstraintLayout
 

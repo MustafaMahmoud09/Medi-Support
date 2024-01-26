@@ -23,7 +23,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.setting.R
 import com.example.setting.uiElement.components.items.CancelDialogSection
-import com.example.sharedui.uiElement.components.composable.BackButtonView
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.EndIconButtonSection
 import com.example.sharedui.uiElement.components.items.HorizontalIconButtonSection
@@ -112,7 +112,7 @@ private fun MoreContent(
 
         }//end AnimatedVisibility
 
-        BackButtonView(
+        IconButtonView(
             dimen = dimen,
             theme = theme,
             onClick = onClickBack,

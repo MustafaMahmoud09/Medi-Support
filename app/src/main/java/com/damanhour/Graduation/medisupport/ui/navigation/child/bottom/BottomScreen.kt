@@ -59,7 +59,16 @@ internal fun BottomScreen(
     BottomContent(
         navHostController = navHostController,
         items = items,
-        navigateToActivityDestination = navigateToActivityDestination
+        navigateToActivityDestination = navigateToActivityDestination,
+        popProfileDestination = navHostController::popProfileDestination,
+        popMoreNavGraph = navHostController::popMoreNavGraph,
+        navigateToAboutDestination = navHostController::navigateToAboutDestination,
+        navigateToContactUsDestination = navHostController::navigateToContactUsDestination,
+        popAboutDestination = navHostController::popAboutDestination,
+        popContactUsDestination = navHostController::popContactUsDestination,
+        popArticleNavGraph = navHostController::popArticleNavGraph,
+        navigateToSingleDestination = navHostController::navigateToSingleDestination,
+        popSingleArticleDestination = navHostController::popSingleArticleDestination
     )
 }//end BottomScreen
 
@@ -70,7 +79,16 @@ private fun BottomContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     navHostController: NavHostController,
     items: List<BottomDestination>,
-    navigateToActivityDestination: () -> Unit
+    navigateToActivityDestination: () -> Unit,
+    popProfileDestination: () -> Unit,
+    popMoreNavGraph: () -> Unit,
+    navigateToAboutDestination: () -> Unit,
+    navigateToContactUsDestination: () -> Unit,
+    popAboutDestination: () -> Unit,
+    popContactUsDestination: () -> Unit,
+    popArticleNavGraph: () -> Unit,
+    navigateToSingleDestination: () -> Unit,
+    popSingleArticleDestination: () -> Unit
 ) {
 
     BaseScreen(
@@ -130,15 +148,15 @@ private fun BottomContent(
 
                 BottomNavGraph(
                     navHostController = navHostController,
-                    popProfileDestination = navHostController::popProfileDestination,
-                    popMoreNavGraph = navHostController::popMoreNavGraph,
-                    navigateToAboutDestination = navHostController::navigateToAboutDestination,
-                    navigateToContactUsDestination = navHostController::navigateToContactUsDestination,
-                    popAboutDestination = navHostController::popAboutDestination,
-                    popContactUsDestination = navHostController::popContactUsDestination,
-                    popArticleNavGraph = navHostController::popArticleNavGraph,
-                    navigateToSingleDestination = navHostController::navigateToSingleDestination,
-                    popSingleArticleDestination = navHostController::popSingleArticleDestination
+                    popProfileDestination = popProfileDestination,
+                    popMoreNavGraph = popMoreNavGraph,
+                    navigateToAboutDestination = navigateToAboutDestination,
+                    navigateToContactUsDestination = navigateToContactUsDestination,
+                    popAboutDestination = popAboutDestination,
+                    popContactUsDestination = popContactUsDestination,
+                    popArticleNavGraph = popArticleNavGraph,
+                    navigateToSingleDestination = navigateToSingleDestination,
+                    popSingleArticleDestination = popSingleArticleDestination
                 )
 
             }//end Box

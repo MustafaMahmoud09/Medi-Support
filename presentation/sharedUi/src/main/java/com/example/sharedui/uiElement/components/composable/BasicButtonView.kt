@@ -25,6 +25,7 @@ fun BasicButtonView(
     color: Color = theme.redDark,
     onClick: () -> Unit,
     fontSize: Float = dimen.dimen_2_25,
+    roundSize: Float = dimen.dimen_1_25,
     modifier: Modifier = Modifier
 ) {
 
@@ -36,7 +37,7 @@ fun BasicButtonView(
             )
             .clip(
                 shape = RoundedCornerShape(
-                    dimen.dimen_1_25.dp
+                    roundSize.dp
                 )
             )
             .background(

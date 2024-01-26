@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.robotoMedium
@@ -16,6 +17,8 @@ fun TextSemiBoldView(
     dimen: CustomDimen,
     text: String,
     size: Float,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
     textAlign: TextAlign? = null,
     fontColor: Color = theme.black,
     modifier: Modifier = Modifier
@@ -27,6 +30,8 @@ fun TextSemiBoldView(
         color = fontColor,
         fontFamily = robotoMedium,
         modifier = modifier,
-        textAlign = textAlign
+        textAlign = textAlign,
+        overflow = overflow,
+        maxLines = maxLines
     )
 }//end TextSemiBoldBlackView

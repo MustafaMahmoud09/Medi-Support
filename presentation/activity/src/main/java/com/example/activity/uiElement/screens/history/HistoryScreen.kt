@@ -19,7 +19,7 @@ import com.example.activity.uiElement.screens.history.child.BMIHistoryScreen
 import com.example.activity.uiElement.screens.history.child.BloodPressureHistoryScreen
 import com.example.activity.uiElement.screens.history.child.BloodSugarHistoryScreen
 import com.example.activity.uiElement.screens.history.child.HeartRateHistoryScreen
-import com.example.sharedui.uiElement.components.composable.BackButtonView
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.DropDownMenuPagerSection
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -65,7 +65,7 @@ private fun HistoryContent(
             val (backButtonId, titleId, dropDownMenuId, historyPageId) = createRefs()
             val guideFromStart156DP = createGuidelineFromStart(dimen.dimen_21_5.dp)
 
-            BackButtonView(
+            IconButtonView(
                 dimen = dimen,
                 theme = theme,
                 onClick = onClickBack,

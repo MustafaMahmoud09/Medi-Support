@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.AUTH_NAV_GRAPH_ROUTE
 import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -37,9 +38,9 @@ internal fun NavGraphBuilder.bottomDestination(
     //create bottom destination
     composable(
         route = BOTTOM_DESTINATION_ROUTE,//define bottom destination name
-        enterTransition = { enterTransitionMain() },//define enter transition method
+        enterTransition = { enterTransitionZero() },//define enter transition method
         exitTransition = { exitTransition() },//define exit transition method
-        popEnterTransition = { enterTransitionMain() }//define pop enter transition method
+        popEnterTransition = { enterTransitionZero() }//define pop enter transition method
     ) {
         //add bottom screen to bottom destination
         BottomScreen(

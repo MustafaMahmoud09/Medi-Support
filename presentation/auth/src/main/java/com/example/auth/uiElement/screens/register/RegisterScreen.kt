@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -21,7 +20,7 @@ import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalRedView
-import com.example.sharedui.uiElement.components.items.FailedHintSection
+import com.example.sharedui.uiElement.components.items.FieldHintSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -82,7 +81,7 @@ private fun RegisterContent(
                     }
             )
 
-            FailedHintSection(
+            FieldHintSection(
                 theme = theme,
                 dimen = dimen,
                 title = stringResource(
@@ -111,7 +110,7 @@ private fun RegisterContent(
                     }
             )
 
-            FailedHintSection(
+            FieldHintSection(
                 theme = theme,
                 dimen = dimen,
                 title = stringResource(
@@ -140,7 +139,7 @@ private fun RegisterContent(
                     }
             )
 
-            FailedHintSection(
+            FieldHintSection(
                 theme = theme,
                 dimen = dimen,
                 title = stringResource(
@@ -169,7 +168,7 @@ private fun RegisterContent(
                     }
             )
 
-            FailedHintSection(
+            FieldHintSection(
                 theme = theme,
                 dimen = dimen,
                 title = stringResource(

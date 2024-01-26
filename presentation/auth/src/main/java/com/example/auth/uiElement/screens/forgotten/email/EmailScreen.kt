@@ -2,7 +2,6 @@ package com.example.auth.uiElement.screens.forgotten.email
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.auth.R
-import com.example.sharedui.uiElement.components.composable.BackButtonView
+import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
-import com.example.sharedui.uiElement.components.items.FailedHintSection
+import com.example.sharedui.uiElement.components.items.FieldHintSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -59,7 +58,7 @@ private fun EmailContent(
             val (backButton, title, message, emailFailed, sendButton) = createRefs()
             val guideLineFromEnd44DP = createGuidelineFromEnd(dimen.dimen_5_5.dp)
 
-            BackButtonView(
+            IconButtonView(
                 dimen = dimen,
                 theme = theme,
                 onClick = onClickBack,
@@ -125,7 +124,7 @@ private fun EmailContent(
                     }
             )
 
-            FailedHintSection(
+            FieldHintSection(
                 theme = theme,
                 dimen = dimen,
                 title = stringResource(R.string.email_address),

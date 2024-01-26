@@ -48,4 +48,15 @@
     <string name="the_account_will_be_completely_deleted">The Account will be completely deleted</string>
     <string name="delete">Delete</string>
     <string name="read_now">Read Now</string>
+    <string name="search">Search</string>
+    <string name="smart_health_metrics">Smart Health Metrics</string>
+    <string name="predicting_heart_disease_using_artificial_intelligence">Predicting Heart disease using artificial intelligence</string>
+    <string name="artificial">artificial</string>
+    <string name="intell">intell</string>
+    <string name="igence">igence</string>
+    <string name="record_now">Record Now</string>
+    <string name="weight_and_tall">Weight and tall</string>
+    <string name="book_now">Book Now</string>
+    <string name="top_doctors">Top Doctors</string>
+    <string name="all_doctors">All Doctors</string>
 </resources>

@@ -10,16 +10,12 @@ import com.google.accompanist.navigation.animation.composable
 
 const val RECORD_HEART_PREDICTION_DESTINATION_ROUTE = "recordHeartPredictionDestination"
 
-fun NavGraphBuilder.recordHeartPredictionDestination(
-    navHostController: NavHostController
-) {
+fun NavGraphBuilder.recordHeartPredictionDestination() {
 
     composable(
         route = RECORD_HEART_PREDICTION_DESTINATION_ROUTE
     ) {
 
-        RecordHeartPredictionScreen(
-            navHostController = navHostController
-        )
+        RecordHeartPredictionScreen()
     }
 }//end recordHeartPredictionDestination

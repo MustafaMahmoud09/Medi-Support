@@ -45,7 +45,8 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @Composable
 internal fun BottomScreen(
     navHostController: NavHostController = rememberAnimatedNavController(),
-    navigateToActivityDestination: () -> Unit
+    navigateToActivityDestination: () -> Unit,
+    navigateToHeartPredictionNavGraph: () -> Unit
 ) {
 
     val items = listOf(
@@ -68,7 +69,8 @@ internal fun BottomScreen(
         popContactUsDestination = navHostController::popContactUsDestination,
         popArticleNavGraph = navHostController::popArticleNavGraph,
         navigateToSingleDestination = navHostController::navigateToSingleDestination,
-        popSingleArticleDestination = navHostController::popSingleArticleDestination
+        popSingleArticleDestination = navHostController::popSingleArticleDestination,
+        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
     )
 }//end BottomScreen
 
@@ -88,7 +90,8 @@ private fun BottomContent(
     popContactUsDestination: () -> Unit,
     popArticleNavGraph: () -> Unit,
     navigateToSingleDestination: () -> Unit,
-    popSingleArticleDestination: () -> Unit
+    popSingleArticleDestination: () -> Unit,
+    navigateToHeartPredictionNavGraph: () -> Unit
 ) {
 
     BaseScreen(
@@ -156,7 +159,8 @@ private fun BottomContent(
                     popContactUsDestination = popContactUsDestination,
                     popArticleNavGraph = popArticleNavGraph,
                     navigateToSingleDestination = navigateToSingleDestination,
-                    popSingleArticleDestination = popSingleArticleDestination
+                    popSingleArticleDestination = popSingleArticleDestination,
+                    navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
                 )
 
             }//end Box

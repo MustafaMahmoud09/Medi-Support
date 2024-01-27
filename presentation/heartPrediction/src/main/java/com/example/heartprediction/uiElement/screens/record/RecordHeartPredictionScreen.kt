@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 
 @Composable
-internal fun RecordHeartPredictionScreen(
-    navHostController: NavHostController
-) {
+internal fun RecordHeartPredictionScreen() {
 
     RecordHeartPredictionContent()
 }//end RecordHeartPredictionScreen

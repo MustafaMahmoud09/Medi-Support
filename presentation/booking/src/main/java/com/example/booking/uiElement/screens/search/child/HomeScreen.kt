@@ -29,14 +29,16 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 internal fun HomeScreen(
     dimen: CustomDimen,
     theme: CustomTheme,
-    onClickSeeAll: () -> Unit
+    onClickSeeAll: () -> Unit,
+    navigateToHeartPredictionNavGraph: () -> Unit
 ) {
 
     //call home content function
     HomeContent(
         dimen = dimen,
         theme = theme,
-        onClickSeeAll = onClickSeeAll
+        onClickSeeAll = onClickSeeAll,
+        onClickHeartPrediction = navigateToHeartPredictionNavGraph
     )
 }//end HomeScreen
 
@@ -45,7 +47,8 @@ internal fun HomeScreen(
 private fun HomeContent(
     dimen: CustomDimen,
     theme: CustomTheme,
-    onClickSeeAll: () -> Unit
+    onClickSeeAll: () -> Unit,
+    onClickHeartPrediction: () -> Unit
 ) {
     //create lazy column here
     LazyColumn(
@@ -122,7 +125,7 @@ private fun HomeContent(
                 buttonContent = stringResource(
                     com.example.sharedui.R.string.record_now
                 ),
-                onClick = { /*TODO*/ },
+                onClick = onClickHeartPrediction,
                 modifier = Modifier
                     .fillMaxWidth()
             )

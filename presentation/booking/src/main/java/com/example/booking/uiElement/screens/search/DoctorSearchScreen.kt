@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 
 package com.example.booking.uiElement.screens.search
 
@@ -11,11 +11,14 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,12 +37,16 @@ import kotlinx.coroutines.launch
 
 //function for collect state and execute action from view model
 @Composable
-internal fun DoctorSearchScreen() {
+internal fun DoctorSearchScreen(
+    navigateToHeartPredictionNavGraph: () -> Unit
+) {
     val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
-    var isFocused = rememberSaveable {
+    val isFocused = rememberSaveable {
         mutableStateOf(false)
     }
+    val focusRequester = remember { FocusRequester() }
+    val keyword = LocalSoftwareKeyboardController.current
 
     DoctorSearchContent(
         pagerState = pagerState,
@@ -47,21 +54,30 @@ internal fun DoctorSearchScreen() {
             coroutineScope.launch {
                 pagerState.scrollToPage(2)
             }
-        },
+        },//end onClickSeeAll
         onClickBack = {
             coroutineScope.launch {
-                isFocused.value = false
+                if (pagerState.currentPage == 1) {
+                    isFocused.value = false
+                }
                 pagerState.scrollToPage(0)
             }
-        },
-        focusOnSearch = isFocused
+        },//end onClickBack
+        focusOnSearch = isFocused,
+        focusRequester = focusRequester,
+        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
     )
 
     LaunchedEffect(isFocused.value) {
+        //if value equal true scroll to search screen
         if (isFocused.value) {
             coroutineScope.launch {
                 pagerState.scrollToPage(1)
             }
+        }//end if
+        //if value equal false delete focus on search input
+        else {
+            keyword?.hide()
         }
     }//end LaunchedEffect
 
@@ -75,7 +91,9 @@ private fun DoctorSearchContent(
     pagerState: PagerState,
     onClickSeeAll: () -> Unit,
     onClickBack: () -> Unit,
-    focusOnSearch: MutableState<Boolean>
+    focusOnSearch: MutableState<Boolean>,
+    focusRequester: FocusRequester,
+    navigateToHeartPredictionNavGraph: () -> Unit
 ) {
 
     //create container here
@@ -99,6 +117,7 @@ private fun DoctorSearchContent(
             ),
             onChange = {},
             onFocus = focusOnSearch,
+            focusRequester = focusRequester,
             modifier = Modifier
                 .constrainAs(searchId) {
                     start.linkTo(
@@ -191,7 +210,8 @@ private fun DoctorSearchContent(
                     HomeScreen(
                         dimen = dimen,
                         theme = theme,
-                        onClickSeeAll = onClickSeeAll
+                        onClickSeeAll = onClickSeeAll,
+                        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
                     )
                 }//end case
                 //if page is 1 show search screen

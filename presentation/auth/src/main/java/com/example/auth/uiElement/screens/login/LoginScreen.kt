@@ -8,8 +8,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -118,6 +122,7 @@ private fun LoginContent(
             )
         ) {
 
+
             ConstraintLayout(
                 modifier = Modifier
                     .safeDrawingPadding()
@@ -126,9 +131,7 @@ private fun LoginContent(
                         color = theme.background
                     )
             ) {
-                val (loginTitle, emailFailed, passwordFailed, textPermission, rememberSection,
-                    forgotPassword, loginButton, googleButton, facebookButton, line, donHaveAccount
-                ) = createRefs()
+                val (loginTitle, container) = createRefs()
 
                 TextBoldView(
                     theme = theme,
@@ -150,266 +153,302 @@ private fun LoginContent(
                         }
                 )
 
-                FieldHintSection(
-                    theme = theme,
-                    dimen = dimen,
-                    title = stringResource(
-                        R.string.email_address
-                    ),
-                    hint = stringResource(
-                        R.string.your_email
-                    ),
-                    value = "",
-                    onChange = {},
+                LazyColumn(
                     modifier = Modifier
-                        .constrainAs(emailFailed) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
-                            )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
+                        .constrainAs(container) {
                             top.linkTo(
                                 loginTitle.bottom,
-                                dimen.dimen_3.dp
+                                dimen.dimen_2.dp
                             )
+                            bottom.linkTo(
+                                parent.bottom
+                            )
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
                             width = Dimension.fillToConstraints
-                        }
-                )
+                            height = Dimension.fillToConstraints
+                        },
+                    contentPadding = PaddingValues(
+                        bottom = dimen.dimen_2.dp,
+                        top = dimen.dimen_1.dp
+                    )
+                ) {
 
-                FieldHintSection(
-                    theme = theme,
-                    dimen = dimen,
-                    title = stringResource(
-                        com.example.sharedui.R.string.password
-                    ),
-                    hint = stringResource(
-                        com.example.sharedui.R.string.your_password
-                    ),
-                    value = "",
-                    password = true,
-                    onChange = {},
-                    modifier = Modifier
-                        .constrainAs(passwordFailed) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
-                            )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
-                            top.linkTo(
-                                emailFailed.bottom,
-                                dimen.dimen_2.dp
-                            )
-                            width = Dimension.fillToConstraints
-                        }
-                )
+                    item(
+                        key = 1
+                    ) {
 
-                TextNormalGrayDarkView(
-                    theme = theme,
-                    dimen = dimen,
-                    text = stringResource(
-                        R.string.login_permission_text
-                    ),
-                    size = dimen.dimen_1_5,
-                    modifier = Modifier
-                        .constrainAs(textPermission) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
-                            )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
-                            top.linkTo(
-                                passwordFailed.bottom,
-                                dimen.dimen_1.dp
-                            )
-                            width = Dimension.fillToConstraints
-                        }
-                )
+                        ConstraintLayout(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            val (emailFailed, passwordFailed, textPermission, rememberSection,
+                                forgotPassword, loginButton, googleButton, facebookButton, line, donHaveAccount
+                            ) = createRefs()
 
-                RememberSection(
-                    dimen = dimen,
-                    theme = theme,
-                    fontColor = theme.redIcon,
-                    checked = false,
-                    onCheckedChange = {},
-                    modifier = Modifier
-                        .constrainAs(rememberSection) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
+                            FieldHintSection(
+                                theme = theme,
+                                dimen = dimen,
+                                title = stringResource(
+                                    R.string.email_address
+                                ),
+                                hint = stringResource(
+                                    R.string.your_email
+                                ),
+                                value = "",
+                                onChange = {},
+                                modifier = Modifier
+                                    .constrainAs(emailFailed) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(parent.top)
+                                        width = Dimension.fillToConstraints
+                                    }
                             )
-                            top.linkTo(
-                                textPermission.bottom,
-                                dimen.dimen_2.dp
-                            )
-                        }
-                )
 
-                TextNormalRedView(
-                    theme = theme,
-                    dimen = dimen,
-                    text = stringResource(
-                        R.string.forgot_password
-                    ),
-                    fontColor = theme.redMedium,
-                    size = dimen.dimen_1_75,
-                    modifier = Modifier
-                        .constrainAs(forgotPassword) {
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
+                            FieldHintSection(
+                                theme = theme,
+                                dimen = dimen,
+                                title = stringResource(
+                                    com.example.sharedui.R.string.password
+                                ),
+                                hint = stringResource(
+                                    com.example.sharedui.R.string.your_password
+                                ),
+                                value = "",
+                                password = true,
+                                onChange = {},
+                                modifier = Modifier
+                                    .constrainAs(passwordFailed) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            emailFailed.bottom,
+                                            dimen.dimen_2.dp
+                                        )
+                                        width = Dimension.fillToConstraints
+                                    }
                             )
-                            top.linkTo(rememberSection.top)
-                            bottom.linkTo(rememberSection.bottom)
-                        }
-                        .clickable(
-                            interactionSource = remember {
-                                MutableInteractionSource()
-                            },
-                            indication = null
-                        ) { onClickForgotPassword() }
-                )
 
-                BasicButtonView(
-                    dimen = dimen,
-                    theme = theme,
-                    text = stringResource(
-                        id = R.string.log_in
-                    ),
-                    onClick = onClickLogin,
-                    fontSize = dimen.dimen_2_5,
-                    modifier = Modifier
-                        .constrainAs(loginButton) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
+                            TextNormalGrayDarkView(
+                                theme = theme,
+                                dimen = dimen,
+                                text = stringResource(
+                                    R.string.login_permission_text
+                                ),
+                                size = dimen.dimen_1_5,
+                                modifier = Modifier
+                                    .constrainAs(textPermission) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            passwordFailed.bottom,
+                                            dimen.dimen_1.dp
+                                        )
+                                        width = Dimension.fillToConstraints
+                                    }
                             )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
-                            top.linkTo(
-                                rememberSection.bottom,
-                                dimen.dimen_2.dp
-                            )
-                            width = Dimension.fillToConstraints
-                        }
-                )
 
-                IconStartButtonView(
-                    theme = theme,
-                    dimen = dimen,
-                    icon = painterResource(
-                        id = R.drawable.google
-                    ),
-                    text = stringResource(
-                        R.string.log_in_with_google
-                    ),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .constrainAs(googleButton) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
+                            RememberSection(
+                                dimen = dimen,
+                                theme = theme,
+                                fontColor = theme.redIcon,
+                                checked = false,
+                                onCheckedChange = {},
+                                modifier = Modifier
+                                    .constrainAs(rememberSection) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            textPermission.bottom,
+                                            dimen.dimen_2.dp
+                                        )
+                                    }
                             )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
-                            top.linkTo(
-                                loginButton.bottom,
-                                dimen.dimen_5.dp
-                            )
-                            width = Dimension.fillToConstraints
-                        }
-                )
 
-                IconStartButtonView(
-                    theme = theme,
-                    dimen = dimen,
-                    icon = painterResource(
-                        id = R.drawable.facebook
-                    ),
-                    text = stringResource(
-                        R.string.log_in_with_facebook
-                    ),
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .constrainAs(facebookButton) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
+                            TextNormalRedView(
+                                theme = theme,
+                                dimen = dimen,
+                                text = stringResource(
+                                    R.string.forgot_password
+                                ),
+                                fontColor = theme.redMedium,
+                                size = dimen.dimen_1_75,
+                                modifier = Modifier
+                                    .constrainAs(forgotPassword) {
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(rememberSection.top)
+                                        bottom.linkTo(rememberSection.bottom)
+                                    }
+                                    .clickable(
+                                        interactionSource = remember {
+                                            MutableInteractionSource()
+                                        },
+                                        indication = null
+                                    ) { onClickForgotPassword() }
                             )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
-                            top.linkTo(
-                                googleButton.bottom,
-                                dimen.dimen_2.dp
-                            )
-                            width = Dimension.fillToConstraints
-                        }
-                )
 
-                LineView(
-                    dimen = dimen,
-                    theme = theme,
-                    modifier = Modifier
-                        .constrainAs(line) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
+                            BasicButtonView(
+                                dimen = dimen,
+                                theme = theme,
+                                text = stringResource(
+                                    id = R.string.log_in
+                                ),
+                                onClick = onClickLogin,
+                                fontSize = dimen.dimen_2_5,
+                                modifier = Modifier
+                                    .constrainAs(loginButton) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            rememberSection.bottom,
+                                            dimen.dimen_2.dp
+                                        )
+                                        width = Dimension.fillToConstraints
+                                    }
                             )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
-                            top.linkTo(
-                                facebookButton.bottom,
-                                dimen.dimen_4_5.dp
-                            )
-                            width = Dimension.fillToConstraints
-                        }
-                )
 
-                MultiTextColorSection(
-                    theme = theme,
-                    dimen = dimen,
-                    textOne = stringResource(
-                        R.string.don_t_have_account
-                    ),
-                    textTwo = stringResource(
-                        R.string.sign_up
-                    ),
-                    colorOne = theme.black,
-                    colorTwo = theme.redDark,
-                    onClick = onClickCreateAccount,
-                    modifier = Modifier
-                        .constrainAs(donHaveAccount) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
+                            IconStartButtonView(
+                                theme = theme,
+                                dimen = dimen,
+                                icon = painterResource(
+                                    id = R.drawable.google
+                                ),
+                                text = stringResource(
+                                    R.string.log_in_with_google
+                                ),
+                                onClick = { /*TODO*/ },
+                                modifier = Modifier
+                                    .constrainAs(googleButton) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            loginButton.bottom,
+                                            dimen.dimen_5.dp
+                                        )
+                                        width = Dimension.fillToConstraints
+                                    }
                             )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
+
+                            IconStartButtonView(
+                                theme = theme,
+                                dimen = dimen,
+                                icon = painterResource(
+                                    id = R.drawable.facebook
+                                ),
+                                text = stringResource(
+                                    R.string.log_in_with_facebook
+                                ),
+                                onClick = { /*TODO*/ },
+                                modifier = Modifier
+                                    .constrainAs(facebookButton) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            googleButton.bottom,
+                                            dimen.dimen_2.dp
+                                        )
+                                        width = Dimension.fillToConstraints
+                                    }
                             )
-                            top.linkTo(
-                                line.bottom,
-                                dimen.dimen_4_5.dp
+
+                            LineView(
+                                dimen = dimen,
+                                theme = theme,
+                                modifier = Modifier
+                                    .constrainAs(line) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            facebookButton.bottom,
+                                            dimen.dimen_5.dp
+                                        )
+                                        width = Dimension.fillToConstraints
+                                    }
                             )
-                            width = Dimension.fillToConstraints
-                        }
-                )
+
+                            MultiTextColorSection(
+                                theme = theme,
+                                dimen = dimen,
+                                textOne = stringResource(
+                                    R.string.don_t_have_account
+                                ),
+                                textTwo = stringResource(
+                                    R.string.sign_up
+                                ),
+                                colorOne = theme.black,
+                                colorTwo = theme.redDark,
+                                onClick = onClickCreateAccount,
+                                modifier = Modifier
+                                    .constrainAs(donHaveAccount) {
+                                        start.linkTo(
+                                            parent.start,
+                                            dimen.dimen_2.dp
+                                        )
+                                        end.linkTo(
+                                            parent.end,
+                                            dimen.dimen_2.dp
+                                        )
+                                        top.linkTo(
+                                            line.bottom,
+                                            dimen.dimen_4_5.dp
+                                        )
+                                        width = Dimension.fillToConstraints
+                                    }
+                            )
+
+                        }//end ConstraintLayout
+
+                    }//end item
+
+                }//end LazyColumn
 
             }//end ConstraintLayout
 

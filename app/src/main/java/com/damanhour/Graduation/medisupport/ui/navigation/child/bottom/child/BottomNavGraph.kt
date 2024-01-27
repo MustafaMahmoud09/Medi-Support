@@ -23,7 +23,8 @@ internal fun BottomNavGraph(
     popContactUsDestination: () -> Unit,
     popArticleNavGraph: () -> Unit,
     navigateToSingleDestination: () -> Unit,
-    popSingleArticleDestination: () -> Unit
+    popSingleArticleDestination: () -> Unit,
+    navigateToHeartPredictionNavGraph: () -> Unit
 ) {
 
     AnimatedNavHost(
@@ -31,7 +32,9 @@ internal fun BottomNavGraph(
         startDestination = HOME_VAV_GRAPH_DATA.route
     ) {
 
-        homeNavGraph()
+        homeNavGraph(
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+        )
 
         articleNavGraph(
             popArticleNavGraph = popArticleNavGraph,

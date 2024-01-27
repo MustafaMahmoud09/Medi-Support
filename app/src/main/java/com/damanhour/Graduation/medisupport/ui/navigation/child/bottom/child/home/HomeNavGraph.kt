@@ -41,7 +41,9 @@ internal fun NavHostController.popHomeNavGraph() {
 }//end popHomeNavGraph
 
 //function for create home nav graph and add destination to it and define start destination to it
-internal fun NavGraphBuilder.homeNavGraph() {
+internal fun NavGraphBuilder.homeNavGraph(
+    navigateToHeartPredictionNavGraph: () -> Unit
+) {
     //create home nav graph
     navigation(
         route = HOME_VAV_GRAPH_DATA.route,//define home nav graph name
@@ -50,7 +52,9 @@ internal fun NavGraphBuilder.homeNavGraph() {
         exitTransition = { exitTransition() }//define exit transition method
     ) {
         //add destinations to home nav graph
-        doctorSearchDestination()
+        doctorSearchDestination(
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+        )
 
         addReminderDestination()
 

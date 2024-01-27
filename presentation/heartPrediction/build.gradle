@@ -39,6 +39,9 @@ android {
 
 dependencies {
 
+    //project
+    implementation(project(':presentation:sharedUi'))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
@@ -58,4 +61,8 @@ dependencies {
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+
+    //material 3
+    implementation "androidx.compose.material3:material3:$material3_versoin"
+
 }

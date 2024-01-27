@@ -6,7 +6,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.AUTH_NAV_GRAPH_ROUTE
-import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
 import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
@@ -33,7 +32,8 @@ internal fun NavHostController.navigateToBottomDestinationWithPopAuthNavGraph() 
 
 //function for create bottom destination and add bottom screen to it
 internal fun NavGraphBuilder.bottomDestination(
-    navigateToActivityDestination: () -> Unit
+    navigateToActivityDestination: () -> Unit,
+    navigateToHeartPredictionNavGraph: () -> Unit
 ) {
     //create bottom destination
     composable(
@@ -44,7 +44,8 @@ internal fun NavGraphBuilder.bottomDestination(
     ) {
         //add bottom screen to bottom destination
         BottomScreen(
-            navigateToActivityDestination = navigateToActivityDestination
+            navigateToActivityDestination = navigateToActivityDestination,
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
         )
     }//end composable
 

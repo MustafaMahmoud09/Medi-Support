@@ -204,14 +204,19 @@ private fun WelcomeContent(
                 modifier = Modifier.constrainAs(footer) {
                     start.linkTo(parent.start)
                     end.linkTo(pager.end)
-                    top.linkTo(tabLayout.bottom)
+                    top.linkTo(
+                        tabLayout.bottom,
+                        dimen.dimen_1.dp
+                    )
+                    bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
                 },
                 contentPadding = PaddingValues(
                     start = dimen.dimen_2.dp,
                     end = dimen.dimen_2.dp,
                     bottom = dimen.dimen_2.dp,
-                    top = dimen.dimen_3.dp
+                    top = dimen.dimen_2.dp
                 ),
                 verticalArrangement = Arrangement.spacedBy(
                     space = dimen.dimen_3_5.dp

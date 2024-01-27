@@ -20,8 +20,11 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgo
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraphWithPopWelcomeDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.bottomDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.navigateToBottomDestinationWithPopAuthNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.heartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToHeartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.popActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredictionNavGraph
 import com.example.activity.uiElement.screens.history.navigateToHistoryDestination
 import com.example.activity.uiElement.screens.history.popHistoryDestination
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
@@ -73,13 +76,18 @@ fun RootNavGraph(
                 )
 
                 bottomDestination(
-                    navigateToActivityDestination = navHostController::navigateToActivityNavGraph
+                    navigateToActivityDestination = navHostController::navigateToActivityNavGraph,
+                    navigateToHeartPredictionNavGraph = navHostController::navigateToHeartPredictionNavGraph
                 )
 
                 activityNavGraph(
                     popActivityNavGraph = navHostController::popActivityNavGraph,
                     popHistoryDestination = navHostController::popHistoryDestination,
                     navigateToHistoryDestination = navHostController::navigateToHistoryDestination
+                )
+
+                heartPredictionNavGraph(
+                    popHeartPredictionNavGraph = navHostController::popHeartPredictionNavGraph
                 )
 
             }//end AnimatedNavHost

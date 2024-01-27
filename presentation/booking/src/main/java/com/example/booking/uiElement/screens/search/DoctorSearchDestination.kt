@@ -12,7 +12,9 @@ import com.google.accompanist.navigation.animation.composable
 const val DOCTOR_SEARCH_DESTINATION_ROUTE = "doctorSearchDestination"
 
 //function for create doctor search destination and add doctor search screen to it
-fun NavGraphBuilder.doctorSearchDestination() {
+fun NavGraphBuilder.doctorSearchDestination(
+    navigateToHeartPredictionNavGraph: () -> Unit
+) {
     //create doctor search destination
     composable(
         route = DOCTOR_SEARCH_DESTINATION_ROUTE,
@@ -20,7 +22,9 @@ fun NavGraphBuilder.doctorSearchDestination() {
         exitTransition = { exitTransition() }
     ) {
         //add doctor search screen to doctor search destination
-        DoctorSearchScreen()
+        DoctorSearchScreen(
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+        )
 
     }//end composable
 

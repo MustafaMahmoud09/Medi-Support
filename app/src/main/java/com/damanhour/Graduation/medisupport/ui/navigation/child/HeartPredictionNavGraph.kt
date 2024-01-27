@@ -9,28 +9,52 @@ import com.example.heartprediction.uiElement.screens.prediction.predictionHeartP
 import com.example.heartprediction.uiElement.screens.record.recordHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.start.START_HEART_PREDICTION_DESTINATION_ROUTE
 import com.example.heartprediction.uiElement.screens.start.startHeartPredictionDestination
+import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
+//route name
 internal const val HEART_PREDICTION_NAV_GRAPH_ROUTE = "heartPredictionNavGraph"
 
-internal fun NavGraphBuilder.heartPredictionNavGraph(
-    navHostController: NavHostController
-) {
+//function for push heart prediction nav graph to top back stack
+internal fun NavHostController.navigateToHeartPredictionNavGraph() {
+    //execute push heart prediction nav graph here
+    navigate(
+        route = HEART_PREDICTION_NAV_GRAPH_ROUTE
+    )
 
-    navigation(
+}//end navigateToHeartPredictionNavGraph
+
+//function for pop heart prediction nav graph from root nav host
+internal fun NavHostController.popHeartPredictionNavGraph() {
+
+    popBackStack(
         route = HEART_PREDICTION_NAV_GRAPH_ROUTE,
-        startDestination = START_HEART_PREDICTION_DESTINATION_ROUTE
+        inclusive = true
+    )
+
+}//end popHeartPredictionNavGraph
+
+//function for create heart prediction nav graph and add destinations to it and define start destination to it
+internal fun NavGraphBuilder.heartPredictionNavGraph(
+    popHeartPredictionNavGraph: () -> Unit
+) {
+    //create heart prediction nav graph here
+    navigation(
+        route = HEART_PREDICTION_NAV_GRAPH_ROUTE,//define route name here
+        startDestination = START_HEART_PREDICTION_DESTINATION_ROUTE,//define start destination here
+        enterTransition = { enterTransitionMain() },
+        exitTransition = { exitTransition() }
     ) {
+        //create destinations here
         startHeartPredictionDestination(
-            navHostController = navHostController
+            popHeartPredictionNavGraph = popHeartPredictionNavGraph
         )
 
-        recordHeartPredictionDestination(
-            navHostController = navHostController
-        )
+        recordHeartPredictionDestination()
 
-        predictionHeartPredictionDestination(
-            navHostController = navHostController
-        )
-    }
+        predictionHeartPredictionDestination()
+
+    }//end navigation
+
 }//end heartPredictionNavGraph

@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 
 @Composable
-internal fun PredictionHeartPredictionScreen(
-    navHostController: NavHostController
-) {
+internal fun PredictionHeartPredictionScreen() {
 
     PredictionHeartPredictionContent()
 }//end PredictionHeartPredictionScreen

@@ -59,4 +59,5 @@
     <string name="book_now">Book Now</string>
     <string name="top_doctors">Top Doctors</string>
     <string name="all_doctors">All Doctors</string>
+    <string name="heart_disease_prediction">Heart Disease Prediction</string>
 </resources>

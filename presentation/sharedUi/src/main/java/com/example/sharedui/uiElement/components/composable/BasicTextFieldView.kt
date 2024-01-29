@@ -21,8 +21,10 @@ fun BasicTextFieldView(
     textColor: Color = theme.black,
     fontSize: Float = dimen.dimen_2,
     fontFamily: FontFamily = robotoMedium,
+    enable: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
+
     //create basic text field here
     BasicTextField(
         value = input,
@@ -32,6 +34,7 @@ fun BasicTextFieldView(
             fontSize = fontSize.sp,
             color = textColor
         ),
+        enabled = enable,
         modifier = modifier,
         maxLines = maxLines
     )

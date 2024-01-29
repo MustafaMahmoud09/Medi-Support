@@ -20,9 +20,9 @@ import com.example.setting.R
 import com.example.setting.uiElement.components.items.DeveloperSection
 import com.example.setting.uiElement.components.items.EmailIconSection
 import com.example.setting.uiElement.components.items.FeatureSection
-import com.example.setting.uiElement.components.composable.TwoColorTextSection
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
+import com.example.sharedui.uiElement.components.composable.MultiColorTextView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.IconTextSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -125,16 +125,19 @@ private fun AboutContent(
                         )
                 ) {
 
-                    TwoColorTextSection(
-                        textSize = dimen.dimen_1_75,
-                        allText = stringResource(
+                    MultiColorTextView(
+                        dimen = dimen,
+                        theme = theme,
+                        parentText = stringResource(
                             id = com.example.sharedui.R.string.about_info
                         ),
-                        otherText = stringResource(
-                            com.example.sharedui.R.string.medisupport
+                        subTexts = arrayOf(
+                            stringResource(
+                                com.example.sharedui.R.string.medisupport
+                            )
                         ),
-                        allColor = theme.hintIconBottom,
-                        singleColor = theme.redDark,
+                        subTextsColors = arrayOf(theme.redDark),
+                        parentTextColor = theme.hintIconBottom,
                         modifier = Modifier
                             .fillMaxWidth()
                     )

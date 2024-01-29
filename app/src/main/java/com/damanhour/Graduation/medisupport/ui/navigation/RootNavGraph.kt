@@ -32,6 +32,10 @@ import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPas
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
 import com.example.auth.uiElement.screens.register.popRegisterDestination
 import com.example.auth.uiElement.screens.welcome.navigateToWelcomeDestination
+import com.example.heartprediction.uiElement.screens.prediction.navigateToPredictionHeartPredictionDestination
+import com.example.heartprediction.uiElement.screens.prediction.popPredictionHeartPredictionDestination
+import com.example.heartprediction.uiElement.screens.record.navigateToRecordHeartPredictionDestination
+import com.example.heartprediction.uiElement.screens.record.popRecordHeartPredictionDestination
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
@@ -87,7 +91,11 @@ fun RootNavGraph(
                 )
 
                 heartPredictionNavGraph(
-                    popHeartPredictionNavGraph = navHostController::popHeartPredictionNavGraph
+                    popHeartPredictionNavGraph = navHostController::popHeartPredictionNavGraph,
+                    navigateToRecordHeartPredictionDestination = navHostController::navigateToRecordHeartPredictionDestination,
+                    popRecordHeartPredictionDestination = navHostController::popRecordHeartPredictionDestination,
+                    navigateToPredictionHeartPredictionDestination = navHostController::navigateToPredictionHeartPredictionDestination,
+                    popPredictionHeartPredictionDestination = navHostController::popPredictionHeartPredictionDestination
                 )
 
             }//end AnimatedNavHost

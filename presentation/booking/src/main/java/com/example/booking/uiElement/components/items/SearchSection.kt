@@ -6,12 +6,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
@@ -22,6 +20,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicTextFieldView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -43,7 +42,8 @@ internal fun SearchSection(
     ),
     borderWidth: Float = dimen.dimen_0_125,
     borderColor: Color = theme.grayC1C7CD,
-    onFocus: MutableState<Boolean>,
+    isFocus: Boolean,
+    onClick: () -> Unit,
     focusRequester: FocusRequester,
     modifier: Modifier = Modifier,
 ) {
@@ -62,6 +62,9 @@ internal fun SearchSection(
                 color = borderColor,
                 shape = shape
             )
+            .clickableWithoutHover {
+                onClick()
+            }
     ) {
         val (searchIconId, keyId, hintId) = createRefs()
 
@@ -121,6 +124,7 @@ internal fun SearchSection(
             input = key,
             onChange = onChange,
             textColor = hintColor,
+            enable = isFocus,
             modifier = Modifier
                 .constrainAs(keyId) {
                     start.linkTo(
@@ -134,9 +138,6 @@ internal fun SearchSection(
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
-                }
-                .onFocusChanged {
-                    onFocus.value = it.isFocused
                 }
                 .focusRequester(focusRequester)
         )

@@ -37,7 +37,11 @@ internal fun NavHostController.popHeartPredictionNavGraph() {
 
 //function for create heart prediction nav graph and add destinations to it and define start destination to it
 internal fun NavGraphBuilder.heartPredictionNavGraph(
-    popHeartPredictionNavGraph: () -> Unit
+    popHeartPredictionNavGraph: () -> Unit,
+    navigateToRecordHeartPredictionDestination: () -> Unit,
+    popRecordHeartPredictionDestination: () -> Unit,
+    navigateToPredictionHeartPredictionDestination: () -> Unit,
+    popPredictionHeartPredictionDestination: () -> Unit
 ) {
     //create heart prediction nav graph here
     navigation(
@@ -48,12 +52,18 @@ internal fun NavGraphBuilder.heartPredictionNavGraph(
     ) {
         //create destinations here
         startHeartPredictionDestination(
-            popHeartPredictionNavGraph = popHeartPredictionNavGraph
+            popHeartPredictionNavGraph = popHeartPredictionNavGraph,
+            navigateToRecordHeartPredictionDestination = navigateToRecordHeartPredictionDestination
         )
 
-        recordHeartPredictionDestination()
+        recordHeartPredictionDestination(
+            popRecordHeartPredictionDestination = popRecordHeartPredictionDestination,
+            navigateToPredictionHeartPredictionDestination = navigateToPredictionHeartPredictionDestination
+        )
 
-        predictionHeartPredictionDestination()
+        predictionHeartPredictionDestination(
+            popPredictionHeartPredictionDestination = popPredictionHeartPredictionDestination
+        )
 
     }//end navigation
 

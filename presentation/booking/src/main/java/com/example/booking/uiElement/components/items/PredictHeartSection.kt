@@ -16,8 +16,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.booking.uiElement.components.composable.FourColorTextView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
+import com.example.sharedui.uiElement.components.composable.MultiColorTextView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -62,17 +62,13 @@ internal fun PredictHeartSection(
         val guideFromStart42P = createGuidelineFromStart(.42f)
 
         //create title text here
-        FourColorTextView(
+        MultiColorTextView(
             dimen = dimen,
             theme = theme,
-            text = title,
-            firstText = firstText,
-            secondText = secondText,
-            thirdText = thirdText,
-            firstTextColor = firstTextColor,
-            secondTextColor = secondTextColor,
-            thirdTextColor = thirdTextColor,
-            otherTextColor = otherTextColor,
+            parentText = title,
+            subTexts = arrayOf(firstText, secondText, thirdText),
+            subTextsColors = arrayOf(firstTextColor, secondTextColor, thirdTextColor),
+            parentTextColor = otherTextColor,
             modifier = Modifier
                 .constrainAs(titleId) {
                     start.linkTo(
@@ -120,11 +116,12 @@ internal fun PredictHeartSection(
         //create padding from bottom
         Spacer(
             modifier = Modifier
-                .constrainAs(spacerId){
+                .constrainAs(spacerId) {
                     start.linkTo(guideFromStart42P)
                     end.linkTo(parent.end)
                     top.linkTo(buttonId.bottom)
-                }.height(
+                }
+                .height(
                     dimen.dimen_1_25.dp
                 )
         )

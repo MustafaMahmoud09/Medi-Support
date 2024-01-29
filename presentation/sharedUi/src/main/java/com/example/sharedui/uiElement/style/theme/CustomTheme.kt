@@ -34,5 +34,10 @@ data class CustomTheme(
     val blueLight7891B7: Color,
     val redSemiLightC66363: Color,
     val redLightDB9E9C: Color,
-    val gold: Color
+    val gold: Color,
+    val blackTR25: Color,
+    val redLightFE8499: Color,
+    val binkLightFB5DAA: Color,
+    val grayLightF2F2F2: Color,
+    val greenMed4CAF50: Color
 )

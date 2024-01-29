@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import com.example.heartprediction.uiElement.components.items.StartRecordHeartPredictionSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
@@ -20,12 +23,14 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 //function for collect state and execute actions in view model
 @Composable
 internal fun StartHeartPredictionScreen(
-    popHeartPredictionNavGraph: () -> Unit
+    popHeartPredictionNavGraph: () -> Unit,
+    navigateToRecordHeartPredictionDestination: () -> Unit
 ) {
 
     //create content here
     StartHeartPredictionContent(
-        onClickBack = popHeartPredictionNavGraph
+        onClickBack = popHeartPredictionNavGraph,
+        onClickOnRecordNow = navigateToRecordHeartPredictionDestination
     )
 }//end StartHeartPredictionScreen
 
@@ -34,7 +39,8 @@ internal fun StartHeartPredictionScreen(
 private fun StartHeartPredictionContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onClickOnRecordNow: () -> Unit
 ) {
 
     //define navigation color and status color for system ui
@@ -52,8 +58,11 @@ private fun StartHeartPredictionContent(
                 )
         ) {
             //create ids for components here
-            val (backButton, title) = createRefs()
+            val (backButton, title, recordId) = createRefs()
+            val guideFromStart20P = createGuidelineFromStart(0.20f)
+            val guideFromEnd20P = createGuidelineFromEnd(0.20f)
 
+            //create back button here
             IconButtonView(
                 dimen = dimen,
                 theme = theme,
@@ -71,6 +80,7 @@ private fun StartHeartPredictionContent(
                     }//end constrainAs
             )
 
+            //create title screen here
             TextBoldView(
                 theme = theme,
                 dimen = dimen,
@@ -87,6 +97,38 @@ private fun StartHeartPredictionContent(
                             dimen.dimen_4.dp
                         )
                     }//end constrainAs
+            )
+
+            StartRecordHeartPredictionSection(
+                dimen = dimen,
+                theme = theme,
+                parentText = stringResource(
+                    id = R.string.predicting_heart_disease_using_artificial_intelligence
+                ),
+                subTexts = arrayOf(
+                    stringResource(
+                        id = R.string.artificial
+                    ),
+                    stringResource(
+                        id = R.string.intell
+                    )
+                ),
+                subTextColors = arrayOf(theme.redLightFE8499, theme.binkLightFB5DAA),
+                painter = painterResource(
+                    id = R.drawable.heart_predict
+                ),
+                buttonText = stringResource(
+                    id = R.string.read_now
+                ),
+                onClick = onClickOnRecordNow,
+                modifier = Modifier
+                    .constrainAs(recordId){
+                        start.linkTo(guideFromStart20P)
+                        end.linkTo(guideFromEnd20P)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                    }
             )
 
         }//end ConstraintLayout

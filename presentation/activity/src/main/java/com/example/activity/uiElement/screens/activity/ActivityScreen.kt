@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -158,7 +159,9 @@ private fun ActivityContent(
                         bottom.linkTo(buttonAddRecordId.top)
                         height = Dimension.fillToConstraints
                         width = Dimension.fillToConstraints
-                    }
+                    }.padding(
+                        top = dimen.dimen_1.dp
+                    )
             ) { page ->
 
                 when (page) {

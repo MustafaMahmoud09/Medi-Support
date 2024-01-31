@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
-//function for create create border and clip item in same time
+//function for create border and clip to component in same time
 @Stable
 fun Modifier.appBorder(
     borderWidth: Float,

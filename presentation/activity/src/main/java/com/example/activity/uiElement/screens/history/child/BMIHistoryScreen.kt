@@ -34,6 +34,7 @@ private fun BMIHistoryContent(
     heightScreen: Int,
 ) {
 
+    //create container here
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -48,6 +49,7 @@ private fun BMIHistoryContent(
             ),
     ) {
 
+        //create all history section here
         AllHistorySection(
             dimen = dimen,
             theme = theme,

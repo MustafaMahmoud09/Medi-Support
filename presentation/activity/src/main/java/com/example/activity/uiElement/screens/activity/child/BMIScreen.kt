@@ -4,27 +4,22 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.example.activity.uiElement.components.items.SomeHistorySection
 import com.example.sharedui.uiElement.components.composable.ColumnChartView
 import com.example.sharedui.uiElement.components.composable.LineView
-import com.example.sharedui.uiElement.components.composable.TextNormalStartView
-import com.example.sharedui.uiElement.components.composable.TextNormalView
-import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.items.DaySection
+import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.patrykandpatrick.vico.core.entry.entryModelOf
@@ -57,39 +52,48 @@ private fun BMIContent(
             .fillMaxSize()
             .background(
                 color = theme.background
-            )
-            .padding(
-                top = dimen.dimen_1.dp
             ),
         contentPadding = PaddingValues(
             vertical = dimen.dimen_2.dp
         )
     ) {
 
+        //create container item contain on all screen components
         item(
             key = 1
         ) {
 
-            Column(
+            //create container here
+            ConstraintLayout(
                 modifier = Modifier
                     .fillMaxWidth()
-            ){
+            ) {
+                //create ids for screen components here
+                val (daysId, chartId, lineId, someHistoryId, recommendedId) = createRefs()
 
+                //create row contain on days here
                 LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth(),
                     contentPadding = PaddingValues(
                         horizontal = dimen.dimen_1_5.dp
                     ),
                     horizontalArrangement = Arrangement.spacedBy(
-                        space = dimen.dimen_1_5.dp
-                    )
+                        space = dimen.dimen_1_5.dp,
+                    ),
+                    modifier = Modifier
+                        .constrainAs(daysId) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            top.linkTo(parent.top)
+                            width = Dimension.fillToConstraints
+                        }
                 ) {
 
+                    //create days here
                     items(
-                        count = 10
+                        count = 7
                     ) {
 
+                        //create single day here
                         DaySection(
                             dimen = dimen,
                             dayName = "Wed",
@@ -101,148 +105,96 @@ private fun BMIContent(
 
                 }//end LazyRow
 
-                Box(
+                //create bmi chart here
+                ColumnChartView(
+                    theme = theme,
+                    dimen = dimen,
+                    data = entryModelOf(50f, 60f, 80f, 90f, 100f, 330f, 320f),
+                    maxValue = 330f,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = dimen.dimen_3_5.dp
-                        )
-                        .padding(
-                            top = dimen.dimen_2.dp
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
+                        .constrainAs(chartId) {
+                            start.linkTo(
+                                parent.start,
+                                dimen.dimen_3_5.dp
+                            )
+                            end.linkTo(
+                                parent.end,
+                                dimen.dimen_3_5.dp
+                            )
+                            top.linkTo(
+                                daysId.bottom,
+                                dimen.dimen_2.dp
+                            )
+                            width = Dimension.fillToConstraints
+                        }
+                        .aspectRatio(1.42f)
+                )
 
-                    ColumnChartView(
-                        theme = theme,
-                        dimen = dimen,
-                        data =  entryModelOf(50f, 60f, 80f, 90f, 100f, 330f, 320f),
-                        maxValue = 330f,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1.42f)
-                    )
-
-                }//end Box
-
-                Box(
+                //create separate line here
+                LineView(
+                    dimen = dimen,
+                    theme = theme,
+                    color = theme.redDarkTR77,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = dimen.dimen_4.dp
-                        )
-                ) {
+                        .constrainAs(lineId) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            top.linkTo(
+                                chartId.bottom,
+                                dimen.dimen_4.dp
+                            )
+                            width = Dimension.fillToConstraints
+                        }
+                )
 
-                    LineView(
-                        dimen = dimen,
-                        theme = theme,
-                        color = theme.redDarkTR77,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-
-                }//end Box
-
-            }//end Column
-
-        }//end item
-
-        item(
-            key = 2
-        ) {
-
-            Box(
-                modifier = Modifier
-                    .padding(
-                        top = dimen.dimen_1_5.dp
-                    )
-                    .padding(
-                        horizontal = dimen.dimen_2.dp
-                    )
-            ) {
-
+                //create some history section here
                 SomeHistorySection(
                     dimen = dimen,
                     theme = theme,
                     onClickSeeAll = onClickSeeAll,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .constrainAs(someHistoryId) {
+                            start.linkTo(
+                                parent.start,
+                                dimen.dimen_2.dp
+                            )
+                            end.linkTo(
+                                parent.end,
+                                dimen.dimen_2.dp
+                            )
+                            top.linkTo(
+                                lineId.bottom,
+                                dimen.dimen_1_5.dp
+                            )
+                            width = Dimension.fillToConstraints
+                        }
                 )
 
-            }//end Box
-
-        }//end item
-
-        item(
-            key = 3
-        ) {
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ){
-
-                Box(
+                //create recommended section here
+                RecommendedSection(
+                    dimen = dimen,
+                    theme = theme,
+                    equationText = "How to loss Sugar?",
+                    responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                     modifier = Modifier
-                        .padding(
-                            top = dimen.dimen_1_75.dp,
-                            start = dimen.dimen_2.dp,
-                            end = dimen.dimen_2.dp
-                        )
-                ) {
+                        .constrainAs(recommendedId) {
+                            start.linkTo(
+                                parent.start,
+                                dimen.dimen_2.dp
+                            )
+                            end.linkTo(
+                                parent.end,
+                                dimen.dimen_2.dp
+                            )
+                            top.linkTo(
+                                someHistoryId.bottom,
+                                dimen.dimen_1_75.dp
+                            )
+                            width = Dimension.fillToConstraints
+                        }
+                )
 
-                    TextSemiBoldView(
-                        theme = theme,
-                        dimen = dimen,
-                        text = stringResource(
-                            com.example.sharedui.R.string.recommended_reading
-                        ),
-                        size = dimen.dimen_2,
-                        fontColor = theme.black
-                    )
-
-                }//end Box
-
-                Box(
-                    modifier = Modifier
-                        .padding(
-                            top = dimen.dimen_2_25.dp,
-                            start = dimen.dimen_2.dp,
-                            end = dimen.dimen_2.dp
-                        )
-                ) {
-
-                    TextNormalView(
-                        theme = theme,
-                        dimen = dimen,
-                        text = "How to loss Sugar?",
-                        size = dimen.dimen_2,
-                        weigh = 300,
-                        fontColor = theme.black
-                    )
-
-                }//end Box
-
-                Box(
-                    modifier = Modifier
-                        .padding(
-                            top = dimen.dimen_2_25.dp,
-                            start = dimen.dimen_2.dp,
-                            end = dimen.dimen_2.dp
-                        )
-                ) {
-
-                    TextNormalStartView(
-                        theme = theme,
-                        dimen = dimen,
-                        text = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                        size = dimen.dimen_2,
-                        fontColor = theme.black
-                    )
-
-                }//end Box
-
-            }//end Column
+            }//end ConstraintLayout
 
         }//end item
 

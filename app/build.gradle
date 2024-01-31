@@ -54,7 +54,7 @@ android {
 dependencies {
 
     //project
-    //implementation(project(':presentation:bmi'))
+    implementation(project(':presentation:bmi'))
     implementation(project(':presentation:auth'))
     //implementation(project(':presentation:bloodSugar'))
     implementation(project(':presentation:bloodPressure'))

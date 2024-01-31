@@ -29,6 +29,10 @@ import com.example.article.uiElement.screens.article.navigateToSingleDestination
 import com.example.article.uiElement.screens.article.popSingleArticleDestination
 import com.example.profile.uiElement.screens.profile.PROFILE_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.popProfileDestination
+import com.example.reminder.uiElement.screens.add.navigateToAddReminderDestination
+import com.example.reminder.uiElement.screens.add.popAddReminderDestination
+import com.example.reminder.uiElement.screens.records.navigateToReminderRecordsDestination
+import com.example.reminder.uiElement.screens.records.popReminderRecordsDestination
 import com.example.setting.uiElement.screens.about.navigateToAboutDestination
 import com.example.setting.uiElement.screens.about.popAboutDestination
 import com.example.setting.uiElement.screens.contactUs.navigateToContactUsDestination
@@ -46,7 +50,8 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 internal fun BottomScreen(
     navHostController: NavHostController = rememberAnimatedNavController(),
     navigateToActivityDestination: () -> Unit,
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
 
     val items = listOf(
@@ -70,7 +75,12 @@ internal fun BottomScreen(
         popArticleNavGraph = navHostController::popArticleNavGraph,
         navigateToSingleDestination = navHostController::navigateToSingleDestination,
         popSingleArticleDestination = navHostController::popSingleArticleDestination,
-        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+        navigateToAddReminderDestination = navHostController::navigateToAddReminderDestination,
+        popAddReminderDestination = navHostController::popAddReminderDestination,
+        navigateToReminderRecordsDestination = navHostController::navigateToReminderRecordsDestination,
+        popReminderRecordsDestination = navHostController::popReminderRecordsDestination,
+        navigateToBmiNavGraph = navigateToBmiNavGraph
     )
 }//end BottomScreen
 
@@ -91,7 +101,12 @@ private fun BottomContent(
     popArticleNavGraph: () -> Unit,
     navigateToSingleDestination: () -> Unit,
     popSingleArticleDestination: () -> Unit,
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToAddReminderDestination: () -> Unit,
+    popAddReminderDestination: () -> Unit,
+    navigateToReminderRecordsDestination: () -> Unit,
+    popReminderRecordsDestination: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
 
     BaseScreen(
@@ -160,7 +175,12 @@ private fun BottomContent(
                     popArticleNavGraph = popArticleNavGraph,
                     navigateToSingleDestination = navigateToSingleDestination,
                     popSingleArticleDestination = popSingleArticleDestination,
-                    navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+                    navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+                    navigateToAddReminderDestination = navigateToAddReminderDestination,
+                    popAddReminderDestination = popAddReminderDestination,
+                    navigateToReminderRecordsDestination = navigateToReminderRecordsDestination,
+                    popReminderRecordsDestination = popReminderRecordsDestination,
+                    navigateToBmiNavGraph = navigateToBmiNavGraph
                 )
 
             }//end Box

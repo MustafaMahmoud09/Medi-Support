@@ -35,8 +35,8 @@ internal fun LineChartView(
     dimen: CustomDimen,
     theme: CustomTheme,
     axis: LineComponent = axisGuidelineComponent(
-        color = theme.gray4,
-        strokeColor = theme.gray4,
+        color = theme.grayECECEC,
+        strokeColor = theme.grayECECEC,
         shape = currentChartStyle.axis.axisLineShape,
         margins = emptyDimensions(),
     ),
@@ -49,8 +49,8 @@ internal fun LineChartView(
         margins = emptyDimensions(),
     ),
     guideLine: LineComponent = axisGuidelineComponent(
-        color = theme.gray4,
-        strokeColor = theme.gray4,
+        color = theme.grayECECEC,
+        strokeColor = theme.grayECECEC,
         shape = currentChartStyle.axis.axisLineShape,
         margins = emptyDimensions(),
     ),

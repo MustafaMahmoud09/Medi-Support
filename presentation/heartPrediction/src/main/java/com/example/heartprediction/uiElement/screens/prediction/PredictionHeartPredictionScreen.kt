@@ -59,8 +59,8 @@ private fun PredictionHeartPredictionContent(
         ) {
             //create ids for components here
             val (backButton, title, messageContainer) = createRefs()
-            val guideFromStart10P = createGuidelineFromStart(.10f)
-            val guideFromEnd10P = createGuidelineFromEnd(.10f)
+            val guideFromStart11P = createGuidelineFromStart(.11f)
+            val guideFromEnd11P = createGuidelineFromEnd(.11f)
 
             //create back button here
             IconButtonView(
@@ -103,8 +103,8 @@ private fun PredictionHeartPredictionContent(
             LazyColumn(
                 modifier = Modifier
                     .constrainAs(messageContainer) {
-                        start.linkTo(guideFromStart10P)
-                        end.linkTo(guideFromEnd10P)
+                        start.linkTo(guideFromStart11P)
+                        end.linkTo(guideFromEnd11P)
                         top.linkTo(
                             title.bottom,
                             dimen.dimen_2.dp
@@ -125,7 +125,7 @@ private fun PredictionHeartPredictionContent(
                 //create message item here
                 item(
                     key = 1
-                ){
+                ) {
 
                     //create message here
                     ResultPredictionSection(

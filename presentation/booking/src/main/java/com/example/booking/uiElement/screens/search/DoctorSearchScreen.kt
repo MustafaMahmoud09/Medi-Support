@@ -37,7 +37,9 @@ import kotlinx.coroutines.launch
 //function for collect state and execute action from view model
 @Composable
 internal fun DoctorSearchScreen(
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToAddReminderDestination: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
@@ -48,6 +50,8 @@ internal fun DoctorSearchScreen(
 
     DoctorSearchContent(
         pagerState = pagerState,
+        onClickOnReminder = navigateToAddReminderDestination,
+        navigateToBmiNavGraph = navigateToBmiNavGraph,
         onClickSeeAll = {
             //execute scroll to see all doctor screen
             coroutineScope.launch {
@@ -98,7 +102,9 @@ private fun DoctorSearchContent(
     focusRequester: FocusRequester,
     navigateToHeartPredictionNavGraph: () -> Unit,
     onClickOnSearchField: () -> Unit,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    onClickOnReminder: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
 
     //create container here
@@ -181,7 +187,7 @@ private fun DoctorSearchContent(
             ),
             dimen = dimen,
             theme = theme,
-            onClick = { /*TODO*/ },
+            onClick = onClickOnReminder,
             modifier = Modifier
                 .constrainAs(reminderButtonId) {
                     end.linkTo(
@@ -217,7 +223,8 @@ private fun DoctorSearchContent(
                         dimen = dimen,
                         theme = theme,
                         onClickSeeAll = onClickSeeAll,
-                        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+                        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+                        navigateToBmiNavGraph = navigateToBmiNavGraph
                     )
                 }//end case
                 //if page is 1 show search screen

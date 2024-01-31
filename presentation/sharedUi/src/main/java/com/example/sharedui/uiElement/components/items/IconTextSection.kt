@@ -31,6 +31,7 @@ fun IconTextSection(
     iconTint: Color,
     overflow: TextOverflow = TextOverflow.Clip,
     maxLines: Int = Int.MAX_VALUE,
+    spaceBetweenComponents: Float = dimen.dimen_0_75,
     modifier: Modifier = Modifier
 ) {
 
@@ -52,7 +53,7 @@ fun IconTextSection(
         Spacer(
             modifier = Modifier
                 .width(
-                    width = dimen.dimen_0_75.dp
+                    width = spaceBetweenComponents.dp
                 )
         )
 

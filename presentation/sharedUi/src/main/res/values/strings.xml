@@ -65,4 +65,15 @@
     <string name="congratulations">Congratulations</string>
     <string name="note_on_prediction_heart_dis">Important Note : This prediction is based on machine learning algorithms and is not a substitute for professional medical advice .For accurate diagnosis and personalized care , We strongly recommend consulting with a healthcare professional or your primary care physician.</string>
     <string name="important_note">Important Note :</string>
+    <string name="medicine_reminder">Medicine Reminder</string>
+    <string name="gender">Gender</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="age">Age</string>
+    <string name="years">Years</string>
+    <string name="height">Height</string>
+    <string name="cm">cm</string>
+    <string name="weight">Weight</string>
+    <string name="kg">kg</string>
+    <string name="calculate">Calculate</string>
 </resources>

@@ -30,7 +30,8 @@ internal fun HomeScreen(
     dimen: CustomDimen,
     theme: CustomTheme,
     onClickSeeAll: () -> Unit,
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
 
     //call home content function
@@ -38,7 +39,8 @@ internal fun HomeScreen(
         dimen = dimen,
         theme = theme,
         onClickSeeAll = onClickSeeAll,
-        onClickHeartPrediction = navigateToHeartPredictionNavGraph
+        onClickHeartPrediction = navigateToHeartPredictionNavGraph,
+        onClickOnBmiSection = navigateToBmiNavGraph
     )
 }//end HomeScreen
 
@@ -48,7 +50,8 @@ private fun HomeContent(
     dimen: CustomDimen,
     theme: CustomTheme,
     onClickSeeAll: () -> Unit,
-    onClickHeartPrediction: () -> Unit
+    onClickHeartPrediction: () -> Unit,
+    onClickOnBmiSection: () -> Unit
 ) {
     //create lazy column here
     LazyColumn(
@@ -157,6 +160,7 @@ private fun HomeContent(
                     image = painterResource(
                         id = com.example.sharedui.R.drawable.heart_rate
                     ),
+                    onClick = {},
                     modifier = Modifier
                         .constrainAs(heartRateId) {
                             start.linkTo(parent.start)
@@ -182,6 +186,7 @@ private fun HomeContent(
                     image = painterResource(
                         id = com.example.sharedui.R.drawable.blood_pressure
                     ),
+                    onClick = {},
                     modifier = Modifier
                         .constrainAs(bloodPressureId) {
                             start.linkTo(
@@ -225,6 +230,7 @@ private fun HomeContent(
                     image = painterResource(
                         id = com.example.sharedui.R.drawable.blood_sugar
                     ),
+                    onClick = {},
                     modifier = Modifier
                         .constrainAs(bloodSugarId) {
                             start.linkTo(parent.start)
@@ -250,6 +256,7 @@ private fun HomeContent(
                     image = painterResource(
                         id = com.example.sharedui.R.drawable.bmi
                     ),
+                    onClick = onClickOnBmiSection,
                     modifier = Modifier
                         .constrainAs(bmiId) {
                             start.linkTo(

@@ -13,7 +13,9 @@ const val DOCTOR_SEARCH_DESTINATION_ROUTE = "doctorSearchDestination"
 
 //function for create doctor search destination and add doctor search screen to it
 fun NavGraphBuilder.doctorSearchDestination(
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToAddReminderDestination: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
     //create doctor search destination
     composable(
@@ -23,7 +25,9 @@ fun NavGraphBuilder.doctorSearchDestination(
     ) {
         //add doctor search screen to doctor search destination
         DoctorSearchScreen(
-            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+            navigateToAddReminderDestination = navigateToAddReminderDestination,
+            navigateToBmiNavGraph = navigateToBmiNavGraph
         )
 
     }//end composable

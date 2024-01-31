@@ -16,6 +16,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -34,6 +35,7 @@ internal fun HealthCareSection(
     shape: Shape = RoundedCornerShape(
         size = dimen.dimen_1_25.dp
     ),
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -49,6 +51,9 @@ internal fun HealthCareSection(
                 color = borderColor,
                 shape = shape
             )
+            .clickableWithoutHover {
+                onClick()
+            }
     ) {
         //create ids to components here
         val (titleId, valueId, unitId, imageId) = createRefs()

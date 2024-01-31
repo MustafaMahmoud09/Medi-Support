@@ -1,15 +1,17 @@
-@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
+@file:OptIn(ExperimentalLayoutApi::class)
 
 package com.example.heartprediction.uiElement.screens.record
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -19,7 +21,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalConfiguration
@@ -431,41 +432,50 @@ private fun RecordHeartPredictionContent(
             //if keyboard is visible
             if (keyboardIsVisible) {
                 //create operation button here
-                BasicButtonView(
-                    dimen = dimen,
-                    theme = theme,
-                    text =
-                    //if field last is focus now set result text to button
-                    if (numberFieldIsFocus.value == focusRequesters.size - 1)
-                        stringResource(
-                            id = R.string.result
-                        )
-                    //else set next text to button
-                    else
-                        stringResource(
-                            id = R.string.next
-                        ),
-                    onClick = onClickOnOperationButton,
+
+                Box(
                     modifier = Modifier
                         .constrainAs(operationButtonId) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
-                            )
-                            end.linkTo(
-                                parent.end,
-                                dimen.dimen_2.dp
-                            )
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
 
                             //if keyboard is visible make button constraint from top
                             top.linkTo(
                                 parent.top,
                                 (heightScreen - (dimen.dimen_6_5 + dimen.dimen_1_5)).dp
                             )
-
+                            bottom.linkTo(parent.bottom)
+                            height = Dimension.fillToConstraints
                             width = Dimension.fillToConstraints
-                        },
-                )
+                        }
+                        .background(
+                            color = theme.background
+                        )
+                        .padding(
+                            horizontal = dimen.dimen_2.dp
+                        ),
+                ) {
+
+                    BasicButtonView(
+                        dimen = dimen,
+                        theme = theme,
+                        text =
+                        //if field last is focus now set result text to button
+                        if (numberFieldIsFocus.value == focusRequesters.size - 1)
+                            stringResource(
+                                id = R.string.result
+                            )
+                        //else set next text to button
+                        else
+                            stringResource(
+                                id = R.string.next
+                            ),
+                        onClick = onClickOnOperationButton,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+
+                }//end Box
 
             }//end if
 

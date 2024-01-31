@@ -24,7 +24,12 @@ internal fun BottomNavGraph(
     popArticleNavGraph: () -> Unit,
     navigateToSingleDestination: () -> Unit,
     popSingleArticleDestination: () -> Unit,
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToAddReminderDestination: () -> Unit,
+    popAddReminderDestination: () -> Unit,
+    navigateToReminderRecordsDestination: () -> Unit,
+    popReminderRecordsDestination: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
 
     AnimatedNavHost(
@@ -33,7 +38,12 @@ internal fun BottomNavGraph(
     ) {
 
         homeNavGraph(
-            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+            navigateToAddReminderDestination = navigateToAddReminderDestination,
+            popAddReminderDestination = popAddReminderDestination,
+            navigateToReminderRecordsDestination = navigateToReminderRecordsDestination,
+            popReminderRecordsDestination = popReminderRecordsDestination,
+            navigateToBmiNavGraph = navigateToBmiNavGraph
         )
 
         articleNavGraph(

@@ -33,7 +33,8 @@ internal fun NavHostController.navigateToBottomDestinationWithPopAuthNavGraph() 
 //function for create bottom destination and add bottom screen to it
 internal fun NavGraphBuilder.bottomDestination(
     navigateToActivityDestination: () -> Unit,
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
     //create bottom destination
     composable(
@@ -45,7 +46,8 @@ internal fun NavGraphBuilder.bottomDestination(
         //add bottom screen to bottom destination
         BottomScreen(
             navigateToActivityDestination = navigateToActivityDestination,
-            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+            navigateToBmiNavGraph = navigateToBmiNavGraph
         )
     }//end composable
 

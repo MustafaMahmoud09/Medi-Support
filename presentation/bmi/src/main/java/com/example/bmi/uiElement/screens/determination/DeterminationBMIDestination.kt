@@ -5,20 +5,51 @@ package com.example.bmi.uiElement.screens.determination
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
+//route name
 const val DETERMINATION_BMI_DESTINATION_ROUTE = "determinationBMIDestination"
 
+//function for push determination bmi destination to top back stack
+fun NavHostController.navigateToDeterminationBMIDestination() {
+
+    //execute navigate method here
+    navigate(
+        route = DETERMINATION_BMI_DESTINATION_ROUTE
+    )
+
+}//end navigateToDeterminationBMIDestination
+
+//function for pop determination bmi destination from back stack
+fun NavHostController.popDeterminationBMIDestination() {
+
+    //pop determination bmi destination here
+    popBackStack(
+        route = DETERMINATION_BMI_DESTINATION_ROUTE,
+        inclusive = true
+    )
+
+}//end popDeterminationBMIDestination
+
+//function for create determination bmi destination and create screen in it
 fun NavGraphBuilder.determinationBMIDestination(
-    navHostController: NavHostController
+    popDeterminationBMIDestination: () -> Unit
 ) {
 
+    //create determination bmi destination here
     composable(
-        route = DETERMINATION_BMI_DESTINATION_ROUTE
+        route = DETERMINATION_BMI_DESTINATION_ROUTE,//define route name here
+        enterTransition = { enterTransitionZero() },//define enter transition method here
+        popExitTransition = { exitTransition() },//define pop exit transition method here
     ) {
 
+        //create determination bmi screen here
         DeterminationBMIScreen(
-            navHostController = navHostController
+            popDeterminationBMIDestination = popDeterminationBMIDestination
         )
-    }
+
+    }//end composable
+
 }//end determinationBMIDestination

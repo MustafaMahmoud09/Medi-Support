@@ -42,7 +42,12 @@ internal fun NavHostController.popHomeNavGraph() {
 
 //function for create home nav graph and add destination to it and define start destination to it
 internal fun NavGraphBuilder.homeNavGraph(
-    navigateToHeartPredictionNavGraph: () -> Unit
+    navigateToHeartPredictionNavGraph: () -> Unit,
+    navigateToAddReminderDestination: () -> Unit,
+    popAddReminderDestination: () -> Unit,
+    navigateToReminderRecordsDestination: () -> Unit,
+    popReminderRecordsDestination: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
     //create home nav graph
     navigation(
@@ -53,12 +58,19 @@ internal fun NavGraphBuilder.homeNavGraph(
     ) {
         //add destinations to home nav graph
         doctorSearchDestination(
-            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
+            navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+            navigateToAddReminderDestination = navigateToAddReminderDestination,
+            navigateToBmiNavGraph = navigateToBmiNavGraph
         )
 
-        addReminderDestination()
+        addReminderDestination(
+            popAddReminderDestination = popAddReminderDestination,
+            navigateToReminderRecordsDestination = navigateToReminderRecordsDestination
+        )
 
-        reminderRecordsDestination()
+        reminderRecordsDestination(
+            popReminderRecordsDestination = popReminderRecordsDestination
+        )
 
     }//end navigation
 

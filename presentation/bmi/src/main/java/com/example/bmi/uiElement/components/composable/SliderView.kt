@@ -36,7 +36,7 @@ internal fun SliderView(
     valueRange: ClosedFloatingPointRange<Float>,
     borderColor: Color = theme.redDark,
     trackShape: Shape = RoundedCornerShape(
-        size = dimen.dimen_0_5.dp
+        size = (dimen.dimen_0_75 - dimen.dimen_0_125).dp
     ),
     height: Float = dimen.dimen_2,
     trackBorderSize: Float = dimen.dimen_0_125,

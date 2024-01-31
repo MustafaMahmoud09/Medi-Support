@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.bmi.uiElement.components.items.GenderSection
-import com.example.bmi.uiElement.components.items.GenderSliderSection
+import com.example.bmi.uiElement.components.items.BMISliderSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
@@ -25,7 +25,6 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-
 
 @Composable
 internal fun RecordBMIScreen(
@@ -99,7 +98,7 @@ private fun RecordBMIContent(
                     }//end constrainAs
             )
 
-            //create container contain on items here
+            //create container here
             LazyColumn(
                 modifier = Modifier
                     .constrainAs(containerId) {
@@ -119,19 +118,17 @@ private fun RecordBMIContent(
                 )
             ) {
 
-                //create gender item here
+                //create item contain on all components here
                 item(
                     key = 1
                 ) {
-
-                    //create container here
-                    Box(
+                    //create sub container here
+                    ConstraintLayout(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(
-                                horizontal = dimen.dimen_2.dp
-                            )
                     ) {
+                        //create ids for screen components here
+                        val (genderSectionId, ageSectionId, heightSectionId, weightSectionId, calculateButtonId) = createRefs()
 
                         //create gender section here
                         GenderSection(
@@ -149,32 +146,22 @@ private fun RecordBMIContent(
                             itemSelected = 0,
                             onClickOnItem = {},
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .constrainAs(genderSectionId) {
+                                    start.linkTo(
+                                        parent.start,
+                                        dimen.dimen_2.dp
+                                    )
+                                    end.linkTo(
+                                        parent.end,
+                                        dimen.dimen_2.dp
+                                    )
+                                    top.linkTo(parent.top)
+                                    width = Dimension.fillToConstraints
+                                }
                         )
 
-                    }//end Box
-
-                }//end item
-
-                //create age item here
-                item(
-                    key = 2
-                ) {
-
-                    //create container here
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = dimen.dimen_1.dp,
-                            )
-                            .padding(
-                                top = dimen.dimen_3.dp
-                            )
-                    ) {
-
-                        //create age slider here
-                        GenderSliderSection(
+                        //create age section here
+                        BMISliderSection(
                             dimen = dimen,
                             theme = theme,
                             title = stringResource(
@@ -188,32 +175,25 @@ private fun RecordBMIContent(
                             startPoint = 0,
                             endPoint = 100,
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .constrainAs(ageSectionId) {
+                                    start.linkTo(
+                                        parent.start,
+                                        dimen.dimen_1.dp
+                                    )
+                                    end.linkTo(
+                                        parent.end,
+                                        dimen.dimen_1.dp
+                                    )
+                                    top.linkTo(
+                                        genderSectionId.bottom,
+                                        dimen.dimen_3.dp
+                                    )
+                                    width = Dimension.fillToConstraints
+                                }
                         )
 
-                    }//end Box
-
-                }//end item
-
-                //create Height item here
-                item(
-                    key = 3
-                ) {
-
-                    //create container here
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = dimen.dimen_1.dp,
-                            )
-                            .padding(
-                                top = dimen.dimen_2_5.dp
-                            )
-                    ) {
-
-                        //create height slider here
-                        GenderSliderSection(
+                        //create height section here
+                        BMISliderSection(
                             dimen = dimen,
                             theme = theme,
                             title = stringResource(
@@ -227,33 +207,25 @@ private fun RecordBMIContent(
                             startPoint = 10,
                             endPoint = 300,
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .constrainAs(heightSectionId) {
+                                    start.linkTo(
+                                        parent.start,
+                                        dimen.dimen_1.dp
+                                    )
+                                    end.linkTo(
+                                        parent.end,
+                                        dimen.dimen_1.dp
+                                    )
+                                    top.linkTo(
+                                        ageSectionId.bottom,
+                                        dimen.dimen_2_5.dp
+                                    )
+                                    width = Dimension.fillToConstraints
+                                }
                         )
 
-                    }//end Box
-
-                }//end item
-
-
-                //create weight item here
-                item(
-                    key = 4
-                ) {
-
-                    //create container here
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = dimen.dimen_1.dp,
-                            )
-                            .padding(
-                                top = dimen.dimen_2_5.dp
-                            )
-                    ) {
-
-                        //create weight slider here
-                        GenderSliderSection(
+                        //create weight section here
+                        BMISliderSection(
                             dimen = dimen,
                             theme = theme,
                             title = stringResource(
@@ -267,29 +239,22 @@ private fun RecordBMIContent(
                             startPoint = 0,
                             endPoint = 300,
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .constrainAs(weightSectionId) {
+                                    start.linkTo(
+                                        parent.start,
+                                        dimen.dimen_1.dp
+                                    )
+                                    end.linkTo(
+                                        parent.end,
+                                        dimen.dimen_1.dp
+                                    )
+                                    top.linkTo(
+                                        heightSectionId.bottom,
+                                        dimen.dimen_2_5.dp
+                                    )
+                                    width = Dimension.fillToConstraints
+                                }
                         )
-
-                    }//end Box
-
-                }//end item
-
-                //create calculate button item here
-                item(
-                    key = 5
-                ) {
-
-                    //create container here
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = dimen.dimen_2.dp,
-                            )
-                            .padding(
-                                top = dimen.dimen_3_5.dp
-                            )
-                    ) {
 
                         //create calculate button here
                         BasicButtonView(
@@ -300,10 +265,24 @@ private fun RecordBMIContent(
                             ),
                             onClick = onClickOnButtonCalculate,
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .constrainAs(calculateButtonId) {
+                                    start.linkTo(
+                                        parent.start,
+                                        dimen.dimen_2.dp
+                                    )
+                                    end.linkTo(
+                                        parent.end,
+                                        dimen.dimen_2.dp
+                                    )
+                                    top.linkTo(
+                                        weightSectionId.bottom,
+                                        dimen.dimen_3_5.dp
+                                    )
+                                    width = Dimension.fillToConstraints
+                                }
                         )
 
-                    }//end Box
+                    }//end ConstraintLayout
 
                 }//end item
 

@@ -14,7 +14,6 @@
             <option value="$PROJECT_DIR$/core/local" />
             <option value="$PROJECT_DIR$/core/remote" />
             <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/domain/activity" />
             <option value="$PROJECT_DIR$/domain/article" />
             <option value="$PROJECT_DIR$/domain/auth" />
             <option value="$PROJECT_DIR$/domain/bloodPressure" />
@@ -28,7 +27,6 @@
             <option value="$PROJECT_DIR$/domain/reminder" />
             <option value="$PROJECT_DIR$/domain/setting" />
             <option value="$PROJECT_DIR$/presentation" />
-            <option value="$PROJECT_DIR$/presentation/activity" />
             <option value="$PROJECT_DIR$/presentation/article" />
             <option value="$PROJECT_DIR$/presentation/auth" />
             <option value="$PROJECT_DIR$/presentation/bloodPressure" />
@@ -43,7 +41,6 @@
             <option value="$PROJECT_DIR$/presentation/setting" />
             <option value="$PROJECT_DIR$/presentation/sharedUi" />
             <option value="$PROJECT_DIR$/repository" />
-            <option value="$PROJECT_DIR$/repository/activity" />
             <option value="$PROJECT_DIR$/repository/article" />
             <option value="$PROJECT_DIR$/repository/auth" />
             <option value="$PROJECT_DIR$/repository/bloodPressure" />

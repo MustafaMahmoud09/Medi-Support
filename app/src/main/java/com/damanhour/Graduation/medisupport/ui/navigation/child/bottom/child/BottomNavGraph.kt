@@ -5,10 +5,10 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.article.articleNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.home.HOME_VAV_GRAPH_DATA
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.home.homeNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.more.moreNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.HOME_VAV_GRAPH_DATA
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.articleNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.homeNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.moreNavGraph
 import com.example.profile.uiElement.screens.profile.profileDestination
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 

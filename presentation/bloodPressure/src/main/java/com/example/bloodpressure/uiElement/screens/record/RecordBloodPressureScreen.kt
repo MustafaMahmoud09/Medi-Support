@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.bloodpressure.uiElement.components.items.InputPressureFieldSection
+import com.example.bloodpressure.uiElement.components.items.PressureFieldSection
 import com.example.bloodpressure.uiElement.components.items.TypeStateSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
@@ -287,7 +287,7 @@ private fun RecordBloodPressureContent(
                         )
 
                         //create input systolic field here
-                        InputPressureFieldSection(
+                        PressureFieldSection(
                             dimen = dimen,
                             theme = theme,
                             hint = stringResource(
@@ -310,7 +310,7 @@ private fun RecordBloodPressureContent(
                         )
 
                         //create input diastolic field here
-                        InputPressureFieldSection(
+                        PressureFieldSection(
                             dimen = dimen,
                             theme = theme,
                             hint = stringResource(

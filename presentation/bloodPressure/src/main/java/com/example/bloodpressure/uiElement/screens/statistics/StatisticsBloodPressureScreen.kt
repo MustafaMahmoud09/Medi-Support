@@ -21,7 +21,7 @@ import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.MultiColorTextView
 import com.example.sharedui.uiElement.components.items.DaySection
-import com.example.sharedui.uiElement.components.items.DoubleLineChartSection
+import com.example.bloodpressure.uiElement.components.items.BloodPressureLineChartSection
 import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.components.items.IconTextSection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
@@ -290,7 +290,7 @@ private fun StatisticsBloodPressureContent(
                         )
 
                         //create blood pressure chart here
-                        DoubleLineChartSection(
+                        BloodPressureLineChartSection(
                             theme = theme,
                             dimen = dimen,
                             data1 = entryModelOf(105f, 110f, 90f, 120f, 100f, 85f, 100f),

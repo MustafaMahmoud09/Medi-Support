@@ -24,11 +24,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.profile.R
 import com.example.profile.uiElement.components.items.UserProfileSection
-import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
-import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.items.FieldHintSection
+import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.components.items.TransparentDialogSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -57,6 +56,7 @@ private fun ProfileContent(
         mutableStateOf(false)
     }
 
+    //create container here
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -64,8 +64,10 @@ private fun ProfileContent(
                 color = theme.background
             )
     ) {
-        val (backButton, title, profile, name, editInfo, faileds) = createRefs()
+        //create ids for screen components here
+        val (headerId, profile, name, editInfo, fields) = createRefs()
 
+        //create success update profile dialog here
         AnimatedVisibility(
             visible = stateDialog,
             enter = fadeIn(
@@ -94,41 +96,34 @@ private fun ProfileContent(
 
         }
 
-        IconButtonView(
+
+        //create header section here
+        HeaderSection(
             dimen = dimen,
             theme = theme,
-            onClick = onClickBack,
+            onClickOnBackButton = onClickBack,
+            title = stringResource(
+                R.string.profile
+            ),
             modifier = Modifier
-                .constrainAs(backButton) {
+                .constrainAs(headerId) {
                     start.linkTo(
                         parent.start,
+                        dimen.dimen_2.dp
+                    )
+                    end.linkTo(
+                        parent.end,
                         dimen.dimen_2.dp
                     )
                     top.linkTo(
                         parent.top,
                         dimen.dimen_4.dp
                     )
-                }//end constrainAs
+                    width = Dimension.fillToConstraints
+                }
         )
 
-        TextBoldView(
-            theme = theme,
-            dimen = dimen,
-            text = stringResource(
-                R.string.profile
-            ),
-            size = dimen.dimen_2_25,
-            modifier = Modifier
-                .constrainAs(title) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(
-                        parent.top,
-                        dimen.dimen_4.dp
-                    )
-                }//end constrainAs
-        )
-
+        //create profile image user section here
         UserProfileSection(
             theme = theme,
             dimen = dimen,
@@ -141,12 +136,13 @@ private fun ProfileContent(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     top.linkTo(
-                        title.bottom,
+                        headerId.bottom,
                         dimen.dimen_4.dp
                     )
                 }//end constrainAs
         )
 
+        //create name user here
         TextSemiBoldView(
             theme = theme,
             dimen = dimen,
@@ -164,6 +160,7 @@ private fun ProfileContent(
                 }//end constrainAs
         )
 
+        //create edit info text here
         TextSemiBoldView(
             theme = theme,
             dimen = dimen,
@@ -183,9 +180,10 @@ private fun ProfileContent(
                 }//end constrainAs
         )
 
+        //create column contain on fields to update profile data
         LazyColumn(
             modifier = Modifier
-                .constrainAs(faileds) {
+                .constrainAs(fields) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     top.linkTo(
@@ -207,6 +205,7 @@ private fun ProfileContent(
             )
         ) {
 
+            //create full name field here
             item(
                 key = 1
             ) {
@@ -228,6 +227,7 @@ private fun ProfileContent(
 
             }//end item
 
+            //create password field here
             item(
                 key = 2
             ) {
@@ -250,6 +250,7 @@ private fun ProfileContent(
 
             }//end item
 
+            //create confirm password field here
             item(
                 key = 3
             ) {
@@ -272,6 +273,7 @@ private fun ProfileContent(
 
             }//end item
 
+            //create save button here
             item(
                 key = 4
             ) {

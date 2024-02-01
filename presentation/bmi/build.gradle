@@ -68,4 +68,10 @@ dependencies {
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
 
+    //vico chart library
+    implementation("com.patrykandpatrick.vico:compose:$vico_version")
+    implementation("com.patrykandpatrick.vico:compose-m2:$vico_version")
+    implementation("com.patrykandpatrick.vico:compose-m3:$vico_version")
+    implementation("com.patrykandpatrick.vico:core:$vico_version")
+
 }

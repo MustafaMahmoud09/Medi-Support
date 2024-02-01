@@ -47,7 +47,8 @@ internal fun NavGraphBuilder.homeNavGraph(
     popAddReminderDestination: () -> Unit,
     navigateToReminderRecordsDestination: () -> Unit,
     popReminderRecordsDestination: () -> Unit,
-    navigateToBmiNavGraph: () -> Unit
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit
 ) {
     //create home nav graph
     navigation(
@@ -60,7 +61,8 @@ internal fun NavGraphBuilder.homeNavGraph(
         doctorSearchDestination(
             navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
             navigateToAddReminderDestination = navigateToAddReminderDestination,
-            navigateToBmiNavGraph = navigateToBmiNavGraph
+            navigateToBmiNavGraph = navigateToBmiNavGraph,
+            navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph
         )
 
         addReminderDestination(

@@ -1,7 +1,6 @@
 package com.example.bmi.uiElement.screens.record
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,8 +17,7 @@ import com.example.bmi.uiElement.components.items.GenderSection
 import com.example.bmi.uiElement.components.items.BMISliderSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
-import com.example.sharedui.uiElement.components.composable.IconButtonView
-import com.example.sharedui.uiElement.components.composable.TextBoldView
+import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -65,36 +63,28 @@ private fun RecordBMIContent(
                 )
         ) {
             //create ids for screen components here
-            val (backButton, title, containerId) = createRefs()
+            val (headerId, containerId) = createRefs()
 
-            //create back button here
-            IconButtonView(
+            //create header screen here
+            HeaderSection(
                 dimen = dimen,
                 theme = theme,
-                onClick = onClickOnBackButton,
+                onClickOnBackButton = onClickOnBackButton,
+                title = stringResource(
+                    id = R.string.bmi
+                ),
                 modifier = Modifier
-                    .constrainAs(backButton) {
+                    .constrainAs(headerId) {
                         start.linkTo(
                             parent.start,
                             dimen.dimen_2.dp
                         )
+                        end.linkTo(
+                            parent.end,
+                            dimen.dimen_2.dp
+                        )
                         top.linkTo(parent.top)
-                    }//end constrainAs
-            )
-
-            //create title screen here
-            TextBoldView(
-                theme = theme,
-                dimen = dimen,
-                text = stringResource(
-                    id = R.string.bmi
-                ),
-                size = dimen.dimen_2_25,
-                modifier = Modifier
-                    .constrainAs(title) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        top.linkTo(parent.top)
+                        width = Dimension.fillToConstraints
                     }//end constrainAs
             )
 
@@ -105,7 +95,7 @@ private fun RecordBMIContent(
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         top.linkTo(
-                            backButton.bottom,
+                            headerId.bottom,
                             dimen.dimen_2.dp
                         )
                         bottom.linkTo(parent.bottom)
@@ -128,7 +118,8 @@ private fun RecordBMIContent(
                             .fillMaxWidth()
                     ) {
                         //create ids for screen components here
-                        val (genderSectionId, ageSectionId, heightSectionId, weightSectionId, calculateButtonId) = createRefs()
+                        val (genderSectionId, ageSectionId, heightSectionId,
+                            weightSectionId, calculateButtonId) = createRefs()
 
                         //create gender section here
                         GenderSection(

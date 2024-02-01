@@ -1,4 +1,4 @@
-package com.example.activity.uiElement.components.items
+package com.example.sharedui.uiElement.components.items
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.aspectRatio
@@ -7,19 +7,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.activity.uiElement.components.composable.LineChartView
+import com.example.sharedui.uiElement.components.composable.LineChartView
 import com.example.sharedui.uiElement.components.composable.IconTitleView
 import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.patrykandpatrick.vico.compose.component.ChartShape
+import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.entry.ChartEntryModel
 
 @Composable
-internal fun DoubleLineChartSection(
+fun DoubleLineChartSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     xAxisData: List<String> = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
@@ -29,7 +32,14 @@ internal fun DoubleLineChartSection(
     maxValue2: Float,
     titleChart1: String,
     titleChart2: String,
+    yLinesChart1: Int = 5,
+    yLinesChart2: Int = 4,
     unit: String,
+    bottomAxisVisibility: Boolean = true,
+    endAxisVisibility: Boolean = true,
+    startAxisVisibility: Boolean = true,
+    guideLineShape: ChartShape = currentChartStyle.axis.axisLineShape,
+    guideLineColor: Color = theme.grayECECEC,
     roundSize: Float = dimen.dimen_1_25,
     modifier: Modifier = Modifier
 ) {
@@ -97,7 +107,12 @@ internal fun DoubleLineChartSection(
             data = data1,
             maxValue = maxValue1,
             xAxisData = xAxisData,
-            maxYLines = 5,
+            maxYLines = yLinesChart1,
+            bottomAxisVisibility = bottomAxisVisibility,
+            endAxisVisibility = endAxisVisibility,
+            startAxisVisibility = startAxisVisibility,
+            guideLineShape = guideLineShape,
+            guideLineColor = guideLineColor,
             modifier = Modifier
                 .constrainAs(firstChartId) {
                     start.linkTo(
@@ -114,7 +129,7 @@ internal fun DoubleLineChartSection(
                     )
                     width = Dimension.fillToConstraints
                 }
-                .aspectRatio(1.8f)
+                .aspectRatio(1.9f)
         )
 
         LineView(
@@ -130,7 +145,7 @@ internal fun DoubleLineChartSection(
                         dimen.dimen_1_5.dp
                     )
                     width = Dimension.fillToConstraints
-                }
+                },
         )
 
         IconTitleView(
@@ -176,7 +191,12 @@ internal fun DoubleLineChartSection(
             data = data2,
             maxValue = maxValue2,
             xAxisData = xAxisData,
-            maxYLines = 4,
+            maxYLines = yLinesChart2,
+            bottomAxisVisibility = bottomAxisVisibility,
+            endAxisVisibility = endAxisVisibility,
+            startAxisVisibility = startAxisVisibility,
+            guideLineShape = guideLineShape,
+            guideLineColor = guideLineColor,
             modifier = Modifier
                 .constrainAs(secondChartId) {
                     start.linkTo(
@@ -193,7 +213,7 @@ internal fun DoubleLineChartSection(
                     )
                     width = Dimension.fillToConstraints
                 }
-                .aspectRatio(2f)
+                .aspectRatio(2.7f)
         )
 
     }//end Box

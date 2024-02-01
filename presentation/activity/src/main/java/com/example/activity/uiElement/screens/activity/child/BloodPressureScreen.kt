@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.activity.uiElement.components.items.DoubleLineChartSection
+import com.example.sharedui.uiElement.components.items.DoubleLineChartSection
 import com.example.activity.uiElement.components.items.SomeHistorySection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.items.DaySection

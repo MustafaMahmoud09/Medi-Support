@@ -29,7 +29,8 @@ internal fun BottomNavGraph(
     popAddReminderDestination: () -> Unit,
     navigateToReminderRecordsDestination: () -> Unit,
     popReminderRecordsDestination: () -> Unit,
-    navigateToBmiNavGraph: () -> Unit
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit
 ) {
 
     AnimatedNavHost(
@@ -43,7 +44,8 @@ internal fun BottomNavGraph(
             popAddReminderDestination = popAddReminderDestination,
             navigateToReminderRecordsDestination = navigateToReminderRecordsDestination,
             popReminderRecordsDestination = popReminderRecordsDestination,
-            navigateToBmiNavGraph = navigateToBmiNavGraph
+            navigateToBmiNavGraph = navigateToBmiNavGraph,
+            navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph
         )
 
         articleNavGraph(

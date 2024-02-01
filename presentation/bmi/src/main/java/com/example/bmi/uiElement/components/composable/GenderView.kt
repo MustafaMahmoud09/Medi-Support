@@ -29,7 +29,7 @@ internal fun GenderView(
     containerWidth: Float = dimen.dimen_16_75,
     containerHeight: Float = dimen.dimen_4_75,
     type: String,
-    typeSize: Float = dimen.dimen_2,
+    typeSize: Float = dimen.dimen_2_25,
     unselectedTypeTextColor: Color = theme.white,
     selectedTypeTextColor: Color = theme.black,
     borderSelectedColor: Color = theme.redDark,

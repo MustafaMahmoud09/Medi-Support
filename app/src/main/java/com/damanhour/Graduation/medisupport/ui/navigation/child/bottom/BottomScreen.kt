@@ -51,7 +51,8 @@ internal fun BottomScreen(
     navHostController: NavHostController = rememberAnimatedNavController(),
     navigateToActivityDestination: () -> Unit,
     navigateToHeartPredictionNavGraph: () -> Unit,
-    navigateToBmiNavGraph: () -> Unit
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit
 ) {
 
     val items = listOf(
@@ -80,7 +81,8 @@ internal fun BottomScreen(
         popAddReminderDestination = navHostController::popAddReminderDestination,
         navigateToReminderRecordsDestination = navHostController::navigateToReminderRecordsDestination,
         popReminderRecordsDestination = navHostController::popReminderRecordsDestination,
-        navigateToBmiNavGraph = navigateToBmiNavGraph
+        navigateToBmiNavGraph = navigateToBmiNavGraph,
+        navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph
     )
 }//end BottomScreen
 
@@ -106,7 +108,8 @@ private fun BottomContent(
     popAddReminderDestination: () -> Unit,
     navigateToReminderRecordsDestination: () -> Unit,
     popReminderRecordsDestination: () -> Unit,
-    navigateToBmiNavGraph: () -> Unit
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit
 ) {
 
     BaseScreen(
@@ -180,7 +183,8 @@ private fun BottomContent(
                     popAddReminderDestination = popAddReminderDestination,
                     navigateToReminderRecordsDestination = navigateToReminderRecordsDestination,
                     popReminderRecordsDestination = popReminderRecordsDestination,
-                    navigateToBmiNavGraph = navigateToBmiNavGraph
+                    navigateToBmiNavGraph = navigateToBmiNavGraph,
+                    navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph
                 )
 
             }//end Box

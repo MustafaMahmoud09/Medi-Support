@@ -20,7 +20,7 @@ internal fun GenderSection(
     theme: CustomTheme,
     dimen: CustomDimen,
     title: String,
-    titleSize: Float = dimen.dimen_2_5,
+    titleSize: Float = dimen.dimen_2_25,
     titleColor: Color = theme.black,
     shape: Shape = RoundedCornerShape(
         size = dimen.dimen_1_25.dp

@@ -18,14 +18,17 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navig
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.navigateToForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgotten.popForgotPasswordNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.navigateToLoginNavGraphWithPopWelcomeDestination
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodPressureNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bmiNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.bottomDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.navigateToBottomDestinationWithPopAuthNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.heartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodPressureNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBmiNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToHeartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.popActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.popBloodPressureNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.popBmiNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredictionNavGraph
 import com.example.activity.uiElement.screens.history.navigateToHistoryDestination
@@ -35,6 +38,8 @@ import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPas
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
 import com.example.auth.uiElement.screens.register.popRegisterDestination
 import com.example.auth.uiElement.screens.welcome.navigateToWelcomeDestination
+import com.example.bloodpressure.uiElement.screens.statistics.navigateToStatisticsBloodPressureDestination
+import com.example.bloodpressure.uiElement.screens.statistics.popStatisticsBloodPressureDestination
 import com.example.bmi.uiElement.screens.determination.navigateToDeterminationBMIDestination
 import com.example.bmi.uiElement.screens.determination.popDeterminationBMIDestination
 import com.example.heartprediction.uiElement.screens.prediction.navigateToPredictionHeartPredictionDestination
@@ -87,7 +92,8 @@ fun RootNavGraph(
                 bottomDestination(
                     navigateToActivityDestination = navHostController::navigateToActivityNavGraph,
                     navigateToHeartPredictionNavGraph = navHostController::navigateToHeartPredictionNavGraph,
-                    navigateToBmiNavGraph = navHostController::navigateToBmiNavGraph
+                    navigateToBmiNavGraph = navHostController::navigateToBmiNavGraph,
+                    navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraph
                 )
 
                 activityNavGraph(
@@ -108,6 +114,12 @@ fun RootNavGraph(
                     popBmiNavGraph = navHostController::popBmiNavGraph,
                     navigateToDeterminationBMIDestination = navHostController::navigateToDeterminationBMIDestination,
                     popDeterminationBMIDestination = navHostController::popDeterminationBMIDestination
+                )
+
+                bloodPressureNavGraph(
+                    popBloodPressureNavGraph = navHostController::popBloodPressureNavGraph,
+                    navigateToStatisticsBloodPressureDestination = navHostController::navigateToStatisticsBloodPressureDestination,
+                    popStatisticsBloodPressureDestination = navHostController::popStatisticsBloodPressureDestination
                 )
 
             }//end AnimatedNavHost

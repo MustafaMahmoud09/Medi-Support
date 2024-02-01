@@ -39,7 +39,8 @@ import kotlinx.coroutines.launch
 internal fun DoctorSearchScreen(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,
-    navigateToBmiNavGraph: () -> Unit
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
@@ -51,6 +52,7 @@ internal fun DoctorSearchScreen(
     DoctorSearchContent(
         pagerState = pagerState,
         onClickOnReminder = navigateToAddReminderDestination,
+        navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
         navigateToBmiNavGraph = navigateToBmiNavGraph,
         onClickSeeAll = {
             //execute scroll to see all doctor screen
@@ -104,7 +106,8 @@ private fun DoctorSearchContent(
     onClickOnSearchField: () -> Unit,
     coroutineScope: CoroutineScope,
     onClickOnReminder: () -> Unit,
-    navigateToBmiNavGraph: () -> Unit
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit
 ) {
 
     //create container here
@@ -224,7 +227,8 @@ private fun DoctorSearchContent(
                         theme = theme,
                         onClickSeeAll = onClickSeeAll,
                         navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
-                        navigateToBmiNavGraph = navigateToBmiNavGraph
+                        navigateToBmiNavGraph = navigateToBmiNavGraph,
+                        navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
                     )
                 }//end case
                 //if page is 1 show search screen

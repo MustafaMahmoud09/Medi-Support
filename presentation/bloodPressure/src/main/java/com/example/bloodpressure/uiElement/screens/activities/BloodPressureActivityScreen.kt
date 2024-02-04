@@ -23,7 +23,7 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
-fun BloodPressureScreen(
+fun BloodPressureActivityScreen(
     theme: CustomTheme,
     dimen: CustomDimen,
     navigateToHistoryDestination: () -> Unit
@@ -106,14 +106,15 @@ private fun BloodPressureActivityContent(
                 BloodPressureLineChartSection(
                     theme = theme,
                     dimen = dimen,
-                    data1 = entryModelOf(105f, 110f, 90f, 120f, 100f, 85f, 100f),
-                    maxValue1 = 330f,
-                    data2 = entryModelOf(60f, 60f, 70f, 80f, 75f, 60f, 80f),
-                    maxValue2 = 330f,
-                    titleChart1 = stringResource(
+                    xAxisData = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+                    firstData = entryModelOf(105f, 110f, 90f, 120f, 100f, 85f, 100f),
+                    maxValueForFirstData = 330f,
+                    secondData = entryModelOf(60f, 60f, 70f, 80f, 75f, 60f, 80f),
+                    maxValueForSecondData = 330f,
+                    titleForFirstChart = stringResource(
                         R.string.upper_bound
                     ),
-                    titleChart2 = stringResource(
+                    titleForSecondChart = stringResource(
                         R.string.lower_bound
                     ),
                     unit = stringResource(
@@ -123,15 +124,15 @@ private fun BloodPressureActivityContent(
                         .constrainAs(chartId) {
                             start.linkTo(
                                 parent.start,
-                                dimen.dimen_2.dp
+                                dimen.dimen_1_5.dp
                             )
                             end.linkTo(
                                 parent.end,
-                                dimen.dimen_2.dp
+                                dimen.dimen_1_5.dp
                             )
                             top.linkTo(
                                 daysId.bottom,
-                                dimen.dimen_2.dp
+                                dimen.dimen_1_5.dp
                             )
                             width = Dimension.fillToConstraints
                         }
@@ -154,7 +155,7 @@ private fun BloodPressureActivityContent(
                             )
                             top.linkTo(
                                 chartId.bottom,
-                                dimen.dimen_1_5.dp
+                                dimen.dimen_1.dp
                             )
                             width = Dimension.fillToConstraints
                         }

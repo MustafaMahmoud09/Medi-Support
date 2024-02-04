@@ -20,9 +20,10 @@ fun Modifier.appShadow(
     shadow(
         elevation = elevation.dp,
         clip = clip,
+        shape = shape,
         ambientColor = ambientColor,
         spotColor = spotColor
     ).clip(
-        shape = shape
-    )
+            shape = shape
+        )
 )

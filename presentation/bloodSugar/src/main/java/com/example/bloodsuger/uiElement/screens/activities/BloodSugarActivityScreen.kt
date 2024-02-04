@@ -25,13 +25,13 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BloodSugarScreen(
+fun BloodSugarActivityScreen(
     theme: CustomTheme,
     dimen: CustomDimen,
     navigateToHistoryDestination: () -> Unit
 ) {
 
-    BloodSugarContent(
+    BloodSugarActivityContent(
         theme = theme,
         dimen = dimen,
         onClickSeeAll = navigateToHistoryDestination
@@ -40,7 +40,7 @@ fun BloodSugarScreen(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-private fun BloodSugarContent(
+private fun BloodSugarActivityContent(
     theme: CustomTheme,
     dimen: CustomDimen,
     onClickSeeAll: () -> Unit

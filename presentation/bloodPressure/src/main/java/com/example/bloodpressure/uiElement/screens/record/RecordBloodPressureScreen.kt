@@ -91,7 +91,7 @@ private fun RecordBloodPressureContent(
                         )
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_3_25.dp
+                            dimen.dimen_2_5.dp
                         )
                         width = Dimension.fillToConstraints
                     }

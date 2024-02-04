@@ -17,9 +17,10 @@ fun Modifier.appBorder(
 ) = this.then(
     clip(
         shape = shape
-    ).border(
-        width = borderWidth.dp,
-        color = borderColor,
-        shape = shape
     )
+        .border(
+            width = borderWidth.dp,
+            color = borderColor,
+            shape = shape
+        )
 )

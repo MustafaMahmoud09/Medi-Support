@@ -1,4 +1,4 @@
-package com.example.heartrate.uiElement.screens.activities
+package com.example.bmi.uiElement.screens.activities
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.uiElement.components.items.SomeHistorySection
-import com.example.heartrate.uiElement.components.items.SingleLineChartSection
+import com.example.sharedui.uiElement.components.composable.ColumnChartView
+import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -25,24 +26,24 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HeartRateScreen(
+fun BMIActivityScreen(
     theme: CustomTheme,
     dimen: CustomDimen,
     navigateToHistoryDestination: () -> Unit
 ) {
 
-    HeartRateContent(
+    BMIActivityContent(
         theme = theme,
         dimen = dimen,
         onClickSeeAll = navigateToHistoryDestination
     )
-}//end HeartRateScreen
+}//end BMIScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-private fun HeartRateContent(
-    dimen: CustomDimen,
+private fun BMIActivityContent(
     theme: CustomTheme,
+    dimen: CustomDimen,
     onClickSeeAll: () -> Unit
 ) {
 
@@ -57,7 +58,7 @@ private fun HeartRateContent(
         )
     ) {
 
-        //create item contain on all components to this screen
+        //create container item contain on all screen components
         item(
             key = 1
         ) {
@@ -67,27 +68,27 @@ private fun HeartRateContent(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                //create ids to screen components here
-                val (daysId, chartId, someHistoryId, recommendedId) = createRefs()
+                //create ids for screen components here
+                val (daysId, chartId, lineId, someHistoryId, recommendedId) = createRefs()
 
                 //create row contain on days here
                 LazyRow(
+                    contentPadding = PaddingValues(
+                        horizontal = dimen.dimen_1_5.dp
+                    ),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = dimen.dimen_1_5.dp,
+                    ),
                     modifier = Modifier
                         .constrainAs(daysId) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                             top.linkTo(parent.top)
                             width = Dimension.fillToConstraints
-                        },
-                    contentPadding = PaddingValues(
-                        horizontal = dimen.dimen_1_5.dp
-                    ),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = dimen.dimen_1_5.dp
-                    )
+                        }
                 ) {
 
-                    //create days item here
+                    //create days here
                     items(
                         count = 7
                     ) {
@@ -104,29 +105,46 @@ private fun HeartRateContent(
 
                 }//end LazyRow
 
-                //create heart rate chart here
-                SingleLineChartSection(
+                //create bmi chart here
+                ColumnChartView(
                     theme = theme,
                     dimen = dimen,
-                    data = entryModelOf(60f, 60f, 90f, 120f, 100f, 50f, 100f),
+                    data = entryModelOf(50f, 60f, 80f, 90f, 100f, 330f, 320f),
                     maxValue = 330f,
                     modifier = Modifier
                         .constrainAs(chartId) {
                             start.linkTo(
                                 parent.start,
-                                dimen.dimen_2.dp
+                                dimen.dimen_3_5.dp
                             )
                             end.linkTo(
                                 parent.end,
-                                dimen.dimen_2.dp
+                                dimen.dimen_3_5.dp
                             )
                             top.linkTo(
                                 daysId.bottom,
-                                dimen.dimen_5_5.dp
+                                dimen.dimen_2.dp
                             )
                             width = Dimension.fillToConstraints
                         }
                         .aspectRatio(1.42f)
+                )
+
+                //create separate line here
+                LineView(
+                    dimen = dimen,
+                    theme = theme,
+                    color = theme.redDarkTR77,
+                    modifier = Modifier
+                        .constrainAs(lineId) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            top.linkTo(
+                                chartId.bottom,
+                                dimen.dimen_4.dp
+                            )
+                            width = Dimension.fillToConstraints
+                        }
                 )
 
                 //create some history section here
@@ -145,8 +163,8 @@ private fun HeartRateContent(
                                 dimen.dimen_2.dp
                             )
                             top.linkTo(
-                                chartId.bottom,
-                                dimen.dimen_1_25.dp
+                                lineId.bottom,
+                                dimen.dimen_1_5.dp
                             )
                             width = Dimension.fillToConstraints
                         }
@@ -160,10 +178,6 @@ private fun HeartRateContent(
                     responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                     modifier = Modifier
                         .constrainAs(recommendedId) {
-                            top.linkTo(
-                                someHistoryId.bottom,
-                                dimen.dimen_1_75.dp
-                            )
                             start.linkTo(
                                 parent.start,
                                 dimen.dimen_2.dp
@@ -171,6 +185,10 @@ private fun HeartRateContent(
                             end.linkTo(
                                 parent.end,
                                 dimen.dimen_2.dp
+                            )
+                            top.linkTo(
+                                someHistoryId.bottom,
+                                dimen.dimen_1_75.dp
                             )
                             width = Dimension.fillToConstraints
                         }
@@ -182,4 +200,4 @@ private fun HeartRateContent(
 
     }//end LazyColumn
 
-}//end HeartRateScreen
+}//end BMIContent

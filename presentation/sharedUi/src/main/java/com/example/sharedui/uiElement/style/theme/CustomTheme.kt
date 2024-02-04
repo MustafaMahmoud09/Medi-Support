@@ -47,5 +47,7 @@ data class CustomTheme(
     val redBF171DTR76: Color,
     val blackLight353535: Color,
     val black333333: Color,
-    val gray939393: Color
+    val gray939393: Color,
+    val redE52D27: Color,
+    val redDarkTR70: Color
 )

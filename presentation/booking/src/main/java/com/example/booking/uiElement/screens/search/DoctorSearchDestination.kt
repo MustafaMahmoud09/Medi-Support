@@ -16,7 +16,8 @@ fun NavGraphBuilder.doctorSearchDestination(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
-    navigateToBloodPressureNavGraph: () -> Unit
+    navigateToBloodPressureNavGraph: () -> Unit,
+    navigateToBloodSugarNavGraph: () -> Unit
 ) {
     //create doctor search destination
     composable(
@@ -29,7 +30,8 @@ fun NavGraphBuilder.doctorSearchDestination(
             navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
             navigateToAddReminderDestination = navigateToAddReminderDestination,
             navigateToBmiNavGraph = navigateToBmiNavGraph,
-            navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph
+            navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
         )
 
     }//end composable

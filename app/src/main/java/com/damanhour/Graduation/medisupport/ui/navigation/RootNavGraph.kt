@@ -33,6 +33,9 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.popBmiNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.navigateToHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.popHistoryDestination
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.popBloodSugarNavGraph
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
@@ -40,6 +43,7 @@ import com.example.auth.uiElement.screens.register.popRegisterDestination
 import com.example.auth.uiElement.screens.welcome.navigateToWelcomeDestination
 import com.example.bloodpressure.uiElement.screens.statistics.navigateToStatisticsBloodPressureDestination
 import com.example.bloodpressure.uiElement.screens.statistics.popStatisticsBloodPressureDestination
+import com.example.bloodsuger.uiElement.screens.statistics.navigateToStatisticsBloodSugarDestination
 import com.example.bmi.uiElement.screens.determination.navigateToDeterminationBMIDestination
 import com.example.bmi.uiElement.screens.determination.popDeterminationBMIDestination
 import com.example.heartprediction.uiElement.screens.prediction.navigateToPredictionHeartPredictionDestination
@@ -93,7 +97,8 @@ fun RootNavGraph(
                     navigateToActivityDestination = navHostController::navigateToActivityNavGraph,
                     navigateToHeartPredictionNavGraph = navHostController::navigateToHeartPredictionNavGraph,
                     navigateToBmiNavGraph = navHostController::navigateToBmiNavGraph,
-                    navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraph
+                    navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraph,
+                    navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraph
                 )
 
                 activityNavGraph(
@@ -120,6 +125,11 @@ fun RootNavGraph(
                     popBloodPressureNavGraph = navHostController::popBloodPressureNavGraph,
                     navigateToStatisticsBloodPressureDestination = navHostController::navigateToStatisticsBloodPressureDestination,
                     popStatisticsBloodPressureDestination = navHostController::popStatisticsBloodPressureDestination
+                )
+
+                bloodSugarNavGraph(
+                    navigateToStatisticsBloodSugarDestination = navHostController::navigateToStatisticsBloodSugarDestination,
+                    popBloodSugarNavGraph = navHostController::popBloodSugarNavGraph
                 )
 
             }//end AnimatedNavHost

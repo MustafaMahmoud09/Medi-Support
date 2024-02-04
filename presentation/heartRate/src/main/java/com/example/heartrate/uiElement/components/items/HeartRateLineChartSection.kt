@@ -12,15 +12,25 @@ import androidx.compose.ui.unit.dp
 import com.example.sharedui.uiElement.components.composable.LineChartView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.patrykandpatrick.vico.compose.axis.axisGuidelineComponent
+import com.patrykandpatrick.vico.compose.style.currentChartStyle
+import com.patrykandpatrick.vico.core.component.shape.LineComponent
+import com.patrykandpatrick.vico.core.dimensions.emptyDimensions
 import com.patrykandpatrick.vico.core.entry.ChartEntryModel
 
 @Composable
 internal fun SingleLineChartSection(
     dimen: CustomDimen,
     theme: CustomTheme,
-    xAxisData: List<String> = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+    xAxisData: List<String>,
     data: ChartEntryModel,
     maxValue: Float,
+    guideLine: LineComponent? = axisGuidelineComponent(
+        color = theme.grayECECEC,
+        strokeColor = theme.grayECECEC,
+        shape = currentChartStyle.axis.axisLineShape,
+        margins = emptyDimensions(),
+    ),
     roundSize: Float = dimen.dimen_2,
     modifier: Modifier = Modifier
 ) {
@@ -51,6 +61,7 @@ internal fun SingleLineChartSection(
             data = data,
             maxValue = maxValue,
             xAxisData = xAxisData,
+            guideLine = guideLine,
             modifier = Modifier
                 .fillMaxSize()
         )

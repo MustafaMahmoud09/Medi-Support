@@ -31,9 +31,11 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.patrykandpatrick.vico.compose.axis.axisGuidelineComponent
 import com.patrykandpatrick.vico.compose.component.shape.dashedShape
 import com.patrykandpatrick.vico.core.component.shape.DashedShape
 import com.patrykandpatrick.vico.core.component.shape.Shapes
+import com.patrykandpatrick.vico.core.dimensions.emptyDimensions
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
@@ -91,7 +93,7 @@ private fun StatisticsBloodPressureContent(
                         )
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_3_25.dp
+                            dimen.dimen_2_5.dp
                         )
                         width = Dimension.fillToConstraints
                     }
@@ -293,15 +295,15 @@ private fun StatisticsBloodPressureContent(
                         BloodPressureLineChartSection(
                             theme = theme,
                             dimen = dimen,
-                            data1 = entryModelOf(105f, 110f, 90f, 120f, 100f, 85f, 100f),
-                            maxValue1 = 330f,
-                            data2 = entryModelOf(60f, 60f, 70f, 80f, 75f, 60f, 80f),
-                            maxValue2 = 330f,
-                            guideLineColor = theme.blackLight353535,
-                            titleChart1 = stringResource(
+                            xAxisData = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+                            firstData = entryModelOf(105f, 110f, 90f, 120f, 100f, 85f, 100f),
+                            maxValueForFirstData = 330f,
+                            secondData = entryModelOf(60f, 60f, 70f, 80f, 75f, 60f, 80f),
+                            maxValueForSecondData = 330f,
+                            titleForFirstChart = stringResource(
                                 R.string.upper_bound
                             ),
-                            titleChart2 = stringResource(
+                            titleForSecondChart = stringResource(
                                 R.string.lower_bound
                             ),
                             unit = stringResource(
@@ -309,27 +311,32 @@ private fun StatisticsBloodPressureContent(
                             ),
                             bottomAxisVisibility = false,
                             endAxisVisibility = false,
-                            guideLineShape = Shapes.dashedShape(
-                                shape = Shapes.roundedCornerShape(90),
-                                dashLength = dimen.dimen_0_25.dp,
-                                gapLength = dimen.dimen_1_25.dp,
-                                fitStrategy = DashedShape.FitStrategy.Fixed
+                            guideLine = axisGuidelineComponent(
+                                color = theme.blackLight353535,
+                                strokeColor = theme.blackLight353535,
+                                shape = Shapes.dashedShape(
+                                    shape = Shapes.roundedCornerShape(90),
+                                    dashLength = dimen.dimen_0_25.dp,
+                                    gapLength = dimen.dimen_1_25.dp,
+                                    fitStrategy = DashedShape.FitStrategy.Fixed
+                                ),
+                                margins = emptyDimensions(),
                             ),
-                            yLinesChart1 = 4,
-                            yLinesChart2 = 3,
+                            maxYLinesForFirstChart = 4,
+                            maxYLinesForSecondChart = 3,
                             modifier = Modifier
                                 .constrainAs(bloodPressureChartId) {
                                     start.linkTo(
                                         parent.start,
-                                        dimen.dimen_2.dp
+                                        dimen.dimen_1_5.dp
                                     )
                                     end.linkTo(
                                         parent.end,
-                                        dimen.dimen_2.dp
+                                        dimen.dimen_1_5.dp
                                     )
                                     top.linkTo(
                                         lineId.bottom,
-                                        dimen.dimen_2_25.dp
+                                        dimen.dimen_1_75.dp
                                     )
                                     width = Dimension.fillToConstraints
                                 }
@@ -353,7 +360,7 @@ private fun StatisticsBloodPressureContent(
                                     )
                                     top.linkTo(
                                         bloodPressureChartId.bottom,
-                                        dimen.dimen_2_5.dp
+                                        dimen.dimen_2.dp
                                     )
                                     width = Dimension.fillToConstraints
                                 }

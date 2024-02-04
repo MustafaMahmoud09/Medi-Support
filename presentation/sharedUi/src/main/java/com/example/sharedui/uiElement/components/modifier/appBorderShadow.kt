@@ -20,17 +20,21 @@ fun Modifier.appBorderShadow(
     ambientColor: Color,
     spotColor: Color,
 ) = then(
+
     shadow(
-       elevation  = elevation.dp,
-       clip = clip,
-       ambientColor = ambientColor,
+        elevation = elevation.dp,
+        clip = clip,
+        shape = shape,
+        ambientColor = ambientColor,
         spotColor = spotColor
     )
-    .clip(
-        shape = shape
-    ).border(
-        width = borderWidth.dp,
-        color = borderColor,
-        shape = shape
-    )
+        .clip(
+            shape = shape
+        )
+        .border(
+            width = borderWidth.dp,
+            color = borderColor,
+            shape = shape
+        )
+
 )

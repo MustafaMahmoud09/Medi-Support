@@ -4,13 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
-import com.patrykandpatrick.vico.compose.axis.ChartShape
 import com.patrykandpatrick.vico.compose.axis.axisGuidelineComponent
 import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
 import com.patrykandpatrick.vico.compose.axis.axisLineComponent
@@ -36,16 +34,15 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 fun LineChartView(
     dimen: CustomDimen,
     theme: CustomTheme,
-    isZoomEnabled: Boolean = false,
-    xAxisData: List<String> = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
     data: ChartEntryModel,
     maxValue: Float,
-    maxYLines: Int = 6,
     bottomAxisVisibility: Boolean = true,
     endAxisVisibility: Boolean = true,
     startAxisVisibility: Boolean = true,
-    guideLineShape: ChartShape = currentChartStyle.axis.axisLineShape,
-    guideLineColor: Color = theme.grayECECEC,
+    xAxisData: List<String>,
+    isZoomEnabled: Boolean = false,
+    maxYLines: Int = 6,
+    guideLine: LineComponent?,
     axis: LineComponent = axisGuidelineComponent(
         color = theme.grayECECEC,
         strokeColor = theme.grayECECEC,
@@ -58,12 +55,6 @@ fun LineChartView(
         strokeWidth = dimen.dimen_0.dp,
         strokeColor = theme.transparent,
         brush = null,
-        margins = emptyDimensions(),
-    ),
-    guideLine: LineComponent = axisGuidelineComponent(
-        color = guideLineColor,
-        strokeColor = guideLineColor,
-        shape = guideLineShape,
         margins = emptyDimensions(),
     ),
     label: TextComponent = axisLabelComponent(

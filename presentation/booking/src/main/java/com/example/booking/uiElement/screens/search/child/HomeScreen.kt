@@ -32,7 +32,8 @@ internal fun HomeScreen(
     onClickSeeAll: () -> Unit,
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
-    navigateToBloodPressureNavGraph: () -> Unit
+    navigateToBloodPressureNavGraph: () -> Unit,
+    navigateToBloodSugarNavGraph: () -> Unit
 ) {
 
     //call home content function
@@ -42,7 +43,8 @@ internal fun HomeScreen(
         onClickSeeAll = onClickSeeAll,
         onClickHeartPrediction = navigateToHeartPredictionNavGraph,
         onClickOnBmiSection = navigateToBmiNavGraph,
-        onClickOnBloodPressureSection = navigateToBloodPressureNavGraph
+        onClickOnBloodPressureSection = navigateToBloodPressureNavGraph,
+        onClickOmBloodSugarSection  = navigateToBloodSugarNavGraph
     )
 }//end HomeScreen
 
@@ -54,7 +56,8 @@ private fun HomeContent(
     onClickSeeAll: () -> Unit,
     onClickHeartPrediction: () -> Unit,
     onClickOnBmiSection: () -> Unit,
-    onClickOnBloodPressureSection: () -> Unit
+    onClickOnBloodPressureSection: () -> Unit,
+    onClickOmBloodSugarSection: () -> Unit
 ) {
     //create lazy column here
     LazyColumn(
@@ -233,7 +236,7 @@ private fun HomeContent(
                     image = painterResource(
                         id = com.example.sharedui.R.drawable.blood_sugar
                     ),
-                    onClick = {},
+                    onClick = onClickOmBloodSugarSection,
                     modifier = Modifier
                         .constrainAs(bloodSugarId) {
                             start.linkTo(parent.start)

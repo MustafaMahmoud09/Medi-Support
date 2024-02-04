@@ -18,10 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.bmi.uiElement.screens.activities.BMIScreen
-import com.example.bloodsuger.uiElement.screens.activities.BloodSugarScreen
-import com.example.heartrate.uiElement.screens.activities.HeartRateScreen
-import com.example.bloodpressure.uiElement.screens.activities.BloodPressureScreen
+import com.example.bmi.uiElement.screens.activities.BMIActivityScreen
+import com.example.bloodsuger.uiElement.screens.activities.BloodSugarActivityScreen
+import com.example.heartrate.uiElement.screens.activities.HeartRateActivityScreen
+import com.example.bloodpressure.uiElement.screens.activities.BloodPressureActivityScreen
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.items.DropDownMenuPagerSection
@@ -166,7 +166,7 @@ private fun ActivityContent(
 
                 when (page) {
                     0 -> {
-                        BMIScreen(
+                        BMIActivityScreen(
                             theme = theme,
                             dimen = dimen,
                             navigateToHistoryDestination = navigateToHistoryDestination
@@ -174,7 +174,7 @@ private fun ActivityContent(
                     }
 
                     1 -> {
-                        BloodPressureScreen(
+                        BloodPressureActivityScreen(
                             theme = theme,
                             dimen = dimen,
                             navigateToHistoryDestination = navigateToHistoryDestination
@@ -182,7 +182,7 @@ private fun ActivityContent(
                     }
 
                     2 -> {
-                        BloodSugarScreen(
+                        BloodSugarActivityScreen(
                             theme = theme,
                             dimen = dimen,
                             navigateToHistoryDestination = navigateToHistoryDestination
@@ -190,7 +190,7 @@ private fun ActivityContent(
                     }
 
                     3 -> {
-                        HeartRateScreen(
+                        HeartRateActivityScreen(
                             theme = theme,
                             dimen = dimen,
                             navigateToHistoryDestination = navigateToHistoryDestination

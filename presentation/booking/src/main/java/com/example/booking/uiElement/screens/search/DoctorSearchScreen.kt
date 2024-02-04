@@ -40,7 +40,8 @@ internal fun DoctorSearchScreen(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
-    navigateToBloodPressureNavGraph: () -> Unit
+    navigateToBloodPressureNavGraph: () -> Unit,
+    navigateToBloodSugarNavGraph: () -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
@@ -54,6 +55,7 @@ internal fun DoctorSearchScreen(
         onClickOnReminder = navigateToAddReminderDestination,
         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
         navigateToBmiNavGraph = navigateToBmiNavGraph,
+        navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
         onClickSeeAll = {
             //execute scroll to see all doctor screen
             coroutineScope.launch {
@@ -107,7 +109,8 @@ private fun DoctorSearchContent(
     coroutineScope: CoroutineScope,
     onClickOnReminder: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
-    navigateToBloodPressureNavGraph: () -> Unit
+    navigateToBloodPressureNavGraph: () -> Unit,
+    navigateToBloodSugarNavGraph: () -> Unit
 ) {
 
     //create container here
@@ -229,6 +232,7 @@ private fun DoctorSearchContent(
                         navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
                         navigateToBmiNavGraph = navigateToBmiNavGraph,
                         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
+                        navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
                     )
                 }//end case
                 //if page is 1 show search screen

@@ -40,11 +40,13 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
 internal fun StatisticsBloodPressureScreen(
-    popStatisticsBloodPressureDestination: () -> Unit
+    popStatisticsBloodPressureDestination: () -> Unit,
+    navigateToRecordBloodPressureDestination: () -> Unit
 ) {
 
     StatisticsBloodPressureContent(
-        onClickOnBackButton = popStatisticsBloodPressureDestination
+        onClickOnBackButton = popStatisticsBloodPressureDestination,
+        onClickOnAddRecordButton = navigateToRecordBloodPressureDestination
     )
 }//end StatisticsBloodPressureScreen
 
@@ -53,6 +55,7 @@ private fun StatisticsBloodPressureContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
+    onClickOnAddRecordButton: () -> Unit,
 ) {
 
     //create base screen for define status bar color and navigation bar color
@@ -106,7 +109,7 @@ private fun StatisticsBloodPressureContent(
                 text = stringResource(
                     id = R.string.add_record
                 ),
-                onClick = { /*TODO*/ },
+                onClick = onClickOnAddRecordButton,
                 modifier = Modifier
                     .constrainAs(addRecordButton) {
                         start.linkTo(

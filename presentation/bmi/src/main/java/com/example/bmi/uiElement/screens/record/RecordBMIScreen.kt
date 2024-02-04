@@ -26,12 +26,12 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun RecordBMIScreen(
-    popBmiNavGraph: () -> Unit,
+    popRecordBMIDestination: () -> Unit,
     navigateToDeterminationBMIDestination: () -> Unit
 ) {
 
     RecordBMIContent(
-        onClickOnBackButton = popBmiNavGraph,
+        onClickOnBackButton = popRecordBMIDestination,
         onClickOnButtonCalculate = navigateToDeterminationBMIDestination
     )
 }//end RecordBMIScreen

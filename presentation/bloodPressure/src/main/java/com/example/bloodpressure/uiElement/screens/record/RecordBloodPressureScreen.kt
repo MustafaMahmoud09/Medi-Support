@@ -35,12 +35,12 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun RecordBloodPressureScreen(
-    popBloodPressureNavGraph: () -> Unit,
+    popRecordBloodPressureDestination: () -> Unit,
     navigateToStatisticsBloodPressureDestination: () -> Unit
 ) {
 
     RecordBloodPressureContent(
-        onClickOnBackButton = popBloodPressureNavGraph,
+        onClickOnBackButton = popRecordBloodPressureDestination,
         onClickOnAddRecordButton = navigateToStatisticsBloodPressureDestination
     )
 }//end RecordBloodPressureScreen

@@ -39,7 +39,9 @@ internal fun NavHostController.popBloodSugarNavGraph() {
 @RequiresApi(Build.VERSION_CODES.O)
 internal fun NavGraphBuilder.bloodSugarNavGraph(
     navigateToStatisticsBloodSugarDestination: () -> Unit,
-    popBloodSugarNavGraph: () -> Unit
+    popRecordBloodSugarDestination: () -> Unit,
+    popStatisticsBloodSugarDestination: () -> Unit,
+    navigateToRecordBloodSugarDestination: () -> Unit
 ) {
     //create blood sugar nav graph
     navigation(
@@ -49,11 +51,14 @@ internal fun NavGraphBuilder.bloodSugarNavGraph(
         popExitTransition = { exitTransition() }//define pop exit transition here
     ) {
         //create destinations into nav graph here
-        statisticsBloodSugarDestination()
+        statisticsBloodSugarDestination(
+            popStatisticsBloodSugarDestination = popStatisticsBloodSugarDestination,
+            navigateToRecordBloodSugarDestination = navigateToRecordBloodSugarDestination
+        )
 
         recordBloodSugarDestination(
             navigateToStatisticsBloodSugarDestination = navigateToStatisticsBloodSugarDestination,
-            popBloodSugarNavGraph = popBloodSugarNavGraph
+            popRecordBloodSugarDestination = popRecordBloodSugarDestination
         )
 
     }//end navigation

@@ -28,24 +28,28 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodP
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBmiNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToHeartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.popActivityNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.popBloodPressureNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.popBmiNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.navigateToHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.popHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.popBloodSugarNavGraph
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
 import com.example.auth.uiElement.screens.register.popRegisterDestination
 import com.example.auth.uiElement.screens.welcome.navigateToWelcomeDestination
+import com.example.bloodpressure.uiElement.screens.record.navigateToRecordBloodPressureDestination
+import com.example.bloodpressure.uiElement.screens.record.popRecordBloodPressureDestination
 import com.example.bloodpressure.uiElement.screens.statistics.navigateToStatisticsBloodPressureDestination
 import com.example.bloodpressure.uiElement.screens.statistics.popStatisticsBloodPressureDestination
+import com.example.bloodsuger.uiElement.screens.record.navigateToRecordBloodSugarDestination
+import com.example.bloodsuger.uiElement.screens.record.popRecordBloodSugarDestination
 import com.example.bloodsuger.uiElement.screens.statistics.navigateToStatisticsBloodSugarDestination
+import com.example.bloodsuger.uiElement.screens.statistics.popStatisticsBloodSugarDestination
 import com.example.bmi.uiElement.screens.determination.navigateToDeterminationBMIDestination
 import com.example.bmi.uiElement.screens.determination.popDeterminationBMIDestination
+import com.example.bmi.uiElement.screens.record.navigateToRecordBMIDestination
+import com.example.bmi.uiElement.screens.record.popRecordBMIDestination
 import com.example.heartprediction.uiElement.screens.prediction.navigateToPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.prediction.popPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.record.navigateToRecordHeartPredictionDestination
@@ -116,20 +120,24 @@ fun RootNavGraph(
                 )
 
                 bmiNavGraph(
-                    popBmiNavGraph = navHostController::popBmiNavGraph,
+                    popRecordBMIDestination = navHostController::popRecordBMIDestination,
                     navigateToDeterminationBMIDestination = navHostController::navigateToDeterminationBMIDestination,
-                    popDeterminationBMIDestination = navHostController::popDeterminationBMIDestination
+                    popDeterminationBMIDestination = navHostController::popDeterminationBMIDestination,
+                    navigateToRecordBMIDestination = navHostController::navigateToRecordBMIDestination
                 )
 
                 bloodPressureNavGraph(
-                    popBloodPressureNavGraph = navHostController::popBloodPressureNavGraph,
+                    popRecordBloodPressureDestination = navHostController::popRecordBloodPressureDestination,
                     navigateToStatisticsBloodPressureDestination = navHostController::navigateToStatisticsBloodPressureDestination,
-                    popStatisticsBloodPressureDestination = navHostController::popStatisticsBloodPressureDestination
+                    popStatisticsBloodPressureDestination = navHostController::popStatisticsBloodPressureDestination,
+                    navigateToRecordBloodPressureDestination = navHostController::navigateToRecordBloodPressureDestination
                 )
 
                 bloodSugarNavGraph(
                     navigateToStatisticsBloodSugarDestination = navHostController::navigateToStatisticsBloodSugarDestination,
-                    popBloodSugarNavGraph = navHostController::popBloodSugarNavGraph
+                    popRecordBloodSugarDestination = navHostController::popRecordBloodSugarDestination,
+                    popStatisticsBloodSugarDestination = navHostController::popStatisticsBloodSugarDestination,
+                    navigateToRecordBloodSugarDestination = navHostController::navigateToRecordBloodSugarDestination
                 )
 
             }//end AnimatedNavHost

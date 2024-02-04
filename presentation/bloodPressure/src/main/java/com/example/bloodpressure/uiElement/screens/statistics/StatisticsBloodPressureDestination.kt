@@ -5,6 +5,7 @@ package com.example.bloodpressure.uiElement.screens.statistics
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.bloodpressure.uiElement.screens.record.RECORD_BLOOD_PRESSURE_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
@@ -13,12 +14,28 @@ import com.google.accompanist.navigation.animation.composable
 const val STATISTICS_BLOOD_PRESSURE_DESTINATION_ROUTE = "statisticsBloodPressureDestination"
 
 //function for navigate to statistics blood pressure Destination
-fun NavHostController.navigateToStatisticsBloodPressureDestination(){
+fun NavHostController.navigateToStatisticsBloodPressureDestination() {
 
     //push statistics blood pressure Destination to back stack here
     navigate(
         route = STATISTICS_BLOOD_PRESSURE_DESTINATION_ROUTE
-    )
+    ) {
+
+        //pop determination bmi destination from back stack
+        popUpTo(
+            route = STATISTICS_BLOOD_PRESSURE_DESTINATION_ROUTE
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+        //pop record bmi destination from back stack
+        popUpTo(
+            route = RECORD_BLOOD_PRESSURE_DESTINATION_ROUTE
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+    }//end navigate
 
 }//end navigateToStatisticsBloodPressureDestination
 
@@ -35,7 +52,8 @@ fun NavHostController.popStatisticsBloodPressureDestination() {
 
 //function for create statistics blood pressure destination and create screen in it
 fun NavGraphBuilder.statisticsBloodPressureDestination(
-    popStatisticsBloodPressureDestination: () -> Unit
+    popStatisticsBloodPressureDestination: () -> Unit,
+    navigateToRecordBloodPressureDestination: () -> Unit
 ) {
     //create statistics blood pressure destination here
     composable(
@@ -45,7 +63,8 @@ fun NavGraphBuilder.statisticsBloodPressureDestination(
     ) {
         //create statistics blood pressure screen here
         StatisticsBloodPressureScreen(
-            popStatisticsBloodPressureDestination = popStatisticsBloodPressureDestination
+            popStatisticsBloodPressureDestination = popStatisticsBloodPressureDestination,
+            navigateToRecordBloodPressureDestination = navigateToRecordBloodPressureDestination
         )
 
     }//end composable

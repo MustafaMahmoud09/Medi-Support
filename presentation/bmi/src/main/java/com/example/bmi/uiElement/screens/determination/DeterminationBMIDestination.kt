@@ -5,6 +5,7 @@ package com.example.bmi.uiElement.screens.determination
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.bmi.uiElement.screens.record.RECORD_BMI_DESTINATION
 import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
@@ -18,7 +19,22 @@ fun NavHostController.navigateToDeterminationBMIDestination() {
     //execute navigate method here
     navigate(
         route = DETERMINATION_BMI_DESTINATION_ROUTE
-    )
+    ) {
+        //pop determination bmi destination from back stack
+        popUpTo(
+            route = DETERMINATION_BMI_DESTINATION_ROUTE
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+        //pop record bmi destination from back stack
+        popUpTo(
+            route = RECORD_BMI_DESTINATION
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+    }//navigate
 
 }//end navigateToDeterminationBMIDestination
 
@@ -35,7 +51,8 @@ fun NavHostController.popDeterminationBMIDestination() {
 
 //function for create determination bmi destination and create screen in it
 fun NavGraphBuilder.determinationBMIDestination(
-    popDeterminationBMIDestination: () -> Unit
+    popDeterminationBMIDestination: () -> Unit,
+    navigateToRecordBMIDestination: () -> Unit
 ) {
 
     //create determination bmi destination here
@@ -47,7 +64,8 @@ fun NavGraphBuilder.determinationBMIDestination(
 
         //create determination bmi screen here
         DeterminationBMIScreen(
-            popDeterminationBMIDestination = popDeterminationBMIDestination
+            popDeterminationBMIDestination = popDeterminationBMIDestination,
+            navigateToRecordBMIDestination = navigateToRecordBMIDestination
         )
 
     }//end composable

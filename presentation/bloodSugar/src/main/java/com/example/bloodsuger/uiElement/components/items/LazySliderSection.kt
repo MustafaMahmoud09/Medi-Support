@@ -61,9 +61,6 @@ internal fun LazySliderSection(
                 ambientColor = theme.black,
                 spotColor = theme.black,
             )
-            .padding(
-                bottom = elevation.dp
-            )
     ) {
 
         ConstraintLayout(
@@ -73,7 +70,7 @@ internal fun LazySliderSection(
                     shape = shape
                 )
                 .background(
-                    theme.white
+                    color = theme.background
                 )
                 .padding(
                     bottom = dimen.dimen_5.dp
@@ -139,7 +136,7 @@ internal fun LazySliderSection(
                         width = Dimension.fillToConstraints
                     },
                 contentPadding = PaddingValues(
-                    horizontal = dimen.dimen_1.dp
+                    horizontal = dimen.dimen_0_5.dp
                 ),
             ) {
                 //create column item here

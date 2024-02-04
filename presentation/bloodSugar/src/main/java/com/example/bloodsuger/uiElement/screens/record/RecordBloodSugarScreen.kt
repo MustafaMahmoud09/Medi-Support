@@ -32,7 +32,7 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 @Composable
 internal fun RecordBloodSugarScreen(
     navigateToStatisticsBloodSugarDestination: () -> Unit,
-    popBloodSugarNavGraph: () -> Unit
+    popRecordBloodSugarDestination: () -> Unit
 ) {
 
     val numberSelected = rememberSaveable {
@@ -40,7 +40,7 @@ internal fun RecordBloodSugarScreen(
     }
 
     RecordBloodSugarContent(
-        onClickOnBackButton = popBloodSugarNavGraph,
+        onClickOnBackButton = popRecordBloodSugarDestination,
         onClickOnAddRecordButton = navigateToStatisticsBloodSugarDestination,
         numberSelected = numberSelected,
     )

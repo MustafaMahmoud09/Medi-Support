@@ -32,11 +32,13 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun DeterminationBMIScreen(
-    popDeterminationBMIDestination: () -> Unit
+    popDeterminationBMIDestination: () -> Unit,
+    navigateToRecordBMIDestination: () -> Unit
 ) {
 
     DeterminationBMIContent(
-        onClickOnBackButton = popDeterminationBMIDestination
+        onClickOnBackButton = popDeterminationBMIDestination,
+        onClickOnAddRecordButton = navigateToRecordBMIDestination
     )
 }//end DeterminationBMIDestination
 
@@ -44,7 +46,8 @@ internal fun DeterminationBMIScreen(
 private fun DeterminationBMIContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
-    onClickOnBackButton: () -> Unit
+    onClickOnBackButton: () -> Unit,
+    onClickOnAddRecordButton: () -> Unit
 ) {
 
     //create base screen here to set status bar color and navigation bar color
@@ -107,7 +110,7 @@ private fun DeterminationBMIContent(
                 text = stringResource(
                     id = R.string.add_record
                 ),
-                onClick = onClickOnBackButton,
+                onClick = onClickOnAddRecordButton,
                 modifier = Modifier
                     .constrainAs(addRecordButtonId) {
                         start.linkTo(

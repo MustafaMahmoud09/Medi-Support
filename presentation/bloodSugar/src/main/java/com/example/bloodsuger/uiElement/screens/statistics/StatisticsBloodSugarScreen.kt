@@ -36,16 +36,24 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-internal fun StatisticsBloodSugarScreen() {
+internal fun StatisticsBloodSugarScreen(
+    popStatisticsBloodSugarDestination: () -> Unit,
+    navigateToRecordBloodSugarDestination: () -> Unit
+) {
 
-    StatisticsBloodSugarContent()
+    StatisticsBloodSugarContent(
+        onClickOnBackButton = popStatisticsBloodSugarDestination,
+        onClickOnAddRecordButton = navigateToRecordBloodSugarDestination
+    )
 }//end StatisticsBloodSugarScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun StatisticsBloodSugarContent(
     dimen: CustomDimen = MediSupportAppDimen(),
-    theme: CustomTheme = MediSupportAppTheme()
+    theme: CustomTheme = MediSupportAppTheme(),
+    onClickOnBackButton: () -> Unit,
+    onClickOnAddRecordButton: () -> Unit
 ) {
 
     //create base screen for define status and navigation bar color here
@@ -68,7 +76,7 @@ private fun StatisticsBloodSugarContent(
             HeaderSection(
                 dimen = dimen,
                 theme = theme,
-                onClickOnBackButton = { /*TODO*/ },
+                onClickOnBackButton = onClickOnBackButton,
                 title = stringResource(
                     id = R.string.blood_suger
                 ),
@@ -96,7 +104,7 @@ private fun StatisticsBloodSugarContent(
                 text = stringResource(
                     id = R.string.add_record
                 ),
-                onClick = { /*TODO*/ },
+                onClick = onClickOnAddRecordButton,
                 modifier = Modifier
                     .constrainAs(addRecordButtonId) {
                         start.linkTo(
@@ -263,7 +271,7 @@ private fun StatisticsBloodSugarContent(
                         ColumnChartView(
                             theme = theme,
                             dimen = dimen,
-                            data = entryModelOf(450f, 0f,600f, 0f, 0f, 300f, 50f),
+                            data = entryModelOf(450f, 0f, 600f, 0f, 0f, 300f, 50f),
                             maxValue = 600f,
                             modifier = Modifier
                                 .constrainAs(chartId) {

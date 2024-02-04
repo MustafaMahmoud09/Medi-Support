@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".MediSupportApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,9 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.MediSupport"
-        tools:targetApi="34"
-        android:name=".MediSupportApplication"
-        >
+        tools:targetApi="34">
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"

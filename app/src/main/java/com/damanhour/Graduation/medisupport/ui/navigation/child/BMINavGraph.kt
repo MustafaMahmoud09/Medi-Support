@@ -36,9 +36,10 @@ internal fun NavHostController.popBmiNavGraph() {
 
 //function for create bmi nav graph and add destinations to it and define start destination to it
 internal fun NavGraphBuilder.bmiNavGraph(
-    popBmiNavGraph: () -> Unit,
+    popRecordBMIDestination: () -> Unit,
     navigateToDeterminationBMIDestination: () -> Unit,
-    popDeterminationBMIDestination: () -> Unit
+    popDeterminationBMIDestination: () -> Unit,
+    navigateToRecordBMIDestination: () -> Unit
 ) {
     //create bmi nav graph here
     navigation(
@@ -49,12 +50,13 @@ internal fun NavGraphBuilder.bmiNavGraph(
     ) {
         //add destinations to bmi nav graph here
         recordBMIDestination(
-            popBmiNavGraph = popBmiNavGraph,
+            popRecordBMIDestination = popRecordBMIDestination,
             navigateToDeterminationBMIDestination = navigateToDeterminationBMIDestination
         )
 
         determinationBMIDestination(
             popDeterminationBMIDestination = popDeterminationBMIDestination,
+            navigateToRecordBMIDestination = navigateToRecordBMIDestination
         )
 
     }//end navigation

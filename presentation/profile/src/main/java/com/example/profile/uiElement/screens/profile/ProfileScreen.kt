@@ -26,7 +26,7 @@ import com.example.profile.R
 import com.example.profile.uiElement.components.items.UserProfileSection
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
-import com.example.sharedui.uiElement.components.items.FieldHintSection
+import com.example.sharedui.uiElement.components.items.BasicFieldSection
 import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.components.items.TransparentDialogSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -210,7 +210,7 @@ private fun ProfileContent(
                 key = 1
             ) {
 
-                FieldHintSection(
+                BasicFieldSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -232,7 +232,7 @@ private fun ProfileContent(
                 key = 2
             ) {
 
-                FieldHintSection(
+                BasicFieldSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -242,7 +242,7 @@ private fun ProfileContent(
                         com.example.sharedui.R.string.your_password
                     ),
                     value = "",
-                    password = true,
+                    fieldIsPassword = true,
                     onChange = {},
                     modifier = Modifier
                         .fillMaxWidth()
@@ -255,7 +255,7 @@ private fun ProfileContent(
                 key = 3
             ) {
 
-                FieldHintSection(
+                BasicFieldSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -265,7 +265,7 @@ private fun ProfileContent(
                         com.example.sharedui.R.string.your_password
                     ),
                     value = "",
-                    password = true,
+                    fieldIsPassword = true,
                     onChange = {},
                     modifier = Modifier
                         .fillMaxWidth()

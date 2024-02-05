@@ -26,7 +26,7 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
-import com.example.sharedui.uiElement.components.items.FieldHintSection
+import com.example.sharedui.uiElement.components.items.BasicFieldSection
 import com.example.sharedui.uiElement.components.items.TransparentDialogSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -155,7 +155,7 @@ private fun ContactUsContent(
                 key = 1
             ) {
 
-                FieldHintSection(
+                BasicFieldSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -176,7 +176,7 @@ private fun ContactUsContent(
                 key = 2
             ) {
 
-                FieldHintSection(
+                BasicFieldSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -197,7 +197,7 @@ private fun ContactUsContent(
                 key = 3
             ) {
 
-                FieldHintSection(
+                BasicFieldSection(
                     theme = theme,
                     dimen = dimen,
                     title = stringResource(
@@ -206,7 +206,7 @@ private fun ContactUsContent(
                     hint = stringResource(
                         com.example.sharedui.R.string.your_message
                     ),
-                    height = dimen.dimen_17_5,
+                    fieldHeight = dimen.dimen_17_5,
                     maxLines = Int.MAX_VALUE,
                     value = "",
                     contentCenter = false,

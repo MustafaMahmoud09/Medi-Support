@@ -6,13 +6,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.auth.R
 import com.example.auth.uiElement.components.composable.NumberFailedView
+import com.example.auth.uiState.state.ForgottenUiState
+import com.example.auth.uiState.viewModel.ForgottenViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
@@ -22,13 +26,22 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
+
 @Composable
 internal fun CodeScreen(
+    viewModel: ForgottenViewModel = hiltViewModel(),
     navigateToNewPasswordDestination: () -> Unit
 ) {
+    //collect screen state here
+    val state = viewModel.state.collectAsState()
 
     CodeContent(
-        onClickNewPassword = { navigateToNewPasswordDestination() }
+        onClickNewPassword = { navigateToNewPasswordDestination() },
+        uiState = state.value,
+        onFirstCodeChanged = viewModel::onFirstCodeChanged,
+        onSecondCodeChanged = viewModel::onSecondCodeChanged,
+        onThirdCodeChanged = viewModel::onThirdCodeChanged,
+        onFourthCodeChanged = viewModel::onFourthCodeChanged
     )
 }//end CodeScreen
 
@@ -36,7 +49,12 @@ internal fun CodeScreen(
 private fun CodeContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
-    onClickNewPassword: () -> Unit
+    onClickNewPassword: () -> Unit,
+    uiState: ForgottenUiState,
+    onFirstCodeChanged: (String) -> Unit,
+    onSecondCodeChanged: (String) -> Unit,
+    onThirdCodeChanged: (String) -> Unit,
+    onFourthCodeChanged: (String) -> Unit
 ) {
 
     BaseScreen(
@@ -52,7 +70,7 @@ private fun CodeContent(
                     color = theme.background
                 )
         ) {
-            val (title, message, rowCodeFaileds, verifyButton) = createRefs()
+            val (title, message, rowCodeFields, verifyButton) = createRefs()
 
             TextBoldView(
                 theme = theme,
@@ -108,7 +126,7 @@ private fun CodeContent(
 
             Row(
                 modifier = Modifier
-                    .constrainAs(rowCodeFaileds) {
+                    .constrainAs(rowCodeFields) {
                         start.linkTo(
                             parent.start,
                             dimen.dimen_2.dp
@@ -129,29 +147,29 @@ private fun CodeContent(
                 NumberFailedView(
                     dimen = dimen,
                     theme = theme,
-                    value = "",
-                    onChange = {}
+                    value = uiState.firstCodeKey,
+                    onChange = onFirstCodeChanged
                 )
 
                 NumberFailedView(
                     dimen = dimen,
                     theme = theme,
-                    value = "",
-                    onChange = {}
+                    value = uiState.secondCodeKey,
+                    onChange = onSecondCodeChanged
                 )
 
                 NumberFailedView(
                     dimen = dimen,
                     theme = theme,
-                    value = "",
-                    onChange = {}
+                    value = uiState.thirdCodeKey,
+                    onChange = onThirdCodeChanged
                 )
 
                 NumberFailedView(
                     dimen = dimen,
                     theme = theme,
-                    value = "",
-                    onChange = {}
+                    value = uiState.fourthCodeKey,
+                    onChange = onFourthCodeChanged
                 )
 
             }//end Row
@@ -175,7 +193,7 @@ private fun CodeContent(
                             dimen.dimen_2.dp
                         )
                         top.linkTo(
-                            rowCodeFaileds.bottom,
+                            rowCodeFields.bottom,
                             dimen.dimen_3_5.dp
                         )
                         width = Dimension.fillToConstraints

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -16,14 +17,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.auth.R
 import com.example.auth.uiElement.components.composable.IconStartButtonView
 import com.example.auth.uiElement.components.items.RememberSection
+import com.example.auth.uiState.state.RegisterUiState
+import com.example.auth.uiState.viewModel.RegisterViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalRedView
-import com.example.sharedui.uiElement.components.items.FieldHintSection
+import com.example.sharedui.uiElement.components.items.BasicFieldSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -32,11 +36,19 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun RegisterScreen(
+    viewModel: RegisterViewModel = hiltViewModel(),
     popRegisterDestination: () -> Unit
 ) {
+    val state = viewModel.state.collectAsState()
 
     RegisterContent(
-        onClickLogin = { popRegisterDestination() }
+        onClickLogin = popRegisterDestination,
+        uiState = state.value,
+        onFirstNameChanged = viewModel::onFirstNameChanged,
+        onLastNameChanged = viewModel::onLastNameChange,
+        onEmailChanged = viewModel::onEmailChanged,
+        onPasswordChanged = viewModel::onPasswordChanged,
+        onRememberChanged = viewModel::onRememberChanged
     )
 }//end RegisterScreen
 
@@ -44,7 +56,13 @@ internal fun RegisterScreen(
 private fun RegisterContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
-    onClickLogin: () -> Unit
+    onClickLogin: () -> Unit,
+    uiState: RegisterUiState,
+    onFirstNameChanged: (String) -> Unit,
+    onLastNameChanged: (String) -> Unit,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onRememberChanged: (Boolean) -> Unit
 ) {
 
     BaseScreen(
@@ -112,10 +130,11 @@ private fun RegisterContent(
                             .fillMaxWidth()
                     ) {
                         val (firstName, lastName, emailFailed, passwordFailed,
-                            rememberSection, registerButton, googleButton, facebookButton, line, haveAccount) = createRefs()
+                            rememberSection, registerButton, googleButton, facebookButton,
+                            line, haveAccount) = createRefs()
                         val guideLineFromStart50P = createGuidelineFromStart(.5f)
 
-                        FieldHintSection(
+                        BasicFieldSection(
                             theme = theme,
                             dimen = dimen,
                             title = stringResource(
@@ -124,8 +143,8 @@ private fun RegisterContent(
                             hint = stringResource(
                                 R.string.fname
                             ),
-                            value = "",
-                            onChange = {},
+                            value = uiState.firstNameKey,
+                            onChange = onFirstNameChanged,
                             modifier = Modifier
                                 .constrainAs(firstName) {
                                     start.linkTo(
@@ -141,7 +160,7 @@ private fun RegisterContent(
                                 }
                         )
 
-                        FieldHintSection(
+                        BasicFieldSection(
                             theme = theme,
                             dimen = dimen,
                             title = stringResource(
@@ -150,8 +169,8 @@ private fun RegisterContent(
                             hint = stringResource(
                                 R.string.lname
                             ),
-                            value = "",
-                            onChange = {},
+                            value = uiState.lastNameKey,
+                            onChange = onLastNameChanged,
                             modifier = Modifier
                                 .constrainAs(lastName) {
                                     start.linkTo(
@@ -167,7 +186,7 @@ private fun RegisterContent(
                                 }
                         )
 
-                        FieldHintSection(
+                        BasicFieldSection(
                             theme = theme,
                             dimen = dimen,
                             title = stringResource(
@@ -176,8 +195,8 @@ private fun RegisterContent(
                             hint = stringResource(
                                 R.string.your_email
                             ),
-                            value = "",
-                            onChange = {},
+                            value = uiState.emailKey,
+                            onChange = onEmailChanged,
                             modifier = Modifier
                                 .constrainAs(emailFailed) {
                                     start.linkTo(
@@ -196,7 +215,7 @@ private fun RegisterContent(
                                 }
                         )
 
-                        FieldHintSection(
+                        BasicFieldSection(
                             theme = theme,
                             dimen = dimen,
                             title = stringResource(
@@ -205,10 +224,10 @@ private fun RegisterContent(
                             hint = stringResource(
                                 com.example.sharedui.R.string.your_password
                             ),
-                            value = "",
-                            password = true,
-                            visibleIconColor = theme.visibleGray,
-                            onChange = {},
+                            value = uiState.passwordKey,
+                            fieldIsPassword = true,
+                            endIconColor = theme.visibleGray,
+                            onChange = onPasswordChanged,
                             modifier = Modifier
                                 .constrainAs(passwordFailed) {
                                     start.linkTo(
@@ -231,8 +250,8 @@ private fun RegisterContent(
                             dimen = dimen,
                             theme = theme,
                             fontColor = theme.black,
-                            checked = false,
-                            onCheckedChange = {},
+                            checked = uiState.rememberKey,
+                            onCheckedChange = onRememberChanged,
                             modifier = Modifier
                                 .constrainAs(rememberSection) {
                                     start.linkTo(

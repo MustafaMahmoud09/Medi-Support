@@ -11,12 +11,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.sharedui.uiElement.components.composable.CircleProgressView
@@ -24,38 +22,43 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.auth.R
 import com.example.auth.uiElement.components.composable.IconStartButtonView
 import com.example.auth.uiElement.components.items.MultiTextColorSection
 import com.example.auth.uiElement.components.items.RememberSection
+import com.example.auth.uiState.state.LoginUiState
+import com.example.auth.uiState.viewModel.LoginViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalGrayDarkView
 import com.example.sharedui.uiElement.components.composable.TextNormalRedView
-import com.example.sharedui.uiElement.components.items.FieldHintSection
+import com.example.sharedui.uiElement.components.items.BasicFieldSection
 import com.example.sharedui.uiElement.screen.BaseScreen
-import kotlinx.coroutines.delay
 
 @Composable
 internal fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel(),
     navigateToRegisterDestination: () -> Unit,
     navigateToForgotPasswordNavGraph: () -> Unit,
     navigateToBottomDestination: () -> Unit
 ) {
+    val state = viewModel.state.collectAsState()
 
     LoginContent(
-        onClickCreateAccount = { navigateToRegisterDestination() },
-        onClickForgotPassword = { navigateToForgotPasswordNavGraph() },
-        onClickLogin = { navigateToBottomDestination() }
+        onClickCreateAccount = navigateToRegisterDestination,
+        onClickForgotPassword = navigateToForgotPasswordNavGraph,
+        onClickLogin = navigateToBottomDestination,
+        uiState = state.value,
+        onEmailChanged = viewModel::onEmailChanged,
+        onPasswordChanged = viewModel::onPasswordChanged,
+        onRememberChanged = viewModel::onRememberChanged
     )
 }//end LoginScreen
 
@@ -65,11 +68,12 @@ private fun LoginContent(
     theme: CustomTheme = MediSupportAppTheme(),
     onClickCreateAccount: () -> Unit,
     onClickForgotPassword: () -> Unit,
-    onClickLogin: () -> Unit
+    onClickLogin: () -> Unit,
+    uiState: LoginUiState,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onRememberChanged: (Boolean) -> Unit
 ) {
-    var state by rememberSaveable {
-        mutableStateOf(true)
-    }
 
     BaseScreen(
         navigationColor = theme.background,
@@ -77,7 +81,7 @@ private fun LoginContent(
     ) {
 
         AnimatedVisibility(
-            visible = state,
+            visible = uiState.pageLoad,
             enter = fadeIn(
                 animationSpec = tween(150)
             ),
@@ -113,7 +117,7 @@ private fun LoginContent(
         }//end AnimatedVisibility
 
         AnimatedVisibility(
-            visible = !state,
+            visible = !uiState.pageLoad,
             enter = fadeIn(
                 animationSpec = tween(150)
             ),
@@ -186,7 +190,7 @@ private fun LoginContent(
                                 forgotPassword, loginButton, googleButton, facebookButton, line, donHaveAccount
                             ) = createRefs()
 
-                            FieldHintSection(
+                            BasicFieldSection(
                                 theme = theme,
                                 dimen = dimen,
                                 title = stringResource(
@@ -195,8 +199,8 @@ private fun LoginContent(
                                 hint = stringResource(
                                     R.string.your_email
                                 ),
-                                value = "",
-                                onChange = {},
+                                value = uiState.emailKey,
+                                onChange = onEmailChanged,
                                 modifier = Modifier
                                     .constrainAs(emailFailed) {
                                         start.linkTo(
@@ -212,7 +216,7 @@ private fun LoginContent(
                                     }
                             )
 
-                            FieldHintSection(
+                            BasicFieldSection(
                                 theme = theme,
                                 dimen = dimen,
                                 title = stringResource(
@@ -221,9 +225,9 @@ private fun LoginContent(
                                 hint = stringResource(
                                     com.example.sharedui.R.string.your_password
                                 ),
-                                value = "",
-                                password = true,
-                                onChange = {},
+                                value = uiState.passwordKey,
+                                fieldIsPassword = true,
+                                onChange = onPasswordChanged,
                                 modifier = Modifier
                                     .constrainAs(passwordFailed) {
                                         start.linkTo(
@@ -271,8 +275,8 @@ private fun LoginContent(
                                 dimen = dimen,
                                 theme = theme,
                                 fontColor = theme.redIcon,
-                                checked = false,
-                                onCheckedChange = {},
+                                checked = uiState.rememberKey,
+                                onCheckedChange = onRememberChanged,
                                 modifier = Modifier
                                     .constrainAs(rememberSection) {
                                         start.linkTo(
@@ -455,13 +459,5 @@ private fun LoginContent(
         }//end AnimatedVisibility
 
     }//end BaseScreen
-
-    LaunchedEffect(
-        key1 = true
-    ) {
-
-        delay(900)
-        state = false
-    }//end LaunchedEffect
 
 }//end LoginContent

@@ -1,35 +1,44 @@
 package com.example.auth.uiState.viewModel
 
-import com.example.auth.uiState.state.LoginUiState
+import com.example.auth.uiState.state.RegisterUiState
 import com.example.sharedui.uiState.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class LoginViewModel @Inject constructor() : BaseViewModel() {
+internal class RegisterViewModel @Inject constructor() : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(LoginUiState())
+    private val _state = MutableStateFlow(RegisterUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
 
-    init {
 
-        //finish page load after 900 millis here
-        getCoroutineScope().launch {
+    fun onFirstNameChanged(newValue: String) {
 
-            delay(900)
-            onPageLoadFinished()
+        //update first name here
+        _state.update {
+            it.copy(
+                firstNameKey = newValue
+            )
+        }//end update
 
-        }//end Launch
+    }//end onFirstNameChanged
 
-    }//end init
+    fun onLastNameChange(newValue: String) {
+
+        //update last name here
+        _state.update {
+            it.copy(
+                lastNameKey = newValue
+            )
+        }//end update
+
+    }//end onLastNameChange
 
     fun onEmailChanged(newValue: String) {
 
@@ -64,15 +73,4 @@ internal class LoginViewModel @Inject constructor() : BaseViewModel() {
 
     }//end onRememberChanged
 
-    private fun onPageLoadFinished() {
-
-        //update page load here
-        _state.update {
-            it.copy(
-                pageLoad = false
-            )
-        }//end update
-
-    }//end onPageLoadFinished
-
-}//end LoginViewModel
+}//end RegisterViewModel

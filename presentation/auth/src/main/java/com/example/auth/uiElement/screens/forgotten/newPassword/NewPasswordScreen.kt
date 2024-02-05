@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -20,11 +21,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.auth.R
+import com.example.auth.uiState.state.ForgottenUiState
+import com.example.auth.uiState.viewModel.ForgottenViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.DialogBasicSection
-import com.example.sharedui.uiElement.components.items.FieldHintSection
+import com.example.sharedui.uiElement.components.items.BasicFieldSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -33,11 +37,16 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun NewPasswordScreen(
+    viewModel: ForgottenViewModel = hiltViewModel(),
     backToLoginNavGraph: () -> Unit
 ) {
+    val state = viewModel.state.collectAsState()
 
     NewPasswordContent(
-        onClickBackLogin = { backToLoginNavGraph() }
+        onClickBackLogin =  backToLoginNavGraph,
+        uiState = state.value,
+        onNewPasswordChanged = viewModel::onNewPasswordChanged,
+        onConfirmPasswordChanged = viewModel::onConfirmPasswordChanged
     )
 }//end NewPasswordScreen
 
@@ -45,7 +54,10 @@ internal fun NewPasswordScreen(
 private fun NewPasswordContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
-    onClickBackLogin: () -> Unit
+    onClickBackLogin: () -> Unit,
+    uiState: ForgottenUiState,
+    onNewPasswordChanged: (String) -> Unit,
+    onConfirmPasswordChanged: (String) -> Unit
 ) {
 
     var isShowDialog by rememberSaveable { mutableStateOf(false) }
@@ -64,8 +76,6 @@ private fun NewPasswordContent(
                 )
         ) {
             val (title, passwordFailed, confirmPassword, resetPasswordButton, dialog) = createRefs()
-//            val guideLineFromTop25P = createGuidelineFromTop(25f)
-//            val guideLineFromBottom25P = createGuidelineFromBottom(25f)
 
             //dialog back to login destination
             AnimatedVisibility(
@@ -138,7 +148,7 @@ private fun NewPasswordContent(
                     }
             )
 
-            FieldHintSection(
+            BasicFieldSection(
                 theme = theme,
                 dimen = dimen,
                 title = stringResource(
@@ -147,9 +157,9 @@ private fun NewPasswordContent(
                 hint = stringResource(
                     com.example.sharedui.R.string.your_password
                 ),
-                value = "",
-                password = true,
-                onChange = {},
+                value = uiState.newPasswordKey,
+                fieldIsPassword = true,
+                onChange = onNewPasswordChanged,
                 modifier = Modifier
                     .constrainAs(passwordFailed) {
                         start.linkTo(
@@ -168,7 +178,7 @@ private fun NewPasswordContent(
                     }
             )
 
-            FieldHintSection(
+            BasicFieldSection(
                 theme = theme,
                 dimen = dimen,
                 title = stringResource(
@@ -177,9 +187,9 @@ private fun NewPasswordContent(
                 hint = stringResource(
                     com.example.sharedui.R.string.your_password
                 ),
-                value = "",
-                password = true,
-                onChange = {},
+                value = uiState.confirmNewPasswordKey,
+                fieldIsPassword = true,
+                onChange = onConfirmPasswordChanged,
                 modifier = Modifier
                     .constrainAs(confirmPassword) {
                         start.linkTo(

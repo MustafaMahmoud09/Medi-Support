@@ -1,8 +1,8 @@
 package com.example.article.uiElement.components.items
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,13 +10,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.article.uiElement.components.composable.EndIconButtonRadiusView
+import com.example.sharedui.uiElement.components.composable.CropImageView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -33,6 +33,8 @@ internal fun ArticleSection(
     src: Painter,
     title: String,
     onClickOnButton: () -> Unit,
+    buttonWidth: Float = dimen.dimen_15,
+    buttonHeight: Float = dimen.dimen_3,
     modifier: Modifier = Modifier
 ) {
 
@@ -52,8 +54,6 @@ internal fun ArticleSection(
     ) {
         val (imageId, titleId, buttonId) = createRefs()
         val guideLineStart45P = createGuidelineFromStart(0.45f)
-        val guidLineEnd18P = createGuidelineFromEnd(0.18f)
-
 
         TextNormalView(
             theme = theme,
@@ -83,14 +83,13 @@ internal fun ArticleSection(
             title = stringResource(
                 com.example.sharedui.R.string.read_now
             ),
-            onClick = onClickOnButton ,
+            onClick = onClickOnButton,
             modifier = Modifier
                 .constrainAs(buttonId) {
                     start.linkTo(
-                        imageId.end,
+                        guideLineStart45P,
                         dimen.dimen_1_25.dp
                     )
-                    end.linkTo(guidLineEnd18P)
                     top.linkTo(
                         titleId.bottom,
                         dimen.dimen_1_75.dp
@@ -99,14 +98,15 @@ internal fun ArticleSection(
                         parent.bottom,
                         dimen.dimen_1_5.dp
                     )
-                    width = Dimension.fillToConstraints
                 }
+                .size(
+                    width = buttonWidth.dp,
+                    height = buttonHeight.dp
+                )
         )
 
-        Image(
+        CropImageView(
             painter = src,
-            contentDescription = "image",
-            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .constrainAs(imageId) {
                     start.linkTo(parent.start)

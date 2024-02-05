@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,6 +43,8 @@ internal fun DoctorSearchSection(
     shape: Shape = RoundedCornerShape(
         size = dimen.dimen_1_25.dp
     ),
+    buttonWidth: Float = dimen.dimen_15,
+    buttonHeight: Float = dimen.dimen_3,
     textButton: String,
     modifier: Modifier = Modifier
 ) {
@@ -61,7 +64,6 @@ internal fun DoctorSearchSection(
         //create ids to components
         val (nameId, locationId, timeId, ratingId, buttonId, paddingBottomId, imageId) = createRefs()
         val guideFromStart42P = createGuidelineFromStart(0.42f)
-        val guideFromStart80P = createGuidelineFromStart(0.80f)
 
         //create name text here
         TextSemiBoldView(
@@ -183,13 +185,15 @@ internal fun DoctorSearchSection(
             modifier = Modifier
                 .constrainAs(buttonId) {
                     start.linkTo(ratingId.start)
-                    end.linkTo(guideFromStart80P)
                     top.linkTo(
                         ratingId.bottom,
                         dimen.dimen_1_5.dp
                     )
-                    width = Dimension.fillToConstraints
                 }
+                .size(
+                    width = buttonWidth.dp,
+                    height = buttonHeight.dp
+                )
                 .aspectRatio(5f)
         )
 

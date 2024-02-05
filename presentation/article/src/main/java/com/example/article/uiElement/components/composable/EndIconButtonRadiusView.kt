@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
+import com.example.sharedui.uiElement.components.modifier.appBorder
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -42,7 +44,11 @@ internal fun EndIconButtonRadiusView(
 
     ConstraintLayout(
         modifier = modifier
-            .aspectRatio(5.5f)
+            .appBorder(
+                borderWidth = borderSize,
+                borderColor = borderColor,
+                shape = shape
+            )
             .clip(
                 shape = shape
             )
@@ -51,12 +57,7 @@ internal fun EndIconButtonRadiusView(
                 color = borderColor,
                 shape = shape
             )
-            .clickable(
-                interactionSource = remember {
-                    MutableInteractionSource()
-                },
-                indication = null
-            ) {
+            .clickableWithoutHover {
                 onClick()
             }
     ) {

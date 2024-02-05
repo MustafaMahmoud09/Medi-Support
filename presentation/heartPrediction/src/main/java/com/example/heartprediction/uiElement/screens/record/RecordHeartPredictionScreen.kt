@@ -5,6 +5,7 @@ package com.example.heartprediction.uiElement.screens.record
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -231,201 +232,160 @@ private fun RecordHeartPredictionContent(
                     end = dimen.dimen_2.dp,
                     top = dimen.dimen_2.dp,
                     bottom = dimen.dimen_1.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = dimen.dimen_2.dp
                 )
             ) {
-
-                item(
-                    key = 0
-                ) {
-
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Cholesterol Levels",
-                        hint = "Your Cholesterol Level",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[0],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 0,
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    )
-
-                }
 
                 item(
                     key = 1
                 ) {
 
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Resting Electrocardiographic Results",
-                        hint = "Your ECG",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[1],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 1,
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
+                        verticalArrangement = Arrangement.spacedBy(
+                            space = dimen.dimen_2.dp
+                        )
+                    ) {
 
-                }
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Cholesterol Levels",
+                            hint = "Your Cholesterol Level",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[0],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 0,
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
 
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Resting Electrocardiographic Results",
+                            hint = "Your ECG",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[1],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 1,
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
 
-                item(
-                    key = 2
-                ) {
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Cholesterol Levels",
+                            hint = "Your Cholesterol Level",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[2],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 2,
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
 
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Cholesterol Levels",
-                        hint = "Your Cholesterol Level",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[2],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 2,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Resting Electrocardiographic Results",
+                            hint = "Your ECG",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[3],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 3,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                        )
 
-                }
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Cholesterol Levels",
+                            hint = "Your Cholesterol Level",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[4],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 4,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                        )
 
-                item(
-                    key = 3
-                ) {
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Resting Electrocardiographic Results",
+                            hint = "Your ECG",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[5],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 5,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                        )
 
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Resting Electrocardiographic Results",
-                        hint = "Your ECG",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[3],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 3,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Cholesterol Levels",
+                            hint = "Your Cholesterol Level",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[6],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 6,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                        )
 
-                }
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Resting Electrocardiographic Results",
+                            hint = "Your ECG",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[7],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 7,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                        )
 
-                item(
-                    key = 4
-                ) {
+                        InputFieldSection(
+                            dimen = dimen,
+                            theme = theme,
+                            title = "Cholesterol Levels",
+                            hint = "Your Cholesterol Level",
+                            value = "",
+                            onChange = {},
+                            focusRequester = focusRequesters[8],
+                            keyboardType = KeyboardType.Number,
+                            numberField = 8,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            numberFieldIsFocusNow = numberFieldIsFocus.value,
+                        )
 
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Cholesterol Levels",
-                        hint = "Your Cholesterol Level",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[4],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 4,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
+                    }//end Column
 
-                }
+                }//end item
 
-                item(
-                    key = 5
-                ) {
-
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Resting Electrocardiographic Results",
-                        hint = "Your ECG",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[5],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 5,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
-
-                }
-
-                item(
-                    key = 6
-                ) {
-
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Cholesterol Levels",
-                        hint = "Your Cholesterol Level",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[6],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 6,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
-
-                }
-
-                item(
-                    key = 7
-                ) {
-
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Resting Electrocardiographic Results",
-                        hint = "Your ECG",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[7],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 7,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
-
-                }
-
-                item(
-                    key = 8
-                ) {
-
-                    InputFieldSection(
-                        dimen = dimen,
-                        theme = theme,
-                        title = "Cholesterol Levels",
-                        hint = "Your Cholesterol Level",
-                        value = "",
-                        onChange = {},
-                        focusRequester = focusRequesters[8],
-                        keyboardType = KeyboardType.Number,
-                        numberField = 8,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        numberFieldIsFocusNow = numberFieldIsFocus.value,
-                    )
-
-                }
 
             }//end LazyColumn
 
@@ -488,22 +448,10 @@ private fun RecordHeartPredictionContent(
         key1 = numberFieldIsFocus.value
     ) {
 
-        try {
 
-            //set focus on field is focus now
-            focusRequesters[numberFieldIsFocus.value].requestFocus()
+        //set focus on field is focus now
+        focusRequesters[numberFieldIsFocus.value].requestFocus()
 
-        }//try
-        catch (ex: Exception) {
-
-            //scroll to field is focus now
-            containerFieldsState.animateScrollToItem(
-                index = numberFieldIsFocus.value
-            )
-            //set focus on field is focus now
-            focusRequesters[numberFieldIsFocus.value].requestFocus()
-
-        }//end catch
 
     }//end LaunchedEffect
 

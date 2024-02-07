@@ -9,17 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.sharedui.uiElement.components.composable.LineChartView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.patrykandpatrick.vico.compose.axis.axisGuidelineComponent
+import com.patrykandpatrick.vico.compose.axis.axisLabelComponent
 import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.component.shape.LineComponent
+import com.patrykandpatrick.vico.core.component.text.TextComponent
 import com.patrykandpatrick.vico.core.dimensions.emptyDimensions
 import com.patrykandpatrick.vico.core.entry.ChartEntryModel
 
 @Composable
-internal fun SingleLineChartSection(
+internal fun HeartRateLineChartSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     xAxisData: List<String>,
@@ -31,10 +34,15 @@ internal fun SingleLineChartSection(
         shape = currentChartStyle.axis.axisLineShape,
         margins = emptyDimensions(),
     ),
+    bottomLabel: TextComponent? = axisLabelComponent(
+        color = theme.black,
+        textSize = dimen.dimen_1_5.sp
+    ),
     roundSize: Float = dimen.dimen_2,
     modifier: Modifier = Modifier
 ) {
 
+    //create container here
     Box(
         modifier = modifier
             .clip(
@@ -55,6 +63,7 @@ internal fun SingleLineChartSection(
             )
     ) {
 
+        //create line chart here
         LineChartView(
             dimen = dimen,
             theme = theme,
@@ -62,6 +71,7 @@ internal fun SingleLineChartSection(
             maxValue = maxValue,
             xAxisData = xAxisData,
             guideLine = guideLine,
+            bottomLabel = bottomLabel,
             modifier = Modifier
                 .fillMaxSize()
         )

@@ -32,7 +32,9 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredicti
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.navigateToHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.popHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.heartRateNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToHeartRateNavGraph
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
@@ -54,6 +56,8 @@ import com.example.heartprediction.uiElement.screens.prediction.navigateToPredic
 import com.example.heartprediction.uiElement.screens.prediction.popPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.record.navigateToRecordHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.record.popRecordHeartPredictionDestination
+import com.example.heartrate.uiElement.screens.measurement.popMeasurementHeartRateDestination
+import com.example.heartrate.uiElement.screens.statistics.navigateToStatisticsHeartRateDestination
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
@@ -102,7 +106,8 @@ fun RootNavGraph(
                     navigateToHeartPredictionNavGraph = navHostController::navigateToHeartPredictionNavGraph,
                     navigateToBmiNavGraph = navHostController::navigateToBmiNavGraph,
                     navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraph,
-                    navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraph
+                    navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraph,
+                    navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraph
                 )
 
                 activityNavGraph(
@@ -138,6 +143,11 @@ fun RootNavGraph(
                     popRecordBloodSugarDestination = navHostController::popRecordBloodSugarDestination,
                     popStatisticsBloodSugarDestination = navHostController::popStatisticsBloodSugarDestination,
                     navigateToRecordBloodSugarDestination = navHostController::navigateToRecordBloodSugarDestination
+                )
+
+                heartRateNavGraph(
+                    popMeasurementHeartRateDestination = navHostController::popMeasurementHeartRateDestination,
+                    navigateToStatisticsHeartRateDestination = navHostController::navigateToStatisticsHeartRateDestination
                 )
 
             }//end AnimatedNavHost

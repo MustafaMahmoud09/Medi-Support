@@ -33,6 +33,7 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlin.reflect.KFunction0
 
 //function for collect state and execute action from view model
 @Composable
@@ -41,7 +42,8 @@ internal fun DoctorSearchScreen(
     navigateToAddReminderDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
@@ -56,6 +58,7 @@ internal fun DoctorSearchScreen(
         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
         navigateToBmiNavGraph = navigateToBmiNavGraph,
         navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+        navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
         onClickSeeAll = {
             //execute scroll to see all doctor screen
             coroutineScope.launch {
@@ -110,7 +113,8 @@ private fun DoctorSearchContent(
     onClickOnReminder: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit
 ) {
 
     //create container here
@@ -232,7 +236,8 @@ private fun DoctorSearchContent(
                         navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
                         navigateToBmiNavGraph = navigateToBmiNavGraph,
                         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
-                        navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+                        navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+                        navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
                     )
                 }//end case
                 //if page is 1 show search screen

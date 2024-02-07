@@ -60,6 +60,7 @@ fun NavGraphBuilder.determinationBMIDestination(
         route = DETERMINATION_BMI_DESTINATION_ROUTE,//define route name here
         enterTransition = { enterTransitionZero() },//define enter transition method here
         popExitTransition = { exitTransition() },//define pop exit transition method here
+        exitTransition = { exitTransition() }
     ) {
 
         //create determination bmi screen here

@@ -2,6 +2,7 @@ package com.example.sharedui.uiElement.style.dimens
 
 
 data class CustomDimen(
+    val dimen_0_075: Float,
     val dimen_0: Float,
     val dimen_0_125: Float,
     val dimen_0_25: Float,

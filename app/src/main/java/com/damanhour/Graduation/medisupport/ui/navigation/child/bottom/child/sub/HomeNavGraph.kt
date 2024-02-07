@@ -16,8 +16,10 @@ import com.example.sharedui.uiElement.components.navigation.BottomDestination
 import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
+import kotlin.reflect.KFunction0
 
-//create object from bottom destination class have icon and title for show in bottom navigation bar and route name
+//create object from bottom destination class have icon and title
+//for show in bottom navigation bar and route name
 //child list have child destinations to home nav graph to organize bottom nav graph
 val HOME_VAV_GRAPH_DATA = BottomDestination(
     route = "homeNavGraph",
@@ -40,7 +42,8 @@ internal fun NavHostController.popHomeNavGraph() {
 
 }//end popHomeNavGraph
 
-//function for create home nav graph and add destination to it and define start destination to it
+//function for create home nav graph
+//and add destination to it and define start destination to it
 internal fun NavGraphBuilder.homeNavGraph(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,
@@ -49,7 +52,8 @@ internal fun NavGraphBuilder.homeNavGraph(
     popReminderRecordsDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit
 ) {
     //create home nav graph
     navigation(
@@ -64,7 +68,8 @@ internal fun NavGraphBuilder.homeNavGraph(
             navigateToAddReminderDestination = navigateToAddReminderDestination,
             navigateToBmiNavGraph = navigateToBmiNavGraph,
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
-            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+            navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
         )
 
         addReminderDestination(

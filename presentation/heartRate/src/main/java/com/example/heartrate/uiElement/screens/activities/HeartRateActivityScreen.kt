@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.uiElement.components.items.SomeHistorySection
-import com.example.heartrate.uiElement.components.items.SingleLineChartSection
+import com.example.heartrate.uiElement.components.items.HeartRateLineChartSection
 import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -105,7 +105,7 @@ private fun HeartRateActivityContent(
                 }//end LazyRow
 
                 //create heart rate chart here
-                SingleLineChartSection(
+                HeartRateLineChartSection(
                     theme = theme,
                     dimen = dimen,
                     data = entryModelOf(60f, 60f, 90f, 120f, 100f, 50f, 100f),

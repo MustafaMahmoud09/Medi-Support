@@ -164,10 +164,10 @@ internal fun LazySliderSection(
         key1 = lazyRowState.isScrollInProgress,
     ) {
 
-        //define visible item here
+        //define visible items here
         val visibleItemsInfo = lazyRowState.layoutInfo.visibleItemsInfo
 
-        //if visible item list is not empty execute block
+        //if visible items list is not empty execute block
         if (visibleItemsInfo.isNotEmpty()) {
 
             //define center item value

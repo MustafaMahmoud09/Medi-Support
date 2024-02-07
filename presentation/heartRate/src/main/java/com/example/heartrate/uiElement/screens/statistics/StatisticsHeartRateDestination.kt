@@ -5,20 +5,44 @@ package com.example.heartrate.uiElement.screens.statistics
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.heartrate.uiElement.screens.measurement.MEASUREMENT_HEART_RATE_DESTINATION_ROUTE
+import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 const val STATISTICS_HEART_RATE_DESTINATION_ROUTE = "statisticsHeartRateDestination"
 
-fun NavGraphBuilder.statisticsHeartRateDestination(
-    navHostController: NavHostController
-) {
+fun NavHostController.navigateToStatisticsHeartRateDestination() {
 
-    composable(
+    navigate(
         route = STATISTICS_HEART_RATE_DESTINATION_ROUTE
     ) {
 
-        StatisticsHeartRateScreen(
-            navHostController = navHostController
-        )
+        popUpTo(
+            route = STATISTICS_HEART_RATE_DESTINATION_ROUTE
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+        popUpTo(
+            route = MEASUREMENT_HEART_RATE_DESTINATION_ROUTE
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToStatisticsHeartRateDestination
+
+fun NavGraphBuilder.statisticsHeartRateDestination() {
+
+    composable(
+        route = STATISTICS_HEART_RATE_DESTINATION_ROUTE,
+        enterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
+        popExitTransition = { exitTransition() }
+    ) {
+
+        StatisticsHeartRateScreen()
     }
 }//end statisticsHeartRateDestination

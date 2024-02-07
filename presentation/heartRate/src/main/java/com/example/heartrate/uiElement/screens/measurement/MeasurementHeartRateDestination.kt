@@ -9,16 +9,27 @@ import com.google.accompanist.navigation.animation.composable
 
 const val MEASUREMENT_HEART_RATE_DESTINATION_ROUTE = "measurementHeartRateDestination"
 
+fun NavHostController.popMeasurementHeartRateDestination() {
+
+    popBackStack(
+        route = MEASUREMENT_HEART_RATE_DESTINATION_ROUTE,
+        inclusive = true
+    )
+
+}//end popMeasurementHeartRateDestination
+
 fun NavGraphBuilder.measurementHeartRateDestination(
-    navHostController: NavHostController
-){
+    popMeasurementHeartRateDestination: () -> Unit,
+    navigateToStatisticsHeartRateDestination: () -> Unit
+) {
 
     composable(
         route = MEASUREMENT_HEART_RATE_DESTINATION_ROUTE
-    ){
+    ) {
 
         MeasurementHeartRateScreen(
-            navHostController = navHostController
+            popMeasurementHeartRateDestination = popMeasurementHeartRateDestination,
+            navigateToStatisticsHeartRateDestination = navigateToStatisticsHeartRateDestination
         )
     }
 }//end measurementHeartRateDestination

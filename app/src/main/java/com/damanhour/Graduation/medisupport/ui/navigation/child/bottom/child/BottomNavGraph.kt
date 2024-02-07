@@ -11,6 +11,7 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.moreNavGraph
 import com.example.profile.uiElement.screens.profile.profileDestination
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import kotlin.reflect.KFunction0
 
 @Composable
 internal fun BottomNavGraph(
@@ -31,7 +32,8 @@ internal fun BottomNavGraph(
     popReminderRecordsDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit
 ) {
 
     AnimatedNavHost(
@@ -47,7 +49,8 @@ internal fun BottomNavGraph(
             popReminderRecordsDestination = popReminderRecordsDestination,
             navigateToBmiNavGraph = navigateToBmiNavGraph,
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
-            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+            navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
         )
 
         articleNavGraph(

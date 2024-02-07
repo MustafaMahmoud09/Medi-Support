@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
+import kotlin.reflect.KFunction0
 
 //destination name
 const val DOCTOR_SEARCH_DESTINATION_ROUTE = "doctorSearchDestination"
@@ -17,7 +18,8 @@ fun NavGraphBuilder.doctorSearchDestination(
     navigateToAddReminderDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit
 ) {
     //create doctor search destination
     composable(
@@ -31,7 +33,8 @@ fun NavGraphBuilder.doctorSearchDestination(
             navigateToAddReminderDestination = navigateToAddReminderDestination,
             navigateToBmiNavGraph = navigateToBmiNavGraph,
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
-            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+            navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
         )
 
     }//end composable

@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 //width < 360
 private val smallDimensions = CustomDimen(
     dimen_0 = 0f,
+    dimen_0_075 = 0.375f,
     dimen_0_125 = .75f,
     dimen_0_25 = 1.5f,
     dimen_0_5 = 3f,
@@ -104,6 +105,7 @@ private val smallDimensions = CustomDimen(
 //width >= 360
 private val sw360Dimensions = CustomDimen(
     dimen_0 = 0f,
+    dimen_0_075 = 0.5f,
     dimen_0_125 = 1f,
     dimen_0_25 = 2f,
     dimen_0_5 = 4f,

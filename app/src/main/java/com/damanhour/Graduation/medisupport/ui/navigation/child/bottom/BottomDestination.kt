@@ -9,6 +9,7 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.AUTH_NAV_GR
 import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
+import kotlin.reflect.KFunction0
 
 //destination name
 const val BOTTOM_DESTINATION_ROUTE = "bottomDestination"
@@ -36,7 +37,8 @@ internal fun NavGraphBuilder.bottomDestination(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: KFunction0<Unit>
 ) {
     //create bottom destination
     composable(
@@ -51,7 +53,8 @@ internal fun NavGraphBuilder.bottomDestination(
             navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
             navigateToBmiNavGraph = navigateToBmiNavGraph,
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
-            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+            navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
         )
     }//end composable
 

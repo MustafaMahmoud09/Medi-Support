@@ -43,13 +43,13 @@ fun LineChartView(
     isZoomEnabled: Boolean = false,
     maxYLines: Int = 6,
     guideLine: LineComponent?,
-    axis: LineComponent = axisGuidelineComponent(
+    axis: LineComponent? = axisGuidelineComponent(
         color = theme.grayECECEC,
         strokeColor = theme.grayECECEC,
         shape = currentChartStyle.axis.axisLineShape,
         margins = emptyDimensions(),
     ),
-    tick: LineComponent = axisLineComponent(
+    tick: LineComponent? = axisLineComponent(
         color = theme.transparent,
         thickness = dimen.dimen_0.dp,
         strokeWidth = dimen.dimen_0.dp,
@@ -57,7 +57,11 @@ fun LineChartView(
         brush = null,
         margins = emptyDimensions(),
     ),
-    label: TextComponent = axisLabelComponent(
+    startLabel: TextComponent? = axisLabelComponent(
+        color = theme.black,
+        textSize = dimen.dimen_1_5.sp
+    ),
+    bottomLabel: TextComponent? = axisLabelComponent(
         color = theme.black,
         textSize = dimen.dimen_1_5.sp
     ),
@@ -80,7 +84,7 @@ fun LineChartView(
             axis = if (bottomAxisVisibility) axis else null,
             tick = tick,
             guideline = guideLine,
-            label = label,
+            label = startLabel,
             itemPlacer = AxisItemPlacer.Vertical.default(
                 maxYLines,
                 false
@@ -113,7 +117,7 @@ fun LineChartView(
             guideline = guideLine,
             tick = guideLine,
             tickLength = 0.25.dp,
-            label = label
+            label = bottomLabel
         )
     } else null,
     modifier: Modifier = Modifier

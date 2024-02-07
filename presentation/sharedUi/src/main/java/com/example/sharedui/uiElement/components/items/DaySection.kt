@@ -1,6 +1,5 @@
 package com.example.sharedui.uiElement.components.items
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +25,7 @@ fun DaySection(
     dayNumber: String,
     theme: CustomTheme,
     shape: Shape = CircleShape,
-    borderWidth: Float = dimen.dimen_0_125,
+    borderWidth: Float = dimen.dimen_0_125 + dimen.dimen_0_075,
     borderColor: Color = theme.redDarkTR50,
     textDayColor: Color = theme.black,
     textDaySize: Float = dimen.dimen_1_75,

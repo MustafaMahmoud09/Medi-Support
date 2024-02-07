@@ -33,7 +33,8 @@ internal fun HomeScreen(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit
 ) {
 
     //call home content function
@@ -44,7 +45,8 @@ internal fun HomeScreen(
         onClickHeartPrediction = navigateToHeartPredictionNavGraph,
         onClickOnBmiSection = navigateToBmiNavGraph,
         onClickOnBloodPressureSection = navigateToBloodPressureNavGraph,
-        onClickOmBloodSugarSection  = navigateToBloodSugarNavGraph
+        onClickOnBloodSugarSection = navigateToBloodSugarNavGraph,
+        onClickOnHeartRateSection = navigateToHeartRateNavGraph
     )
 }//end HomeScreen
 
@@ -57,7 +59,8 @@ private fun HomeContent(
     onClickHeartPrediction: () -> Unit,
     onClickOnBmiSection: () -> Unit,
     onClickOnBloodPressureSection: () -> Unit,
-    onClickOmBloodSugarSection: () -> Unit
+    onClickOnBloodSugarSection: () -> Unit,
+    onClickOnHeartRateSection: () -> Unit
 ) {
     //create lazy column here
     LazyColumn(
@@ -166,7 +169,7 @@ private fun HomeContent(
                     image = painterResource(
                         id = com.example.sharedui.R.drawable.heart_rate
                     ),
-                    onClick = {},
+                    onClick = onClickOnHeartRateSection,
                     modifier = Modifier
                         .constrainAs(heartRateId) {
                             start.linkTo(parent.start)
@@ -236,7 +239,7 @@ private fun HomeContent(
                     image = painterResource(
                         id = com.example.sharedui.R.drawable.blood_sugar
                     ),
-                    onClick = onClickOmBloodSugarSection,
+                    onClick = onClickOnBloodSugarSection,
                     modifier = Modifier
                         .constrainAs(bloodSugarId) {
                             start.linkTo(parent.start)

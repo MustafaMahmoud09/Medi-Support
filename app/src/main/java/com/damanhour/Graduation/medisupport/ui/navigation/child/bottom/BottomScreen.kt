@@ -45,6 +45,7 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import kotlin.reflect.KFunction0
 
 @Composable
 internal fun BottomScreen(
@@ -53,7 +54,8 @@ internal fun BottomScreen(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: KFunction0<Unit>
 ) {
 
     val items = listOf(
@@ -84,7 +86,8 @@ internal fun BottomScreen(
         popReminderRecordsDestination = navHostController::popReminderRecordsDestination,
         navigateToBmiNavGraph = navigateToBmiNavGraph,
         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
-        navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+        navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+        navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
     )
 }//end BottomScreen
 
@@ -112,7 +115,8 @@ private fun BottomContent(
     popReminderRecordsDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToHeartRateNavGraph: KFunction0<Unit>
 ) {
 
     BaseScreen(
@@ -188,7 +192,8 @@ private fun BottomContent(
                     popReminderRecordsDestination = popReminderRecordsDestination,
                     navigateToBmiNavGraph = navigateToBmiNavGraph,
                     navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
-                    navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+                    navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+                    navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
                 )
 
             }//end Box

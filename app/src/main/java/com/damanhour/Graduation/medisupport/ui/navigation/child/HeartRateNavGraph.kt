@@ -24,7 +24,9 @@ internal fun NavHostController.navigateToHeartRateNavGraph() {
 
 internal fun NavGraphBuilder.heartRateNavGraph(
     popMeasurementHeartRateDestination: () -> Unit,
-    navigateToStatisticsHeartRateDestination: () -> Unit
+    navigateToStatisticsHeartRateDestination: () -> Unit,
+    popStatisticsHeartRateDestination: () -> Unit,
+    navigateToMeasurementHeartRateDestination: () -> Unit
 ) {
 
     navigation(
@@ -33,7 +35,10 @@ internal fun NavGraphBuilder.heartRateNavGraph(
         enterTransition = { enterTransitionZero() },
         popExitTransition = { exitTransition() }
     ) {
-        statisticsHeartRateDestination()
+        statisticsHeartRateDestination(
+            popStatisticsHeartRateDestination = popStatisticsHeartRateDestination,
+            navigateToMeasurementHeartRateDestination = navigateToMeasurementHeartRateDestination
+        )
 
         measurementHeartRateDestination(
             popMeasurementHeartRateDestination = popMeasurementHeartRateDestination,

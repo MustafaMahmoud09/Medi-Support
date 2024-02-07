@@ -33,15 +33,23 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 
 @Composable
-internal fun StatisticsHeartRateScreen() {
+internal fun StatisticsHeartRateScreen(
+    popStatisticsHeartRateDestination: () -> Unit,
+    navigateToMeasurementHeartRateDestination: () -> Unit
+) {
 
-    StatisticsHeartRateContent()
+    StatisticsHeartRateContent(
+        onClickOnBackButton = popStatisticsHeartRateDestination,
+        onClickOnAddRecordButton = navigateToMeasurementHeartRateDestination
+    )
 }//end StatisticsHeartRateScreen
 
 @Composable
 private fun StatisticsHeartRateContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
+    onClickOnBackButton: () -> Unit,
+    onClickOnAddRecordButton: () -> Unit,
 ) {
 
     //create base screen to set navigation and status bar color here
@@ -64,7 +72,7 @@ private fun StatisticsHeartRateContent(
             HeaderSection(
                 dimen = dimen,
                 theme = theme,
-                onClickOnBackButton = {},
+                onClickOnBackButton = onClickOnBackButton,
                 title = stringResource(
                     id = R.string.heart_rate
                 ),
@@ -93,7 +101,7 @@ private fun StatisticsHeartRateContent(
                 text = stringResource(
                     id = R.string.add_record
                 ),
-                onClick = {},
+                onClick = onClickOnAddRecordButton,
                 modifier = Modifier
                     .constrainAs(addRecordButtonId) {
                         start.linkTo(

@@ -9,6 +9,14 @@ import com.google.accompanist.navigation.animation.composable
 
 const val MEASUREMENT_HEART_RATE_DESTINATION_ROUTE = "measurementHeartRateDestination"
 
+fun NavHostController.navigateToMeasurementHeartRateDestination() {
+
+    navigate(
+        route = MEASUREMENT_HEART_RATE_DESTINATION_ROUTE
+    )
+
+}//navigateToRecordBMIDestination
+
 fun NavHostController.popMeasurementHeartRateDestination() {
 
     popBackStack(

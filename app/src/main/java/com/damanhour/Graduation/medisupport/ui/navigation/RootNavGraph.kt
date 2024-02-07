@@ -56,8 +56,10 @@ import com.example.heartprediction.uiElement.screens.prediction.navigateToPredic
 import com.example.heartprediction.uiElement.screens.prediction.popPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.record.navigateToRecordHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.record.popRecordHeartPredictionDestination
+import com.example.heartrate.uiElement.screens.measurement.navigateToMeasurementHeartRateDestination
 import com.example.heartrate.uiElement.screens.measurement.popMeasurementHeartRateDestination
 import com.example.heartrate.uiElement.screens.statistics.navigateToStatisticsHeartRateDestination
+import com.example.heartrate.uiElement.screens.statistics.popStatisticsHeartRateDestination
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
@@ -147,7 +149,9 @@ fun RootNavGraph(
 
                 heartRateNavGraph(
                     popMeasurementHeartRateDestination = navHostController::popMeasurementHeartRateDestination,
-                    navigateToStatisticsHeartRateDestination = navHostController::navigateToStatisticsHeartRateDestination
+                    navigateToStatisticsHeartRateDestination = navHostController::navigateToStatisticsHeartRateDestination,
+                    popStatisticsHeartRateDestination = navHostController::popStatisticsHeartRateDestination,
+                    navigateToMeasurementHeartRateDestination = navHostController::navigateToMeasurementHeartRateDestination
                 )
 
             }//end AnimatedNavHost

@@ -34,7 +34,21 @@ fun NavHostController.navigateToStatisticsHeartRateDestination() {
 
 }//end navigateToStatisticsHeartRateDestination
 
-fun NavGraphBuilder.statisticsHeartRateDestination() {
+//function for pop statistics heart rate Destination from back stack
+fun NavHostController.popStatisticsHeartRateDestination() {
+
+    //pop statistics blood pressure Destination here
+    popBackStack(
+        route = STATISTICS_HEART_RATE_DESTINATION_ROUTE,
+        inclusive = true
+    )
+
+}//end popStatisticsBloodPressureDestination
+
+fun NavGraphBuilder.statisticsHeartRateDestination(
+    popStatisticsHeartRateDestination: () -> Unit,
+    navigateToMeasurementHeartRateDestination: () -> Unit
+) {
 
     composable(
         route = STATISTICS_HEART_RATE_DESTINATION_ROUTE,
@@ -43,6 +57,9 @@ fun NavGraphBuilder.statisticsHeartRateDestination() {
         popExitTransition = { exitTransition() }
     ) {
 
-        StatisticsHeartRateScreen()
+        StatisticsHeartRateScreen(
+            popStatisticsHeartRateDestination = popStatisticsHeartRateDestination,
+            navigateToMeasurementHeartRateDestination = navigateToMeasurementHeartRateDestination
+        )
     }
 }//end statisticsHeartRateDestination

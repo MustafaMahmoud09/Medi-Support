@@ -1,6 +1,5 @@
 package com.example.sharedui.uiElement.components.modifier
 
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Stable

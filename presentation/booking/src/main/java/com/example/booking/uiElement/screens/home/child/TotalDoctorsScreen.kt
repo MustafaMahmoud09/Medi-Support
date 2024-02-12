@@ -1,4 +1,4 @@
-package com.example.booking.uiElement.screens.search.child
+package com.example.booking.uiElement.screens.home.child
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,13 +21,13 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 //function for collect state and execute action from view model
 @Composable
-internal fun SeeAllDoctorScreen(
+internal fun TotalDoctorsScreen(
     dimen: CustomDimen,
     theme: CustomTheme
 ) {
 
     //call see all doctor content function
-    SeeAllDoctorContent(
+    TotalDoctorsContent(
         dimen = dimen,
         theme = theme
     )
@@ -35,7 +35,7 @@ internal fun SeeAllDoctorScreen(
 
 //function for observe state and draw components
 @Composable
-private fun SeeAllDoctorContent(
+private fun TotalDoctorsContent(
     dimen: CustomDimen,
     theme: CustomTheme
 ) {

@@ -1,30 +1,27 @@
 package com.example.profile.uiElement.components.items
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.sharedui.uiElement.components.composable.CircleImageView
+import com.example.sharedui.uiElement.components.composable.CropImageView
+import com.example.sharedui.uiElement.components.modifier.appBorder
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -35,10 +32,22 @@ internal fun UserProfileSection(
     painter: Painter,
     onClick: () -> Unit,
     size: Float = dimen.dimen_18_75,
-    borderColor: Color = theme.redDark,
+    profileBorderColor: Color = theme.redDark,
+    profileBorderWidth: Float = dimen.dimen_0_125,
+    profileShape: Shape = CircleShape,
+    editShape: Shape = RoundedCornerShape(
+        size = dimen.dimen_1_25.dp
+    ),
+    editBorderColor: Color = theme.redDarkDash,
+    editBorderWidth: Float = dimen.dimen_0_125,
+    editBoxWidth: Float = dimen.dimen_3,
+    editBoxHeight: Float = dimen.dimen_2_5,
+    editIconSize: Float = dimen.dimen_1_5,
+    editIconTint: Color = theme.white,
     modifier: Modifier = Modifier
 ) {
 
+    //create container here
     ConstraintLayout(
         modifier = modifier
             .width(
@@ -46,9 +55,12 @@ internal fun UserProfileSection(
             )
             .height(size.dp)
     ) {
+        //create ids for components here
         val (edit, profile) = createRefs()
+        //create guides here
         val guideFromBottom15P = createGuidelineFromBottom(.15f)
 
+        //create profile image box here
         Box(
             modifier = Modifier
                 .constrainAs(profile) {
@@ -60,26 +72,27 @@ internal fun UserProfileSection(
                 .size(
                     size.dp
                 )
-                .clip(
-                    shape = CircleShape
-                )
-                .border(
-                    width = dimen.dimen_0_125.dp,
-                    color = borderColor,
-                    shape = CircleShape
+                .appBorder(
+                    borderWidth = profileBorderWidth,
+                    borderColor = profileBorderColor,
+                    shape = profileShape
                 )
         ) {
 
-            CircleImageView(
+            //create image here
+            CropImageView(
                 painter = painter,
-                contentDescription = "profile",
                 modifier = Modifier
                     .fillMaxSize()
+                    .clip(
+                        shape = CircleShape
+                    )
             )
 
         }//end Box
 
-        Row(
+        //create edit box here
+        Box(
             modifier = Modifier
                 .constrainAs(edit) {
                     end.linkTo(
@@ -89,34 +102,24 @@ internal fun UserProfileSection(
                     bottom.linkTo(guideFromBottom15P)
                 }
                 .size(
-                    dimen.dimen_3_5.dp
+                    width = editBoxWidth.dp,
+                    height =  editBoxHeight.dp
                 )
-                .clip(
-                    shape = CircleShape
+                .appBorder(
+                    borderColor =  editBorderColor,
+                    borderWidth = editBorderWidth,
+                    shape = editShape
                 )
                 .background(
                     color = theme.redDark
                 )
-                .border(
-                    width = dimen.dimen_0_125.dp,
-                    color = theme.redDarkDash,
-                    shape = CircleShape
-                )
-                .clickable(
-                    interactionSource = remember {
-                        MutableInteractionSource()
-                    },
-                    indication = null
-                ) {
+                .clickableWithoutHover {
                     onClick()
-                }
-                .padding(
-                    dimen.dimen_0_5.dp
-                ),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End
+                },
+            contentAlignment = Alignment.Center
         ) {
 
+            //create edit icon here
             Icon(
                 painter = painterResource(
                     id = com.example.sharedui.R.drawable.edit
@@ -124,12 +127,12 @@ internal fun UserProfileSection(
                 contentDescription = "",
                 modifier = Modifier
                     .size(
-                        dimen.dimen_1_5.dp
+                        size = editIconSize.dp
                     ),
-                tint = theme.white
+                tint = editIconTint
             )
 
-        }//end Row
+        }//end Box
 
     }//end ConstraintLayout
 

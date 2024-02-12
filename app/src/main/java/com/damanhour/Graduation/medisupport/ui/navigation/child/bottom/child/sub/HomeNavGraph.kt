@@ -5,8 +5,8 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.su
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.booking.uiElement.screens.search.DOCTOR_SEARCH_DESTINATION_ROUTE
-import com.example.booking.uiElement.screens.search.doctorSearchDestination
+import com.example.booking.uiElement.screens.home.DOCTOR_SEARCH_DESTINATION_ROUTE
+import com.example.booking.uiElement.screens.home.homeDestination
 import com.example.reminder.uiElement.screens.add.ADD_REMINDER_DESTINATION_ROUTE
 import com.example.reminder.uiElement.screens.add.addReminderDestination
 import com.example.reminder.uiElement.screens.records.REMINDER_RECORDS_DESTINATION_ROUTE
@@ -16,7 +16,6 @@ import com.example.sharedui.uiElement.components.navigation.BottomDestination
 import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.components.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
-import kotlin.reflect.KFunction0
 
 //create object from bottom destination class have icon and title
 //for show in bottom navigation bar and route name
@@ -63,7 +62,7 @@ internal fun NavGraphBuilder.homeNavGraph(
         exitTransition = { exitTransition() }//define exit transition method
     ) {
         //add destinations to home nav graph
-        doctorSearchDestination(
+        homeDestination(
             navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
             navigateToAddReminderDestination = navigateToAddReminderDestination,
             navigateToBmiNavGraph = navigateToBmiNavGraph,

@@ -1,4 +1,4 @@
-package com.example.booking.uiElement.screens.search.child
+package com.example.booking.uiElement.screens.home.child
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

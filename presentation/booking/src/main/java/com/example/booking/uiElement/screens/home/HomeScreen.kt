@@ -1,6 +1,6 @@
-@file:OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
+@file:OptIn(ExperimentalFoundationApi::class)
 
-package com.example.booking.uiElement.screens.search
+package com.example.booking.uiElement.screens.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -10,11 +10,9 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
@@ -22,10 +20,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.booking.uiElement.components.items.SearchSection
-import com.example.booking.uiElement.screens.search.child.HomeScreen
-import com.example.booking.uiElement.screens.search.child.SearchScreen
-import com.example.booking.uiElement.screens.search.child.SeeAllDoctorScreen
+import com.example.booking.uiElement.screens.home.child.TopDoctorsScreen
+import com.example.booking.uiElement.screens.home.child.SearchScreen
+import com.example.booking.uiElement.screens.home.child.TotalDoctorsScreen
+import com.example.booking.uiState.state.HomeUiState
+import com.example.booking.uiState.viewModel.HomeViewModel
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -33,11 +34,12 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.reflect.KFunction0
+import com.example.sharedui.R
 
 //function for collect state and execute action from view model
 @Composable
-internal fun DoctorSearchScreen(
+internal fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
@@ -45,67 +47,76 @@ internal fun DoctorSearchScreen(
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit
 ) {
+
+    //collect state here
+    val state = viewModel.state.collectAsState()
+
+    //ui state
+    val uiState = state.value
+
     val pagerState = rememberPagerState(initialPage = 0)
+
+    //coroutine scope to call call suspend function
     val coroutineScope = rememberCoroutineScope()
-    val isFocused = rememberSaveable {
-        mutableStateOf(false)
-    }
+
     val focusRequester = remember { FocusRequester() }
 
-    DoctorSearchContent(
+    HomeContent(
         pagerState = pagerState,
         onClickOnReminder = navigateToAddReminderDestination,
         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
         navigateToBmiNavGraph = navigateToBmiNavGraph,
         navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
         navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
+        focusRequester = focusRequester,
+        coroutineScope = coroutineScope,
+        onClickOnSearchField = viewModel::onFocusOnSearchField,
+        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
+        uiState = uiState,
+        onSearchKeyChanged = viewModel::onSearchKeyChanged,
         onClickSeeAll = {
+
+            //change current page and prev page
+            viewModel.onScrollToTotalDoctorsPage()
+
             //execute scroll to see all doctor screen
             coroutineScope.launch {
-                pagerState.scrollToPage(2)
+                pagerState.scrollToPage(
+                    page = 2
+                )
             }//end launch
 
         },//end onClickSeeAll
         onClickBack = {
 
             coroutineScope.launch {
-                //when back if current page is search make is focus equal false to make search field is not enable
-                if (pagerState.currentPage == 1) {
-                    isFocused.value = false
-                }
 
-                //on back scroll to home screen
-                pagerState.scrollToPage(0)
+                //get prev page here
+                val prevPage = uiState.prevPage
+
+                //change current page and prev page
+                viewModel.onBack()
+
+                //on back scroll to prev page
+                pagerState.scrollToPage(
+                    page = prevPage
+                )
 
             }//end launch
 
         },//end onClickBack
-        focusOnSearch = isFocused.value,
-        focusRequester = focusRequester,
-        coroutineScope = coroutineScope,
-        onClickOnSearchField = {
-            //if not exist in search screen scroll to search screen
-            if (pagerState.currentPage != 1) {
-
-                isFocused.value = true
-
-            }//end if
-
-        },//end onClickOnSearchField
-        navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph
     )
 
 }//end DoctorSearchScreen
 
 //function for observe state and draw components
 @Composable
-private fun DoctorSearchContent(
+private fun HomeContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
     pagerState: PagerState,
     onClickSeeAll: () -> Unit,
     onClickBack: () -> Unit,
-    focusOnSearch: Boolean,
     focusRequester: FocusRequester,
     navigateToHeartPredictionNavGraph: () -> Unit,
     onClickOnSearchField: () -> Unit,
@@ -114,7 +125,9 @@ private fun DoctorSearchContent(
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
-    navigateToHeartRateNavGraph: () -> Unit
+    navigateToHeartRateNavGraph: () -> Unit,
+    uiState: HomeUiState,
+    onSearchKeyChanged: (String) -> Unit
 ) {
 
     //create container here
@@ -126,18 +139,67 @@ private fun DoctorSearchContent(
             )
     ) {
         //create ids to screen components
-        val (buttonBackId, searchId, reminderButtonId, searchPagerId) = createRefs()
+        val (buttonBackId, searchId, reminderButtonId, searchPagerId, notificationButtonId) = createRefs()
+
+        //create reminder button here
+        IconButtonView(
+            icon = painterResource(
+                id = R.drawable.reminder_icon
+            ),
+            dimen = dimen,
+            theme = theme,
+            onClick = onClickOnReminder,
+            tint  = theme.hintIconBottom,
+            modifier = Modifier
+                .constrainAs(reminderButtonId) {
+                    end.linkTo(
+                        parent.end,
+                        dimen.dimen_2.dp
+                    )
+                    top.linkTo(searchId.top)
+                    bottom.linkTo(searchId.bottom)
+                }
+        )
+
+        //create notification button here
+        IconButtonView(
+            icon = painterResource(
+                id = R.drawable.notification_icon
+            ),
+            dimen = dimen,
+            theme = theme,
+            onClick = {},
+            tint = theme.hintIconBottom,
+            size =
+            /**if exist in page 0**/
+            if (uiState.currentPage == 0) {
+                dimen.dimen_3_5
+            }
+            /**if exist in page 1 or 2**/
+            else {
+                dimen.dimen_0
+            },
+            modifier = Modifier
+                .constrainAs(notificationButtonId) {
+                    end.linkTo(
+                        reminderButtonId.start,
+                        dimen.dimen_1.dp
+                    )
+                    top.linkTo(searchId.top)
+                    bottom.linkTo(searchId.bottom)
+                }
+        )
 
         //create search field here
         SearchSection(
             dimen = dimen,
             theme = theme,
-            key = "",
+            key = uiState.searchKey,
             hint = stringResource(
-                com.example.sharedui.R.string.search
+                R.string.search
             ),
-            onChange = {},
-            isFocus = focusOnSearch,
+            onChange = onSearchKeyChanged,
+            isFocus = uiState.focusOnSearch,
             focusRequester = focusRequester,
             onClick = onClickOnSearchField,
             modifier = Modifier
@@ -145,7 +207,7 @@ private fun DoctorSearchContent(
                     start.linkTo(
                         parent.start,
                         //if exist in page 0
-                        if (pagerState.currentPage == 0) {
+                        if (uiState.currentPage == 0) {
                             dimen.dimen_2.dp
                         }//end if
                         //if exist in page 1 or 2
@@ -155,7 +217,14 @@ private fun DoctorSearchContent(
                     )
                     end.linkTo(
                         parent.end,
-                        dimen.dimen_6_25.dp
+                        //if exist in page 0
+                        if (uiState.currentPage == 0) {
+                            dimen.dimen_10_75.dp
+                        }//end if
+                        //if exist in page 1 or 2
+                        else {
+                            dimen.dimen_6_25.dp
+                        }
                     )
                     top.linkTo(
                         parent.top,
@@ -172,7 +241,7 @@ private fun DoctorSearchContent(
             onClick = onClickBack,
             size =
             /**if exist in page 0**/
-            if (pagerState.currentPage == 0) {
+            if (uiState.currentPage == 0) {
                 dimen.dimen_0
             }
             /**if exist in page 1 or 2**/
@@ -190,24 +259,6 @@ private fun DoctorSearchContent(
                 }
         )
 
-        //create reminder button here
-        IconButtonView(
-            icon = painterResource(
-                id = com.example.sharedui.R.drawable.reminder_icon
-            ),
-            dimen = dimen,
-            theme = theme,
-            onClick = onClickOnReminder,
-            modifier = Modifier
-                .constrainAs(reminderButtonId) {
-                    end.linkTo(
-                        parent.end,
-                        dimen.dimen_2.dp
-                    )
-                    top.linkTo(searchId.top)
-                    bottom.linkTo(searchId.bottom)
-                }
-        )
 
         //create horizontal pager here
         HorizontalPager(
@@ -229,7 +280,7 @@ private fun DoctorSearchContent(
                 //if page is 0 show home screen
                 0 -> {
 
-                    HomeScreen(
+                    TopDoctorsScreen(
                         dimen = dimen,
                         theme = theme,
                         onClickSeeAll = onClickSeeAll,
@@ -251,7 +302,7 @@ private fun DoctorSearchContent(
                 //if page is 2 show see all doctor screen
                 2 -> {
 
-                    SeeAllDoctorScreen(
+                    TotalDoctorsScreen(
                         dimen = dimen,
                         theme = theme
                     )
@@ -264,21 +315,24 @@ private fun DoctorSearchContent(
     }//end ConstraintLayout
 
 
-    LaunchedEffect(focusOnSearch) {
+    LaunchedEffect(
+        key1 = uiState.focusOnSearch
+    ) {
 
         //if value equal true scroll to search screen
-        if (focusOnSearch) {
+        if (uiState.focusOnSearch) {
 
             //focus on search field
             focusRequester.requestFocus()
 
             //scroll to search screen
             coroutineScope.launch {
-                pagerState.scrollToPage(1)
+                pagerState.scrollToPage(
+                    page = 1
+                )
             }
 
         }//end if
-
 
     }//end LaunchedEffect
 

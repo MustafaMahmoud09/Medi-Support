@@ -6,6 +6,9 @@
       <module name="MediSupport.app" target="17" />
       <module name="MediSupport.core.local" target="17" />
       <module name="MediSupport.core.remote" target="17" />
+      <module name="MediSupport.domain.room" target="17" />
+      <module name="MediSupport.domain.room.main" target="17" />
+      <module name="MediSupport.domain.room.test" target="17" />
       <module name="MediSupport.domain.setting" target="17" />
       <module name="MediSupport.domain.setting.main" target="17" />
       <module name="MediSupport.domain.setting.test" target="17" />
@@ -23,6 +26,7 @@
       <module name="MediSupport.presentation.heartRate" target="17" />
       <module name="MediSupport.presentation.profile" target="17" />
       <module name="MediSupport.presentation.reminder" target="17" />
+      <module name="MediSupport.presentation.room" target="17" />
       <module name="MediSupport.presentation.setting" target="17" />
       <module name="MediSupport.presentation.sharedUi" target="17" />
       <module name="MediSupport.repository.activity" target="17" />
@@ -39,6 +43,7 @@
       <module name="MediSupport.repository.history" target="17" />
       <module name="MediSupport.repository.profile" target="17" />
       <module name="MediSupport.repository.reminder" target="17" />
+      <module name="MediSupport.repository.room" target="17" />
       <module name="MediSupport.repository.setting" target="17" />
     </bytecodeTargetLevel>
   </component>

@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/domain/heartRate" />
             <option value="$PROJECT_DIR$/domain/profile" />
             <option value="$PROJECT_DIR$/domain/reminder" />
+            <option value="$PROJECT_DIR$/domain/room" />
             <option value="$PROJECT_DIR$/domain/setting" />
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/presentation/article" />
@@ -38,6 +39,7 @@
             <option value="$PROJECT_DIR$/presentation/heartRate" />
             <option value="$PROJECT_DIR$/presentation/profile" />
             <option value="$PROJECT_DIR$/presentation/reminder" />
+            <option value="$PROJECT_DIR$/presentation/room" />
             <option value="$PROJECT_DIR$/presentation/setting" />
             <option value="$PROJECT_DIR$/presentation/sharedUi" />
             <option value="$PROJECT_DIR$/repository" />
@@ -52,6 +54,7 @@
             <option value="$PROJECT_DIR$/repository/heartRate" />
             <option value="$PROJECT_DIR$/repository/profile" />
             <option value="$PROJECT_DIR$/repository/reminder" />
+            <option value="$PROJECT_DIR$/repository/room" />
             <option value="$PROJECT_DIR$/repository/setting" />
           </set>
         </option>

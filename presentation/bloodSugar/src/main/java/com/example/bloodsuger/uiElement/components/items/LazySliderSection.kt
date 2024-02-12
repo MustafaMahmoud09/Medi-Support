@@ -14,6 +14,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,6 +55,9 @@ internal fun LazySliderSection(
     modifier: Modifier = Modifier,
 ) {
     val lazyRowState: LazyListState = rememberLazyListState()
+    var calculateState by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     //create box to create shadow
     Box(
@@ -161,7 +168,7 @@ internal fun LazySliderSection(
 
     //create launch effect to calculate new value to lazy slider here
     LaunchedEffect(
-        key1 = lazyRowState.isScrollInProgress,
+        key1 = calculateState,
     ) {
 
         //define visible items here
@@ -173,10 +180,15 @@ internal fun LazySliderSection(
             //define center item value
             val newValue = visibleItemsInfo[visibleItemsInfo.size / 2].key as Float
 
-            //change value by new value here
-            onValueChanged(newValue)
+            //new value is new value
+            if (value != newValue) {
+                //change value by new value here
+                onValueChanged(newValue)
+            }//end if
+
         }//end if
 
+        calculateState = !calculateState
     }//end Launch
 
 }//end LazySliderSection

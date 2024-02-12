@@ -36,6 +36,7 @@ fun BasicTextFieldView(
         ),
         enabled = enable,
         modifier = modifier,
+        singleLine = maxLines == 1,
         maxLines = maxLines
     )
 

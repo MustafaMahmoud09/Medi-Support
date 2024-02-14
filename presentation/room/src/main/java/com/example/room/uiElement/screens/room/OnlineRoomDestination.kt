@@ -1,20 +1,22 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package com.example.chat.uiElement.screens.chat
+package com.example.room.uiElement.screens.room
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 
-const val CHAT_DESTINATION_ROUTE = "chatDestination"
 
-fun NavGraphBuilder.chatDestination() {
+const val ONLINE_ROOM_DESTINATION_ROUTE = "onlineRoomDestination"
+
+fun NavGraphBuilder.onlineRoomDestination() {
 
     composable(
-        route = CHAT_DESTINATION_ROUTE
+        route = ONLINE_ROOM_DESTINATION_ROUTE
     ) {
 
-        ChatScreen()
-    }
+        OnlineRoomScreen()
+
+    }//end composable
+
 }//end chatDestination

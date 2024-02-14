@@ -10,16 +10,12 @@ import com.google.accompanist.navigation.animation.composable
 
 const val BOOKING_DETAILS_DESTINATION_ROUTE = "bookingDetailsDestination"
 
-fun NavGraphBuilder.bookingDetailsDestination(
-    navHostController: NavHostController
-) {
+fun NavGraphBuilder.bookingDetailsDestination() {
 
     composable(
         route = BOOKING_DETAILS_DESTINATION_ROUTE
     ) {
 
-        BookingDetailsScreen(
-            navHostController = navHostController
-        )
+        BookingDetailsScreen()
     }
 }//end bookingDetailsDestination

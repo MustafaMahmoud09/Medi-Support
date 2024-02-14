@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalFoundationApi::class)
 
-package com.example.booking.uiElement.screens.home.child
+package com.example.booking.uiElement.screens.doctors.child
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background

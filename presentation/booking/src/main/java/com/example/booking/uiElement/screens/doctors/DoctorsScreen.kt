@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalFoundationApi::class)
 
-package com.example.booking.uiElement.screens.home
+package com.example.booking.uiElement.screens.doctors
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -22,9 +22,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.booking.uiElement.components.items.SearchSection
-import com.example.booking.uiElement.screens.home.child.TopDoctorsScreen
-import com.example.booking.uiElement.screens.home.child.SearchScreen
-import com.example.booking.uiElement.screens.home.child.TotalDoctorsScreen
+import com.example.booking.uiElement.screens.doctors.child.TopDoctorsScreen
+import com.example.booking.uiElement.screens.doctors.child.SearchScreen
+import com.example.booking.uiElement.screens.doctors.child.TotalDoctorsScreen
 import com.example.booking.uiState.state.HomeUiState
 import com.example.booking.uiState.viewModel.HomeViewModel
 import com.example.sharedui.uiElement.components.composable.IconButtonView
@@ -38,7 +38,7 @@ import com.example.sharedui.R
 
 //function for collect state and execute action from view model
 @Composable
-internal fun HomeScreen(
+internal fun DoctorsScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,
@@ -61,7 +61,7 @@ internal fun HomeScreen(
 
     val focusRequester = remember { FocusRequester() }
 
-    HomeContent(
+    DoctorsContent(
         pagerState = pagerState,
         onClickOnReminder = navigateToAddReminderDestination,
         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
@@ -111,7 +111,7 @@ internal fun HomeScreen(
 
 //function for observe state and draw components
 @Composable
-private fun HomeContent(
+private fun DoctorsContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
     pagerState: PagerState,
@@ -140,7 +140,10 @@ private fun HomeContent(
             )
     ) {
         //create ids to screen components
-        val (buttonBackId, searchId, reminderButtonId, searchPagerId, notificationButtonId) = createRefs()
+        val (
+            buttonBackId, searchId, reminderButtonId,
+            searchPagerId, notificationButtonId
+        ) = createRefs()
 
         //create reminder button here
         IconButtonView(

@@ -7,18 +7,16 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 
+//route name here
 const val BOOKING_DESTINATION_ROUTE = "bookingDestination"
 
-fun NavGraphBuilder.bookingDestination(
-    navHostController: NavHostController
-) {
+//function for create booking destination and create design in it
+fun NavGraphBuilder.bookingDestination() {
 
     composable(
         route = BOOKING_DESTINATION_ROUTE
     ) {
 
-        BookingScreen(
-            navHostController = navHostController
-        )
+        BookingScreen()
     }
 }//end bookingDestination

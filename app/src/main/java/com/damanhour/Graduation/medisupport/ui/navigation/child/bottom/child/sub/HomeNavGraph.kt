@@ -5,8 +5,8 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.su
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.booking.uiElement.screens.home.DOCTOR_SEARCH_DESTINATION_ROUTE
-import com.example.booking.uiElement.screens.home.homeDestination
+import com.example.booking.uiElement.screens.doctors.DOCTOR_DESTINATION_ROUTE
+import com.example.booking.uiElement.screens.doctors.doctorsDestination
 import com.example.reminder.uiElement.screens.add.ADD_REMINDER_DESTINATION_ROUTE
 import com.example.reminder.uiElement.screens.add.addReminderDestination
 import com.example.reminder.uiElement.screens.records.REMINDER_RECORDS_DESTINATION_ROUTE
@@ -25,7 +25,7 @@ val HOME_VAV_GRAPH_DATA = BottomDestination(
     icon = R.drawable.home,
     title = R.string.home,
     childList = listOf(
-        DOCTOR_SEARCH_DESTINATION_ROUTE,
+        DOCTOR_DESTINATION_ROUTE,
         ADD_REMINDER_DESTINATION_ROUTE,
         REMINDER_RECORDS_DESTINATION_ROUTE
     )
@@ -57,12 +57,12 @@ internal fun NavGraphBuilder.homeNavGraph(
     //create home nav graph
     navigation(
         route = HOME_VAV_GRAPH_DATA.route,//define home nav graph name
-        startDestination = DOCTOR_SEARCH_DESTINATION_ROUTE,//define start destination to home nav graph
+        startDestination = DOCTOR_DESTINATION_ROUTE,//define start destination to home nav graph
         enterTransition = { enterTransitionZero() },//define enter transition method
         exitTransition = { exitTransition() }//define exit transition method
     ) {
         //add destinations to home nav graph
-        homeDestination(
+        doctorsDestination(
             navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
             navigateToAddReminderDestination = navigateToAddReminderDestination,
             navigateToBmiNavGraph = navigateToBmiNavGraph,

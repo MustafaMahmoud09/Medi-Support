@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.sharedui.uiElement.components.navigation.BottomDestination
@@ -117,16 +118,23 @@ private fun clickOnItemInBottomNavigation(
             ) {
 
                 popUpTo(
-                    route = screen.route
+                    id = navController.graph.findStartDestination().id
                 ) {
-                    inclusive = true
+                    //save the state to popped screen here
+                    saveState = true
                 }//end popUpTo
 
+                //support not exit multi copied to single destination in back stack here
+                launchSingleTop = true
+                //restore last state to this destination here
+                restoreState = true
             }//end navigate
 
         }//end if
 
     } else {
+
+        ifRouteNull()
 
         for (count in 1 until items.size) {
 
@@ -137,7 +145,6 @@ private fun clickOnItemInBottomNavigation(
 
         }//end for
 
-        ifRouteNull()
     }//end else
 
 }//end clickOnItemInBottomNavigation

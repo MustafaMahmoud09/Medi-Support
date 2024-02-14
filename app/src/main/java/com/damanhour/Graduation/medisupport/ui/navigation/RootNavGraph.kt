@@ -32,6 +32,7 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredicti
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.navigateToHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.popHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.examinationNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.heartRateNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToHeartRateNavGraph
@@ -117,6 +118,8 @@ fun RootNavGraph(
                     popHistoryDestination = navHostController::popHistoryDestination,
                     navigateToHistoryDestination = navHostController::navigateToHistoryDestination
                 )
+
+                examinationNavGraph()
 
                 heartPredictionNavGraph(
                     popHeartPredictionNavGraph = navHostController::popHeartPredictionNavGraph,

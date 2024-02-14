@@ -1,10 +1,9 @@
-package com.example.chat.uiElement.screens.chat
+package com.example.chat.uiElement.screens.chats
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 
 @Composable
-internal fun ChatScreen() {
+internal fun ChatsScreen() {
 
     ChatContent()
 }//end ChatScreen

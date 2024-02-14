@@ -14,7 +14,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.auth.R
-import com.example.auth.uiElement.components.composable.NumberFailedView
+import com.example.auth.uiElement.components.composable.CodeFieldView
 import com.example.auth.uiState.state.ForgottenUiState
 import com.example.auth.uiState.viewModel.ForgottenViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
@@ -144,28 +144,28 @@ private fun CodeContent(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                NumberFailedView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.firstCodeKey,
                     onChange = onFirstCodeChanged
                 )
 
-                NumberFailedView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.secondCodeKey,
                     onChange = onSecondCodeChanged
                 )
 
-                NumberFailedView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.thirdCodeKey,
                     onChange = onThirdCodeChanged
                 )
 
-                NumberFailedView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.fourthCodeKey,

@@ -32,6 +32,7 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.TextNormalBlackFailedView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.modifier.appBorder
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.robotoRegular
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -56,6 +57,8 @@ fun BasicFieldSection(
     borderColor: Color = theme.redDark,
     fontSize: Float = dimen.dimen_2,
     fontColor: Color = theme.gray,
+    onClick: () -> Unit = {},
+    enable: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(true) }
@@ -63,6 +66,9 @@ fun BasicFieldSection(
     //create container here
     Column(
         modifier = modifier
+            .clickableWithoutHover {
+                onClick()
+            }
     ) {
 
         //create title here
@@ -143,6 +149,7 @@ fun BasicFieldSection(
                 } else {
                     PasswordVisualTransformation()
                 },
+                enabled = enable,
                 modifier = Modifier
                     .constrainAs(boxFailed) {
                         start.linkTo(parent.start)

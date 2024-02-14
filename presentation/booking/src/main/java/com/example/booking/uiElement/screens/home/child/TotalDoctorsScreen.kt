@@ -1,35 +1,80 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.example.booking.uiElement.screens.home.child
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.booking.uiElement.components.items.DoctorSearchSection
+import com.example.booking.uiElement.components.items.LazyDoctorsSection
+import com.example.booking.uiElement.components.items.TabsSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import kotlinx.coroutines.launch
 
 //function for collect state and execute action from view model
 @Composable
 internal fun TotalDoctorsScreen(
     dimen: CustomDimen,
-    theme: CustomTheme
+    theme: CustomTheme,
+    headerHeight: Float
 ) {
+    val pagerState = rememberPagerState(
+        initialPage = 0
+    )
+    val coroutineScope = rememberCoroutineScope()
 
     //call see all doctor content function
     TotalDoctorsContent(
         dimen = dimen,
-        theme = theme
+        theme = theme,
+        headerHeight = headerHeight,
+        onClickOnDoctorsOnline = {
+
+            coroutineScope.launch {
+                //if not exist in doctors online page scroll to it
+                if (pagerState.currentPage != 0) {
+
+                    //execute scroll here
+                    pagerState.animateScrollToPage(
+                        page = 0
+                    )
+
+                }//end if
+
+            }//end launch
+        },
+        onClickOnDoctorsOffline = {
+
+            coroutineScope.launch {
+                //if not exist in doctors offline page scroll to it
+                if (pagerState.currentPage != 1) {
+
+                    //execute scroll here
+                    pagerState.animateScrollToPage(
+                        page = 1
+                    )
+
+                }//end if
+
+            }//end launch
+        },
+        pagerState = pagerState
     )
 }//end SeeAllDoctorScreen
 
@@ -37,7 +82,23 @@ internal fun TotalDoctorsScreen(
 @Composable
 private fun TotalDoctorsContent(
     dimen: CustomDimen,
-    theme: CustomTheme
+    theme: CustomTheme,
+    pagerState: PagerState,
+    onClickOnDoctorsOffline: () -> Unit,
+    onClickOnDoctorsOnline: () -> Unit,
+    headerHeight: Float,
+    screenHeight: Int = LocalConfiguration.current.screenHeightDp,
+    doctorsHeight: Float = screenHeight - (
+            (
+                    headerHeight +
+                            dimen.dimen_2 +
+                            dimen.dimen_1_75 +
+                            dimen.dimen_3_5 +
+                            dimen.dimen_1 +
+                            dimen.dimen_0_125 +
+                            dimen.dimen_8_5
+                    )
+            )
 ) {
     //create lazy column here
     LazyColumn(
@@ -52,24 +113,17 @@ private fun TotalDoctorsContent(
         contentPadding = PaddingValues(
             start = dimen.dimen_2.dp,
             end = dimen.dimen_2.dp,
-            bottom = dimen.dimen_2.dp,
             top = dimen.dimen_1.dp
-        ),
-        verticalArrangement = Arrangement.spacedBy(
-            space = dimen.dimen_1_5.dp
         )
     ) {
         //create all doctors title item here
-        item(
+        stickyHeader(
             key = 1
         ) {
             //create all doctors title here
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        bottom = dimen.dimen_1.dp
-                    )
             ) {
 
                 TextBoldView(
@@ -86,29 +140,78 @@ private fun TotalDoctorsContent(
 
         }//end item
 
-        //create doctor items
-        items(
-            count = 10
+        //item for create tabs item
+        stickyHeader(
+            key = 2
         ) {
 
-            //create single doctor here
-            DoctorSearchSection(
-                dimen = dimen,
-                theme = theme,
-                name = "DR: Alaa Ahmed",
-                location = "Cairo",
-                time = "12.00 AM -3:00 PM",
-                image = painterResource(
-                    id = R.drawable.doctor_test
-                ),
-                textButton = stringResource(
-                    R.string.book_now
-                ),
+            //create tabs items here
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-            )
+                    .background(
+                        color = theme.background
+                    )
+                    .padding(
+                        top = dimen.dimen_2_5.dp
+                    ),
+            ) {
 
-        }//end items
+                TabsSection(
+                    theme = theme,
+                    dimen = dimen,
+                    titles = arrayOf(
+                        stringResource(
+                            id = R.string.doctors_online
+                        ), stringResource(
+                            id = R.string.doctors_offline
+                        )
+                    ),
+                    onClickOnTab = arrayOf(onClickOnDoctorsOnline, onClickOnDoctorsOffline),
+                    selectedItem = pagerState.currentPage,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+            }//end Box
+
+        }//end item
+
+        //create doctors pager item here
+        item(
+            key = 3
+        ) {
+
+            //create doctors pager here
+            HorizontalPager(
+                pageCount = 2,
+                state = pagerState,
+            ) { page ->
+
+                //if page is 0 create doctors online page else create doctor offline page
+                when (page) {
+
+                    //create doctors online page here
+                    0 -> LazyDoctorsSection(
+                        dimen = dimen,
+                        theme = theme,
+                        doctorsHeight = doctorsHeight,
+                        doctorIsOnline = true
+                    )
+
+                    //create doctors offline page here
+                    1 -> LazyDoctorsSection(
+                        dimen = dimen,
+                        theme = theme,
+                        doctorIsOnline = false,
+                        doctorsHeight = doctorsHeight,
+                    )
+
+                }//end when
+
+            }//end HorizontalPager
+
+        }//end item
 
     }//end LazyColumn
 

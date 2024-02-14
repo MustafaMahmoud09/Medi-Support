@@ -1,10 +1,12 @@
 package com.example.booking.uiElement.components.items
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -46,6 +48,10 @@ internal fun DoctorSearchSection(
     buttonWidth: Float = dimen.dimen_15,
     buttonHeight: Float = dimen.dimen_3,
     textButton: String,
+    doctorIsOnline: Boolean = false,
+    onlineIconSize: Float = dimen.dimen_1,
+    onlineIconShape: Shape = CircleShape,
+    onlineIconColor: Color = theme.green75F94C,
     modifier: Modifier = Modifier
 ) {
 
@@ -62,7 +68,9 @@ internal fun DoctorSearchSection(
             )
     ) {
         //create ids to components
-        val (nameId, locationId, timeId, ratingId, buttonId, paddingBottomId, imageId) = createRefs()
+        val (nameId, locationId, timeId, ratingId,
+            buttonId, paddingBottomId, imageId, onlineIconId) = createRefs()
+        //create guides
         val guideFromStart42P = createGuidelineFromStart(0.42f)
 
         //create name text here
@@ -86,11 +94,38 @@ internal fun DoctorSearchSection(
                     )
                     end.linkTo(
                         parent.end,
-                        dimen.dimen_1_5.dp
+                        dimen.dimen_3.dp
                     )
-                    width = Dimension.fillToConstraints
+                    width = Dimension.preferredWrapContent
                 }
         )
+
+        //if doctor is online create online icon
+        if (doctorIsOnline) {
+
+            //create online icon here
+            Spacer(
+                modifier = Modifier
+                    .constrainAs(onlineIconId) {
+                        top.linkTo(nameId.top)
+                        bottom.linkTo(nameId.bottom)
+                        start.linkTo(
+                            nameId.end,
+                            dimen.dimen_0_5.dp
+                        )
+                    }
+                    .size(
+                        size = onlineIconSize.dp
+                    )
+                    .clip(
+                        shape = onlineIconShape
+                    )
+                    .background(
+                        color = onlineIconColor
+                    )
+            )
+
+        }//end if
 
         //create location box here
         IconTextSection(
@@ -113,7 +148,8 @@ internal fun DoctorSearchSection(
                         nameId.start
                     )
                     end.linkTo(
-                        nameId.end
+                        parent.end,
+                        dimen.dimen_1_5.dp
                     )
                     top.linkTo(
                         nameId.bottom,

@@ -22,7 +22,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun PredictHeartSection(
+internal fun HeartPredictionSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     shape: Shape = RoundedCornerShape(

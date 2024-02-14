@@ -83,4 +83,13 @@
     <string name="mg_gl">mg/gl</string>
     <string name="measuring">Measuring....</string>
     <string name="calculate_heart_rate_message">Press your finger on camera</string>
+    <string name="doctors_online">Doctors Online</string>
+    <string name="doctors_offline">Doctors Offline</string>
+    <string name="medicament_name">Medicament Name</string>
+    <string name="your_medicament_name">Your Medicament Name</string>
+    <string name="day">Day</string>
+    <string name="every_day">Every Day</string>
+    <string name="time">Time</string>
+    <string name="_7_00_am">7.00 AM</string>
+    <string name="add_alarm">Add Alarm</string>
 </resources>

@@ -127,7 +127,8 @@ private fun HomeContent(
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
     uiState: HomeUiState,
-    onSearchKeyChanged: (String) -> Unit
+    onSearchKeyChanged: (String) -> Unit,
+    headerHeight: Float = dimen.dimen_2_5 + dimen.dimen_5_5,
 ) {
 
     //create container here
@@ -288,7 +289,8 @@ private fun HomeContent(
                         navigateToBmiNavGraph = navigateToBmiNavGraph,
                         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
                         navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
-                        navigateToHeartRateNavGraph = navigateToHeartRateNavGraph
+                        navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
+                        headerHeight = headerHeight
                     )
                 }//end case
                 //if page is 1 show search screen
@@ -304,7 +306,8 @@ private fun HomeContent(
 
                     TotalDoctorsScreen(
                         dimen = dimen,
-                        theme = theme
+                        theme = theme,
+                        headerHeight = headerHeight
                     )
                 }//end case
 

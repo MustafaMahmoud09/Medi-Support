@@ -14,21 +14,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
+import com.example.sharedui.uiElement.style.robotoRegular
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun NumberFailedView(
+internal fun CodeFieldView(
     dimen: CustomDimen,
     theme: CustomTheme,
     value: String,
     onChange: (String) -> Unit,
     size: Float = dimen.dimen_8,
+    fontSize: Float = dimen.dimen_2,
+    fontColor: Color = theme.gray,
     modifier: Modifier = Modifier
 ) {
 
@@ -63,6 +68,12 @@ internal fun NumberFailedView(
         BasicTextField(
             value = value,
             onValueChange = onChange,
+            textStyle = TextStyle.Default.copy(
+                fontFamily = robotoRegular,
+                fontSize = fontSize.sp,
+                color = fontColor,
+                textAlign = TextAlign.Center
+            ),
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
             ),
@@ -75,10 +86,7 @@ internal fun NumberFailedView(
                 }
                 .onFocusChanged {
                     isFocused = it.isFocused
-                },
-            textStyle = TextStyle.Default.copy(
-                textAlign = TextAlign.Center
-            )
+                }
         )
 
     }//end Box

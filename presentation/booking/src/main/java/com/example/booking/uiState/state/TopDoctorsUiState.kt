@@ -1,3 +1,5 @@
 package com.example.booking.uiState.state
 
- class TopDoctorsUiState()
+data class TopDoctorsUiState(
+    val currentDoctorsPage: Int = 0,
+)

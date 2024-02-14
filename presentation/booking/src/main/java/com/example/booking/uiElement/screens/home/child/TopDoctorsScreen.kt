@@ -1,32 +1,45 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.example.booking.uiElement.screens.home.child
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.booking.uiElement.components.items.DoctorSearchSection
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sharedui.R
 import com.example.booking.uiElement.components.items.HealthCareSection
-import com.example.booking.uiElement.components.items.PredictHeartSection
+import com.example.booking.uiElement.components.items.LazyDoctorsSection
+import com.example.booking.uiElement.components.items.HeartPredictionSection
+import com.example.booking.uiElement.components.items.TabsSection
+import com.example.booking.uiState.viewModel.TopDoctorsViewModel
 import com.example.sharedui.uiElement.components.composable.LinkView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
+import com.example.sharedui.uiElement.components.modifier.appDefaultContainer
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.robotoBold
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import kotlinx.coroutines.launch
 
 //function for collect state and execute action from view model
 @Composable
 internal fun TopDoctorsScreen(
+    viewModel: TopDoctorsViewModel = hiltViewModel(),
     dimen: CustomDimen,
     theme: CustomTheme,
     onClickSeeAll: () -> Unit,
@@ -34,8 +47,13 @@ internal fun TopDoctorsScreen(
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
-    navigateToHeartRateNavGraph: () -> Unit
+    navigateToHeartRateNavGraph: () -> Unit,
+    headerHeight: Float
 ) {
+    val pagerState = rememberPagerState(
+        initialPage = 0
+    )
+    val coroutineScope = rememberCoroutineScope()
 
     //call home content function
     TopDoctorsContent(
@@ -46,7 +64,39 @@ internal fun TopDoctorsScreen(
         onClickOnBmiSection = navigateToBmiNavGraph,
         onClickOnBloodPressureSection = navigateToBloodPressureNavGraph,
         onClickOnBloodSugarSection = navigateToBloodSugarNavGraph,
-        onClickOnHeartRateSection = navigateToHeartRateNavGraph
+        onClickOnHeartRateSection = navigateToHeartRateNavGraph,
+        headerHeight = headerHeight,
+        onClickOnDoctorsOnline = {
+
+            coroutineScope.launch {
+                //if not exist in doctors online page scroll to it
+                if (pagerState.currentPage != 0) {
+
+                    //execute scroll here
+                    pagerState.animateScrollToPage(
+                        page = 0
+                    )
+
+                }//end if
+
+            }//end launch
+        },
+        onClickOnDoctorsOffline = {
+
+            coroutineScope.launch {
+                //if not exist in doctors offline page scroll to it
+                if (pagerState.currentPage != 1) {
+
+                    //execute scroll here
+                    pagerState.animateScrollToPage(
+                        page = 1
+                    )
+
+                }//end if
+
+            }//end launch
+        },
+        pagerState = pagerState
     )
 }//end HomeScreen
 
@@ -60,13 +110,29 @@ private fun TopDoctorsContent(
     onClickOnBmiSection: () -> Unit,
     onClickOnBloodPressureSection: () -> Unit,
     onClickOnBloodSugarSection: () -> Unit,
-    onClickOnHeartRateSection: () -> Unit
+    onClickOnHeartRateSection: () -> Unit,
+    pagerState: PagerState,
+    onClickOnDoctorsOnline: () -> Unit,
+    onClickOnDoctorsOffline: () -> Unit,
+    headerHeight: Float,
+    screenHeight: Int = LocalConfiguration.current.screenHeightDp,
+    doctorsHeight: Float = screenHeight - (
+            (
+                    headerHeight +
+                            dimen.dimen_2 +
+                            dimen.dimen_1_75 +
+                            dimen.dimen_3_5 +
+                            dimen.dimen_1 +
+                            dimen.dimen_0_125 +
+                            dimen.dimen_8_5
+                    )
+            )
 ) {
+
     //create lazy column here
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .background(
+            .appDefaultContainer(
                 color = theme.background
             )
             .padding(
@@ -75,99 +141,91 @@ private fun TopDoctorsContent(
         contentPadding = PaddingValues(
             start = dimen.dimen_2.dp,
             end = dimen.dimen_2.dp,
-            bottom = dimen.dimen_2.dp,
             top = dimen.dimen_1.dp
-        ),
-        verticalArrangement = Arrangement.spacedBy(
-            space = dimen.dimen_1_5.dp
         )
     ) {
 
-        //create smart health title item here
+        //item contain on all buttons to transition to particular parts
         item(
-            key = 1
-        ) {
-            //create smart health title here
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        bottom = dimen.dimen_1.dp
-                    )
-            ) {
-
-                TextBoldView(
-                    theme = theme,
-                    dimen = dimen,
-                    text = stringResource(
-                        com.example.sharedui.R.string.smart_health_metrics
-                    ),
-                    size = dimen.dimen_2_25,
-                    color = theme.black
-                )
-
-            }//end Box
-
-        }//end item
-
-        //create heart predict item here
-        item(
-            key = 2
+            key = 0
         ) {
 
-            //create content item here
-            PredictHeartSection(
-                dimen = dimen,
-                theme = theme,
-                image = painterResource(
-                    id = com.example.sharedui.R.drawable.heart_predict
-                ),
-                title = stringResource(
-                    com.example.sharedui.R.string.predicting_heart_disease_using_artificial_intelligence
-                ),
-                firstText = stringResource(
-                    com.example.sharedui.R.string.artificial
-                ),
-                secondText = stringResource(
-                    com.example.sharedui.R.string.intell
-                ),
-                thirdText = stringResource(
-                    com.example.sharedui.R.string.igence
-                ),
-                buttonContent = stringResource(
-                    com.example.sharedui.R.string.record_now
-                ),
-                onClick = onClickHeartPrediction,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-
-        }//end item
-
-        //create health care item here
-        item(
-            key = 3
-        ) {
-            //create content item here
+            //create container here
             ConstraintLayout(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                //create ids to components here
-                val (heartRateId, bloodPressureId) = createRefs()
+                //create ids for components here
+                val (
+                    smartHealthTitleId, heartPredictionId, heartRateId,
+                    bloodPressureId, bloodSugarId, bmiId, titleId, seeAllId
+                ) = createRefs()
+
+                //create guides here
                 val guideFromStart50P = createGuidelineFromStart(.50f)
+
+                //create smart health title here
+                TextBoldView(
+                    theme = theme,
+                    dimen = dimen,
+                    text = stringResource(
+                        id = R.string.smart_health_metrics
+                    ),
+                    size = dimen.dimen_2_25,
+                    color = theme.black,
+                    modifier = Modifier
+                        .constrainAs(smartHealthTitleId) {
+                            start.linkTo(parent.start)
+                            top.linkTo(parent.top)
+                        }
+                )
+
+                //create predict heart section here
+                HeartPredictionSection(
+                    dimen = dimen,
+                    theme = theme,
+                    image = painterResource(
+                        id = R.drawable.heart_predict
+                    ),
+                    title = stringResource(
+                        id = R.string.predicting_heart_disease_using_artificial_intelligence
+                    ),
+                    firstText = stringResource(
+                        id = R.string.artificial
+                    ),
+                    secondText = stringResource(
+                        id = R.string.intell
+                    ),
+                    thirdText = stringResource(
+                        id = R.string.igence
+                    ),
+                    buttonContent = stringResource(
+                        id = R.string.record_now
+                    ),
+                    onClick = onClickHeartPrediction,
+                    modifier = Modifier
+                        .constrainAs(heartPredictionId) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            top.linkTo(
+                                smartHealthTitleId.bottom,
+                                dimen.dimen_2_5.dp
+                            )
+                            width = Dimension.fillToConstraints
+                        }
+                )
 
                 //create heart rate item here
                 HealthCareSection(
                     dimen = dimen,
                     theme = theme,
                     title = stringResource(
-                        id = com.example.sharedui.R.string.heart_rate
+                        id = R.string.heart_rate
                     ),
                     value = "65",
                     unit = "PBM",
                     image = painterResource(
-                        id = com.example.sharedui.R.drawable.heart_rate
+                        id = R.drawable.heart_rate
                     ),
                     onClick = onClickOnHeartRateSection,
                     modifier = Modifier
@@ -177,10 +235,12 @@ private fun TopDoctorsContent(
                                 guideFromStart50P,
                                 dimen.dimen_0_75.dp
                             )
-                            top.linkTo(parent.top)
+                            top.linkTo(
+                                heartPredictionId.bottom,
+                                dimen.dimen_1_5.dp
+                            )
                             width = Dimension.fillToConstraints
                         }
-                        .fillMaxWidth()
                 )
 
                 //create blood pressure item here
@@ -188,12 +248,12 @@ private fun TopDoctorsContent(
                     dimen = dimen,
                     theme = theme,
                     title = stringResource(
-                        id = com.example.sharedui.R.string.blood_pressure
+                        id = R.string.blood_pressure
                     ),
                     value = "120",
                     unit = "mmHG",
                     image = painterResource(
-                        id = com.example.sharedui.R.drawable.blood_pressure
+                        id = R.drawable.blood_pressure
                     ),
                     onClick = onClickOnBloodPressureSection,
                     modifier = Modifier
@@ -203,41 +263,22 @@ private fun TopDoctorsContent(
                                 dimen.dimen_0_75.dp
                             )
                             end.linkTo(parent.end)
-                            top.linkTo(parent.top)
+                            top.linkTo(heartRateId.top)
                             width = Dimension.fillToConstraints
                         }
-                        .fillMaxWidth()
                 )
-
-            }//end ConstraintLayout
-
-        }//end item
-
-        //create health care item here
-        item(
-            key = 4
-        ) {
-
-            //create container here
-            ConstraintLayout(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                //create ids to components here
-                val (bloodSugarId, bmiId) = createRefs()
-                val guideFromStart50P = createGuidelineFromStart(.50f)
 
                 //create blood sugar item here
                 HealthCareSection(
                     dimen = dimen,
                     theme = theme,
                     title = stringResource(
-                        id = com.example.sharedui.R.string.blood_suger
+                        id = R.string.blood_suger
                     ),
                     value = "120",
                     unit = "Mg/Ld",
                     image = painterResource(
-                        id = com.example.sharedui.R.drawable.blood_sugar
+                        id = R.drawable.blood_sugar
                     ),
                     onClick = onClickOnBloodSugarSection,
                     modifier = Modifier
@@ -247,10 +288,12 @@ private fun TopDoctorsContent(
                                 guideFromStart50P,
                                 dimen.dimen_0_75.dp
                             )
-                            top.linkTo(parent.top)
+                            top.linkTo(
+                                heartRateId.bottom,
+                                dimen.dimen_1_5.dp
+                            )
                             width = Dimension.fillToConstraints
                         }
-                        .fillMaxWidth()
                 )
 
                 //create bmi item here
@@ -258,12 +301,12 @@ private fun TopDoctorsContent(
                     dimen = dimen,
                     theme = theme,
                     title = stringResource(
-                        id = com.example.sharedui.R.string.weight_and_tall
+                        id = R.string.weight_and_tall
                     ),
                     value = "80",
                     unit = "Kg",
                     image = painterResource(
-                        id = com.example.sharedui.R.drawable.bmi
+                        id = R.drawable.bmi
                     ),
                     onClick = onClickOnBmiSection,
                     modifier = Modifier
@@ -273,38 +316,17 @@ private fun TopDoctorsContent(
                                 dimen.dimen_0_75.dp
                             )
                             end.linkTo(parent.end)
-                            top.linkTo(parent.top)
+                            top.linkTo(bloodSugarId.top)
                             width = Dimension.fillToConstraints
                         }
-                        .fillMaxWidth()
                 )
-
-            }//end ConstraintLayout
-
-        }//end item
-
-        //create top doctor title item
-        item(
-            key = 5
-        ) {
-
-            //create container here
-            ConstraintLayout(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        bottom = dimen.dimen_0_5.dp
-                    )
-            ) {
-                //create ids to components here
-                val (titleId, seeAllId) = createRefs()
 
                 //create top doctor title here
                 TextBoldView(
                     theme = theme,
                     dimen = dimen,
                     text = stringResource(
-                        com.example.sharedui.R.string.top_doctors
+                        R.string.top_doctors
                     ),
                     size = dimen.dimen_2_25,
                     color = theme.black,
@@ -312,8 +334,8 @@ private fun TopDoctorsContent(
                         .constrainAs(titleId) {
                             start.linkTo(parent.start)
                             top.linkTo(
-                                parent.top,
-                                dimen.dimen_0_5.dp
+                                bloodSugarId.bottom,
+                                dimen.dimen_2.dp
                             )
                         }
                 )
@@ -321,7 +343,7 @@ private fun TopDoctorsContent(
                 //create see all link here
                 LinkView(
                     text = stringResource(
-                        com.example.sharedui.R.string.see_all
+                        id = R.string.see_all
                     ),
                     color = theme.redDark,
                     size = dimen.dimen_1_5,
@@ -339,30 +361,80 @@ private fun TopDoctorsContent(
 
         }//end item
 
-        //create doctor items
-        items(
-            count = 10
+        //item for create tabs item
+        stickyHeader(
+            key = 6
         ) {
 
-            //create single doctor here
-            DoctorSearchSection(
-                dimen = dimen,
-                theme = theme,
-                name = "DR: Alaa Ahmed",
-                location = "Cairo",
-                time = "12.00 AM -3:00 PM",
-                image = painterResource(
-                    id = com.example.sharedui.R.drawable.doctor_test
-                ),
-                textButton = stringResource(
-                    com.example.sharedui.R.string.book_now
-                ),
+            //create tabs items here
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-            )
+                    .background(
+                        color = theme.background
+                    )
+                    .padding(
+                        top = dimen.dimen_2.dp
+                    ),
+            ) {
 
-        }//end items
+                TabsSection(
+                    theme = theme,
+                    dimen = dimen,
+                    titles = arrayOf(
+                        stringResource(
+                            id = R.string.doctors_online
+                        ), stringResource(
+                            id = R.string.doctors_offline
+                        )
+                    ),
+                    onClickOnTab = arrayOf(onClickOnDoctorsOnline, onClickOnDoctorsOffline),
+                    selectedItem = pagerState.currentPage,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+            }//end Box
+
+        }//end item
+
+        //create doctors pager item here
+        item(
+            key = 7
+        ) {
+
+            //create doctors pager here
+            HorizontalPager(
+                pageCount = 2,
+                state = pagerState
+            ) { page ->
+
+                //if page is 0 create doctors online page else create doctor offline page
+                when (page) {
+
+                    //create doctors online page here
+                    0 -> LazyDoctorsSection(
+                        dimen = dimen,
+                        theme = theme,
+                        doctorsHeight = doctorsHeight,
+                        doctorIsOnline = true
+                    )
+
+                    //create doctors offline page here
+                    1 -> LazyDoctorsSection(
+                        dimen = dimen,
+                        theme = theme,
+                        doctorIsOnline = false,
+                        doctorsHeight = doctorsHeight,
+                    )
+
+                }//end when
+
+            }//end HorizontalPager
+
+        }//end item
 
     }//end LazyColumn
 
 }//end HomeContent
+

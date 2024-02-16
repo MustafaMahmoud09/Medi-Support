@@ -32,6 +32,8 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredicti
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.navigateToHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.popHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.navigateToBookingNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.popBookingNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.examinationNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.heartRateNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraph
@@ -110,7 +112,8 @@ fun RootNavGraph(
                     navigateToBmiNavGraph = navHostController::navigateToBmiNavGraph,
                     navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraph,
                     navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraph,
-                    navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraph
+                    navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraph,
+                    navigateToBookingNavGraph = navHostController::navigateToBookingNavGraph
                 )
 
                 activityNavGraph(
@@ -119,7 +122,9 @@ fun RootNavGraph(
                     navigateToHistoryDestination = navHostController::navigateToHistoryDestination
                 )
 
-                examinationNavGraph()
+                examinationNavGraph(
+                    popBookingNavGraph = navHostController::popBookingNavGraph
+                )
 
                 heartPredictionNavGraph(
                     popHeartPredictionNavGraph = navHostController::popHeartPredictionNavGraph,

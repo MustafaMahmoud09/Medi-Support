@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
-import com.example.sharedui.uiElement.components.composable.CropImageView
+import com.example.sharedui.uiElement.components.composable.LoadImageView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.items.IconTextSection
 import com.example.sharedui.uiElement.components.items.RatingBarSection
@@ -52,7 +52,8 @@ internal fun DoctorSearchSection(
     onlineIconSize: Float = dimen.dimen_1,
     onlineIconShape: Shape = CircleShape,
     onlineIconColor: Color = theme.green75F94C,
-    modifier: Modifier = Modifier
+    onClickOnButton: (Boolean, Int) -> Unit = { x, z -> },
+    modifier: Modifier = Modifier,
 ) {
 
     //create container here
@@ -217,7 +218,7 @@ internal fun DoctorSearchSection(
             theme = theme,
             text = textButton,
             fontSize = dimen.dimen_1_25,
-            onClick = { /*TODO*/ },
+            onClick = { onClickOnButton(doctorIsOnline, 1) },
             modifier = Modifier
                 .constrainAs(buttonId) {
                     start.linkTo(ratingId.start)
@@ -246,7 +247,7 @@ internal fun DoctorSearchSection(
                 )
         )
 
-        CropImageView(
+        LoadImageView(
             painter = image,
             modifier = Modifier
                 .constrainAs(imageId) {

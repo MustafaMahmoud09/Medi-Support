@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.article.uiElement.components.composable.EndIconButtonRadiusView
-import com.example.sharedui.uiElement.components.composable.CropImageView
+import com.example.sharedui.uiElement.components.composable.LoadImageView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -105,7 +105,7 @@ internal fun ArticleSection(
                 )
         )
 
-        CropImageView(
+        LoadImageView(
             painter = src,
             modifier = Modifier
                 .constrainAs(imageId) {

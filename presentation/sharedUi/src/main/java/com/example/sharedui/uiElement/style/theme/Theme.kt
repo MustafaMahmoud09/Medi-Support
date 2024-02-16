@@ -52,7 +52,8 @@ private val DarkColor = CustomTheme(
     gray939393 = Gray939393,
     redE52D27 = RedE52D27,
     redDarkTR70 = RedDarkTR70,
-    green75F94C = green75F94C
+    green75F94C = green75F94C,
+    grayA7A6A5 = GrayA7A6A5
 )
 
 //Light Mode
@@ -104,7 +105,8 @@ private val LightColor = CustomTheme(
     gray939393 = Gray939393,
     redE52D27 = RedE52D27,
     redDarkTR70 = RedDarkTR70,
-    green75F94C = green75F94C
+    green75F94C = green75F94C,
+    grayA7A6A5 = GrayA7A6A5
 )
 
 @Composable

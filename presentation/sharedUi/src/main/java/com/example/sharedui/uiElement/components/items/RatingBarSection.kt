@@ -1,6 +1,5 @@
 package com.example.sharedui.uiElement.components.items
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

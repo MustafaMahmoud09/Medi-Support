@@ -195,8 +195,9 @@ private fun TotalDoctorsContent(
                     0 -> LazyDoctorsSection(
                         dimen = dimen,
                         theme = theme,
+                        doctorIsOnline = true,
                         doctorsHeight = doctorsHeight,
-                        doctorIsOnline = true
+                        onClickOnBookingButton = {x,v -> }
                     )
 
                     //create doctors offline page here
@@ -205,6 +206,7 @@ private fun TotalDoctorsContent(
                         theme = theme,
                         doctorIsOnline = false,
                         doctorsHeight = doctorsHeight,
+                        onClickOnBookingButton = {x,v -> },
                     )
 
                 }//end when

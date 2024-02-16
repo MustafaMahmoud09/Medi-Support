@@ -1,15 +1,58 @@
 package com.example.booking.uiElement.screens.booking
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.booking.uiElement.screens.booking.child.OnlineBookingScreen
+import com.example.booking.uiState.state.bookings.BookingUiState
+import com.example.booking.uiState.viewModel.bookings.BookingViewModel
+import com.example.sharedui.uiElement.screen.BaseScreen
+import com.example.sharedui.uiElement.style.dimens.CustomDimen
+import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
+import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
-internal fun BookingScreen() {
+internal fun BookingScreen(
+    viewModel: BookingViewModel = hiltViewModel(),
+    popBookingNavGraph: () -> Unit
+) {
+    //collect state screen here
+    val state = viewModel.state.collectAsState()
 
-    BookingContent()
+    BookingContent(
+        popBookingNavGraph = popBookingNavGraph,
+        uiState = state.value
+    )
+
 }//end BookingScreen
 
 @Composable
-private fun BookingContent() {
+private fun BookingContent(
+    dimen: CustomDimen = MediSupportAppDimen(),
+    theme: CustomTheme = MediSupportAppTheme(),
+    popBookingNavGraph: () -> Unit,
+    uiState: BookingUiState
+) {
+
+    //create base screen to define navigation bar and status bar color
+    BaseScreen(
+        navigationColor = theme.background,
+        statusColor = theme.transparent
+    ) {
+
+        //if booking type equal true show online booking screen
+        if (uiState.bookingType) {
+
+            //create online booking screen here
+            OnlineBookingScreen(
+                dimen = dimen,
+                theme = theme,
+                popBookingNavGraph = popBookingNavGraph
+            )
+
+        }//end if
+
+    }//en BaseScreen
 
 }//end BookingContent

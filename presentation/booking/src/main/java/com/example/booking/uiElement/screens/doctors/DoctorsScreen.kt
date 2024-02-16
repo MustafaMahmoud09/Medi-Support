@@ -25,8 +25,8 @@ import com.example.booking.uiElement.components.items.SearchSection
 import com.example.booking.uiElement.screens.doctors.child.TopDoctorsScreen
 import com.example.booking.uiElement.screens.doctors.child.SearchScreen
 import com.example.booking.uiElement.screens.doctors.child.TotalDoctorsScreen
-import com.example.booking.uiState.state.HomeUiState
-import com.example.booking.uiState.viewModel.HomeViewModel
+import com.example.booking.uiState.state.doctors.HomeUiState
+import com.example.booking.uiState.viewModel.doctors.HomeViewModel
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -45,7 +45,8 @@ internal fun DoctorsScreen(
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
-    navigateToHeartRateNavGraph: () -> Unit
+    navigateToHeartRateNavGraph: () -> Unit,
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit
 ) {
 
     //collect state here
@@ -73,6 +74,7 @@ internal fun DoctorsScreen(
         onClickOnSearchField = viewModel::onFocusOnSearchField,
         navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
         uiState = uiState,
+        navigateToBookingNavGraph = navigateToBookingNavGraph,
         onSearchKeyChanged = viewModel::onSearchKeyChanged,
         onClickSeeAll = {
 
@@ -129,6 +131,7 @@ private fun DoctorsContent(
     uiState: HomeUiState,
     onSearchKeyChanged: (String) -> Unit,
     headerHeight: Float = dimen.dimen_2_5 + dimen.dimen_5_5,
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
 ) {
 
     //create container here
@@ -287,6 +290,7 @@ private fun DoctorsContent(
                     TopDoctorsScreen(
                         dimen = dimen,
                         theme = theme,
+                        navigateToBookingNavGraph = navigateToBookingNavGraph,
                         onClickSeeAll = onClickSeeAll,
                         navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
                         navigateToBmiNavGraph = navigateToBmiNavGraph,

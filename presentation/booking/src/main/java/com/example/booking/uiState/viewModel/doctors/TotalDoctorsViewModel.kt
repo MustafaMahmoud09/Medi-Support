@@ -1,4 +1,4 @@
-package com.example.booking.uiState.viewModel
+package com.example.booking.uiState.viewModel.doctors
 
 import com.example.sharedui.uiState.BaseViewModel
 

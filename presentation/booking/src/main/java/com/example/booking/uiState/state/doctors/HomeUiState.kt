@@ -1,4 +1,4 @@
-package com.example.booking.uiState.state
+package com.example.booking.uiState.state.doctors
 
 
 data class HomeUiState(

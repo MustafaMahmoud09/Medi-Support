@@ -16,7 +16,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
-import com.example.sharedui.uiElement.components.composable.CropImageView
+import com.example.sharedui.uiElement.components.composable.LoadImageView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
@@ -133,7 +133,7 @@ private fun SingleArticleContent(
                             }//end constrainAs
                     )
 
-                    CropImageView(
+                    LoadImageView(
                         painter = painterResource(
                             id = R.drawable.test_article_1
                         ),

@@ -92,4 +92,6 @@
     <string name="time">Time</string>
     <string name="_7_00_am">7.00 AM</string>
     <string name="add_alarm">Add Alarm</string>
+    <string name="book_appointment">Book Appointment</string>
+    <string name="rate">Rate:</string>
 </resources>

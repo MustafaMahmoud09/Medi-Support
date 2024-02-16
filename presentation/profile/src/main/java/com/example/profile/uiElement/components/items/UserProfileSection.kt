@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.sharedui.uiElement.components.composable.CropImageView
+import com.example.sharedui.uiElement.components.composable.LoadImageView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -80,7 +80,7 @@ internal fun UserProfileSection(
         ) {
 
             //create image here
-            CropImageView(
+            LoadImageView(
                 painter = painter,
                 modifier = Modifier
                     .fillMaxSize()

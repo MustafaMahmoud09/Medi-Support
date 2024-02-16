@@ -77,7 +77,7 @@ private fun SearchContent(
                     R.string.book_now
                 ),
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
 
         }//end items

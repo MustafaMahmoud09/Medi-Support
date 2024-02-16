@@ -27,6 +27,7 @@ internal fun LazyDoctorsSection(
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(
         space = dimen.dimen_1_5.dp
     ),
+    onClickOnBookingButton: (Boolean, Int) -> Unit,
     modifier: Modifier = Modifier,
 ){
 
@@ -59,6 +60,7 @@ internal fun LazyDoctorsSection(
                 textButton = stringResource(
                     id = R.string.book_now
                 ),
+                onClickOnButton = onClickOnBookingButton,
                 doctorIsOnline = doctorIsOnline,
                 modifier = Modifier
                     .fillMaxWidth()

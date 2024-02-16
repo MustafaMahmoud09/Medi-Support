@@ -27,7 +27,7 @@ import com.example.booking.uiElement.components.items.HealthCareSection
 import com.example.booking.uiElement.components.items.LazyDoctorsSection
 import com.example.booking.uiElement.components.items.HeartPredictionSection
 import com.example.booking.uiElement.components.items.TabsSection
-import com.example.booking.uiState.viewModel.TopDoctorsViewModel
+import com.example.booking.uiState.viewModel.doctors.TopDoctorsViewModel
 import com.example.sharedui.uiElement.components.composable.LinkView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.modifier.appDefaultContainer
@@ -48,7 +48,8 @@ internal fun TopDoctorsScreen(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
-    headerHeight: Float
+    headerHeight: Float,
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0
@@ -66,6 +67,7 @@ internal fun TopDoctorsScreen(
         onClickOnBloodSugarSection = navigateToBloodSugarNavGraph,
         onClickOnHeartRateSection = navigateToHeartRateNavGraph,
         headerHeight = headerHeight,
+        onClickOnBookingButton = navigateToBookingNavGraph,
         onClickOnDoctorsOnline = {
 
             coroutineScope.launch {
@@ -126,7 +128,8 @@ private fun TopDoctorsContent(
                             dimen.dimen_0_125 +
                             dimen.dimen_8_5
                     )
-            )
+            ),
+    onClickOnBookingButton: (Boolean, Int) -> Unit
 ) {
 
     //create lazy column here
@@ -417,6 +420,7 @@ private fun TopDoctorsContent(
                         dimen = dimen,
                         theme = theme,
                         doctorsHeight = doctorsHeight,
+                        onClickOnBookingButton = onClickOnBookingButton,
                         doctorIsOnline = true
                     )
 
@@ -426,6 +430,7 @@ private fun TopDoctorsContent(
                         theme = theme,
                         doctorIsOnline = false,
                         doctorsHeight = doctorsHeight,
+                        onClickOnBookingButton = onClickOnBookingButton,
                     )
 
                 }//end when

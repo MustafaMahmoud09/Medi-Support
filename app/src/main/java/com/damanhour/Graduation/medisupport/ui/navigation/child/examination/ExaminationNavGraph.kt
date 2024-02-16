@@ -15,14 +15,18 @@ import com.google.accompanist.navigation.animation.navigation
 internal const val EXAMINATION_NAV_GRAPH_ROUTE = "examinationNavGraph"
 
 //function for create examination nav graph and added to destinations in it
-internal fun NavGraphBuilder.examinationNavGraph() {
+internal fun NavGraphBuilder.examinationNavGraph(
+    popBookingNavGraph: () -> Unit
+) {
 
     navigation(
         route = EXAMINATION_NAV_GRAPH_ROUTE,
         startDestination = BOOKING_NAV_GRAPH_ROUTE
     ) {
 
-        bookingNavGraph()
+        bookingNavGraph(
+            popBookingNavGraph = popBookingNavGraph
+        )
 
         bookingDetailsDestination()
 

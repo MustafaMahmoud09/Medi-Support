@@ -1,6 +1,6 @@
-package com.example.booking.uiState.viewModel
+package com.example.booking.uiState.viewModel.doctors
 
-import com.example.booking.uiState.state.HomeUiState
+import com.example.booking.uiState.state.doctors.HomeUiState
 import com.example.sharedui.uiState.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

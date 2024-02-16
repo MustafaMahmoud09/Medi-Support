@@ -7,15 +7,16 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 
 @Composable
-fun CropImageView(
+fun LoadImageView(
     painter: Painter,
+    contentScale: ContentScale = ContentScale.Crop,
     modifier: Modifier = Modifier
 ) {
 
     Image(
         painter = painter,
         contentDescription = "image",
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
         modifier = modifier
     )
 

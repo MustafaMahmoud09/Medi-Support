@@ -35,6 +35,7 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
+import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -124,43 +125,30 @@ private fun RecordHeartPredictionContent(
                 )
         ) {
             //create ids for components here
-            val (backButton, title, operationButtonId, fieldsId) = createRefs()
+            val (headerId, operationButtonId, fieldsId) = createRefs()
 
-            //create back button here
-            IconButtonView(
+            //create header here
+            HeaderSection(
                 dimen = dimen,
                 theme = theme,
-                onClick = onClickBack,
+                onClickOnBackButton = onClickBack,
+                title = stringResource(
+                    id = R.string.heart_disease_prediction
+                ),
                 modifier = Modifier
-                    .constrainAs(backButton) {
+                    .constrainAs(headerId){
                         start.linkTo(
                             parent.start,
                             dimen.dimen_2.dp
                         )
-                        top.linkTo(
-                            parent.top,
-                            dimen.dimen_4.dp
-                        )
-                    }//end constrainAs
-            )
-
-            //create title screen here
-            TextBoldView(
-                theme = theme,
-                dimen = dimen,
-                text = stringResource(
-                    id = R.string.heart_disease_prediction
-                ),
-                size = dimen.dimen_2_25,
-                modifier = Modifier
-                    .constrainAs(title) {
-                        start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_4.dp
+                            dimen.dimen_3_25.dp
                         )
-                    }//end constrainAs
+
+                        width = Dimension.fillToConstraints
+                    }
             )
 
             //if keyboard is not visible
@@ -213,7 +201,7 @@ private fun RecordHeartPredictionContent(
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         top.linkTo(
-                            title.bottom,
+                            headerId.bottom,
                             dimen.dimen_2.dp
                         )
                         //if keyboard is visible set this item above parent
@@ -230,7 +218,7 @@ private fun RecordHeartPredictionContent(
                 contentPadding = PaddingValues(
                     start = dimen.dimen_2.dp,
                     end = dimen.dimen_2.dp,
-                    top = dimen.dimen_2.dp,
+                    top = dimen.dimen_0_5.dp,
                     bottom = dimen.dimen_1.dp
                 )
             ) {

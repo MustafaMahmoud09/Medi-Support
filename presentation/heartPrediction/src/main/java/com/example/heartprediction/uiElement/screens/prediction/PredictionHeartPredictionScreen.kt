@@ -18,6 +18,7 @@ import com.example.heartprediction.uiElement.components.items.ResultPredictionSe
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
+import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -58,45 +59,32 @@ private fun PredictionHeartPredictionContent(
                 )
         ) {
             //create ids for components here
-            val (backButton, title, messageContainer) = createRefs()
+            val (headerId, messageContainer) = createRefs()
             val guideFromStart11P = createGuidelineFromStart(.11f)
             val guideFromEnd11P = createGuidelineFromEnd(.11f)
 
-            //create back button here
-            IconButtonView(
+            //create header here
+            HeaderSection(
                 dimen = dimen,
                 theme = theme,
-                onClick = onClickBack,
+                onClickOnBackButton = onClickBack,
+                title = stringResource(
+                    id = R.string.heart_disease_prediction
+                ),
                 modifier = Modifier
-                    .constrainAs(backButton) {
+                    .constrainAs(headerId){
                         start.linkTo(
                             parent.start,
                             dimen.dimen_2.dp
                         )
-                        top.linkTo(
-                            parent.top,
-                            dimen.dimen_4.dp
-                        )
-                    }//end constrainAs
-            )
-
-            //create title screen here
-            TextBoldView(
-                theme = theme,
-                dimen = dimen,
-                text = stringResource(
-                    id = R.string.heart_disease_prediction
-                ),
-                size = dimen.dimen_2_25,
-                modifier = Modifier
-                    .constrainAs(title) {
-                        start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_4.dp
+                            dimen.dimen_3_25.dp
                         )
-                    }//end constrainAs
+
+                        width = Dimension.fillToConstraints
+                    }
             )
 
             //create message container here
@@ -106,7 +94,7 @@ private fun PredictionHeartPredictionContent(
                         start.linkTo(guideFromStart11P)
                         end.linkTo(guideFromEnd11P)
                         top.linkTo(
-                            title.bottom,
+                            headerId.bottom,
                             dimen.dimen_2.dp
                         )
                         bottom.linkTo(parent.bottom)

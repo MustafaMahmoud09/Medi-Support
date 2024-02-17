@@ -32,7 +32,8 @@ internal fun OnlineBookingScreen(
     viewModel: OnlineBookingViewModel = hiltViewModel(),
     dimen: CustomDimen,
     theme: CustomTheme,
-    popBookingNavGraph: () -> Unit
+    popBookingNavGraph: () -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
     //collect screen state here
     val state = viewModel.state.collectAsState()
@@ -41,17 +42,19 @@ internal fun OnlineBookingScreen(
         dimen = dimen,
         theme = theme,
         onClickOnBackButton = popBookingNavGraph,
-        uiState = state.value
+        uiState = state.value,
+        onClickOnBookingButton = navigateToBookingDetailsDestination
     )
 
 }//end OnlineBookingScreen
 
 @Composable
-internal fun OnlineBookingContent(
+private fun OnlineBookingContent(
     dimen: CustomDimen,
     theme: CustomTheme,
     onClickOnBackButton: () -> Unit,
-    uiState: Int
+    uiState: Int,
+    onClickOnBookingButton: (Int) -> Unit
 ) {
 
     //create container here
@@ -111,7 +114,7 @@ internal fun OnlineBookingContent(
             text = stringResource(
                 id = R.string.book_appointment
             ),
-            onClick = { /*TODO*/ },
+            onClick = { onClickOnBookingButton(0) },
             modifier = Modifier
                 .constrainAs(bookAppointmentId) {
                     start.linkTo(

@@ -94,4 +94,6 @@
     <string name="add_alarm">Add Alarm</string>
     <string name="book_appointment">Book Appointment</string>
     <string name="rate">Rate:</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_a_time">Select a Time</string>
 </resources>

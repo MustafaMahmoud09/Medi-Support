@@ -47,7 +47,8 @@ internal fun NavHostController.popBookingNavGraph() {
 
 //function for create booking nav graph and added to destinations in it
 internal fun NavGraphBuilder.bookingNavGraph(
-    popBookingNavGraph: () -> Unit
+    popBookingNavGraph: () -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
 
     navigation(
@@ -66,7 +67,8 @@ internal fun NavGraphBuilder.bookingNavGraph(
     ) {
 
         bookingDestination(
-            popBookingNavGraph = popBookingNavGraph
+            popBookingNavGraph = popBookingNavGraph,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
 
         paymentDestination()

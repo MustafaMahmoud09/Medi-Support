@@ -55,6 +55,8 @@ import com.example.bmi.uiElement.screens.determination.navigateToDeterminationBM
 import com.example.bmi.uiElement.screens.determination.popDeterminationBMIDestination
 import com.example.bmi.uiElement.screens.record.navigateToRecordBMIDestination
 import com.example.bmi.uiElement.screens.record.popRecordBMIDestination
+import com.example.booking.uiElement.screens.details.navigateToBookingDetailsDestination
+import com.example.booking.uiElement.screens.details.popBookingDetailsDestination
 import com.example.heartprediction.uiElement.screens.prediction.navigateToPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.prediction.popPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.record.navigateToRecordHeartPredictionDestination
@@ -123,7 +125,9 @@ fun RootNavGraph(
                 )
 
                 examinationNavGraph(
-                    popBookingNavGraph = navHostController::popBookingNavGraph
+                    popBookingNavGraph = navHostController::popBookingNavGraph,
+                    navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
+                    popBookingDetailsDestination = navHostController::popBookingDetailsDestination
                 )
 
                 heartPredictionNavGraph(

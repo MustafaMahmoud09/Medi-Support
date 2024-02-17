@@ -1,6 +1,7 @@
 package com.example.sharedui.uiElement.style.theme
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorMatrix
 
 data class CustomTheme(
     val background: Color,
@@ -51,5 +52,8 @@ data class CustomTheme(
     val redE52D27: Color,
     val redDarkTR70: Color,
     val green75F94C: Color,
-    val grayA7A6A5: Color
+    val grayA7A6A5: Color,
+    val grayF3F3F3: Color,
+    val green33A351: Color,
+    val green8CFFAB: Color
 )

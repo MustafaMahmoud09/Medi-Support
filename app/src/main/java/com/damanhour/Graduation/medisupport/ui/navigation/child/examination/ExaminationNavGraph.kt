@@ -10,13 +10,16 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.chil
 import com.example.booking.uiElement.screens.details.bookingDetailsDestination
 import com.example.room.uiElement.screens.room.onlineRoomDestination
 import com.google.accompanist.navigation.animation.navigation
+import kotlin.reflect.KFunction0
 
 //route name here
 internal const val EXAMINATION_NAV_GRAPH_ROUTE = "examinationNavGraph"
 
 //function for create examination nav graph and added to destinations in it
 internal fun NavGraphBuilder.examinationNavGraph(
-    popBookingNavGraph: () -> Unit
+    popBookingNavGraph: () -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit,
+    popBookingDetailsDestination: KFunction0<Unit>
 ) {
 
     navigation(
@@ -25,10 +28,13 @@ internal fun NavGraphBuilder.examinationNavGraph(
     ) {
 
         bookingNavGraph(
-            popBookingNavGraph = popBookingNavGraph
+            popBookingNavGraph = popBookingNavGraph,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
 
-        bookingDetailsDestination()
+        bookingDetailsDestination(
+            popBookingDetailsDestination = popBookingDetailsDestination
+        )
 
         onlineRoomDestination()
 

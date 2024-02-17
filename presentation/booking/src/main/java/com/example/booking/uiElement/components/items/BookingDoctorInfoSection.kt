@@ -31,7 +31,7 @@ internal fun BookingDoctorInfoSection(
     doctorNameSize: Float = dimen.dimen_2,
     doctorNameColor: Color = theme.black,
     jop: String,
-    jopSize: Float = dimen.dimen_1_75,
+    jopSize: Float = dimen.dimen_1_5,
     jopColor: Color = theme.grayA7A6A5,
     price: String,
     priceColor: Color = theme.redDark,

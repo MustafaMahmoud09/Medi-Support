@@ -1,13 +1,15 @@
 @file:OptIn(ExperimentalFoundationApi::class)
 
-package com.example.booking.uiElement.screens.doctors.child
+package com.example.booking.uiElement.screens.doctors.child.total
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
@@ -19,8 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.booking.uiElement.components.items.LazyDoctorsSection
 import com.example.booking.uiElement.components.items.TabsSection
+import com.example.booking.uiElement.screens.doctors.child.total.child.TotalOfflineDoctorsScreen
+import com.example.booking.uiElement.screens.doctors.child.total.child.TotalOnlineDoctorsScreen
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -32,7 +35,7 @@ import kotlinx.coroutines.launch
 internal fun TotalDoctorsScreen(
     dimen: CustomDimen,
     theme: CustomTheme,
-    headerHeight: Float
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0
@@ -43,7 +46,7 @@ internal fun TotalDoctorsScreen(
     TotalDoctorsContent(
         dimen = dimen,
         theme = theme,
-        headerHeight = headerHeight,
+        navigateToBookingNavGraph = navigateToBookingNavGraph,
         onClickOnDoctorsOnline = {
 
             coroutineScope.launch {
@@ -86,19 +89,8 @@ private fun TotalDoctorsContent(
     pagerState: PagerState,
     onClickOnDoctorsOffline: () -> Unit,
     onClickOnDoctorsOnline: () -> Unit,
-    headerHeight: Float,
     screenHeight: Int = LocalConfiguration.current.screenHeightDp,
-    doctorsHeight: Float = screenHeight - (
-            (
-                    headerHeight +
-                            dimen.dimen_2 +
-                            dimen.dimen_1_75 +
-                            dimen.dimen_3_5 +
-                            dimen.dimen_1 +
-                            dimen.dimen_0_125 +
-                            dimen.dimen_8_5
-                    )
-            )
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit
 ) {
     //create lazy column here
     LazyColumn(
@@ -111,8 +103,6 @@ private fun TotalDoctorsContent(
                 top = dimen.dimen_1.dp
             ),
         contentPadding = PaddingValues(
-            start = dimen.dimen_2.dp,
-            end = dimen.dimen_2.dp,
             top = dimen.dimen_1.dp
         )
     ) {
@@ -124,6 +114,9 @@ private fun TotalDoctorsContent(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(
+                        horizontal = dimen.dimen_2.dp
+                    )
             ) {
 
                 TextBoldView(
@@ -153,7 +146,9 @@ private fun TotalDoctorsContent(
                         color = theme.background
                     )
                     .padding(
-                        top = dimen.dimen_2_5.dp
+                        top = dimen.dimen_2_5.dp,
+                        start = dimen.dimen_2.dp,
+                        end = dimen.dimen_2.dp
                     ),
             ) {
 
@@ -186,28 +181,41 @@ private fun TotalDoctorsContent(
             HorizontalPager(
                 pageCount = 2,
                 state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxWidth()
+                    .heightIn(
+                        min = dimen.dimen_0.dp,
+                        max = screenHeight.dp
+                    )
             ) { page ->
 
                 //if page is 0 create doctors online page else create doctor offline page
                 when (page) {
 
                     //create doctors online page here
-                    0 -> LazyDoctorsSection(
-                        dimen = dimen,
-                        theme = theme,
-                        doctorIsOnline = true,
-                        doctorsHeight = doctorsHeight,
-                        onClickOnBookingButton = {x,v -> }
-                    )
+                    0 -> {
+
+                        //create total online doctors screen
+                        TotalOnlineDoctorsScreen(
+                            theme = theme,
+                            dimen = dimen,
+                            navigateToBookingNavGraph = navigateToBookingNavGraph
+                        )
+
+                    }//end online doctors case
 
                     //create doctors offline page here
-                    1 -> LazyDoctorsSection(
-                        dimen = dimen,
-                        theme = theme,
-                        doctorIsOnline = false,
-                        doctorsHeight = doctorsHeight,
-                        onClickOnBookingButton = {x,v -> },
-                    )
+                    1 -> {
+
+                        //create total offline doctors screen
+                        TotalOfflineDoctorsScreen(
+                            theme = theme,
+                            dimen = dimen,
+                            navigateToBookingNavGraph = navigateToBookingNavGraph
+                        )
+
+                    }//end offline doctors case
 
                 }//end when
 

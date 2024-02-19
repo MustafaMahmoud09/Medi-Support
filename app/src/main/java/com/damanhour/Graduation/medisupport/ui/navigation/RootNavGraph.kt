@@ -33,7 +33,9 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.h
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.popHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.navigateToBookingNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.navigateToChatNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.popBookingNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.popChatNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.examinationNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.heartRateNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraph
@@ -127,7 +129,9 @@ fun RootNavGraph(
                 examinationNavGraph(
                     popBookingNavGraph = navHostController::popBookingNavGraph,
                     navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
-                    popBookingDetailsDestination = navHostController::popBookingDetailsDestination
+                    popBookingDetailsDestination = navHostController::popBookingDetailsDestination,
+                    navigateToChatNavGraph = navHostController::navigateToChatNavGraph,
+                    popChatNavGraph = navHostController::popChatNavGraph
                 )
 
                 heartPredictionNavGraph(

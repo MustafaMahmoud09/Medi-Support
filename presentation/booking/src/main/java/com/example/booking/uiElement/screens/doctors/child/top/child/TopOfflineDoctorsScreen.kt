@@ -1,45 +1,55 @@
-package com.example.booking.uiElement.components.items
+package com.example.booking.uiElement.screens.doctors.child.top.child
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.booking.uiElement.components.items.DoctorSearchSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun LazyDoctorsSection(
+internal fun TopOfflineDoctorsScreen(
+    theme: CustomTheme,
+    dimen: CustomDimen,
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+) {
+
+    //create top offline doctors here
+    TopOfflineDoctorsContent(
+        theme = theme,
+        dimen = dimen,
+        navigateToBookingNavGraph = navigateToBookingNavGraph
+    )
+}//end TopOfflineDoctorsScreen
+
+@Composable
+private fun TopOfflineDoctorsContent(
     dimen: CustomDimen,
     theme: CustomTheme,
-    doctorIsOnline: Boolean = false,
-    doctorsHeight: Float,
-    contentPadding: PaddingValues = PaddingValues(
-        bottom = dimen.dimen_2.dp,
-        top = dimen.dimen_1_5.dp
-    ),
-    verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(
-        space = dimen.dimen_1_5.dp
-    ),
-    onClickOnBookingButton: (Boolean, Int) -> Unit,
-    modifier: Modifier = Modifier,
-){
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+) {
 
     //create container here
     LazyColumn(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(
-                height = doctorsHeight.dp
-            ),
-        contentPadding = contentPadding,
-        verticalArrangement = verticalArrangement
+        modifier = Modifier
+            .fillMaxSize(),
+        contentPadding = PaddingValues(
+            bottom = dimen.dimen_2.dp,
+            top = dimen.dimen_1_5.dp,
+            start = dimen.dimen_2.dp,
+            end = dimen.dimen_2.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(
+            space = dimen.dimen_1_5.dp
+        ),
     ) {
 
         //create doctor items
@@ -60,8 +70,8 @@ internal fun LazyDoctorsSection(
                 textButton = stringResource(
                     id = R.string.book_now
                 ),
-                onClickOnButton = onClickOnBookingButton,
-                doctorIsOnline = doctorIsOnline,
+                onClickOnButton = navigateToBookingNavGraph,
+                doctorIsOnline = false,
                 modifier = Modifier
                     .fillMaxWidth()
             )
@@ -70,4 +80,4 @@ internal fun LazyDoctorsSection(
 
     }//end LazyColumn
 
-}//end LazyDoctorsSection
+}//end TopOfflineDoctorsContent

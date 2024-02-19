@@ -53,7 +53,8 @@ internal fun OfflineBookingSection(
     ),
     timeIconSize: Float = dimen.dimen_2_25,
     timeIconTint: Color = theme.black,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickOnChatButton: () -> Unit
 ) {
 
     //create container here
@@ -183,7 +184,7 @@ internal fun OfflineBookingSection(
         IconButtonView(
             dimen = dimen,
             theme = theme,
-            onClick = { /*TODO*/ },
+            onClick = onClickOnChatButton,
             size = chatIconSize,
             icon = chatIcon,
             tint = chatIconTint,

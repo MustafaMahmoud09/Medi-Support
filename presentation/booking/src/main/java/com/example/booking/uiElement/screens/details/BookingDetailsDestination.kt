@@ -46,7 +46,8 @@ fun NavHostController.popBookingDetailsDestination() {
 }//end popBookingDetailsDestination
 
 fun NavGraphBuilder.bookingDetailsDestination(
-    popBookingDetailsDestination: KFunction0<Unit>
+    popBookingDetailsDestination: KFunction0<Unit>,
+    navigateToChatNavGraph: () -> Unit
 ) {
 
     composable(
@@ -65,7 +66,8 @@ fun NavGraphBuilder.bookingDetailsDestination(
     ) {
 
         BookingDetailsScreen(
-            popBookingDetailsDestination = popBookingDetailsDestination
+            popBookingDetailsDestination = popBookingDetailsDestination,
+            navigateToChatNavGraph = navigateToChatNavGraph
         )
 
     }//end composable

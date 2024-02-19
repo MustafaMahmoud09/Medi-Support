@@ -1,12 +1,14 @@
 @file:OptIn(ExperimentalFoundationApi::class)
 
-package com.example.booking.uiElement.screens.doctors.child
+package com.example.booking.uiElement.screens.doctors.child.top
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
@@ -19,18 +21,19 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sharedui.R
 import com.example.booking.uiElement.components.items.HealthCareSection
-import com.example.booking.uiElement.components.items.LazyDoctorsSection
 import com.example.booking.uiElement.components.items.HeartPredictionSection
 import com.example.booking.uiElement.components.items.TabsSection
+import com.example.booking.uiElement.screens.doctors.child.top.child.TopOfflineDoctorsScreen
+import com.example.booking.uiElement.screens.doctors.child.top.child.TopOnlineDoctorsScreen
 import com.example.booking.uiState.viewModel.doctors.TopDoctorsViewModel
 import com.example.sharedui.uiElement.components.composable.LinkView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
-import com.example.sharedui.uiElement.components.modifier.appDefaultContainer
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.robotoBold
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -48,7 +51,6 @@ internal fun TopDoctorsScreen(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
-    headerHeight: Float,
     navigateToBookingNavGraph: (Boolean, Int) -> Unit
 ) {
     val pagerState = rememberPagerState(
@@ -66,8 +68,7 @@ internal fun TopDoctorsScreen(
         onClickOnBloodPressureSection = navigateToBloodPressureNavGraph,
         onClickOnBloodSugarSection = navigateToBloodSugarNavGraph,
         onClickOnHeartRateSection = navigateToHeartRateNavGraph,
-        headerHeight = headerHeight,
-        onClickOnBookingButton = navigateToBookingNavGraph,
+        navigateToBookingNavGraph = navigateToBookingNavGraph,
         onClickOnDoctorsOnline = {
 
             coroutineScope.launch {
@@ -116,34 +117,21 @@ private fun TopDoctorsContent(
     pagerState: PagerState,
     onClickOnDoctorsOnline: () -> Unit,
     onClickOnDoctorsOffline: () -> Unit,
-    headerHeight: Float,
     screenHeight: Int = LocalConfiguration.current.screenHeightDp,
-    doctorsHeight: Float = screenHeight - (
-            (
-                    headerHeight +
-                            dimen.dimen_2 +
-                            dimen.dimen_1_75 +
-                            dimen.dimen_3_5 +
-                            dimen.dimen_1 +
-                            dimen.dimen_0_125 +
-                            dimen.dimen_8_5
-                    )
-            ),
-    onClickOnBookingButton: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit
 ) {
 
     //create lazy column here
     LazyColumn(
         modifier = Modifier
-            .appDefaultContainer(
+            .fillMaxSize()
+            .background(
                 color = theme.background
             )
             .padding(
                 top = dimen.dimen_1.dp
             ),
         contentPadding = PaddingValues(
-            start = dimen.dimen_2.dp,
-            end = dimen.dimen_2.dp,
             top = dimen.dimen_1.dp
         )
     ) {
@@ -157,6 +145,9 @@ private fun TopDoctorsContent(
             ConstraintLayout(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(
+                        horizontal = dimen.dimen_2.dp
+                    )
             ) {
                 //create ids for components here
                 val (
@@ -365,7 +356,7 @@ private fun TopDoctorsContent(
         }//end item
 
         //item for create tabs item
-        stickyHeader(
+        stickyHeader (
             key = 6
         ) {
 
@@ -377,8 +368,10 @@ private fun TopDoctorsContent(
                         color = theme.background
                     )
                     .padding(
-                        top = dimen.dimen_2.dp
-                    ),
+                        top = dimen.dimen_2.dp,
+                        start = dimen.dimen_2.dp,
+                        end = dimen.dimen_2.dp
+                    )
             ) {
 
                 TabsSection(
@@ -409,29 +402,39 @@ private fun TopDoctorsContent(
             //create doctors pager here
             HorizontalPager(
                 pageCount = 2,
-                state = pagerState
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(
+                        min = dimen.dimen_0.dp,
+                        max = screenHeight.dp
+                    )
             ) { page ->
 
                 //if page is 0 create doctors online page else create doctor offline page
                 when (page) {
 
                     //create doctors online page here
-                    0 -> LazyDoctorsSection(
-                        dimen = dimen,
-                        theme = theme,
-                        doctorsHeight = doctorsHeight,
-                        onClickOnBookingButton = onClickOnBookingButton,
-                        doctorIsOnline = true
-                    )
+                    0 -> {
+
+                        TopOnlineDoctorsScreen(
+                            theme = theme,
+                            dimen = dimen,
+                            navigateToBookingNavGraph = navigateToBookingNavGraph
+                        )
+
+                    }//end top online case here
 
                     //create doctors offline page here
-                    1 -> LazyDoctorsSection(
-                        dimen = dimen,
-                        theme = theme,
-                        doctorIsOnline = false,
-                        doctorsHeight = doctorsHeight,
-                        onClickOnBookingButton = onClickOnBookingButton,
-                    )
+                    1 -> {
+
+                        TopOfflineDoctorsScreen(
+                            theme = theme,
+                            dimen = dimen,
+                            navigateToBookingNavGraph = navigateToBookingNavGraph
+                        )
+
+                    }//end top offline case here
 
                 }//end when
 

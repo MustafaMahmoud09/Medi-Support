@@ -57,7 +57,7 @@ private fun OnlineDetailsContent(
             OnlineBookingSection(
                 dimen = dimen,
                 theme = theme,
-                message = "Now you Can Make Video Calld With The Dortor",
+                message = "Now you Can Make Video Call With The Doctor",
                 modifier = Modifier
                     .fillMaxWidth()
             )

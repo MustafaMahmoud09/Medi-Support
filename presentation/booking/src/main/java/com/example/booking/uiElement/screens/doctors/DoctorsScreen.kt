@@ -18,13 +18,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.booking.uiElement.components.items.SearchSection
-import com.example.booking.uiElement.screens.doctors.child.TopDoctorsScreen
+import com.example.booking.uiElement.screens.doctors.child.top.TopDoctorsScreen
 import com.example.booking.uiElement.screens.doctors.child.SearchScreen
-import com.example.booking.uiElement.screens.doctors.child.TotalDoctorsScreen
+import com.example.booking.uiElement.screens.doctors.child.total.TotalDoctorsScreen
 import com.example.booking.uiState.state.doctors.HomeUiState
 import com.example.booking.uiState.viewModel.doctors.HomeViewModel
 import com.example.sharedui.uiElement.components.composable.IconButtonView
@@ -130,7 +131,6 @@ private fun DoctorsContent(
     navigateToHeartRateNavGraph: () -> Unit,
     uiState: HomeUiState,
     onSearchKeyChanged: (String) -> Unit,
-    headerHeight: Float = dimen.dimen_2_5 + dimen.dimen_5_5,
     navigateToBookingNavGraph: (Boolean, Int) -> Unit,
 ) {
 
@@ -297,7 +297,6 @@ private fun DoctorsContent(
                         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
                         navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
                         navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
-                        headerHeight = headerHeight
                     )
                 }//end case
                 //if page is 1 show search screen
@@ -305,7 +304,8 @@ private fun DoctorsContent(
 
                     SearchScreen(
                         dimen = dimen,
-                        theme = theme
+                        theme = theme,
+                        navigateToBookingNavGraph = navigateToBookingNavGraph
                     )
                 }//end case
                 //if page is 2 show see all doctor screen
@@ -314,7 +314,7 @@ private fun DoctorsContent(
                     TotalDoctorsScreen(
                         dimen = dimen,
                         theme = theme,
-                        headerHeight = headerHeight
+                        navigateToBookingNavGraph = navigateToBookingNavGraph
                     )
                 }//end case
 

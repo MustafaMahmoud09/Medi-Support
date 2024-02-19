@@ -19,7 +19,9 @@ internal const val EXAMINATION_NAV_GRAPH_ROUTE = "examinationNavGraph"
 internal fun NavGraphBuilder.examinationNavGraph(
     popBookingNavGraph: () -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    popBookingDetailsDestination: KFunction0<Unit>
+    popBookingDetailsDestination: KFunction0<Unit>,
+    navigateToChatNavGraph: () -> Unit,
+    popChatNavGraph: () -> Unit
 ) {
 
     navigation(
@@ -33,12 +35,15 @@ internal fun NavGraphBuilder.examinationNavGraph(
         )
 
         bookingDetailsDestination(
-            popBookingDetailsDestination = popBookingDetailsDestination
+            popBookingDetailsDestination = popBookingDetailsDestination,
+            navigateToChatNavGraph = navigateToChatNavGraph
         )
 
         onlineRoomDestination()
 
-        chatNavGraph()
+        chatNavGraph(
+            popChatNavGraph = popChatNavGraph
+        )
 
     }//end navigation
 

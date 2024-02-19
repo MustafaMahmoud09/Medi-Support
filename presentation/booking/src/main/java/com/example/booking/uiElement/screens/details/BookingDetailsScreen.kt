@@ -22,6 +22,7 @@ import com.example.booking.uiState.viewModel.details.BookingDetailsViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.components.modifier.appDefaultContainer
+import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -32,7 +33,8 @@ import kotlin.reflect.KFunction0
 @Composable
 internal fun BookingDetailsScreen(
     viewModel: BookingDetailsViewModel = hiltViewModel(),
-    popBookingDetailsDestination: KFunction0<Unit>
+    popBookingDetailsDestination: KFunction0<Unit>,
+    navigateToChatNavGraph: () -> Unit
 ) {
     //collect state here
     val state = viewModel.state.collectAsState()
@@ -49,6 +51,7 @@ internal fun BookingDetailsScreen(
     BookingDetailsContent(
         pagerState = pagerState,
         onClickOnBackButton = popBookingDetailsDestination,
+        navigateToChatNavGraph = navigateToChatNavGraph,
         onClickOnBookingsOnline = {
 
             coroutineScope.launch {
@@ -90,114 +93,124 @@ private fun BookingDetailsContent(
     pagerState: PagerState,
     onClickOnBookingsOnline: () -> Unit,
     onClickOnBookingsOffline: () -> Unit,
-    onClickOnBackButton: KFunction0<Unit>
+    onClickOnBackButton: KFunction0<Unit>,
+    navigateToChatNavGraph: () -> Unit
 ) {
 
-    //create container here
-    ConstraintLayout(
-        modifier = Modifier
-            .appDefaultContainer(
-                color = theme.background
-            )
+    //create base screen to define navigation and status color
+    BaseScreen(
+        navigationColor = theme.background,
+        statusColor = theme.background
     ) {
-        //create ids for screen components here
-        val (headerId, tabsId, pagerId) = createRefs()
 
-        //create header here
-        HeaderSection(
-            dimen = dimen,
-            theme = theme,
-            onClickOnBackButton = onClickOnBackButton,
-            title = stringResource(
-                id = R.string.details_of_booking_doctor
-            ),
+        //create container here
+        ConstraintLayout(
             modifier = Modifier
-                .constrainAs(headerId) {
-                    start.linkTo(
-                        parent.start,
-                        dimen.dimen_2.dp
-                    )
-                    end.linkTo(parent.end)
-                    top.linkTo(
-                        parent.top,
-                        (dimen.dimen_3_5 + dimen.dimen_0_125).dp
-                    )
-
-                    width = Dimension.fillToConstraints
-                }
-        )
-
-        //create pager tabs here
-        TabsSection(
-            theme = theme,
-            dimen = dimen,
-            titles = arrayOf(
-                stringResource(
-                    id = R.string.doctors_online
-                ),
-                stringResource(
-                    id = R.string.doctors_offline
+                .appDefaultContainer(
+                    color = theme.background
                 )
-            ),
-            selectedItem = pagerState.currentPage,
-            onClickOnTab = arrayOf(onClickOnBookingsOnline, onClickOnBookingsOffline),
-            modifier = Modifier
-                .constrainAs(tabsId) {
-                    start.linkTo(
-                        parent.start,
-                        dimen.dimen_2.dp
+        ) {
+            //create ids for screen components here
+            val (headerId, tabsId, pagerId) = createRefs()
+
+            //create header here
+            HeaderSection(
+                dimen = dimen,
+                theme = theme,
+                onClickOnBackButton = onClickOnBackButton,
+                title = stringResource(
+                    id = R.string.details_of_booking_doctor
+                ),
+                modifier = Modifier
+                    .constrainAs(headerId) {
+                        start.linkTo(
+                            parent.start,
+                            dimen.dimen_2.dp
+                        )
+                        end.linkTo(parent.end)
+                        top.linkTo(
+                            parent.top,
+                            (dimen.dimen_3_5 + dimen.dimen_0_125).dp
+                        )
+
+                        width = Dimension.fillToConstraints
+                    }
+            )
+
+            //create pager tabs here
+            TabsSection(
+                theme = theme,
+                dimen = dimen,
+                titles = arrayOf(
+                    stringResource(
+                        id = R.string.doctors_online
+                    ),
+                    stringResource(
+                        id = R.string.doctors_offline
                     )
-                    end.linkTo(
-                        parent.end,
-                        dimen.dimen_2.dp
-                    )
-                    top.linkTo(
-                        headerId.bottom,
-                        dimen.dimen_3.dp
-                    )
-                    width = Dimension.fillToConstraints
-                }
-        )
+                ),
+                selectedItem = pagerState.currentPage,
+                onClickOnTab = arrayOf(onClickOnBookingsOnline, onClickOnBookingsOffline),
+                modifier = Modifier
+                    .constrainAs(tabsId) {
+                        start.linkTo(
+                            parent.start,
+                            dimen.dimen_2.dp
+                        )
+                        end.linkTo(
+                            parent.end,
+                            dimen.dimen_2.dp
+                        )
+                        top.linkTo(
+                            headerId.bottom,
+                            dimen.dimen_3.dp
+                        )
+                        width = Dimension.fillToConstraints
+                    }
+            )
 
-        //create pager contain on online and offline bookings here
-        HorizontalPager(
-            pageCount = 2,
-            state = pagerState,
-            modifier = Modifier
-                .constrainAs(pagerId) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(tabsId.bottom)
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                }
-        ) { page ->
+            //create pager contain on online and offline bookings here
+            HorizontalPager(
+                pageCount = 2,
+                state = pagerState,
+                modifier = Modifier
+                    .constrainAs(pagerId) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(tabsId.bottom)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.fillToConstraints
+                    }
+            ) { page ->
 
-            //if page equal 0 create online screen else create offline screen
-            when (page) {
-                0 -> {
+                //if page equal 0 create online screen else create offline screen
+                when (page) {
+                    0 -> {
 
-                    //create online screen here
-                    OnlineDetailsScreen(
-                        dimen = dimen,
-                        theme = theme
-                    )
-                }//end online case
+                        //create online screen here
+                        OnlineDetailsScreen(
+                            dimen = dimen,
+                            theme = theme
+                        )
+                    }//end online case
 
-                1 -> {
+                    1 -> {
 
-                    //create offline screen here
-                    OfflineDetailsScreen(
-                        dimen = dimen,
-                        theme = theme
-                    )
-                }//end offline case
+                        //create offline screen here
+                        OfflineDetailsScreen(
+                            dimen = dimen,
+                            theme = theme,
+                            navigateToChatNavGraph = navigateToChatNavGraph
+                        )
+                    }//end offline case
 
-            }//end when
+                }//end when
 
-        }//end HorizontalPager
+            }//end HorizontalPager
 
-    }//end ConstraintLayout
+        }//end ConstraintLayout
+
+    }//end BaseScreen
 
 }//end BookingDetailsContent

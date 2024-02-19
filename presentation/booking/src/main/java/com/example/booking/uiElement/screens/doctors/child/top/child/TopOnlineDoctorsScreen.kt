@@ -1,11 +1,10 @@
-package com.example.booking.uiElement.screens.doctors.child
+package com.example.booking.uiElement.screens.doctors.child.top.child
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,48 +16,41 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
-//function for collect state and execute action from view model
 @Composable
-internal fun SearchScreen(
-    dimen: CustomDimen,
+internal fun TopOnlineDoctorsScreen(
     theme: CustomTheme,
+    dimen: CustomDimen,
     navigateToBookingNavGraph: (Boolean, Int) -> Unit
 ) {
 
-    //call search content function
-    SearchContent(
-        dimen = dimen,
+    //create top online doctors content here
+    TopOnlineDoctorsContent(
         theme = theme,
-        onClickOnBookingButton = navigateToBookingNavGraph
+        dimen = dimen,
+        navigateToBookingNavGraph = navigateToBookingNavGraph
     )
-}//end SearchContent
+}//end TopOnlineDoctorsScreen
 
-//function for observe state and draw components
 @Composable
-private fun SearchContent(
+private fun TopOnlineDoctorsContent(
     dimen: CustomDimen,
     theme: CustomTheme,
-    onClickOnBookingButton: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
 ) {
-    //create lazy column here
+
+    //create container here
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .background(
-                color = theme.background
-            )
-            .padding(
-                top = dimen.dimen_1.dp
-            ),
+            .fillMaxSize(),
         contentPadding = PaddingValues(
-            start = dimen.dimen_2.dp,
-            end = dimen.dimen_2.dp,
             bottom = dimen.dimen_2.dp,
-            top = dimen.dimen_1.dp
+            top = dimen.dimen_1_5.dp,
+            start = dimen.dimen_2.dp,
+            end = dimen.dimen_2.dp
         ),
         verticalArrangement = Arrangement.spacedBy(
             space = dimen.dimen_1_5.dp
-        )
+        ),
     ) {
 
         //create doctor items
@@ -77,15 +69,16 @@ private fun SearchContent(
                     id = R.drawable.doctor_test
                 ),
                 textButton = stringResource(
-                    R.string.book_now
+                    id = R.string.book_now
                 ),
-                onClickOnButton = onClickOnBookingButton,
+                onClickOnButton = navigateToBookingNavGraph,
+                doctorIsOnline = true,
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
             )
 
         }//end items
 
     }//end LazyColumn
 
-}//end SearchContent
+}//end TopOnlineDoctorsScreen

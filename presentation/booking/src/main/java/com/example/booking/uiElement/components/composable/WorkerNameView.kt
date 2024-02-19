@@ -1,19 +1,17 @@
 package com.example.booking.uiElement.components.composable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import com.example.sharedui.uiElement.components.composable.OnlineView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -81,17 +79,12 @@ internal fun WorkerNameView(
         if (doctorIsOnline) {
 
             //create online icon here
-            Spacer(
-                modifier = Modifier
-                    .size(
-                        size = onlineIconSize.dp
-                    )
-                    .clip(
-                        shape = onlineIconShape
-                    )
-                    .background(
-                        color = onlineIconColor
-                    )
+            OnlineView(
+                dimen = dimen,
+                theme = theme,
+                iconColor = onlineIconColor,
+                iconShape = onlineIconShape,
+                iconSize = onlineIconSize
             )
 
         }//end if

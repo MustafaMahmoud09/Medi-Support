@@ -16,13 +16,15 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 @Composable
 internal fun OfflineDetailsScreen(
     dimen: CustomDimen,
-    theme: CustomTheme
+    theme: CustomTheme,
+    navigateToChatNavGraph: () -> Unit
 ) {
 
     //create offline details content here
     OfflineDetailsContent(
         dimen = dimen,
-        theme = theme
+        theme = theme,
+        onClickOnChatButton = navigateToChatNavGraph
     )
 
 }//end OfflineDetailsScreen
@@ -30,7 +32,8 @@ internal fun OfflineDetailsScreen(
 @Composable
 private fun OfflineDetailsContent(
     dimen: CustomDimen,
-    theme: CustomTheme
+    theme: CustomTheme,
+    onClickOnChatButton: () -> Unit
 ) {
 
     //create container here
@@ -57,12 +60,12 @@ private fun OfflineDetailsContent(
             OfflineBookingSection(
                 dimen = dimen,
                 theme = theme,
+                onClickOnChatButton = onClickOnChatButton,
                 modifier = Modifier
                     .fillMaxWidth()
             )
 
         }//end items
-
 
     }//end LazyColumn
 

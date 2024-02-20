@@ -10,9 +10,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.chat.uiElement.components.composable.UnseenCountView
+import com.example.chat.uiElement.components.composable.CountView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.modifier.appBorder
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -27,12 +28,16 @@ internal fun ChatSection(
     borderColor: Color = theme.blackTR25,
     lastMessageSize: Float = dimen.dimen_1_5,
     lastMessageColor: Color = theme.grayA7A6A5,
-    modifier: Modifier = Modifier
+    onClick: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     //create container here
     ConstraintLayout(
         modifier = modifier
+            .clickableWithoutHover {
+                onClick(0)
+            }
             .appBorder(
                 shape = shape,
                 borderWidth = borderWidth,
@@ -88,11 +93,11 @@ internal fun ChatSection(
         )
 
         //create unseen messages number here
-        UnseenCountView(
+        CountView(
             theme = theme,
             dimen = dimen,
             modifier = Modifier
-                .constrainAs(unseenMessagesNumberId){
+                .constrainAs(unseenMessagesNumberId) {
                     end.linkTo(
                         parent.end,
                         dimen.dimen_1_5.dp
@@ -114,7 +119,7 @@ internal fun ChatSection(
             overflow = TextOverflow.Ellipsis,
             fontColor = theme.grayA7A6A5,
             modifier = Modifier
-                .constrainAs(lastMessageId){
+                .constrainAs(lastMessageId) {
                     start.linkTo(
                         doctorProfileId.start,
                         dimen.dimen_5_75.dp

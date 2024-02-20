@@ -39,7 +39,8 @@ internal fun NavGraphBuilder.bottomDestination(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: KFunction0<Unit>,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
     //create bottom destination
     composable(
@@ -56,7 +57,8 @@ internal fun NavGraphBuilder.bottomDestination(
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
             navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
-            navigateToBookingNavGraph = navigateToBookingNavGraph
+            navigateToBookingNavGraph = navigateToBookingNavGraph,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
     }//end composable
 

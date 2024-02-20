@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.booking.uiElement.components.items.BookingDoctorInfoSection
+import com.example.booking.uiElement.components.items.BookedDoctorInformationSection
 import com.example.booking.uiState.viewModel.bookings.OnlineBookingViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
@@ -172,7 +172,7 @@ private fun OnlineBookingContent(
             ) {
 
                 //create doctor info here
-                BookingDoctorInfoSection(
+                BookedDoctorInformationSection(
                     dimen = dimen,
                     theme = theme,
                     doctorName = "Dr: Ahmed Mohamed",

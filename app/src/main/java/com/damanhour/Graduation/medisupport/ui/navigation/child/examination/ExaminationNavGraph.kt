@@ -21,7 +21,9 @@ internal fun NavGraphBuilder.examinationNavGraph(
     navigateToBookingDetailsDestination: (Int) -> Unit,
     popBookingDetailsDestination: KFunction0<Unit>,
     navigateToChatNavGraph: () -> Unit,
-    popChatNavGraph: () -> Unit
+    popChatNavGraph: () -> Unit,
+    navigateToChatDestination: (Int) -> Unit,
+    popChatDestination: () -> Unit
 ) {
 
     navigation(
@@ -42,7 +44,9 @@ internal fun NavGraphBuilder.examinationNavGraph(
         onlineRoomDestination()
 
         chatNavGraph(
-            popChatNavGraph = popChatNavGraph
+            popChatNavGraph = popChatNavGraph,
+            navigateToChatDestination = navigateToChatDestination,
+            popChatDestination = popChatDestination
         )
 
     }//end navigation

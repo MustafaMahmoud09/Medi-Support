@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.booking.uiElement.components.items.DoctorSearchSection
+import com.example.booking.uiElement.components.items.DoctorPrimaryInformationSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -67,7 +67,7 @@ private fun SearchContent(
         ) {
 
             //create single doctor here
-            DoctorSearchSection(
+            DoctorPrimaryInformationSection(
                 dimen = dimen,
                 theme = theme,
                 name = "DR: Alaa Ahmed",

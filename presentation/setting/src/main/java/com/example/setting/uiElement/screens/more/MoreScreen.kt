@@ -32,18 +32,19 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
-
 @Composable
 internal fun MoreScreen(
     popMoreNavGraph: () -> Unit,
     navigateToContactUsDestination: () -> Unit,
-    navigateToAboutDestination: () -> Unit
+    navigateToAboutDestination: () -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
 
     MoreContent(
         onClickBack = popMoreNavGraph,
         onClickContactUs = navigateToContactUsDestination,
-        onClickAbout = navigateToAboutDestination
+        onClickAbout = navigateToAboutDestination,
+        onClickOnBookingDetailsButton = navigateToBookingDetailsDestination
     )
 }//end MoreScreen
 
@@ -53,7 +54,8 @@ private fun MoreContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     onClickBack: () -> Unit,
     onClickContactUs: () -> Unit,
-    onClickAbout: () -> Unit
+    onClickAbout: () -> Unit,
+    onClickOnBookingDetailsButton: (Int) -> Unit
 ) {
 
     var isShowDialog by rememberSaveable { mutableStateOf(false) }
@@ -184,7 +186,7 @@ private fun MoreContent(
                     icon = painterResource(
                         id = com.example.sharedui.R.drawable.back_fw
                     ),
-                    onClick = {},
+                    onClick = { onClickOnBookingDetailsButton(0) },
                     modifier = Modifier
                         .fillMaxWidth()
                 )

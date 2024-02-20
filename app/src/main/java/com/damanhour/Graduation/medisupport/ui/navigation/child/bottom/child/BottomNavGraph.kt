@@ -33,7 +33,8 @@ internal fun BottomNavGraph(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
 
     AnimatedNavHost(
@@ -51,7 +52,8 @@ internal fun BottomNavGraph(
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
             navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
-            navigateToBookingNavGraph = navigateToBookingNavGraph
+            navigateToBookingNavGraph = navigateToBookingNavGraph,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
 
         articleNavGraph(
@@ -69,7 +71,8 @@ internal fun BottomNavGraph(
             navigateToAboutDestination = navigateToAboutDestination,
             navigateToContactUsDestination = navigateToContactUsDestination,
             popAboutDestination = popAboutDestination,
-            popContactUsDestination = popContactUsDestination
+            popContactUsDestination = popContactUsDestination,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
 
     }//end AnimatedNavHost

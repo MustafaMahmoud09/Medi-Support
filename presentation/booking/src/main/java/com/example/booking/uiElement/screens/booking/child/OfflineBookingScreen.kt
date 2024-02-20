@@ -1,6 +1,5 @@
 package com.example.booking.uiElement.screens.booking.child
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.booking.uiElement.components.items.BookingDateSection
-import com.example.booking.uiElement.components.items.BookingDoctorInfoSection
-import com.example.booking.uiElement.components.items.BookingTimeSection
+import com.example.booking.uiElement.components.items.BookingDatesSection
+import com.example.booking.uiElement.components.items.BookedDoctorInformationSection
+import com.example.booking.uiElement.components.items.BookingTimesSection
 import com.example.booking.uiState.viewModel.bookings.OfflineBookingViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
@@ -181,7 +180,7 @@ private fun OfflineBookingContent(
                     val (doctorInfoId, dateId, timeId) = createRefs()
 
                     //create doctor info here
-                    BookingDoctorInfoSection(
+                    BookedDoctorInformationSection(
                         dimen = dimen,
                         theme = theme,
                         doctorName = "Dr: Ahmed Mohamed",
@@ -213,7 +212,7 @@ private fun OfflineBookingContent(
                     )
 
                     //create date section here
-                    BookingDateSection(
+                    BookingDatesSection(
                         dimen = dimen,
                         theme = theme,
                         title = stringResource(
@@ -232,7 +231,7 @@ private fun OfflineBookingContent(
                     )
 
                     //create time section here
-                    BookingTimeSection(
+                    BookingTimesSection(
                         dimen = dimen,
                         theme = theme,
                         title = stringResource(

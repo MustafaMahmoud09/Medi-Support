@@ -37,7 +37,9 @@ internal fun NavHostController.popChatNavGraph() {
 
 //function for create chat nav graph and added to destinations in it
 internal fun NavGraphBuilder.chatNavGraph(
-    popChatNavGraph: () -> Unit
+    popChatNavGraph: () -> Unit,
+    navigateToChatDestination: (Int) -> Unit,
+    popChatDestination: () -> Unit
 ) {
 
     navigation(
@@ -50,10 +52,13 @@ internal fun NavGraphBuilder.chatNavGraph(
     ) {
 
         chatsDestination(
-            popChatNavGraph = popChatNavGraph
+            popChatNavGraph = popChatNavGraph,
+            navigateToChatDestination = navigateToChatDestination
         )
 
-        chatDestination()
+        chatDestination(
+            popChatDestination = popChatDestination
+        )
 
     }//end navigation
 

@@ -56,7 +56,8 @@ internal fun BottomScreen(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: KFunction0<Unit>,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
 
     val items = listOf(
@@ -89,7 +90,8 @@ internal fun BottomScreen(
         navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
         navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
         navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
-        navigateToBookingNavGraph = navigateToBookingNavGraph
+        navigateToBookingNavGraph = navigateToBookingNavGraph,
+        navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
     )
 }//end BottomScreen
 
@@ -119,7 +121,8 @@ private fun BottomContent(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: KFunction0<Unit>,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
 
     BaseScreen(
@@ -197,7 +200,8 @@ private fun BottomContent(
                     navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
                     navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
                     navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
-                    navigateToBookingNavGraph = navigateToBookingNavGraph
+                    navigateToBookingNavGraph = navigateToBookingNavGraph,
+                    navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
                 )
 
             }//end Box

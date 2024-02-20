@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.R
-import com.example.booking.uiElement.components.composable.WorkerNameView
+import com.example.booking.uiElement.components.composable.WorkerView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.modifier.appBorder
@@ -63,7 +63,7 @@ internal fun OnlineBookingSection(
         val guideFromStart60P = createGuidelineFromStart(0.6f)
 
         //create doctor name here
-        WorkerNameView(
+        WorkerView(
             dimen = dimen,
             theme = theme,
             workerName = "Dr: Ahmed Mohamed",

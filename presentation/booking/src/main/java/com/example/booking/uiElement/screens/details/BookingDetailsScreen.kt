@@ -2,6 +2,7 @@
 
 package com.example.booking.uiElement.screens.details
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.booking.uiElement.components.data.TabData
 import com.example.booking.uiElement.components.items.TabsSection
 import com.example.booking.uiElement.screens.details.childs.OfflineDetailsScreen
 import com.example.booking.uiElement.screens.details.childs.OnlineDetailsScreen
@@ -52,36 +54,52 @@ internal fun BookingDetailsScreen(
         pagerState = pagerState,
         onClickOnBackButton = popBookingDetailsDestination,
         navigateToChatNavGraph = navigateToChatNavGraph,
-        onClickOnBookingsOnline = {
+        bookingOnlineTabData = TabData(
+            title = stringResource(
+                id = R.string.doctors_online
+            ),
+            onClick = {
 
-            coroutineScope.launch {
-                //if not exist in doctors online page scroll to it
-                if (pagerState.currentPage != 0) {
+                coroutineScope.launch {
+                    //if not exist in doctors online page scroll to it
+                    if (pagerState.currentPage != 0) {
 
-                    //execute scroll here
-                    pagerState.animateScrollToPage(
-                        page = 0
-                    )
+                        //execute scroll here
+                        pagerState.animateScrollToPage(
+                            page = 0,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        )
 
-                }//end if
+                    }//end if
 
-            }//end launch
-        },
-        onClickOnBookingsOffline = {
+                }//end launch
+            }
+        ),
+        bookingOfflineTabData = TabData(
+            title = stringResource(
+                id = R.string.doctors_offline
+            ),
+            onClick = {
 
-            coroutineScope.launch {
-                //if not exist in doctors offline page scroll to it
-                if (pagerState.currentPage != 1) {
+                coroutineScope.launch {
+                    //if not exist in doctors online page scroll to it
+                    if (pagerState.currentPage != 1) {
 
-                    //execute scroll here
-                    pagerState.animateScrollToPage(
-                        page = 1
-                    )
+                        //execute scroll here
+                        pagerState.animateScrollToPage(
+                            page = 1,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        )
 
-                }//end if
+                    }//end if
 
-            }//end launch
-        }
+                }//end launch
+            }
+        ),
     )
 
 }//end BookingDetailsScreen
@@ -91,10 +109,10 @@ private fun BookingDetailsContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     pagerState: PagerState,
-    onClickOnBookingsOnline: () -> Unit,
-    onClickOnBookingsOffline: () -> Unit,
     onClickOnBackButton: KFunction0<Unit>,
-    navigateToChatNavGraph: () -> Unit
+    navigateToChatNavGraph: () -> Unit,
+    bookingOfflineTabData: TabData,
+    bookingOnlineTabData: TabData,
 ) {
 
     //create base screen to define navigation and status color
@@ -141,16 +159,8 @@ private fun BookingDetailsContent(
             TabsSection(
                 theme = theme,
                 dimen = dimen,
-                titles = arrayOf(
-                    stringResource(
-                        id = R.string.doctors_online
-                    ),
-                    stringResource(
-                        id = R.string.doctors_offline
-                    )
-                ),
-                selectedItem = pagerState.currentPage,
-                onClickOnTab = arrayOf(onClickOnBookingsOnline, onClickOnBookingsOffline),
+                currentItem = pagerState.currentPage,
+                tabs = arrayOf(bookingOnlineTabData, bookingOfflineTabData),
                 modifier = Modifier
                     .constrainAs(tabsId) {
                         start.linkTo(
@@ -163,7 +173,7 @@ private fun BookingDetailsContent(
                         )
                         top.linkTo(
                             headerId.bottom,
-                            dimen.dimen_3.dp
+                            dimen.dimen_2.dp
                         )
                         width = Dimension.fillToConstraints
                     }

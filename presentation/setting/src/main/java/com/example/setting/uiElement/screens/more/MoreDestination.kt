@@ -13,7 +13,8 @@ const val MORE_DESTINATION_ROUTE = "moreDestination"
 fun NavGraphBuilder.moreDestination(
     popMoreNavGraph: () -> Unit,
     navigateToAboutDestination: () -> Unit,
-    navigateToContactUsDestination: () -> Unit
+    navigateToContactUsDestination: () -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
 
     composable(
@@ -25,8 +26,10 @@ fun NavGraphBuilder.moreDestination(
         MoreScreen(
             popMoreNavGraph = popMoreNavGraph,
             navigateToContactUsDestination = navigateToContactUsDestination,
-            navigateToAboutDestination = navigateToAboutDestination
+            navigateToAboutDestination = navigateToAboutDestination,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
+
     }//end composable
 
 }//end moreDestination

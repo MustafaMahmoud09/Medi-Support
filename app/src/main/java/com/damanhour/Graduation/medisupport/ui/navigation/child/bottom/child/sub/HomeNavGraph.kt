@@ -53,7 +53,8 @@ internal fun NavGraphBuilder.homeNavGraph(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
     //create home nav graph
     navigation(
@@ -70,7 +71,8 @@ internal fun NavGraphBuilder.homeNavGraph(
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
             navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
-            navigateToBookingNavGraph = navigateToBookingNavGraph
+            navigateToBookingNavGraph = navigateToBookingNavGraph,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
 
         addReminderDestination(

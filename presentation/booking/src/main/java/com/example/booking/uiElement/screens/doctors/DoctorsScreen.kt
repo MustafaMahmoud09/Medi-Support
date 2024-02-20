@@ -18,7 +18,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,7 +46,8 @@ internal fun DoctorsScreen(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
 
     //collect state here
@@ -77,6 +77,7 @@ internal fun DoctorsScreen(
         uiState = uiState,
         navigateToBookingNavGraph = navigateToBookingNavGraph,
         onSearchKeyChanged = viewModel::onSearchKeyChanged,
+        onClickOnNotificationButton = navigateToBookingDetailsDestination,
         onClickSeeAll = {
 
             //change current page and prev page
@@ -132,6 +133,7 @@ private fun DoctorsContent(
     uiState: HomeUiState,
     onSearchKeyChanged: (String) -> Unit,
     navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    onClickOnNotificationButton: (Int) -> Unit,
 ) {
 
     //create container here
@@ -175,7 +177,7 @@ private fun DoctorsContent(
             ),
             dimen = dimen,
             theme = theme,
-            onClick = {},
+            onClick = {onClickOnNotificationButton(0)},
             tint = theme.hintIconBottom,
             size =
             /**if exist in page 0**/

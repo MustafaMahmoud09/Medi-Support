@@ -59,6 +59,8 @@ import com.example.bmi.uiElement.screens.record.navigateToRecordBMIDestination
 import com.example.bmi.uiElement.screens.record.popRecordBMIDestination
 import com.example.booking.uiElement.screens.details.navigateToBookingDetailsDestination
 import com.example.booking.uiElement.screens.details.popBookingDetailsDestination
+import com.example.chat.uiElement.screens.chat.navigateToChatDestination
+import com.example.chat.uiElement.screens.chat.popChatDestination
 import com.example.heartprediction.uiElement.screens.prediction.navigateToPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.prediction.popPredictionHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.record.navigateToRecordHeartPredictionDestination
@@ -117,7 +119,8 @@ fun RootNavGraph(
                     navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraph,
                     navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraph,
                     navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraph,
-                    navigateToBookingNavGraph = navHostController::navigateToBookingNavGraph
+                    navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
+                    navigateToBookingNavGraph = navHostController::navigateToBookingNavGraph,
                 )
 
                 activityNavGraph(
@@ -131,7 +134,9 @@ fun RootNavGraph(
                     navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
                     popBookingDetailsDestination = navHostController::popBookingDetailsDestination,
                     navigateToChatNavGraph = navHostController::navigateToChatNavGraph,
-                    popChatNavGraph = navHostController::popChatNavGraph
+                    popChatNavGraph = navHostController::popChatNavGraph,
+                    navigateToChatDestination = navHostController::navigateToChatDestination,
+                    popChatDestination = navHostController::popChatDestination
                 )
 
                 heartPredictionNavGraph(

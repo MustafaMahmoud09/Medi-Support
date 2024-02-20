@@ -45,7 +45,8 @@ internal fun NavGraphBuilder.moreNavGraph(
     navigateToAboutDestination: () -> Unit,
     navigateToContactUsDestination: () -> Unit,
     popAboutDestination: () -> Unit,
-    popContactUsDestination: () -> Unit
+    popContactUsDestination: () -> Unit,
+    navigateToBookingDetailsDestination: (Int) -> Unit
 ) {
     //create more nav graph
     navigation(
@@ -58,7 +59,8 @@ internal fun NavGraphBuilder.moreNavGraph(
         moreDestination(
             popMoreNavGraph = popMoreNavGraph,
             navigateToAboutDestination = navigateToAboutDestination,
-            navigateToContactUsDestination = navigateToContactUsDestination
+            navigateToContactUsDestination = navigateToContactUsDestination,
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
 
         aboutDestination(

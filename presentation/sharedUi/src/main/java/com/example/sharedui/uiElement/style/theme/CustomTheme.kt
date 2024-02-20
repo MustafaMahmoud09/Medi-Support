@@ -58,5 +58,11 @@ data class CustomTheme(
     val green8CFFAB: Color,
     val green66CA98: Color,
     val black1C1F1E: Color,
-    val orangeFF6C52: Color
+    val orangeFF6C52: Color,
+    val green2BEF83: Color,
+    val gray797C7B: Color,
+    val grayF3F6F6: Color,
+    val blue0F0C22: Color,
+    val greenLightEEFAF8: Color,
+    val grayF2F7FB: Color
 )

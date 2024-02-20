@@ -17,7 +17,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun WorkerNameView(
+internal fun WorkerView(
     dimen: CustomDimen,
     theme: CustomTheme,
     workerName: String,

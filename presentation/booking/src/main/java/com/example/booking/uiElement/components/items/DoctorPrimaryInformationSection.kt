@@ -29,7 +29,7 @@ import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun DoctorSearchSection(
+internal fun DoctorPrimaryInformationSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     borderSize: Float = dimen.dimen_0_125,

@@ -2,6 +2,7 @@
 
 package com.example.booking.uiElement.screens.doctors.child.top
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,10 +22,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.booking.uiElement.components.data.TabData
 import com.example.sharedui.R
 import com.example.booking.uiElement.components.items.HealthCareSection
 import com.example.booking.uiElement.components.items.HeartPredictionSection
@@ -69,37 +70,53 @@ internal fun TopDoctorsScreen(
         onClickOnBloodSugarSection = navigateToBloodSugarNavGraph,
         onClickOnHeartRateSection = navigateToHeartRateNavGraph,
         navigateToBookingNavGraph = navigateToBookingNavGraph,
-        onClickOnDoctorsOnline = {
+        pagerState = pagerState,
+        doctorsOnlineTabData = TabData(
+            title = stringResource(
+                id = R.string.doctors_online
+            ),
+            onClick = {
 
-            coroutineScope.launch {
-                //if not exist in doctors online page scroll to it
-                if (pagerState.currentPage != 0) {
+                coroutineScope.launch {
+                    //if not exist in doctors online page scroll to it
+                    if (pagerState.currentPage != 0) {
 
-                    //execute scroll here
-                    pagerState.animateScrollToPage(
-                        page = 0
-                    )
+                        //execute scroll here
+                        pagerState.animateScrollToPage(
+                            page = 0,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        )
 
-                }//end if
+                    }//end if
 
-            }//end launch
-        },
-        onClickOnDoctorsOffline = {
+                }//end launch
+            }
+        ),
+        doctorsOfflineTabData = TabData(
+            title = stringResource(
+                id = R.string.doctors_offline
+            ),
+            onClick = {
 
-            coroutineScope.launch {
-                //if not exist in doctors offline page scroll to it
-                if (pagerState.currentPage != 1) {
+                coroutineScope.launch {
+                    //if not exist in doctors online page scroll to it
+                    if (pagerState.currentPage != 1) {
 
-                    //execute scroll here
-                    pagerState.animateScrollToPage(
-                        page = 1
-                    )
+                        //execute scroll here
+                        pagerState.animateScrollToPage(
+                            page = 1,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        )
 
-                }//end if
+                    }//end if
 
-            }//end launch
-        },
-        pagerState = pagerState
+                }//end launch
+            }
+        )
     )
 }//end HomeScreen
 
@@ -115,10 +132,10 @@ private fun TopDoctorsContent(
     onClickOnBloodSugarSection: () -> Unit,
     onClickOnHeartRateSection: () -> Unit,
     pagerState: PagerState,
-    onClickOnDoctorsOnline: () -> Unit,
-    onClickOnDoctorsOffline: () -> Unit,
     screenHeight: Int = LocalConfiguration.current.screenHeightDp,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    doctorsOnlineTabData: TabData,
+    doctorsOfflineTabData: TabData
 ) {
 
     //create lazy column here
@@ -356,7 +373,7 @@ private fun TopDoctorsContent(
         }//end item
 
         //item for create tabs item
-        stickyHeader (
+        stickyHeader(
             key = 6
         ) {
 
@@ -368,7 +385,6 @@ private fun TopDoctorsContent(
                         color = theme.background
                     )
                     .padding(
-                        top = dimen.dimen_2.dp,
                         start = dimen.dimen_2.dp,
                         end = dimen.dimen_2.dp
                     )
@@ -377,15 +393,8 @@ private fun TopDoctorsContent(
                 TabsSection(
                     theme = theme,
                     dimen = dimen,
-                    titles = arrayOf(
-                        stringResource(
-                            id = R.string.doctors_online
-                        ), stringResource(
-                            id = R.string.doctors_offline
-                        )
-                    ),
-                    onClickOnTab = arrayOf(onClickOnDoctorsOnline, onClickOnDoctorsOffline),
-                    selectedItem = pagerState.currentPage,
+                    currentItem = pagerState.currentPage,
+                    tabs = arrayOf(doctorsOnlineTabData, doctorsOfflineTabData),
                     modifier = Modifier
                         .fillMaxWidth()
                 )

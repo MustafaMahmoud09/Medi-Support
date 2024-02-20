@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.booking.uiElement.components.data.TabData
 import com.example.booking.uiElement.components.items.TabsSection
 import com.example.booking.uiElement.screens.doctors.child.total.child.TotalOfflineDoctorsScreen
 import com.example.booking.uiElement.screens.doctors.child.total.child.TotalOnlineDoctorsScreen
@@ -47,37 +48,53 @@ internal fun TotalDoctorsScreen(
         dimen = dimen,
         theme = theme,
         navigateToBookingNavGraph = navigateToBookingNavGraph,
-        onClickOnDoctorsOnline = {
+        pagerState = pagerState,
+        doctorsOnlineTabData = TabData(
+            title = stringResource(
+                id = R.string.doctors_online
+            ),
+            onClick = {
 
-            coroutineScope.launch {
-                //if not exist in doctors online page scroll to it
-                if (pagerState.currentPage != 0) {
+                coroutineScope.launch {
+                    //if not exist in doctors online page scroll to it
+                    if (pagerState.currentPage != 0) {
 
-                    //execute scroll here
-                    pagerState.animateScrollToPage(
-                        page = 0
-                    )
+                        //execute scroll here
+                        pagerState.animateScrollToPage(
+                            page = 0,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        )
 
-                }//end if
+                    }//end if
 
-            }//end launch
-        },
-        onClickOnDoctorsOffline = {
+                }//end launch
+            }
+        ),
+        doctorsOfflineTabData = TabData(
+            title = stringResource(
+                id = R.string.doctors_offline
+            ),
+            onClick = {
 
-            coroutineScope.launch {
-                //if not exist in doctors offline page scroll to it
-                if (pagerState.currentPage != 1) {
+                coroutineScope.launch {
+                    //if not exist in doctors online page scroll to it
+                    if (pagerState.currentPage != 1) {
 
-                    //execute scroll here
-                    pagerState.animateScrollToPage(
-                        page = 1
-                    )
+                        //execute scroll here
+                        pagerState.animateScrollToPage(
+                            page = 1,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        )
 
-                }//end if
+                    }//end if
 
-            }//end launch
-        },
-        pagerState = pagerState
+                }//end launch
+            }
+        )
     )
 }//end SeeAllDoctorScreen
 
@@ -87,10 +104,10 @@ private fun TotalDoctorsContent(
     dimen: CustomDimen,
     theme: CustomTheme,
     pagerState: PagerState,
-    onClickOnDoctorsOffline: () -> Unit,
-    onClickOnDoctorsOnline: () -> Unit,
     screenHeight: Int = LocalConfiguration.current.screenHeightDp,
-    navigateToBookingNavGraph: (Boolean, Int) -> Unit
+    navigateToBookingNavGraph: (Boolean, Int) -> Unit,
+    doctorsOnlineTabData: TabData,
+    doctorsOfflineTabData: TabData
 ) {
     //create lazy column here
     LazyColumn(
@@ -146,7 +163,7 @@ private fun TotalDoctorsContent(
                         color = theme.background
                     )
                     .padding(
-                        top = dimen.dimen_2_5.dp,
+                        top = dimen.dimen_0_5.dp,
                         start = dimen.dimen_2.dp,
                         end = dimen.dimen_2.dp
                     ),
@@ -155,15 +172,8 @@ private fun TotalDoctorsContent(
                 TabsSection(
                     theme = theme,
                     dimen = dimen,
-                    titles = arrayOf(
-                        stringResource(
-                            id = R.string.doctors_online
-                        ), stringResource(
-                            id = R.string.doctors_offline
-                        )
-                    ),
-                    onClickOnTab = arrayOf(onClickOnDoctorsOnline, onClickOnDoctorsOffline),
-                    selectedItem = pagerState.currentPage,
+                    tabs = arrayOf(doctorsOnlineTabData, doctorsOfflineTabData),
+                    currentItem = pagerState.currentPage,
                     modifier = Modifier
                         .fillMaxWidth()
                 )

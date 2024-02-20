@@ -15,7 +15,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun BookingDateSection(
+internal fun BookingDatesSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     title: String,

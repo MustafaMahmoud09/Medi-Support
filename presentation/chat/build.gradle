@@ -60,6 +60,9 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
+    //material 3
+    implementation "androidx.compose.material3:material3:$material3_versoin"
+
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
 

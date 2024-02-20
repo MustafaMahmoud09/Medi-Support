@@ -11,7 +11,8 @@ import com.google.accompanist.navigation.animation.composable
 const val CHATS_DESTINATION_ROUTE = "chatsDestination"
 
 fun NavGraphBuilder.chatsDestination(
-    popChatNavGraph: () -> Unit
+    popChatNavGraph: () -> Unit,
+    navigateToChatDestination: (Int) -> Unit
 ) {
 
     composable(
@@ -23,7 +24,8 @@ fun NavGraphBuilder.chatsDestination(
     ) {
 
         ChatsScreen(
-            popChatNavGraph = popChatNavGraph
+            popChatNavGraph = popChatNavGraph,
+            navigateToChatDestination = navigateToChatDestination
         )
     }
 }//end chatsDestination

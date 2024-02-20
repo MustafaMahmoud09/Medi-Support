@@ -16,7 +16,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun UnseenCountView(
+internal fun CountView(
     theme: CustomTheme,
     dimen: CustomDimen,
     number: String = "2",

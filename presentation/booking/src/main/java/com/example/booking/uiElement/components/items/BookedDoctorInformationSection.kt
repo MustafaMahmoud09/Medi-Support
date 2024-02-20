@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.booking.uiElement.components.composable.WorkerNameView
+import com.example.booking.uiElement.components.composable.WorkerView
 import com.example.sharedui.uiElement.components.composable.MultiStyleTextView
 import com.example.sharedui.uiElement.components.items.IconTextSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -24,7 +24,7 @@ import com.example.sharedui.uiElement.components.items.RatingBarSection
 import com.example.sharedui.uiElement.style.robotoRegular
 
 @Composable
-internal fun BookingDoctorInfoSection(
+internal fun BookedDoctorInformationSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     doctorName: String,
@@ -108,7 +108,7 @@ internal fun BookingDoctorInfoSection(
         )
 
         //create doctor name here
-        WorkerNameView(
+        WorkerView(
             dimen = dimen,
             theme = theme,
             workerName = doctorName,

@@ -8,8 +8,8 @@ import androidx.navigation.NavHostController
 import com.example.bmi.uiElement.screens.determination.determinationBMIDestination
 import com.example.bmi.uiElement.screens.record.RECORD_BMI_DESTINATION
 import com.example.bmi.uiElement.screens.record.recordBMIDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //nav graph route here

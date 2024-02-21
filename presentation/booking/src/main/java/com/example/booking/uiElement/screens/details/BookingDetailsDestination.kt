@@ -9,8 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.booking.uiElement.screens.booking.BOOKING_DESTINATION_ROUTE
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 import kotlin.reflect.KFunction0
 

@@ -5,15 +5,16 @@ package com.example.profile.uiElement.screens.profile
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.sharedui.uiElement.components.navigation.BottomDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.R
+import com.example.sharedui.uiElement.containers.navigation.BottomDestination
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 val PROFILE_DESTINATION_DATA = BottomDestination(
     route = "profileDestination",
-    icon = com.example.sharedui.R.drawable.profile,
-    title = com.example.sharedui.R.string.profile
+    icon = R.drawable.profile,
+    title = R.string.profile
 )
 
 fun NavHostController.popProfileDestination() {

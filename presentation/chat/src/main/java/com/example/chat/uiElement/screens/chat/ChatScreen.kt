@@ -1,8 +1,9 @@
-@file:OptIn(ExperimentalLayoutApi::class)
+@file:OptIn(ExperimentalLayoutApi::class, ExperimentalComposeUiApi::class)
 
 package com.example.chat.uiElement.screens.chat
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -41,10 +44,26 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 internal fun ChatScreen(
     popChatDestination: () -> Unit
 ) {
+    //get keyboard visible
+    val isKeyboardVisible = WindowInsets.isImeVisible
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     ChatContent(
-        onClickOnBackButton = popChatDestination,
-        keyboardIsVisible = WindowInsets.isImeVisible,
+        onClickOnBackButton = {
+
+            //if keyboard is visible close keyboard
+            if (isKeyboardVisible) {
+                keyboardController!!.hide()
+            }//end if
+
+            //else pop destination from back stack
+            else {
+                popChatDestination()
+            }//end else
+
+        },
+        keyboardIsVisible = isKeyboardVisible,
     )
 }//end ChatScreen
 
@@ -210,7 +229,7 @@ private fun ChatContent(
                                     .fillMaxWidth()
                             )
 
-                        }else{
+                        } else {
 
                             OwnerUserMessageSection(
                                 dimen = dimen,

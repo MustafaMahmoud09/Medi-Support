@@ -38,7 +38,7 @@ import com.example.setting.uiElement.screens.about.popAboutDestination
 import com.example.setting.uiElement.screens.contactUs.navigateToContactUsDestination
 import com.example.setting.uiElement.screens.contactUs.popContactUsDestination
 import com.example.sharedui.uiElement.components.items.BottomNavigationSection
-import com.example.sharedui.uiElement.components.navigation.BottomDestination
+import com.example.sharedui.uiElement.containers.navigation.BottomDestination
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen

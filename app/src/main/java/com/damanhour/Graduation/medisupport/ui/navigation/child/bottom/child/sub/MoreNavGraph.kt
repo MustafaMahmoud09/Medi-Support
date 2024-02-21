@@ -11,17 +11,18 @@ import com.example.setting.uiElement.screens.contactUs.CONTACT_US_DESTINATION_RO
 import com.example.setting.uiElement.screens.contactUs.contactUsDestination
 import com.example.setting.uiElement.screens.more.MORE_DESTINATION_ROUTE
 import com.example.setting.uiElement.screens.more.moreDestination
-import com.example.sharedui.uiElement.components.navigation.BottomDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.R
+import com.example.sharedui.uiElement.containers.navigation.BottomDestination
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //create object from bottom destination class have icon and title for show in bottom navigation bar and route name
 //child list have child destinations to home nav graph to organize bottom nav graph
 val MORE_VAV_GRAPH_DATA = BottomDestination(
     route = "moreNavGraph",
-    icon = com.example.sharedui.R.drawable.more,
-    title = com.example.sharedui.R.string.more,
+    icon = R.drawable.more,
+    title = R.string.more,
     childList = listOf(
         MORE_DESTINATION_ROUTE,
         ABOUT_DESTINATION_ROUTE,

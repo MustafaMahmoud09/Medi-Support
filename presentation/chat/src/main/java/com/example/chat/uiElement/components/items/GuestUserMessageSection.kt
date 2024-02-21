@@ -24,9 +24,9 @@ internal fun GuestUserMessageSection(
     theme: CustomTheme,
     messageShape: Shape = RoundedCornerShape(
         bottomEnd = dimen.dimen_2.dp,
-        topEnd = dimen.dimen_0.dp,
+        topEnd = dimen.dimen_2.dp,
         bottomStart = dimen.dimen_2.dp,
-        topStart = dimen.dimen_2.dp
+        topStart = dimen.dimen_0.dp
     ),
     isStartMessage: Boolean = false,
     isEndMessage: Boolean = false,

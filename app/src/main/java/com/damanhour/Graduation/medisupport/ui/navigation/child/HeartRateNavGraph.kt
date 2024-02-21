@@ -8,8 +8,8 @@ import androidx.navigation.NavHostController
 import com.example.heartrate.uiElement.screens.measurement.MEASUREMENT_HEART_RATE_DESTINATION_ROUTE
 import com.example.heartrate.uiElement.screens.measurement.measurementHeartRateDestination
 import com.example.heartrate.uiElement.screens.statistics.statisticsHeartRateDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 internal const val HEART_RATE_NAV_GRAPH = "heartRateNavGraph"

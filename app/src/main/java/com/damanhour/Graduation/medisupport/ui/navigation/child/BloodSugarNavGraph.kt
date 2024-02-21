@@ -10,8 +10,8 @@ import androidx.navigation.NavHostController
 import com.example.bloodsuger.uiElement.screens.record.RECORD_BLOOD_SUGAR_DESTINATION_ROUTE
 import com.example.bloodsuger.uiElement.screens.record.recordBloodSugarDestination
 import com.example.bloodsuger.uiElement.screens.statistics.statisticsBloodSugarDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //route name

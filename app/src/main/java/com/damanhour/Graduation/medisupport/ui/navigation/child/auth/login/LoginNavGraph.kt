@@ -10,9 +10,9 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.auth.login.forgo
 import com.example.auth.uiElement.screens.login.LOGIN_DESTINATION_ROUTE
 import com.example.auth.uiElement.screens.login.loginDestination
 import com.example.auth.uiElement.screens.welcome.WELCOME_DESTINATION_ROUTE
-import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //nav graph name

@@ -21,23 +21,34 @@ internal class BookingDetailsViewModel @Inject constructor(
     //for observe by screen
     val state = _state.asStateFlow()
 
+    //get booking details arguments here
     private val bookingDetailsArgs: BookingDetailsArgs = BookingDetailsArgs(savedStateHandle)
 
     init {
 
-        onBookingDetailsPageUpdated()
+        //change current booking details page here
+        onCurrentBookingDetailsPageChanged(
+            newPage = bookingDetailsArgs.page
+        )
 
     }//end init
 
-    private fun onBookingDetailsPageUpdated() {
+    //function for change current doctor page
+    fun onCurrentBookingDetailsPageChanged(newPage: Int) {
 
-        //update booking details page here
-        _state.update {
-            it.copy(
-                bookingDetailsPage = bookingDetailsArgs.page
-            )
-        }//end update
+        //check current page not equal new page
+        //if not equal change current page
+        if (newPage != _state.value.currentBookingDetailsPage) {
 
-    }//end onBookingDetailsPageUpdated
+            //update current doctors page here
+            _state.update {
+                it.copy(
+                    currentBookingDetailsPage = newPage
+                )
+            }//end update
+
+        }//end if
+
+    }//end onCurrentBookingDetailsPageChanged
 
 }//end BookingDetailsViewModel

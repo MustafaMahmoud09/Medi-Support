@@ -31,6 +31,7 @@ import com.example.auth.uiElement.screens.welcome.child.SecondScreen
 import com.example.auth.uiElement.screens.welcome.child.ThirdScreen
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextNormalBrownView
+import com.example.sharedui.uiElement.containers.pager.scrollToPage
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -51,19 +52,23 @@ internal fun WelcomeScreen(
 
             when (pagerState.currentPage) {
                 0 -> {
-                    coroutineScope.launch {
-                        pagerState.scrollToPage(
-                            page = 1
-                        )
-                    }//end launch
+
+                    //execute scroll here
+                    pagerState.scrollToPage(
+                        coroutineScope = coroutineScope,
+                        page = 1
+                    )
+
                 }//end case
 
                 1 -> {
-                    coroutineScope.launch {
-                        pagerState.scrollToPage(
-                            page = 2
-                        )
-                    }//end launch
+
+                    //execute scroll here
+                    pagerState.scrollToPage(
+                        coroutineScope = coroutineScope,
+                        page = 2
+                    )
+
                 }//end case
 
                 2 -> {

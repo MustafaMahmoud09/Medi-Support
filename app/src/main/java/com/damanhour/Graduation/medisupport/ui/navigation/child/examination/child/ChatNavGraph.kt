@@ -8,8 +8,8 @@ import androidx.navigation.NavHostController
 import com.example.chat.uiElement.screens.chat.chatDestination
 import com.example.chat.uiElement.screens.chats.CHATS_DESTINATION_ROUTE
 import com.example.chat.uiElement.screens.chats.chatsDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //route name here

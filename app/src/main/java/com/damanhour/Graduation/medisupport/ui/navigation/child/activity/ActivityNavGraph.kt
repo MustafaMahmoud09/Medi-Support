@@ -11,9 +11,9 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.a
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.activity.activityDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.historyDestination
 import com.example.sharedui.R
-import com.example.sharedui.uiElement.components.navigation.BottomDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.BottomDestination
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 internal val ACTIVITY_NAV_GRAPH_DATA = BottomDestination(

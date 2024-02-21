@@ -9,8 +9,8 @@ import com.example.heartprediction.uiElement.screens.prediction.predictionHeartP
 import com.example.heartprediction.uiElement.screens.record.recordHeartPredictionDestination
 import com.example.heartprediction.uiElement.screens.start.START_HEART_PREDICTION_DESTINATION_ROUTE
 import com.example.heartprediction.uiElement.screens.start.startHeartPredictionDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //route name

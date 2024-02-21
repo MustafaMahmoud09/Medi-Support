@@ -10,8 +10,8 @@ import com.example.auth.uiElement.screens.forgotten.code.codeDestination
 import com.example.auth.uiElement.screens.forgotten.email.EMAIL_DESTINATION_ROUTE
 import com.example.auth.uiElement.screens.forgotten.email.emailDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.newPasswordDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //nav graph name

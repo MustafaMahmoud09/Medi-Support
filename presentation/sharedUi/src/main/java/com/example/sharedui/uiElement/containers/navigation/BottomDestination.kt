@@ -1,4 +1,4 @@
-package com.example.sharedui.uiElement.components.navigation
+package com.example.sharedui.uiElement.containers.navigation
 
 data class BottomDestination(
     val route: String,

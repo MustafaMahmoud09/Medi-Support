@@ -1,4 +1,4 @@
-package com.example.booking.uiElement.components.data
+package com.example.sharedui.uiElement.containers.pager.data
 
 data class TabData(
     val title: String,

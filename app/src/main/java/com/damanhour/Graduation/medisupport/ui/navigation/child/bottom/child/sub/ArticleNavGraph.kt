@@ -10,9 +10,9 @@ import com.example.article.uiElement.screens.article.singleArticleDestination
 import com.example.article.uiElement.screens.articles.ARTICLES_DESTINATION_ROUTE
 import com.example.article.uiElement.screens.articles.articlesDestination
 import com.example.sharedui.R
-import com.example.sharedui.uiElement.components.navigation.BottomDestination
-import com.example.sharedui.uiElement.components.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.BottomDestination
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //create object from bottom destination class have icon and title for show in bottom navigation bar and route name

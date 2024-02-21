@@ -1,6 +1,9 @@
 package com.example.auth.uiElement.screens.forgotten.newPassword
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -43,7 +46,7 @@ internal fun NewPasswordScreen(
     val state = viewModel.state.collectAsState()
 
     NewPasswordContent(
-        onClickBackLogin =  backToLoginNavGraph,
+        onClickBackLogin = backToLoginNavGraph,
         uiState = state.value,
         onNewPasswordChanged = viewModel::onNewPasswordChanged,
         onConfirmPasswordChanged = viewModel::onConfirmPasswordChanged
@@ -61,6 +64,20 @@ private fun NewPasswordContent(
 ) {
 
     var isShowDialog by rememberSaveable { mutableStateOf(false) }
+
+    //create title animated color here
+    val titleAnimatedColor by animateColorAsState(
+        targetValue = if (isShowDialog) theme.redDark else theme.black,
+        label = "titleAnimatedColor",
+        animationSpec = snap()
+    )
+
+    //create title animated size here
+    val titleAnimatedSize by animateFloatAsState(
+        targetValue = if (isShowDialog) dimen.dimen_2_75 else dimen.dimen_2_5,
+        animationSpec = snap(),
+        label = "titleAnimatedSize"
+    )
 
     BaseScreen(
         navigationColor = theme.background,
@@ -129,7 +146,8 @@ private fun NewPasswordContent(
                 text = stringResource(
                     R.string.new_password
                 ),
-                size = dimen.dimen_2_5,
+                size = titleAnimatedSize,
+                color = titleAnimatedColor,
                 modifier = Modifier
                     .constrainAs(title) {
                         start.linkTo(
@@ -171,8 +189,8 @@ private fun NewPasswordContent(
                             dimen.dimen_2.dp
                         )
                         top.linkTo(
-                            title.bottom,
-                            dimen.dimen_4.dp
+                            parent.top,
+                            dimen.dimen_9_5.dp
                         )
                         width = Dimension.fillToConstraints
                     }

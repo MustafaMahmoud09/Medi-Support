@@ -2,7 +2,6 @@
 
 package com.example.booking.uiElement.screens.doctors.child.total
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,24 +15,31 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.booking.uiElement.components.data.TabData
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sharedui.uiElement.containers.pager.data.TabData
 import com.example.booking.uiElement.components.items.TabsSection
 import com.example.booking.uiElement.screens.doctors.child.total.child.TotalOfflineDoctorsScreen
 import com.example.booking.uiElement.screens.doctors.child.total.child.TotalOnlineDoctorsScreen
+import com.example.booking.uiState.state.doctors.TotalDoctorsUiState
+import com.example.booking.uiState.viewModel.doctors.TotalDoctorsViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.TextBoldView
+import com.example.sharedui.uiElement.containers.pager.animateScrollToPage
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
-import kotlinx.coroutines.launch
+import kotlin.reflect.KFunction1
 
 //function for collect state and execute action from view model
 @Composable
 internal fun TotalDoctorsScreen(
+    viewModel: TotalDoctorsViewModel = hiltViewModel(),
     dimen: CustomDimen,
     theme: CustomTheme,
     navigateToBookingNavGraph: (Boolean, Int) -> Unit
@@ -43,34 +49,34 @@ internal fun TotalDoctorsScreen(
     )
     val coroutineScope = rememberCoroutineScope()
 
+    val state = viewModel.state.collectAsState()
+
     //call see all doctor content function
     TotalDoctorsContent(
         dimen = dimen,
         theme = theme,
         navigateToBookingNavGraph = navigateToBookingNavGraph,
         pagerState = pagerState,
+        uiState = state.value,
+        onCurrentDoctorsPageChanged = viewModel::onCurrentDoctorsPageChanged,
         doctorsOnlineTabData = TabData(
             title = stringResource(
                 id = R.string.doctors_online
             ),
             onClick = {
 
-                coroutineScope.launch {
-                    //if not exist in doctors online page scroll to it
-                    if (pagerState.currentPage != 0) {
+                //make scroll here
+                pagerState.animateScrollToPage(
+                    coroutineScope = coroutineScope,
+                    page = 0
+                )
 
-                        //execute scroll here
-                        pagerState.animateScrollToPage(
-                            page = 0,
-                            animationSpec = tween(
-                                durationMillis = 200
-                            )
-                        )
+                //change current doctors page here
+                viewModel.onCurrentDoctorsPageChanged(
+                    newPage = 0
+                )
 
-                    }//end if
-
-                }//end launch
-            }
+            }//end onClick
         ),
         doctorsOfflineTabData = TabData(
             title = stringResource(
@@ -78,22 +84,18 @@ internal fun TotalDoctorsScreen(
             ),
             onClick = {
 
-                coroutineScope.launch {
-                    //if not exist in doctors online page scroll to it
-                    if (pagerState.currentPage != 1) {
+                //make scroll here
+                pagerState.animateScrollToPage(
+                    coroutineScope = coroutineScope,
+                    page = 1
+                )
 
-                        //execute scroll here
-                        pagerState.animateScrollToPage(
-                            page = 1,
-                            animationSpec = tween(
-                                durationMillis = 200
-                            )
-                        )
+                //change current doctors page here
+                viewModel.onCurrentDoctorsPageChanged(
+                    newPage = 1
+                )
 
-                    }//end if
-
-                }//end launch
-            }
+            }//end onClick
         )
     )
 }//end SeeAllDoctorScreen
@@ -107,7 +109,9 @@ private fun TotalDoctorsContent(
     screenHeight: Int = LocalConfiguration.current.screenHeightDp,
     navigateToBookingNavGraph: (Boolean, Int) -> Unit,
     doctorsOnlineTabData: TabData,
-    doctorsOfflineTabData: TabData
+    doctorsOfflineTabData: TabData,
+    uiState: TotalDoctorsUiState,
+    onCurrentDoctorsPageChanged: KFunction1<Int, Unit>
 ) {
     //create lazy column here
     LazyColumn(
@@ -173,7 +177,7 @@ private fun TotalDoctorsContent(
                     theme = theme,
                     dimen = dimen,
                     tabs = arrayOf(doctorsOnlineTabData, doctorsOfflineTabData),
-                    currentItem = pagerState.currentPage,
+                    currentItem = uiState.currentDoctorsPage,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -234,5 +238,15 @@ private fun TotalDoctorsContent(
         }//end item
 
     }//end LazyColumn
+
+    //on pager state changed
+    LaunchedEffect(
+        key1 = pagerState.currentPage
+    ) {
+
+        //change current doctors page here
+        onCurrentDoctorsPageChanged(pagerState.currentPage)
+
+    }//end LaunchedEffect
 
 }//end SeeAllDoctorContent

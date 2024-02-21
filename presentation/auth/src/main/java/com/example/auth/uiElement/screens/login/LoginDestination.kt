@@ -4,8 +4,8 @@ package com.example.auth.uiElement.screens.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import com.example.sharedui.uiElement.components.navigation.enterTransitionMain
-import com.example.sharedui.uiElement.components.navigation.exitTransition
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 const val LOGIN_DESTINATION_ROUTE = "loginDestination"

@@ -33,8 +33,8 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import com.example.sharedui.R
+import com.example.sharedui.uiElement.containers.pager.scrollToPage
 
 //function for collect state and execute action from view model
 @Composable
@@ -83,30 +83,26 @@ internal fun DoctorsScreen(
             //change current page and prev page
             viewModel.onScrollToTotalDoctorsPage()
 
-            //execute scroll to see all doctor screen
-            coroutineScope.launch {
-                pagerState.scrollToPage(
-                    page = 2
-                )
-            }//end launch
+            //execute scroll to see all doctor screen here
+            pagerState.scrollToPage(
+                coroutineScope = coroutineScope,
+                page = 2
+            )
 
         },//end onClickSeeAll
         onClickBack = {
 
-            coroutineScope.launch {
+            //get prev page here
+            val prevPage = uiState.prevPage
 
-                //get prev page here
-                val prevPage = uiState.prevPage
+            //change current page and prev page
+            viewModel.onBack()
 
-                //change current page and prev page
-                viewModel.onBack()
-
-                //on back scroll to prev page
-                pagerState.scrollToPage(
-                    page = prevPage
-                )
-
-            }//end launch
+            //on back scroll to prev page
+            pagerState.scrollToPage(
+                coroutineScope = coroutineScope,
+                page = prevPage
+            )
 
         },//end onClickBack
     )
@@ -158,7 +154,7 @@ private fun DoctorsContent(
             dimen = dimen,
             theme = theme,
             onClick = onClickOnReminder,
-            tint  = theme.hintIconBottom,
+            tint = theme.hintIconBottom,
             modifier = Modifier
                 .constrainAs(reminderButtonId) {
                     end.linkTo(
@@ -177,7 +173,7 @@ private fun DoctorsContent(
             ),
             dimen = dimen,
             theme = theme,
-            onClick = {onClickOnNotificationButton(0)},
+            onClick = { onClickOnNotificationButton(0) },
             tint = theme.hintIconBottom,
             size =
             /**if exist in page 0**/
@@ -337,12 +333,11 @@ private fun DoctorsContent(
             //focus on search field
             focusRequester.requestFocus()
 
-            //scroll to search screen
-            coroutineScope.launch {
-                pagerState.scrollToPage(
-                    page = 1
-                )
-            }
+            //scroll to search screen here
+            pagerState.scrollToPage(
+                coroutineScope = coroutineScope,
+                page = 1
+            )
 
         }//end if
 

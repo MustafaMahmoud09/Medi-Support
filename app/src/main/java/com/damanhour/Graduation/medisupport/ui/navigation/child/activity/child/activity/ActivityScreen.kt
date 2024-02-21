@@ -13,6 +13,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,9 +23,12 @@ import com.example.bmi.uiElement.screens.activities.BMIActivityScreen
 import com.example.bloodsuger.uiElement.screens.activities.BloodSugarActivityScreen
 import com.example.heartrate.uiElement.screens.activities.HeartRateActivityScreen
 import com.example.bloodpressure.uiElement.screens.activities.BloodPressureActivityScreen
+import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.items.DropDownMenuPagerSection
+import com.example.sharedui.uiElement.containers.pager.data.MenuData
+import com.example.sharedui.uiElement.containers.pager.scrollToPage
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -40,10 +44,66 @@ internal fun ActivityScreen(
 
     val pagerState = rememberPagerState(initialPage = 0)
 
+    val coroutineScope = rememberCoroutineScope()
+
     ActivityContent(
         onClickBack = popActivityNavGraph,
         pagerState = pagerState,
-        navigateToHistoryDestination = navigateToHistoryDestination
+        navigateToHistoryDestination = navigateToHistoryDestination,
+        healthCareMenusData = arrayOf(
+            MenuData(
+                title = stringResource(
+                    R.string.bmi
+                ),
+                onClick = {
+                    //execute scroll here
+                    pagerState.scrollToPage(
+                        coroutineScope = coroutineScope,
+                        page = 0
+                    )
+
+                }
+            ),
+            MenuData(
+                title = stringResource(
+                    R.string.blood_pressure
+                ),
+                onClick = {
+                    //execute scroll here
+                    pagerState.scrollToPage(
+                        coroutineScope = coroutineScope,
+                        page = 1
+                    )
+
+                }
+            ),
+            MenuData(
+                title = stringResource(
+                    R.string.blood_suger
+                ),
+                onClick = {
+                    //execute scroll here
+                    pagerState.scrollToPage(
+                        coroutineScope = coroutineScope,
+                        page = 2
+                    )
+
+                }
+            ),
+            MenuData(
+                title = stringResource(
+                    R.string.heart_rate
+                ),
+                onClick = {
+                    //execute scroll here
+                    pagerState.scrollToPage(
+                        coroutineScope = coroutineScope,
+                        page = 3
+                    )
+
+                }
+            ),
+        )
     )
 }//end ActivityScreen
 
@@ -54,7 +114,8 @@ private fun ActivityContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     onClickBack: () -> Unit,
     pagerState: PagerState,
-    navigateToHistoryDestination: () -> Unit
+    navigateToHistoryDestination: () -> Unit,
+    healthCareMenusData: Array<MenuData>
 ) {
 
     BaseScreen(
@@ -95,21 +156,7 @@ private fun ActivityContent(
             DropDownMenuPagerSection(
                 dimen = dimen,
                 theme = theme,
-                options = listOf(
-                    stringResource(
-                        com.example.sharedui.R.string.bmi
-                    ),
-                    stringResource(
-                        com.example.sharedui.R.string.blood_pressure
-                    ),
-                    stringResource(
-                        com.example.sharedui.R.string.blood_suger
-                    ),
-                    stringResource(
-                        com.example.sharedui.R.string.heart_rate
-                    )
-                ),
-                pagerState = pagerState,
+                menus = healthCareMenusData,
                 modifier = Modifier
                     .constrainAs(dropDownMenuId) {
                         start.linkTo(guideFromStart25P)
@@ -126,7 +173,7 @@ private fun ActivityContent(
                 dimen = dimen,
                 theme = theme,
                 text = stringResource(
-                    com.example.sharedui.R.string.add_record
+                    R.string.add_record
                 ),
                 onClick = { /*TODO*/ },
                 modifier = Modifier
@@ -159,7 +206,8 @@ private fun ActivityContent(
                         bottom.linkTo(buttonAddRecordId.top)
                         height = Dimension.fillToConstraints
                         width = Dimension.fillToConstraints
-                    }.padding(
+                    }
+                    .padding(
                         top = dimen.dimen_1.dp
                     )
             ) { page ->

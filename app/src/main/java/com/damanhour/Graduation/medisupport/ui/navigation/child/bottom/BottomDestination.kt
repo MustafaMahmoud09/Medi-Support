@@ -47,7 +47,8 @@ internal fun NavGraphBuilder.bottomDestination(
         route = BOTTOM_DESTINATION_ROUTE,//define bottom destination name
         enterTransition = { enterTransitionZero() },//define enter transition method
         exitTransition = { exitTransition() },//define exit transition method
-        popEnterTransition = { enterTransitionZero() }//define pop enter transition method
+        popEnterTransition = { enterTransitionZero() },//define pop enter transition method
+        popExitTransition = { exitTransition() },
     ) {
         //add bottom screen to bottom destination
         BottomScreen(

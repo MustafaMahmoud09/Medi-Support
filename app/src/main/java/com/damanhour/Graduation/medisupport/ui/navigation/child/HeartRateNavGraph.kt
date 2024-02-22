@@ -5,6 +5,7 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
 import com.example.heartrate.uiElement.screens.measurement.MEASUREMENT_HEART_RATE_DESTINATION_ROUTE
 import com.example.heartrate.uiElement.screens.measurement.measurementHeartRateDestination
 import com.example.heartrate.uiElement.screens.statistics.statisticsHeartRateDestination
@@ -22,6 +23,24 @@ internal fun NavHostController.navigateToHeartRateNavGraph() {
 
 }//end navigateToHeartRateNavGraph
 
+internal fun NavHostController.navigateToHeartRateNavGraphWithPopActivityNavGraph() {
+
+    navigate(
+        route = HEART_RATE_NAV_GRAPH
+    ) {
+
+        popUpTo(
+            route = ACTIVITY_NAV_GRAPH_DATA.route
+        ) {
+
+            inclusive = true
+
+        }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToHeartRateNavGraph
+
 internal fun NavGraphBuilder.heartRateNavGraph(
     popMeasurementHeartRateDestination: () -> Unit,
     navigateToStatisticsHeartRateDestination: () -> Unit,
@@ -33,7 +52,9 @@ internal fun NavGraphBuilder.heartRateNavGraph(
         route = HEART_RATE_NAV_GRAPH,
         startDestination = MEASUREMENT_HEART_RATE_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        popExitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
         statisticsHeartRateDestination(
             popStatisticsHeartRateDestination = popStatisticsHeartRateDestination,

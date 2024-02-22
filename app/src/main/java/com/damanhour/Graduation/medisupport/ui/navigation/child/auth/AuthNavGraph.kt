@@ -9,6 +9,8 @@ import com.example.auth.uiElement.screens.register.registerDestination
 import com.example.auth.uiElement.screens.start.START_DESTINATION_ROUTE
 import com.example.auth.uiElement.screens.start.startDestination
 import com.example.auth.uiElement.screens.welcome.welcomeDestination
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
 //nav graph name
@@ -31,6 +33,10 @@ internal fun NavGraphBuilder.authNavGraph(
     navigation(
         route = AUTH_NAV_GRAPH_ROUTE,//define name nav graph
         startDestination = START_DESTINATION_ROUTE,//define start destination to auth nav graph
+        enterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
         //add destinations to auth nav graph
         startDestination(

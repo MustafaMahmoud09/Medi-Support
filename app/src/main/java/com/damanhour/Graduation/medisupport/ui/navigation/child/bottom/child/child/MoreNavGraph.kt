@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub
+package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
@@ -54,7 +54,9 @@ internal fun NavGraphBuilder.moreNavGraph(
         route = MORE_VAV_GRAPH_DATA.route,//define more nav graph name
         startDestination = MORE_DESTINATION_ROUTE,//define start destination to more nav graph
         enterTransition = { enterTransitionZero() },//define enter transition method
-        exitTransition = { exitTransition() }//define exit transition method
+        exitTransition = { exitTransition() },//define exit transition method
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
         //add destinations to more nav graph
         moreDestination(

@@ -32,7 +32,9 @@ fun NavGraphBuilder.profileDestination(
     composable(
         route = PROFILE_DESTINATION_DATA.route,
         enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() }
     ) {
 
         ProfileScreen(

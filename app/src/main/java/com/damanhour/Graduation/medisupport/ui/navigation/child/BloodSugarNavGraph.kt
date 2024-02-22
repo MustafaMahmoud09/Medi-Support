@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
 import com.example.bloodsuger.uiElement.screens.record.RECORD_BLOOD_SUGAR_DESTINATION_ROUTE
 import com.example.bloodsuger.uiElement.screens.record.recordBloodSugarDestination
 import com.example.bloodsuger.uiElement.screens.statistics.statisticsBloodSugarDestination
@@ -25,6 +26,24 @@ internal fun NavHostController.navigateToBloodSugarNavGraph() {
     )
 
 }//end navigateToBloodSugarNavGraph
+
+internal fun NavHostController.navigateToBloodSugarNavGraphWithPopActivityNavGraph() {
+
+    navigate(
+        route = BLOOD_SUGAR_NAV_GRAPH
+    ) {
+
+        popUpTo(
+            route = ACTIVITY_NAV_GRAPH_DATA.route
+        ) {
+
+            inclusive = true
+
+        }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToHeartRateNavGraph
 
 internal fun NavHostController.popBloodSugarNavGraph() {
 
@@ -48,7 +67,9 @@ internal fun NavGraphBuilder.bloodSugarNavGraph(
         route = BLOOD_SUGAR_NAV_GRAPH,//define route name here
         startDestination = RECORD_BLOOD_SUGAR_DESTINATION_ROUTE,//define start destination here
         enterTransition = { enterTransitionZero() },//define enter transition method here
-        popExitTransition = { exitTransition() }//define pop exit transition here
+        popExitTransition = { exitTransition() },//define pop exit transition here
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
         //create destinations into nav graph here
         statisticsBloodSugarDestination(

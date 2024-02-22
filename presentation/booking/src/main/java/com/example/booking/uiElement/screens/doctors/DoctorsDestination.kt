@@ -26,7 +26,9 @@ fun NavGraphBuilder.doctorsDestination(
     composable(
         route = DOCTOR_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
         //add doctor search screen to doctor search destination
         DoctorsScreen(

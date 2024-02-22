@@ -5,6 +5,8 @@ package com.example.heartrate.uiElement.screens.measurement
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 const val MEASUREMENT_HEART_RATE_DESTINATION_ROUTE = "measurementHeartRateDestination"
@@ -32,7 +34,11 @@ fun NavGraphBuilder.measurementHeartRateDestination(
 ) {
 
     composable(
-        route = MEASUREMENT_HEART_RATE_DESTINATION_ROUTE
+        route = MEASUREMENT_HEART_RATE_DESTINATION_ROUTE,
+        enterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() }
     ) {
 
         MeasurementHeartRateScreen(

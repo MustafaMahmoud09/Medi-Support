@@ -32,14 +32,18 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.popHeartPredicti
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.navigateToHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.history.popHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bloodSugarNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.navigateToBookingNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.navigateToChatNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.popBookingNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.navigateToOnlineRoomNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.popChatNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.child.popOnlineRoomGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.examination.examinationNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.heartRateNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodPressureNavGraphWithPopActivityNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBloodSugarNavGraphWithPopActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToBmiNavGraphWithPopActivityNavGraph
 import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToHeartRateNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.navigateToHeartRateNavGraphWithPopActivityNavGraph
 import com.example.auth.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.uiElement.screens.register.navigateToRegisterDestination
@@ -57,8 +61,11 @@ import com.example.bmi.uiElement.screens.determination.navigateToDeterminationBM
 import com.example.bmi.uiElement.screens.determination.popDeterminationBMIDestination
 import com.example.bmi.uiElement.screens.record.navigateToRecordBMIDestination
 import com.example.bmi.uiElement.screens.record.popRecordBMIDestination
+import com.example.booking.uiElement.screens.booking.navigateToBookingDestination
+import com.example.booking.uiElement.screens.booking.popBookingDestination
 import com.example.booking.uiElement.screens.details.navigateToBookingDetailsDestination
 import com.example.booking.uiElement.screens.details.popBookingDetailsDestination
+import com.example.booking.uiElement.screens.payment.PAYMENT_DESTINATION_ROUTE
 import com.example.chat.uiElement.screens.chat.navigateToChatDestination
 import com.example.chat.uiElement.screens.chat.popChatDestination
 import com.example.heartprediction.uiElement.screens.prediction.navigateToPredictionHeartPredictionDestination
@@ -69,6 +76,9 @@ import com.example.heartrate.uiElement.screens.measurement.navigateToMeasurement
 import com.example.heartrate.uiElement.screens.measurement.popMeasurementHeartRateDestination
 import com.example.heartrate.uiElement.screens.statistics.navigateToStatisticsHeartRateDestination
 import com.example.heartrate.uiElement.screens.statistics.popStatisticsHeartRateDestination
+import com.example.room.uiElement.screens.room.navigateToOnlineRoomDestination
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
@@ -96,7 +106,11 @@ fun RootNavGraph(
 
             AnimatedNavHost(
                 navController = navHostController,
-                startDestination = AUTH_NAV_GRAPH_ROUTE
+                startDestination = AUTH_NAV_GRAPH_ROUTE,
+                enterTransition = { enterTransitionZero() },
+                popExitTransition = { exitTransition() },
+                popEnterTransition = { enterTransitionZero() },
+                exitTransition = { exitTransition() },
             ) {
 
                 authNavGraph(
@@ -120,24 +134,39 @@ fun RootNavGraph(
                     navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraph,
                     navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraph,
                     navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
-                    navigateToBookingNavGraph = navHostController::navigateToBookingNavGraph,
+                    navigateToBookingNavGraph = navHostController::navigateToBookingDestination,
                 )
 
                 activityNavGraph(
                     popActivityNavGraph = navHostController::popActivityNavGraph,
                     popHistoryDestination = navHostController::popHistoryDestination,
-                    navigateToHistoryDestination = navHostController::navigateToHistoryDestination
+                    navigateToHistoryDestination = navHostController::navigateToHistoryDestination,
+                    navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraphWithPopActivityNavGraph,
+                    navigateToBmiNavGraph = navHostController::navigateToBmiNavGraphWithPopActivityNavGraph,
+                    navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraphWithPopActivityNavGraph,
+                    navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraphWithPopActivityNavGraph
                 )
 
                 examinationNavGraph(
-                    popBookingNavGraph = navHostController::popBookingNavGraph,
+                    popBookingNavGraph = navHostController::popBookingDestination,
                     navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
                     popBookingDetailsDestination = navHostController::popBookingDetailsDestination,
                     navigateToChatNavGraph = navHostController::navigateToChatNavGraph,
                     popChatNavGraph = navHostController::popChatNavGraph,
                     navigateToChatDestination = navHostController::navigateToChatDestination,
-                    popChatDestination = navHostController::popChatDestination
+                    popChatDestination = navHostController::popChatDestination,
+                    navigateToOnlineRoomNavGraph = navHostController::navigateToOnlineRoomNavGraph,
+                    popOnlineRoomGraph = navHostController::popOnlineRoomGraph,
+                    navigateToOnlineRoomDestination = {
+
+                        //execute navigate to online room and pop payment here
+                        navHostController.navigateToOnlineRoomDestination(
+                            poppedDestination = PAYMENT_DESTINATION_ROUTE
+                        )
+
+                    }//end scope
                 )
+
 
                 heartPredictionNavGraph(
                     popHeartPredictionNavGraph = navHostController::popHeartPredictionNavGraph,

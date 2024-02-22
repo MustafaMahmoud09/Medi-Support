@@ -57,7 +57,8 @@ fun NavGraphBuilder.statisticsBloodSugarDestination(
         route = STATISTICS_BLOOD_SUGAR_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
         exitTransition = { exitTransition() },
-        popExitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
         StatisticsBloodSugarScreen(
             popStatisticsBloodSugarDestination = popStatisticsBloodSugarDestination,

@@ -38,7 +38,8 @@ import kotlin.reflect.KFunction1
 internal fun BookingDetailsScreen(
     viewModel: BookingDetailsViewModel = hiltViewModel(),
     popBookingDetailsDestination: KFunction0<Unit>,
-    navigateToChatNavGraph: () -> Unit
+    navigateToChatNavGraph: () -> Unit,
+    navigateToOnlineRoomNavGraph: () -> Unit
 ) {
     //collect state here
     val state = viewModel.state.collectAsState()
@@ -58,6 +59,7 @@ internal fun BookingDetailsScreen(
         navigateToChatNavGraph = navigateToChatNavGraph,
         uiState = uiState,
         onCurrentBookingDetailsPageChanged = viewModel::onCurrentBookingDetailsPageChanged,
+        navigateToOnlineRoomNavGraph = navigateToOnlineRoomNavGraph,
         bookingOnlineTabData = TabData(
             title = stringResource(
                 id = R.string.doctors_online
@@ -111,6 +113,7 @@ private fun BookingDetailsContent(
     bookingOnlineTabData: TabData,
     uiState: BookingDetailsUiState,
     onCurrentBookingDetailsPageChanged: KFunction1<Int, Unit>,
+    navigateToOnlineRoomNavGraph: () -> Unit,
 ) {
 
     //create base screen to define navigation and status color
@@ -199,7 +202,8 @@ private fun BookingDetailsContent(
                         //create online screen here
                         OnlineDetailsScreen(
                             dimen = dimen,
-                            theme = theme
+                            theme = theme,
+                            navigateToOnlineRoomNavGraph = navigateToOnlineRoomNavGraph
                         )
                     }//end online case
 

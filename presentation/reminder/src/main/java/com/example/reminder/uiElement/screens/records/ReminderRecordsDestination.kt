@@ -5,6 +5,8 @@ package com.example.reminder.uiElement.screens.records
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 //destination name
@@ -37,7 +39,11 @@ fun NavGraphBuilder.reminderRecordsDestination(
 ) {
     //create reminder records here
     composable(
-        route = REMINDER_RECORDS_DESTINATION_ROUTE
+        route = REMINDER_RECORDS_DESTINATION_ROUTE,
+        enterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() }
     ) {
         //create reminder records screen here
         ReminderRecordsScreen(

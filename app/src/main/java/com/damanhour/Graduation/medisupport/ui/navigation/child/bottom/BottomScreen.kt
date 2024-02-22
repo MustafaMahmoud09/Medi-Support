@@ -20,17 +20,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
 import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.BottomNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.ARTICLE_NAV_GRAPH_DATA
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.popArticleNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.HOME_VAV_GRAPH_DATA
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.MORE_VAV_GRAPH_DATA
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.popMoreNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.ARTICLE_NAV_GRAPH_DATA
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.popArticleNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.home.HOME_VAV_GRAPH_DATA
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.MORE_VAV_GRAPH_DATA
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.home.child.navigateToAddReminderNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.home.child.popAddReminderNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.popMoreNavGraph
 import com.example.article.uiElement.screens.article.navigateToSingleDestination
 import com.example.article.uiElement.screens.article.popSingleArticleDestination
 import com.example.profile.uiElement.screens.profile.PROFILE_DESTINATION_DATA
 import com.example.profile.uiElement.screens.profile.popProfileDestination
-import com.example.reminder.uiElement.screens.add.navigateToAddReminderDestination
-import com.example.reminder.uiElement.screens.add.popAddReminderDestination
 import com.example.reminder.uiElement.screens.records.navigateToReminderRecordsDestination
 import com.example.reminder.uiElement.screens.records.popReminderRecordsDestination
 import com.example.setting.uiElement.screens.about.navigateToAboutDestination
@@ -82,8 +82,8 @@ internal fun BottomScreen(
         navigateToSingleDestination = navHostController::navigateToSingleDestination,
         popSingleArticleDestination = navHostController::popSingleArticleDestination,
         navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
-        navigateToAddReminderDestination = navHostController::navigateToAddReminderDestination,
-        popAddReminderDestination = navHostController::popAddReminderDestination,
+        navigateToAddReminderDestination = navHostController::navigateToAddReminderNavGraph,
+        popAddReminderDestination = navHostController::popAddReminderNavGraph,
         navigateToReminderRecordsDestination = navHostController::navigateToReminderRecordsDestination,
         popReminderRecordsDestination = navHostController::popReminderRecordsDestination,
         navigateToBmiNavGraph = navigateToBmiNavGraph,

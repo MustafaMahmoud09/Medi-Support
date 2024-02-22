@@ -42,7 +42,9 @@ fun NavGraphBuilder.codeDestination(
     composable(
         route = CODE_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
         CodeScreen(
             navigateToNewPasswordDestination = navigateToNewPasswordDestination

@@ -17,7 +17,9 @@ fun NavGraphBuilder.startDestination(
     composable(
         route = START_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        exitTransition = {exitTransition()}
+        exitTransition = {exitTransition()},
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
 
         StartScreen(

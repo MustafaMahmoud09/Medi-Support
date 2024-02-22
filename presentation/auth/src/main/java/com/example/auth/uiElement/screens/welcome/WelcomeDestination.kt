@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.example.auth.uiElement.screens.start.START_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -36,7 +37,9 @@ fun NavGraphBuilder.welcomeDestination(
     composable(
         route = WELCOME_DESTINATION_ROUTE,
         enterTransition = { enterTransitionMain() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
 
         WelcomeScreen(

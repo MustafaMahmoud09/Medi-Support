@@ -10,6 +10,7 @@ import com.example.heartprediction.uiElement.screens.record.recordHeartPredictio
 import com.example.heartprediction.uiElement.screens.start.START_HEART_PREDICTION_DESTINATION_ROUTE
 import com.example.heartprediction.uiElement.screens.start.startHeartPredictionDestination
 import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
@@ -48,7 +49,9 @@ internal fun NavGraphBuilder.heartPredictionNavGraph(
         route = HEART_PREDICTION_NAV_GRAPH_ROUTE,//define route name here
         startDestination = START_HEART_PREDICTION_DESTINATION_ROUTE,//define start destination here
         enterTransition = { enterTransitionMain() },
-        exitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
         //create destinations here
         startHeartPredictionDestination(

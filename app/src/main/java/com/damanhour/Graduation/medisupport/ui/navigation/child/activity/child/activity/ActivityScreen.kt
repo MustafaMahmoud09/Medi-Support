@@ -39,7 +39,11 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 @Composable
 internal fun ActivityScreen(
     popActivityNavGraph: () -> Unit,
-    navigateToHistoryDestination: () -> Unit
+    navigateToHistoryDestination: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit,
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit
 ) {
 
     val pagerState = rememberPagerState(initialPage = 0)
@@ -103,7 +107,26 @@ internal fun ActivityScreen(
 
                 }
             ),
-        )
+        ),
+        onClickOnAddRecordButton = {
+
+            when(pagerState.currentPage){
+
+                //if current page equal 0 navigate to bmi nav graph
+                0 -> navigateToBmiNavGraph()
+
+                //if current page equal 1 navigate to blood pressure nav graph
+                1 -> navigateToBloodPressureNavGraph()
+
+                //if current page equal 2 navigate to blood sugar nav graph
+                2 -> navigateToBloodSugarNavGraph()
+
+                //if current page equal 3 navigate to heart rate nav graph
+                3 -> navigateToHeartRateNavGraph()
+
+            }//end when
+
+        }//end onClickOnAddRecordButton
     )
 }//end ActivityScreen
 
@@ -115,7 +138,8 @@ private fun ActivityContent(
     onClickBack: () -> Unit,
     pagerState: PagerState,
     navigateToHistoryDestination: () -> Unit,
-    healthCareMenusData: Array<MenuData>
+    healthCareMenusData: Array<MenuData>,
+    onClickOnAddRecordButton: () -> Unit
 ) {
 
     BaseScreen(
@@ -175,7 +199,7 @@ private fun ActivityContent(
                 text = stringResource(
                     R.string.add_record
                 ),
-                onClick = { /*TODO*/ },
+                onClick = onClickOnAddRecordButton,
                 modifier = Modifier
                     .constrainAs(buttonAddRecordId) {
                         start.linkTo(

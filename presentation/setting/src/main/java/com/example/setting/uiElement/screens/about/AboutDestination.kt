@@ -35,7 +35,9 @@ fun NavGraphBuilder.aboutDestination(
     composable(
         route = ABOUT_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        popExitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
 
         AboutScreen(

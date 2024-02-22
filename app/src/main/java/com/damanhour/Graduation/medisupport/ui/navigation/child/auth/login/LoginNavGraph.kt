@@ -68,7 +68,8 @@ internal fun NavGraphBuilder.loginNavGraph(
         startDestination = LOGIN_DESTINATION_ROUTE,//define start destination to login nav graph
         enterTransition = { enterTransitionZero() },//define enter transition method
         exitTransition = { exitTransition() },//define exist transition method
-        popEnterTransition = { enterTransitionMain() }//define pop enter transition method
+        popEnterTransition = { enterTransitionMain() },//define pop enter transition method
+        popExitTransition = { exitTransition() },
     ) {
         //add destinations to login nav graph
         loginDestination(

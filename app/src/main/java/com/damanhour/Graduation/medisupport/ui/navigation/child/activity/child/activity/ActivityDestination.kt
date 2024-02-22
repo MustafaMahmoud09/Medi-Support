@@ -15,18 +15,28 @@ const val ACTIVITY_DESTINATION_ROUTE = "activityDestination"
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.activityDestination(
     popActivityNavGraph: () -> Unit,
-    navigateToHistoryDestination: () -> Unit
+    navigateToHistoryDestination: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodSugarNavGraph: () -> Unit
 ) {
 
     composable(
         route = ACTIVITY_DESTINATION_ROUTE,
         popEnterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        enterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() },
     ) {
 
         ActivityScreen(
             popActivityNavGraph = popActivityNavGraph,
-            navigateToHistoryDestination = navigateToHistoryDestination
+            navigateToHistoryDestination = navigateToHistoryDestination,
+            navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
+            navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+            navigateToBmiNavGraph = navigateToBmiNavGraph
         )
 
     }//end composable

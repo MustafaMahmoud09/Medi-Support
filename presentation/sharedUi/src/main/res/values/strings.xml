@@ -98,4 +98,13 @@
     <string name="select_a_time">Select a Time</string>
     <string name="chat">Chat</string>
     <string name="write_your_message">Write your message</string>
+    <string name="amount">Amount</string>
+    <string name="_250_l_e">250 L.E</string>
+    <string name="wallet_number">Wallet Number</string>
+    <string name="big_stars">**************</string>
+    <string name="personal_identification_number_pin">Personal Identification Number (PIN)</string>
+    <string name="small_stars">******</string>
+    <string name="one_time_password_otp">One Time Password (OTP)</string>
+    <string name="resend_otp_again">Resend OTP Again</string>
+    <string name="pay_with_wallet">Pay With Wallet</string>
 </resources>

@@ -1,16 +1,15 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub
+package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.home.child.reminderNavGraph
 import com.example.booking.uiElement.screens.doctors.DOCTOR_DESTINATION_ROUTE
 import com.example.booking.uiElement.screens.doctors.doctorsDestination
 import com.example.reminder.uiElement.screens.add.ADD_REMINDER_DESTINATION_ROUTE
-import com.example.reminder.uiElement.screens.add.addReminderDestination
 import com.example.reminder.uiElement.screens.records.REMINDER_RECORDS_DESTINATION_ROUTE
-import com.example.reminder.uiElement.screens.records.reminderRecordsDestination
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.containers.navigation.BottomDestination
 import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
@@ -61,7 +60,9 @@ internal fun NavGraphBuilder.homeNavGraph(
         route = HOME_VAV_GRAPH_DATA.route,//define home nav graph name
         startDestination = DOCTOR_DESTINATION_ROUTE,//define start destination to home nav graph
         enterTransition = { enterTransitionZero() },//define enter transition method
-        exitTransition = { exitTransition() }//define exit transition method
+        exitTransition = { exitTransition() },//define exit transition method
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
         //add destinations to home nav graph
         doctorsDestination(
@@ -75,12 +76,9 @@ internal fun NavGraphBuilder.homeNavGraph(
             navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
         )
 
-        addReminderDestination(
+        reminderNavGraph(
             popAddReminderDestination = popAddReminderDestination,
-            navigateToReminderRecordsDestination = navigateToReminderRecordsDestination
-        )
-
-        reminderRecordsDestination(
+            navigateToReminderRecordsDestination = navigateToReminderRecordsDestination,
             popReminderRecordsDestination = popReminderRecordsDestination
         )
 

@@ -35,7 +35,9 @@ fun NavGraphBuilder.singleArticleDestination(
     composable(
         route = SINGLE_ARTICLE_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
 
         SingleArticleScreen(

@@ -60,7 +60,8 @@ fun NavGraphBuilder.statisticsBloodPressureDestination(
         route = STATISTICS_BLOOD_PRESSURE_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
         popExitTransition = { exitTransition() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
         //create statistics blood pressure screen here
         StatisticsBloodPressureScreen(

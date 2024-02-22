@@ -1,6 +1,7 @@
 package com.example.booking.uiState.viewModel.bookings
 
 import androidx.lifecycle.SavedStateHandle
+import com.example.booking.uiElement.screens.booking.BookingArgs
 import com.example.booking.uiState.state.bookings.BookingUiState
 import com.example.sharedui.uiState.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +21,8 @@ internal class BookingViewModel @Inject constructor(
     //for observe by screen
     val state = _state.asStateFlow()
 
-    //get booking type
-    private val bookingType: Boolean = checkNotNull(savedStateHandle["booking_type"])
+    //get booking arguments
+    private val bookingArgs: BookingArgs = BookingArgs(savedStateHandle)
 
     init {
         onBookingTypeUpdated()
@@ -32,7 +33,7 @@ internal class BookingViewModel @Inject constructor(
         //update booking type here
         _state.update {
             it.copy(
-                bookingType = bookingType
+                bookingType = bookingArgs.bookingType
             )
         }
 

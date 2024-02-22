@@ -5,6 +5,7 @@ package com.example.auth.uiElement.screens.forgotten.email
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -18,7 +19,9 @@ fun NavGraphBuilder.emailDestination(
     composable(
         route = EMAIL_DESTINATION_ROUTE,
         exitTransition = { exitTransition() },
-        popExitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        enterTransition = { enterTransitionZero() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
         EmailScreen(
             popForgotPasswordNavGraph = popForgotPasswordNavGraph,

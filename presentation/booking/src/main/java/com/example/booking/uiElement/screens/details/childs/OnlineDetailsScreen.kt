@@ -16,13 +16,15 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 @Composable
 internal fun OnlineDetailsScreen(
     dimen: CustomDimen,
-    theme: CustomTheme
+    theme: CustomTheme,
+    navigateToOnlineRoomNavGraph: () -> Unit
 ) {
 
     //create online details content here
     OnlineDetailsContent(
         dimen = dimen,
-        theme = theme
+        theme = theme,
+        onClickOnVideoCallButton = navigateToOnlineRoomNavGraph
     )
 
 }//end OnlineDetailsScreen
@@ -30,7 +32,8 @@ internal fun OnlineDetailsScreen(
 @Composable
 private fun OnlineDetailsContent(
     dimen: CustomDimen,
-    theme: CustomTheme
+    theme: CustomTheme,
+    onClickOnVideoCallButton: () -> Unit
 ) {
 
     //create container here
@@ -57,6 +60,7 @@ private fun OnlineDetailsContent(
             OnlineBookingSection(
                 dimen = dimen,
                 theme = theme,
+                onClickOnVideoCallButton = onClickOnVideoCallButton,
                 message = "Now you Can Make Video Call With The Doctor",
                 modifier = Modifier
                     .fillMaxWidth()

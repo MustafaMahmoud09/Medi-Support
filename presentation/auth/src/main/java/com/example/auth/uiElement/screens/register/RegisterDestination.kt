@@ -36,7 +36,9 @@ fun NavGraphBuilder.registerDestination(
     composable(
         route = REGISTER_DESTINATION_ROUTE,
         enterTransition = { enterTransitionMain() },
-        popExitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
 
         RegisterScreen(

@@ -40,7 +40,8 @@ internal fun OnlineBookingSection(
     ),
     videoCallSize: Float = dimen.dimen_2_5,
     videoCallTint: Color = theme.greenLight,
-    modifier: Modifier = Modifier
+    onClickOnVideoCallButton: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     //create container here
@@ -134,7 +135,7 @@ internal fun OnlineBookingSection(
         IconButtonView(
             dimen = dimen,
             theme = theme,
-            onClick = { /*TODO*/ },
+            onClick = onClickOnVideoCallButton,
             size = videoCallSize,
             icon = videoCallIcon,
             tint = videoCallTint,

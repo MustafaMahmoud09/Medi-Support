@@ -5,6 +5,7 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
 import com.example.bloodpressure.uiElement.screens.record.RECORD_BLOOD_PRESSURE_DESTINATION_ROUTE
 import com.example.bloodpressure.uiElement.screens.record.recordBloodPressureDestination
 import com.example.bloodpressure.uiElement.screens.statistics.statisticsBloodPressureDestination
@@ -23,6 +24,24 @@ internal fun NavHostController.navigateToBloodPressureNavGraph() {
     )
 
 }//end navigateToBloodPressureNavGraph
+
+internal fun NavHostController.navigateToBloodPressureNavGraphWithPopActivityNavGraph() {
+
+    navigate(
+        route = BLOOD_PRESSURE_NAV_GRAPH
+    ) {
+
+        popUpTo(
+            route = ACTIVITY_NAV_GRAPH_DATA.route
+        ) {
+
+            inclusive = true
+
+        }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToHeartRateNavGraph
 
 //function for pop blood pressure nav graph from back stack
 internal fun NavHostController.popBloodPressureNavGraph() {
@@ -49,6 +68,8 @@ internal fun NavGraphBuilder.bloodPressureNavGraph(
         startDestination = RECORD_BLOOD_PRESSURE_DESTINATION_ROUTE,//define start destination here
         enterTransition = { enterTransitionZero() },//define enter transition method here
         popExitTransition = { exitTransition() },//define pop exit transition method here
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
         //create destinations here
         statisticsBloodPressureDestination(

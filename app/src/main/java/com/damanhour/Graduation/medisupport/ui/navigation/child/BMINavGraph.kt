@@ -5,6 +5,7 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
 import com.example.bmi.uiElement.screens.determination.determinationBMIDestination
 import com.example.bmi.uiElement.screens.record.RECORD_BMI_DESTINATION
 import com.example.bmi.uiElement.screens.record.recordBMIDestination
@@ -23,6 +24,24 @@ internal fun NavHostController.navigateToBmiNavGraph() {
     )
 
 }//end navigateToBmiNavGraph
+
+internal fun NavHostController.navigateToBmiNavGraphWithPopActivityNavGraph() {
+
+    navigate(
+        route = BMI_NAV_GRAPH_ROUTE
+    ) {
+
+        popUpTo(
+            route = ACTIVITY_NAV_GRAPH_DATA.route
+        ) {
+
+            inclusive = true
+
+        }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToHeartRateNavGraph
 
 //function for pop bmi nav graph from back stack
 internal fun NavHostController.popBmiNavGraph() {
@@ -47,6 +66,8 @@ internal fun NavGraphBuilder.bmiNavGraph(
         startDestination = RECORD_BMI_DESTINATION,//define start destination here
         enterTransition = { enterTransitionZero() },//define enter transition function here
         popExitTransition = { exitTransition() },//define exit transition function here
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
         //add destinations to bmi nav graph here
         recordBMIDestination(

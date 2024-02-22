@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 
 @Composable
 fun LinkView(
@@ -45,12 +46,7 @@ fun LinkView(
             fontSize = size.sp
         ),
         modifier = modifier
-            .clickable(
-                interactionSource = remember {
-                    MutableInteractionSource()
-                },
-                indication = null
-            ) {
+            .clickableWithoutHover {
                 onClick()
             }
     )

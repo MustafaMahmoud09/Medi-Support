@@ -5,6 +5,7 @@ package com.example.auth.uiElement.screens.login
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
@@ -19,7 +20,9 @@ fun NavGraphBuilder.loginDestination(
     composable(
         route = LOGIN_DESTINATION_ROUTE,
         exitTransition = { exitTransition() },
-        popEnterTransition = { enterTransitionMain() }
+        popEnterTransition = { enterTransitionMain() },
+        enterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() },
     ) {
         LoginScreen(
             navigateToRegisterDestination = navigateToRegisterDestination,

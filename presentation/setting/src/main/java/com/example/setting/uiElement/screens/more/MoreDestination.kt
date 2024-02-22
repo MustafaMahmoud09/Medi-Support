@@ -20,7 +20,9 @@ fun NavGraphBuilder.moreDestination(
     composable(
         route = MORE_DESTINATION_ROUTE,
         popEnterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        enterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() }
     ) {
 
         MoreScreen(

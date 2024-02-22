@@ -13,6 +13,7 @@ import com.damanhour.Graduation.medisupport.ui.navigation.child.activity.child.h
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.containers.navigation.BottomDestination
 import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
 import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 
@@ -43,19 +44,29 @@ internal fun NavHostController.popActivityNavGraph() {
 internal fun NavGraphBuilder.activityNavGraph(
     popActivityNavGraph: () -> Unit,
     popHistoryDestination: () -> Unit,
-    navigateToHistoryDestination: () -> Unit
+    navigateToHistoryDestination: () -> Unit,
+    navigateToHeartRateNavGraph: () -> Unit,
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToBloodPressureNavGraph: () -> Unit
 ) {
 
     navigation(
         route = ACTIVITY_NAV_GRAPH_DATA.route,
         startDestination = ACTIVITY_DESTINATION_ROUTE,
         enterTransition = { enterTransitionMain() },
-        popExitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
 
         activityDestination(
             popActivityNavGraph = popActivityNavGraph,
-            navigateToHistoryDestination = navigateToHistoryDestination
+            navigateToHistoryDestination = navigateToHistoryDestination,
+            navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
+            navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
+            navigateToBmiNavGraph = navigateToBmiNavGraph,
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
         )
 
         historyDestination(

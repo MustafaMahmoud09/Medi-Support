@@ -46,7 +46,9 @@ internal fun NavGraphBuilder.forgotPasswordNavGraph(
         route = FORGOT_PASSWORD_NAV_GRAPH,//define nav graph name
         startDestination = EMAIL_DESTINATION_ROUTE,//define start destination to forgot password nav graph
         enterTransition = { enterTransitionZero() },//define enter transition method
-        popExitTransition = { exitTransition() }//define pop exit transition method
+        popExitTransition = { exitTransition() },//define pop exit transition method
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
         //add destinations to forgot password nav graph
         emailDestination(

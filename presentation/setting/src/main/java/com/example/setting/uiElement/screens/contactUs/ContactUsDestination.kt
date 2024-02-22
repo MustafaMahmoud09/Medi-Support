@@ -35,7 +35,9 @@ fun NavGraphBuilder.contactUsDestination(
     composable(
         route = CONTACT_US_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        popExitTransition = { exitTransition() }
+        popExitTransition = { exitTransition() },
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
 
         ContactUsScreen(

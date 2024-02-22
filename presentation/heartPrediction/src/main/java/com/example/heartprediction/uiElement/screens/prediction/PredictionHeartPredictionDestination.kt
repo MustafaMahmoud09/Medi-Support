@@ -52,6 +52,8 @@ fun NavGraphBuilder.predictionHeartPredictionDestination(
         route = PREDICTION_HEART_PREDICTION_DESTINATION_ROUTE,//route name here
         enterTransition = { enterTransitionZero() },//enter transition function here
         popExitTransition = { exitTransition() },//pop exist transition function here
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
 
         //create create prediction heart prediction screen here

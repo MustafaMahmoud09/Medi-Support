@@ -5,11 +5,13 @@ package com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.HOME_VAV_GRAPH_DATA
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.articleNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.homeNavGraph
-import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.sub.moreNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.home.HOME_VAV_GRAPH_DATA
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.articleNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.home.homeNavGraph
+import com.damanhour.Graduation.medisupport.ui.navigation.child.bottom.child.child.moreNavGraph
 import com.example.profile.uiElement.screens.profile.profileDestination
+import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
+import com.example.sharedui.uiElement.containers.navigation.exitTransition
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 @Composable
@@ -39,7 +41,11 @@ internal fun BottomNavGraph(
 
     AnimatedNavHost(
         navController = navHostController,
-        startDestination = HOME_VAV_GRAPH_DATA.route
+        startDestination = HOME_VAV_GRAPH_DATA.route,
+        enterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
     ) {
 
         homeNavGraph(

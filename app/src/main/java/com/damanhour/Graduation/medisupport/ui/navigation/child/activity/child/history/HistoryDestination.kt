@@ -35,7 +35,9 @@ fun NavGraphBuilder.historyDestination(
     composable(
         route = HISTORY_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() }
+        exitTransition = { exitTransition() },
+        popExitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
     ) {
 
         HistoryScreen(

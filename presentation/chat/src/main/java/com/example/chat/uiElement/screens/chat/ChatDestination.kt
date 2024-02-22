@@ -46,6 +46,10 @@ fun NavGraphBuilder.chatDestination(
 
     composable(
         route = CHAT_DESTINATION_ARGUMENT_ROUTE,
+        enterTransition = { enterTransitionZero() },
+        exitTransition = { exitTransition() },
+        popEnterTransition = { enterTransitionZero() },
+        popExitTransition = { exitTransition() },
         arguments = listOf(
             navArgument(
                 name = ChatArgs.CHAT_ID_ARGUMENT
@@ -53,10 +57,6 @@ fun NavGraphBuilder.chatDestination(
                 type = NavType.IntType
             }//end NavArgumentBuilder
         ),
-        enterTransition = { enterTransitionZero() },
-        exitTransition = { exitTransition() },
-        popEnterTransition = { enterTransitionZero() },
-        popExitTransition = { exitTransition() }
     ) {
 
         ChatScreen(

@@ -58,12 +58,13 @@ dependencies {
     //project
     implementation(project(':presentation:bmi'))
     implementation(project(':presentation:auth'))
-    implementation(project(':presentation:bloodSugar'))
-    implementation(project(':presentation:bloodPressure'))
+    implementation implementation(project(':presentation:blood_sugar',))
+    implementation implementation(project(':presentation:blood_pressure',))
     implementation(project(':presentation:heartRate'))
-    implementation(project(':presentation:heartPrediction'))
+    implementation implementation(project(':presentation:heart_prediction',))
     implementation(project(':presentation:reminder'))
-    implementation(project(':presentation:booking'))
+    implementation implementation(project(':presentation:offline_booking'))
+    implementation implementation(project(':presentation:online_booking'))
     implementation(project(':presentation:chat'))
     implementation(project(':presentation:profile'))
     implementation(project(':presentation:article'))
@@ -94,8 +95,13 @@ dependencies {
     //navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
-    //hilt-navigation
+    //material 3
+    implementation "androidx.compose.material3:material3:$material3_versoin"
+
+    //hilt dependency injection
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
 
 }

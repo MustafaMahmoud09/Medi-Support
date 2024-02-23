@@ -4,8 +4,8 @@ package com.example.chat.uiElement.screens.chats
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.containers.navigation.exitTransition
+import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
+import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 const val CHATS_DESTINATION_ROUTE = "chatsDestination"

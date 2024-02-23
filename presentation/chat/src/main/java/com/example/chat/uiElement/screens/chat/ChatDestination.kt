@@ -8,8 +8,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.containers.navigation.exitTransition
+import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
+import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 //create route name here

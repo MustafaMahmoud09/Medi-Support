@@ -33,10 +33,11 @@
             <option value="$PROJECT_DIR$/presentation/bloodPressure" />
             <option value="$PROJECT_DIR$/presentation/bloodSugar" />
             <option value="$PROJECT_DIR$/presentation/bmi" />
-            <option value="$PROJECT_DIR$/presentation/booking" />
             <option value="$PROJECT_DIR$/presentation/chat" />
             <option value="$PROJECT_DIR$/presentation/heartPrediction" />
             <option value="$PROJECT_DIR$/presentation/heartRate" />
+            <option value="$PROJECT_DIR$/presentation/offline_booking" />
+            <option value="$PROJECT_DIR$/presentation/online_booking" />
             <option value="$PROJECT_DIR$/presentation/profile" />
             <option value="$PROJECT_DIR$/presentation/reminder" />
             <option value="$PROJECT_DIR$/presentation/room" />

@@ -31,7 +31,7 @@ import com.example.auth.uiElement.screens.welcome.child.SecondScreen
 import com.example.auth.uiElement.screens.welcome.child.ThirdScreen
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextNormalBrownView
-import com.example.sharedui.uiElement.containers.pager.scrollToPage
+import com.example.sharedui.uiElement.navigation.transitions.scrollToPage
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen

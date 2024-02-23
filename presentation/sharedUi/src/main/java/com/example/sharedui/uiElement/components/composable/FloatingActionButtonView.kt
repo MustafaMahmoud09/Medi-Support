@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import com.example.sharedui.uiElement.components.modifier.appShadow
 import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 
 @Composable
@@ -23,7 +24,9 @@ fun FloatingActionButtonView(
     floatingColor: Color,
     shape: Shape = CircleShape,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    elevation: Float = 0f,
+    shadowColor: Color = Color.White,
+    modifier: Modifier = Modifier,
 ) {
 
     //create container here
@@ -32,8 +35,11 @@ fun FloatingActionButtonView(
             .size(
                 size = floatingSize.dp
             )
-            .clip(
-                shape = shape
+            .appShadow(
+                shape = shape,
+                elevation = elevation,
+                spotColor = shadowColor,
+                ambientColor = shadowColor
             )
             .background(
                 color = floatingColor

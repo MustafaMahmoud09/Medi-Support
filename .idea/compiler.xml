@@ -19,11 +19,12 @@
       <module name="MediSupport.presentation.bloodPressure" target="17" />
       <module name="MediSupport.presentation.bloodSugar" target="17" />
       <module name="MediSupport.presentation.bmi" target="17" />
-      <module name="MediSupport.presentation.booking" target="17" />
       <module name="MediSupport.presentation.chat" target="17" />
       <module name="MediSupport.presentation.contactUs" target="17" />
       <module name="MediSupport.presentation.heartPrediction" target="17" />
       <module name="MediSupport.presentation.heartRate" target="17" />
+      <module name="MediSupport.presentation.offline_booking" target="17" />
+      <module name="MediSupport.presentation.online_booking" target="17" />
       <module name="MediSupport.presentation.profile" target="17" />
       <module name="MediSupport.presentation.reminder" target="17" />
       <module name="MediSupport.presentation.room" target="17" />

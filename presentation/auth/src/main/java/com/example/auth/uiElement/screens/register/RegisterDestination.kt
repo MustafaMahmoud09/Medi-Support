@@ -5,9 +5,9 @@ package com.example.auth.uiElement.screens.register
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.sharedui.uiElement.containers.navigation.enterTransitionMain
-import com.example.sharedui.uiElement.containers.navigation.enterTransitionZero
-import com.example.sharedui.uiElement.containers.navigation.exitTransition
+import com.example.sharedui.uiElement.navigation.transitions.enterTransitionMain
+import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
+import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
 
 const val REGISTER_DESTINATION_ROUTE = "registerDestination"

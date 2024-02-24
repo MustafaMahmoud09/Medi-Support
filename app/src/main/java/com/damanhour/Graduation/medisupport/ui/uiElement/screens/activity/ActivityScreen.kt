@@ -13,12 +13,14 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bmi.uiElement.screens.activities.BMIActivityScreen
 import com.example.bloodsuger.uiElement.screens.activities.BloodSugarActivityScreen
 import com.example.heartrate.uiElement.screens.activities.HeartRateActivityScreen
@@ -27,6 +29,8 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.DropDownMenuPagerSection
+import com.damanhour.Graduation.medisupport.ui.uiState.state.ActivityUiState
+import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.ActivityViewModel
 import com.example.sharedui.uiElement.navigation.data.MenuData
 import com.example.sharedui.uiElement.navigation.transitions.scrollToPage
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -38,13 +42,17 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun ActivityScreen(
+    viewModel: ActivityViewModel = hiltViewModel(),
     popActivityNavGraph: () -> Unit,
-    navigateToHistoryDestination: () -> Unit,
+    navigateToHistoryDestination: (Int) -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit
 ) {
+    //get screen state from view model here
+    val state = viewModel.state.collectAsState()
+    val uiState = state.value
 
     val pagerState = rememberPagerState(initialPage = 0)
 
@@ -54,6 +62,8 @@ internal fun ActivityScreen(
         onClickBack = popActivityNavGraph,
         pagerState = pagerState,
         navigateToHistoryDestination = navigateToHistoryDestination,
+        uiState = uiState,
+        onDropMenusExpandedChanged = viewModel::onDropMenusExpandedChanged,
         healthCareMenusData = arrayOf(
             MenuData(
                 title = stringResource(
@@ -66,6 +76,8 @@ internal fun ActivityScreen(
                         page = 0
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(0)
                 }
             ),
             MenuData(
@@ -79,6 +91,8 @@ internal fun ActivityScreen(
                         page = 1
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(1)
                 }
             ),
             MenuData(
@@ -92,6 +106,8 @@ internal fun ActivityScreen(
                         page = 2
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(2)
                 }
             ),
             MenuData(
@@ -105,12 +121,14 @@ internal fun ActivityScreen(
                         page = 3
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(3)
                 }
             ),
         ),
         onClickOnAddRecordButton = {
 
-            when(pagerState.currentPage){
+            when (uiState.currentPage) {
 
                 //if current page equal 0 navigate to bmi nav graph
                 0 -> navigateToBmiNavGraph()
@@ -137,9 +155,11 @@ private fun ActivityContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     onClickBack: () -> Unit,
     pagerState: PagerState,
-    navigateToHistoryDestination: () -> Unit,
+    navigateToHistoryDestination: (Int) -> Unit,
     healthCareMenusData: Array<MenuData>,
-    onClickOnAddRecordButton: () -> Unit
+    onClickOnAddRecordButton: () -> Unit,
+    uiState: ActivityUiState,
+    onDropMenusExpandedChanged: () -> Unit
 ) {
 
     BaseScreen(
@@ -181,6 +201,9 @@ private fun ActivityContent(
                 dimen = dimen,
                 theme = theme,
                 menus = healthCareMenusData,
+                currentPage = uiState.currentPage,
+                menusExpanded = uiState.menusExpanded,
+                onDropMenusExpandedChanged = onDropMenusExpandedChanged,
                 modifier = Modifier
                     .constrainAs(dropDownMenuId) {
                         start.linkTo(guideFromStart25P)
@@ -241,7 +264,7 @@ private fun ActivityContent(
                         BMIActivityScreen(
                             theme = theme,
                             dimen = dimen,
-                            navigateToHistoryDestination = navigateToHistoryDestination
+                            navigateToHistoryDestination = { navigateToHistoryDestination(0) }
                         )
                     }
 
@@ -249,7 +272,7 @@ private fun ActivityContent(
                         BloodPressureActivityScreen(
                             theme = theme,
                             dimen = dimen,
-                            navigateToHistoryDestination = navigateToHistoryDestination
+                            navigateToHistoryDestination = { navigateToHistoryDestination(1) }
                         )
                     }
 
@@ -257,7 +280,7 @@ private fun ActivityContent(
                         BloodSugarActivityScreen(
                             theme = theme,
                             dimen = dimen,
-                            navigateToHistoryDestination = navigateToHistoryDestination
+                            navigateToHistoryDestination = { navigateToHistoryDestination(2) }
                         )
                     }
 
@@ -265,7 +288,7 @@ private fun ActivityContent(
                         HeartRateActivityScreen(
                             theme = theme,
                             dimen = dimen,
-                            navigateToHistoryDestination = navigateToHistoryDestination
+                            navigateToHistoryDestination = { navigateToHistoryDestination(3) }
                         )
                     }
                 }//end when

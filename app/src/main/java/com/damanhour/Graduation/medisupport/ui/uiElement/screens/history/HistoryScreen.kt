@@ -10,12 +10,14 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bmi.uiElement.screens.activities.BMIHistoryScreen
 import com.example.bloodsuger.uiElement.screens.activities.BloodSugarHistoryScreen
 import com.example.heartrate.uiElement.screens.activities.HeartRateHistoryScreen
@@ -24,6 +26,8 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.DropDownMenuPagerSection
+import com.damanhour.Graduation.medisupport.ui.uiState.state.HistoryUiState
+import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.HistoryViewModel
 import com.example.sharedui.uiElement.navigation.data.MenuData
 import com.example.sharedui.uiElement.navigation.transitions.scrollToPage
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -31,18 +35,26 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import kotlin.reflect.KFunction0
 
 @Composable
 internal fun HistoryScreen(
+    viewModel: HistoryViewModel = hiltViewModel(),
     popHistoryDestination: () -> Unit
 ) {
-    val pagerState = rememberPagerState(initialPage = 0)
+    //get screen state here
+    val state = viewModel.state.collectAsState()
+    val uiState = state.value
+
+    val pagerState = rememberPagerState(initialPage = uiState.currentPage)
 
     val coroutineScope = rememberCoroutineScope()
 
     HistoryContent(
         onClickBack = popHistoryDestination,
         pagerState = pagerState,
+        uiState = uiState,
+        onDropMenusExpandedChanged = viewModel::onDropMenusExpandedChanged,
         healthCareMenusData = arrayOf(
             MenuData(
                 title = stringResource(
@@ -55,6 +67,8 @@ internal fun HistoryScreen(
                         page = 0
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(0)
                 }
             ),
             MenuData(
@@ -68,6 +82,8 @@ internal fun HistoryScreen(
                         page = 1
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(1)
                 }
             ),
             MenuData(
@@ -81,6 +97,8 @@ internal fun HistoryScreen(
                         page = 2
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(2)
                 }
             ),
             MenuData(
@@ -94,6 +112,8 @@ internal fun HistoryScreen(
                         page = 3
                     )
 
+                    //change current page here
+                    viewModel.onCurrentHealthCarePageChanged(3)
                 }
             ),
         )
@@ -107,7 +127,9 @@ private fun HistoryContent(
     theme: CustomTheme = MediSupportAppTheme(),
     onClickBack: () -> Unit,
     pagerState: PagerState,
-    healthCareMenusData: Array<MenuData>
+    healthCareMenusData: Array<MenuData>,
+    uiState: HistoryUiState,
+    onDropMenusExpandedChanged: () -> Unit
 ) {
 
     BaseScreen(
@@ -169,6 +191,9 @@ private fun HistoryContent(
                 textSelectedSize = dimen.dimen_2,
                 textItemSize = dimen.dimen_1_75,
                 dropDownMenuWidth = dimen.dimen_19_5,
+                currentPage = uiState.currentPage,
+                menusExpanded = uiState.menusExpanded,
+                onDropMenusExpandedChanged = onDropMenusExpandedChanged,
                 modifier = Modifier
                     .constrainAs(dropDownMenuId) {
                         start.linkTo(
@@ -181,7 +206,7 @@ private fun HistoryContent(
                             dimen.dimen_4.dp
                         )
                         width = Dimension.fillToConstraints
-                    }
+                    },
             )
 
             HorizontalPager(

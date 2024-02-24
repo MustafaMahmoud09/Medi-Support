@@ -22,6 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.modifier.appBorder
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -40,6 +41,7 @@ internal fun PressureFieldSection(
     input: Int,
     inputSize: Float = dimen.dimen_1_75,
     inputColor: Color = theme.black,
+    onClickOnOperation: (Boolean) -> Unit,
     minusIcon: Painter = painterResource(
         id = com.example.sharedui.R.drawable.minus
     ),
@@ -145,6 +147,9 @@ internal fun PressureFieldSection(
                             width = operationWidth.dp,
                             height = operationHeight.dp
                         )
+                        .clickableWithoutHover {
+                            onClickOnOperation(false)
+                        }
                 )
 
                 //create padding here
@@ -158,13 +163,16 @@ internal fun PressureFieldSection(
                 //create plus button here
                 Icon(
                     painter = plusIcon,
-                    contentDescription = "minus button",
+                    contentDescription = "plus button",
                     tint = tint,
                     modifier = Modifier
                         .size(
                             width = operationWidth.dp,
                             height = operationHeight.dp
                         )
+                        .clickableWithoutHover {
+                            onClickOnOperation(true)
+                        }
                 )
 
             }//end Row

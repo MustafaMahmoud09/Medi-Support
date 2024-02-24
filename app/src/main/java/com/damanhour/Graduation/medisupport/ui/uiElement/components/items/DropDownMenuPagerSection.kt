@@ -1,9 +1,6 @@
 package com.damanhour.Graduation.medisupport.ui.uiElement.components.items
 
-
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -11,11 +8,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
@@ -27,10 +19,10 @@ import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.navigation.data.MenuData
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
-
 
 @Composable
 fun DropDownMenuPagerSection(
@@ -40,18 +32,13 @@ fun DropDownMenuPagerSection(
     textSelectedSize: Float = dimen.dimen_2_5,
     textItemSize: Float = dimen.dimen_1_75,
     dropDownMenuWidth: Float = dimen.dimen_15,
-    modifier: Modifier = Modifier
+    currentPage: Int,
+    menusExpanded: Boolean,
+    onDropMenusExpandedChanged: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     if (menus.isNotEmpty()) {
-
-        var expanded by rememberSaveable {
-            mutableStateOf(false)
-        }
-
-        var itemSelected by rememberSaveable {
-            mutableStateOf(0)
-        }
 
         ConstraintLayout(
             modifier = modifier
@@ -71,20 +58,15 @@ fun DropDownMenuPagerSection(
                         end.linkTo(parent.end)
                         top.linkTo(parent.top)
                     }
-                    .clickable(
-                        interactionSource = remember {
-                            MutableInteractionSource()
-                        },
-                        indication = null
-                    ) {
-                        expanded = !expanded
+                    .clickableWithoutHover {
+                        onDropMenusExpandedChanged()
                     }
             )
 
             TextBoldView(
                 theme = theme,
                 dimen = dimen,
-                text = menus[itemSelected].title,
+                text = menus[currentPage].title,
                 size = textSelectedSize,
                 modifier = Modifier
                     .constrainAs(textSelectedId) {
@@ -116,8 +98,8 @@ fun DropDownMenuPagerSection(
             ) {
 
                 DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
+                    expanded = menusExpanded,
+                    onDismissRequest = onDropMenusExpandedChanged,
                     offset = DpOffset((-1 * dropDownMenuWidth).dp, dimen.dimen_0.dp),
                     modifier = Modifier
                         .background(
@@ -130,27 +112,22 @@ fun DropDownMenuPagerSection(
                 ) {
 
 
-                    for (count in menus.indices) {
+                    menus.forEach { item ->
 
                         DropdownMenuItem(
                             text = {
                                 TextSemiBoldView(
                                     theme = theme,
                                     dimen = dimen,
-                                    text = menus[count].title,
+                                    text = item.title,
                                     size = textItemSize,
                                     fontColor = theme.black,
                                 )
                             },
-                            onClick = {
-
-                                menus[count].onClick()
-                                itemSelected = count
-
-                            }//end onClick
+                            onClick = item.onClick
                         )
 
-                    }//end for
+                    }//end forEach
 
                 }//end DropdownMenu
 

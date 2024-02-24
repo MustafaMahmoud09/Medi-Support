@@ -6,17 +6,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bloodsuger.uiElement.components.items.LazySliderSection
 import com.example.bloodsuger.uiElement.components.items.StatusSection
+import com.example.bloodsuger.uiState.state.RecordBloodSugarUiState
+import com.example.bloodsuger.uiState.viewModel.RecordBloodSugarViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.HeaderSection
@@ -28,21 +29,22 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import kotlin.reflect.KFunction1
 
 @Composable
 internal fun RecordBloodSugarScreen(
+    viewModel: RecordBloodSugarViewModel = hiltViewModel(),
     navigateToStatisticsBloodSugarDestination: () -> Unit,
     popRecordBloodSugarDestination: () -> Unit
 ) {
-
-    val numberSelected = rememberSaveable {
-        mutableStateOf(0f)
-    }
+    //get screen state from view model here
+    val state = viewModel.state.collectAsState()
 
     RecordBloodSugarContent(
         onClickOnBackButton = popRecordBloodSugarDestination,
         onClickOnAddRecordButton = navigateToStatisticsBloodSugarDestination,
-        numberSelected = numberSelected,
+        uiState = state.value,
+        onSugarLevelChanged = viewModel::onSugarLevelChanged,
     )
 }//end RecordBloodSugarScreen
 
@@ -52,7 +54,8 @@ private fun RecordBloodSugarContent(
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
     onClickOnAddRecordButton: () -> Unit,
-    numberSelected: MutableState<Float>,
+    uiState: RecordBloodSugarUiState,
+    onSugarLevelChanged: (Float) -> Unit,
 ) {
 
     //create base screen for define status and navigation bar color here
@@ -226,8 +229,8 @@ private fun RecordBloodSugarContent(
                             unit = stringResource(
                                 id = com.example.sharedui.R.string.mg_gl
                             ),
-                            value = numberSelected.value,
-                            onValueChanged = { newValue -> numberSelected.value = newValue },
+                            value = uiState.sugarLevel,
+                            onValueChanged = onSugarLevelChanged,
                             startPoint = 10,
                             endPoint = 400,
                             modifier = Modifier

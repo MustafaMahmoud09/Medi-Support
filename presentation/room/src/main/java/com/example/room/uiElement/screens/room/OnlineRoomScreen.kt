@@ -140,11 +140,13 @@ private fun OnlineRoomContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        bottom = dimen.dimen_10.dp
+                        bottom = dimen.dimen_8_25.dp
                     )
             ){
+                //create ids for screen components here
 
-            }
+
+            }//end ConstraintLayout
 
         }//end Scaffold
 

@@ -9,14 +9,18 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bloodpressure.uiElement.components.items.PressureFieldSection
 import com.example.bloodpressure.uiElement.components.items.TypeStateSection
+import com.example.bloodpressure.uiState.state.RecordBloodPressureUiState
+import com.example.bloodpressure.uiState.viewModel.RecordBloodPressureViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
@@ -35,11 +39,17 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun RecordBloodPressureScreen(
+    viewModel: RecordBloodPressureViewModel = hiltViewModel(),
     popRecordBloodPressureDestination: () -> Unit,
     navigateToStatisticsBloodPressureDestination: () -> Unit
 ) {
+    //get screen state here
+    val state = viewModel.state.collectAsState()
 
     RecordBloodPressureContent(
+        uiState = state.value,
+        onDiastolicBloodPressureChanged = viewModel::onDiastolicBloodPressureChanged,
+        onSystolicBloodPressureChanged = viewModel::onSystolicBloodPressureChanged,
         onClickOnBackButton = popRecordBloodPressureDestination,
         onClickOnAddRecordButton = navigateToStatisticsBloodPressureDestination
     )
@@ -50,7 +60,10 @@ private fun RecordBloodPressureContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
-    onClickOnAddRecordButton: () -> Unit
+    onClickOnAddRecordButton: () -> Unit,
+    uiState: RecordBloodPressureUiState,
+    onDiastolicBloodPressureChanged: (Boolean) -> Unit,
+    onSystolicBloodPressureChanged: (Boolean) -> Unit
 ) {
 
     //create base screen for define status bar color and navigation bar color
@@ -127,7 +140,8 @@ private fun RecordBloodPressureContent(
                     ) {
                         //create ids for screen components here
                         val (dateId, averageId, typeStateId, daysId, lineId,
-                            inputDataTextId, systolicFieldId, diastolicFieldId, addRecordButtonId) = createRefs()
+                            inputDataTextId, systolicFieldId, diastolicFieldId, addRecordButtonId
+                        ) = createRefs()
                         //create guides here
                         val guideFromEnd35P = createGuidelineFromEnd(0.35f)
                         val guideFromEnd19P = createGuidelineFromEnd(0.19F)
@@ -293,7 +307,8 @@ private fun RecordBloodPressureContent(
                             hint = stringResource(
                                 id = R.string.systolic_blood_pressure
                             ),
-                            input = 100,
+                            input = uiState.systolicBloodPressure,
+                            onClickOnOperation = onSystolicBloodPressureChanged,
                             modifier = Modifier
                                 .constrainAs(systolicFieldId) {
                                     start.linkTo(
@@ -316,7 +331,8 @@ private fun RecordBloodPressureContent(
                             hint = stringResource(
                                 id = R.string.diastolic_blood_pressure
                             ),
-                            input = 80,
+                            input = uiState.diastolicBloodSugar,
+                            onClickOnOperation = onDiastolicBloodPressureChanged,
                             modifier = Modifier
                                 .constrainAs(diastolicFieldId) {
                                     start.linkTo(systolicFieldId.start)

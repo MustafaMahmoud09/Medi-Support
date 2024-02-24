@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
+      <module name="AndroidStudioProjects.MediSupport.presentation.blood_pressure" target="17" />
       <module name="AndroidStudioProjects.MediSupport.presentation.bmi" target="17" />
       <module name="MediSupport.app" target="17" />
       <module name="MediSupport.core.local" target="17" />
@@ -16,12 +17,12 @@
       <module name="MediSupport.presentation.activity" target="17" />
       <module name="MediSupport.presentation.article" target="17" />
       <module name="MediSupport.presentation.auth" target="17" />
-      <module name="MediSupport.presentation.bloodPressure" target="17" />
-      <module name="MediSupport.presentation.bloodSugar" target="17" />
+      <module name="MediSupport.presentation.blood_pressure" target="17" />
+      <module name="MediSupport.presentation.blood_sugar" target="17" />
       <module name="MediSupport.presentation.bmi" target="17" />
       <module name="MediSupport.presentation.chat" target="17" />
       <module name="MediSupport.presentation.contactUs" target="17" />
-      <module name="MediSupport.presentation.heartPrediction" target="17" />
+      <module name="MediSupport.presentation.heart_prediction" target="17" />
       <module name="MediSupport.presentation.heartRate" target="17" />
       <module name="MediSupport.presentation.offline_booking" target="17" />
       <module name="MediSupport.presentation.online_booking" target="17" />

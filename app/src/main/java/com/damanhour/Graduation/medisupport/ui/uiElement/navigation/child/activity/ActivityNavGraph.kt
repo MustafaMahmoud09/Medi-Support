@@ -44,7 +44,7 @@ internal fun NavHostController.popActivityNavGraph() {
 internal fun NavGraphBuilder.activityNavGraph(
     popActivityNavGraph: () -> Unit,
     popHistoryDestination: () -> Unit,
-    navigateToHistoryDestination: () -> Unit,
+    navigateToHistoryDestination: (Int) -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,

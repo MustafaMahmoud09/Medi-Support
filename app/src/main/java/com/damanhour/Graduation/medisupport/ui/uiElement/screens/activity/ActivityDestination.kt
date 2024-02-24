@@ -15,7 +15,7 @@ const val ACTIVITY_DESTINATION_ROUTE = "activityDestination"
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.activityDestination(
     popActivityNavGraph: () -> Unit,
-    navigateToHistoryDestination: () -> Unit,
+    navigateToHistoryDestination: (Int) -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,

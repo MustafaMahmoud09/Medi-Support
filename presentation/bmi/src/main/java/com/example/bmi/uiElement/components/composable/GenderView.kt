@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.sharedui.uiElement.animation.animateColorAsState
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
@@ -37,13 +39,41 @@ internal fun GenderView(
     selectedBackground: Color = theme.background,
     unselectedBackground: Color = theme.transparent,
     borderWidth: Float = dimen.dimen_0_125,
-    numberItem: Int,
-    itemSelected: Int,
+    typeItem: Boolean,
+    typeSelected: Boolean,
     iconSize: Float = dimen.dimen_3,
     iconColor: Color = theme.redDark,
     modifier: Modifier = Modifier,
-    onClickOnItem: () -> Unit
+    onClickOnItem: (Boolean) -> Unit
 ) {
+
+    //create animated border color here
+    val borderColor by animateColorAsState(
+        targetColor = if (typeItem == typeSelected) {
+            borderSelectedColor
+        } else {
+            borderUnselectedColor
+        }, label = "border color"
+    )
+
+    //create animated background color here
+    val backgroundColor by animateColorAsState(
+        targetColor = if (typeItem == typeSelected) {
+            selectedBackground
+        } else {
+            unselectedBackground
+        }, label = "background color"
+    )
+
+    //create animated type text color here
+    val typeTextColor by animateColorAsState(
+        targetColor = if (typeSelected == typeItem) {
+            selectedTypeTextColor
+        } else {
+            unselectedTypeTextColor
+        },
+        label = "type text color",
+    )
 
     //create container here
     ConstraintLayout(
@@ -55,13 +85,13 @@ internal fun GenderView(
             .appBorder(
                 shape = shape,
                 borderWidth = borderWidth,
-                borderColor = if (numberItem == itemSelected) borderSelectedColor else borderUnselectedColor,
+                borderColor = borderColor,
             )
             .background(
-                color = if (numberItem == itemSelected) selectedBackground else unselectedBackground
+                color = backgroundColor
             )
             .clickableWithoutHover {
-                onClickOnItem()
+                onClickOnItem(typeItem)
             }
     ) {
         //create ids for components screen here
@@ -96,7 +126,7 @@ internal fun GenderView(
             text = type,
             size = typeSize,
             textAlign = null,
-            fontColor = if (itemSelected == numberItem) selectedTypeTextColor else unselectedTypeTextColor,
+            fontColor = typeTextColor,
             modifier = Modifier
                 .constrainAs(typeId) {
                     start.linkTo(

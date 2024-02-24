@@ -30,12 +30,12 @@
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/presentation/article" />
             <option value="$PROJECT_DIR$/presentation/auth" />
-            <option value="$PROJECT_DIR$/presentation/bloodPressure" />
-            <option value="$PROJECT_DIR$/presentation/bloodSugar" />
+            <option value="$PROJECT_DIR$/presentation/blood_pressure" />
+            <option value="$PROJECT_DIR$/presentation/blood_sugar" />
             <option value="$PROJECT_DIR$/presentation/bmi" />
             <option value="$PROJECT_DIR$/presentation/chat" />
-            <option value="$PROJECT_DIR$/presentation/heartPrediction" />
             <option value="$PROJECT_DIR$/presentation/heartRate" />
+            <option value="$PROJECT_DIR$/presentation/heart_prediction" />
             <option value="$PROJECT_DIR$/presentation/offline_booking" />
             <option value="$PROJECT_DIR$/presentation/online_booking" />
             <option value="$PROJECT_DIR$/presentation/profile" />

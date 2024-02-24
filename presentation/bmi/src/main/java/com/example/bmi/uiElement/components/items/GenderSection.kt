@@ -25,14 +25,14 @@ internal fun GenderSection(
     shape: Shape = RoundedCornerShape(
         size = dimen.dimen_1_25.dp
     ),
+    firstTypeNumber: Boolean = true,
+    secondTypeNumber: Boolean = false,
+    typeSelected: Boolean,
+    onClickOnType: (Boolean) -> Unit,
     firstType: String,
-    firstTypeNumber: Int = 0,
     secondType: String,
-    secondTypeNumber: Int = 1,
     borderWidth: Float = dimen.dimen_0_125,
     borderColor: Color = theme.redDark,
-    itemSelected: Int,
-    onClickOnItem: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -85,9 +85,9 @@ internal fun GenderSection(
                 dimen = dimen,
                 theme = theme,
                 type = firstType,
-                numberItem = firstTypeNumber,
-                itemSelected = itemSelected,
-                onClickOnItem = onClickOnItem,
+                typeItem = firstTypeNumber,
+                typeSelected = typeSelected,
+                onClickOnItem = onClickOnType,
             )
 
             //create second gender here
@@ -95,9 +95,9 @@ internal fun GenderSection(
                 dimen = dimen,
                 theme = theme,
                 type = secondType,
-                numberItem = secondTypeNumber,
-                itemSelected = itemSelected,
-                onClickOnItem = onClickOnItem
+                typeItem = secondTypeNumber,
+                typeSelected = typeSelected,
+                onClickOnItem = onClickOnType
             )
 
         }//end Row

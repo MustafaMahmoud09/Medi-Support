@@ -8,13 +8,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bmi.uiElement.components.items.GenderSection
 import com.example.bmi.uiElement.components.items.BMISliderSection
+import com.example.bmi.uiState.state.RecordBMIUiState
+import com.example.bmi.uiState.viewModel.RecordBMIViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.items.HeaderSection
@@ -26,13 +30,21 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun RecordBMIScreen(
+    viewModel: RecordBMIViewModel = hiltViewModel(),
     popRecordBMIDestination: () -> Unit,
     navigateToDeterminationBMIDestination: () -> Unit
 ) {
+    //get screen state here
+    val state = viewModel.state.collectAsState()
 
     RecordBMIContent(
         onClickOnBackButton = popRecordBMIDestination,
-        onClickOnButtonCalculate = navigateToDeterminationBMIDestination
+        onClickOnButtonCalculate = navigateToDeterminationBMIDestination,
+        onWeightChanged = viewModel::onWeightChanged,
+        onAgeChanged = viewModel::onAgeChanged,
+        onHeightChanged = viewModel::onHeightChanged,
+        onGenderChanged = viewModel::onGenderChanged,
+        uiSate = state.value
     )
 }//end RecordBMIScreen
 
@@ -41,7 +53,12 @@ private fun RecordBMIContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
     onClickOnBackButton: () -> Unit,
-    onClickOnButtonCalculate: () -> Unit
+    onClickOnButtonCalculate: () -> Unit,
+    uiSate: RecordBMIUiState,
+    onWeightChanged: (Float) -> Unit,
+    onAgeChanged: (Float) -> Unit,
+    onHeightChanged: (Float) -> Unit,
+    onGenderChanged: (Boolean) -> Unit
 ) {
 
     //create base screen here to set status bar color and navigation bar color
@@ -134,8 +151,8 @@ private fun RecordBMIContent(
                             secondType = stringResource(
                                 id = R.string.male
                             ),
-                            itemSelected = 0,
-                            onClickOnItem = {},
+                            typeSelected = uiSate.gender,
+                            onClickOnType = onGenderChanged,
                             modifier = Modifier
                                 .constrainAs(genderSectionId) {
                                     start.linkTo(
@@ -158,8 +175,8 @@ private fun RecordBMIContent(
                             title = stringResource(
                                 id = R.string.age
                             ),
-                            value = 13f,
-                            onValueChange = {},
+                            value = uiSate.age,
+                            onValueChange = onAgeChanged,
                             unit = stringResource(
                                 id = R.string.years
                             ),
@@ -190,8 +207,8 @@ private fun RecordBMIContent(
                             title = stringResource(
                                 id = R.string.height
                             ),
-                            value = 65f,
-                            onValueChange = {},
+                            value = uiSate.height,
+                            onValueChange = onHeightChanged,
                             unit = stringResource(
                                 id = R.string.cm
                             ),
@@ -222,8 +239,8 @@ private fun RecordBMIContent(
                             title = stringResource(
                                 id = R.string.weight
                             ),
-                            value = 130f,
-                            onValueChange = {},
+                            value = uiSate.weight,
+                            onValueChange = onWeightChanged,
                             unit = stringResource(
                                 id = R.string.kg
                             ),

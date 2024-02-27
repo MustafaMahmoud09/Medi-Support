@@ -1,3 +1,5 @@
 package com.example.online_booking.uiState.state
 
-//data class OnlineBookingUiState()
+internal data class OnlineBookingUiState(
+    val bookingSuccessfullyDialogIsVisible: Boolean = false
+)

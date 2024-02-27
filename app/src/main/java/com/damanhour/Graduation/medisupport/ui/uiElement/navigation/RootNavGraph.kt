@@ -61,7 +61,8 @@ import com.example.bmi.uiElement.screens.determination.navigateToDeterminationBM
 import com.example.bmi.uiElement.screens.determination.popDeterminationBMIDestination
 import com.example.bmi.uiElement.screens.record.navigateToRecordBMIDestination
 import com.example.bmi.uiElement.screens.record.popRecordBMIDestination
-import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details.navigateToBookingDetailsDestination
+import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details.navigateToBookingDetailsDestinationWithPopOfflineBookingDestination
+import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details.navigateToBookingDetailsDestinationWithPopOnlineBookingDestination
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details.popBookingDetailsDestination
 import com.example.booking.uiElement.screens.booking.navigateToOfflineBookingDestination
 import com.example.booking.uiElement.screens.booking.popOfflineBookingDestination
@@ -135,7 +136,7 @@ fun RootNavGraph(
                     navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraph,
                     navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraph,
                     navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraph,
-                    navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
+                    navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestinationWithPopOfflineBookingDestination,
                     navigateToOnlineBookingNavGraph = navHostController::navigateToOnlineBookingDestination,
                     navigateToOfflineBookingDestination = navHostController::navigateToOfflineBookingDestination,
                 )
@@ -153,7 +154,7 @@ fun RootNavGraph(
                 examinationNavGraph(
                     popOfflineBookingNavGraph = navHostController::popOfflineBookingDestination,
                     popOnlineBookingNavGraph = navHostController::popOnlineBookingDestination,
-                    navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestination,
+                    navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestinationWithPopOfflineBookingDestination,
                     popBookingDetailsDestination = navHostController::popBookingDetailsDestination,
                     navigateToChatNavGraph = navHostController::navigateToChatNavGraph,
                     popChatNavGraph = navHostController::popChatNavGraph,
@@ -161,6 +162,7 @@ fun RootNavGraph(
                     popChatDestination = navHostController::popChatDestination,
                     navigateToOnlineRoomNavGraph = navHostController::navigateToOnlineRoomNavGraph,
                     popOnlineRoomGraph = navHostController::popOnlineRoomGraph,
+                    navigateToBookingDetailsDestinationWithPopOnlineBookingDestination = navHostController::navigateToBookingDetailsDestinationWithPopOnlineBookingDestination,
                     navigateToOnlineRoomDestination = {
 
                         //execute navigate to online room and pop payment here

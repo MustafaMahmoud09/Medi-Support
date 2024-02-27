@@ -107,4 +107,16 @@
     <string name="one_time_password_otp">One Time Password (OTP)</string>
     <string name="resend_otp_again">Resend OTP Again</string>
     <string name="pay_with_wallet">Pay With Wallet</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="repeat">Repeat</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="booking_successful">Booking Successful</string>
+    <string name="your_appointment_booking_completed">Your appointment booking completed.</string>
+    <string name="will_message_you_soon">will message you soon.</string>
+    <string name="online_message_during_first_step_in_booking">when the doctor approves your reservation , you will be booked to make the video call</string>
+    <string name="you_will_now_make_video_call_with_doctor">you will now make video call with doctor</string>
+    <string name="payment_successful">Payment Successful</string>
+    <string name="start_now">Start Now</string>
 </resources>

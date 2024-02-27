@@ -1,7 +1,7 @@
 package com.example.bmi.uiState.viewModel
 
 import com.example.bmi.uiState.state.RecordBMIUiState
-import com.example.sharedui.uiState.BaseViewModel
+import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

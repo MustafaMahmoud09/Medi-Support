@@ -2,6 +2,8 @@
 
 package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -42,6 +44,7 @@ internal fun NavHostController.popHomeNavGraph() {
 
 //function for create home nav graph
 //and add destination to it and define start destination to it
+@RequiresApi(Build.VERSION_CODES.O)
 internal fun NavGraphBuilder.homeNavGraph(
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,

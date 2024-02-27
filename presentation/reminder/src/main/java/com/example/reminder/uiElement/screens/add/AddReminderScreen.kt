@@ -1,5 +1,7 @@
 package com.example.reminder.uiElement.screens.add
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,12 +9,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.reminder.uiElement.components.items.DatePickerSection
+import com.example.reminder.uiState.state.AddReminderUiState
+import com.example.reminder.uiState.viewModel.AddReminderViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
@@ -22,25 +30,72 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.example.sharedui.uiState.viewModel.child.BottomNavigationViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun AddReminderScreen(
+    bottomNavigationViewModel: BottomNavigationViewModel = hiltViewModel(),
+    addReminderViewModel: AddReminderViewModel = hiltViewModel(),
     popAddReminderDestination: () -> Unit,
     navigateToReminderRecordsDestination: () -> Unit
 ) {
+    //collect screen state here
+    val state = addReminderViewModel.state.collectAsState()
 
     AddReminderContent(
-        onClickOnBack = popAddReminderDestination,
+        uiState = state.value,
+        onCancel = {
+            //change bottom navigation visibility here
+            bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
+                show = true
+            )
+
+             addReminderViewModel.onDatePickerVisibilityChanged(
+                 show = false
+             )
+        },
+        onMedicamentNameChanged = addReminderViewModel::onMedicamentNameChanged,
+        onClickOnBack = {
+
+            //change bottom navigation visibility here
+            bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
+                show = true
+            )
+
+            //pop reminder destination here
+            popAddReminderDestination()
+        },
+        onClickOnTimeSelectorButton = {
+
+            //change bottom navigation visibility here
+            bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
+                show = false
+            )
+
+            //change date picker visibility here
+            addReminderViewModel.onDatePickerVisibilityChanged(
+                show = true
+            )
+
+        },
         onClickOnReminderButton = navigateToReminderRecordsDestination
     )
+
 }//end AddReminderScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun AddReminderContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBack: () -> Unit,
-    onClickOnReminderButton: () -> Unit
+    onClickOnReminderButton: () -> Unit,
+    screenWidth: Int = LocalConfiguration.current.screenWidthDp,
+    onClickOnTimeSelectorButton: () -> Unit,
+    uiState: AddReminderUiState,
+    onMedicamentNameChanged: (String) -> Unit,
+    onCancel: () -> Unit
 ) {
 
     //create container here
@@ -117,8 +172,6 @@ private fun AddReminderContent(
                     height = Dimension.fillToConstraints
                 },
             contentPadding = PaddingValues(
-                start = dimen.dimen_2.dp,
-                end = dimen.dimen_2.dp,
                 top = dimen.dimen_3.dp,
                 bottom = dimen.dimen_2.dp
             ),
@@ -138,7 +191,8 @@ private fun AddReminderContent(
                         .fillMaxWidth()
                 ) {
                     //create ids for components here
-                    val (medicineNameFieldId, dayFieldId, timeFieldId, addAlarmButtonId) = createRefs()
+                    val (medicineNameFieldId, dayFieldId,
+                        timeFieldId, addAlarmButtonId, datePickerId) = createRefs()
 
                     //create guides here
                     val guideFromStart50P = createGuidelineFromStart(.50f)
@@ -153,12 +207,18 @@ private fun AddReminderContent(
                         hint = stringResource(
                             R.string.your_medicament_name
                         ),
-                        value = "",
-                        onChange = {},
+                        value = uiState.medicamentName,
+                        onChange = onMedicamentNameChanged,
                         modifier = Modifier
                             .constrainAs(medicineNameFieldId) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
+                                start.linkTo(
+                                    parent.start,
+                                    dimen.dimen_2.dp
+                                )
+                                end.linkTo(
+                                    parent.end,
+                                    dimen.dimen_2.dp
+                                )
                                 top.linkTo(parent.top)
                                 width = Dimension.fillToConstraints
                             }
@@ -177,11 +237,14 @@ private fun AddReminderContent(
                         value = "",
                         onChange = {},
                         enable = false,
-                        onClick = {},
+                        onClick = onClickOnTimeSelectorButton,
                         fontSize = dimen.dimen_2_5,
                         modifier = Modifier
                             .constrainAs(dayFieldId) {
-                                start.linkTo(parent.start)
+                                start.linkTo(
+                                    parent.start,
+                                    dimen.dimen_2.dp
+                                )
                                 end.linkTo(
                                     guideFromStart50P,
                                     dimen.dimen_0_75.dp
@@ -207,11 +270,14 @@ private fun AddReminderContent(
                         value = "",
                         onChange = {},
                         enable = false,
-                        onClick = {},
+                        onClick = onClickOnTimeSelectorButton,
                         fontSize = dimen.dimen_2_5,
                         modifier = Modifier
                             .constrainAs(timeFieldId) {
-                                end.linkTo(parent.end)
+                                end.linkTo(
+                                    parent.end,
+                                    dimen.dimen_2.dp
+                                )
                                 start.linkTo(
                                     guideFromStart50P,
                                     dimen.dimen_0_75.dp
@@ -231,8 +297,14 @@ private fun AddReminderContent(
                         onClick = { /*TODO*/ },
                         modifier = Modifier
                             .constrainAs(addAlarmButtonId) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
+                                start.linkTo(
+                                    parent.start,
+                                    dimen.dimen_2.dp
+                                )
+                                end.linkTo(
+                                    parent.end,
+                                    dimen.dimen_2.dp
+                                )
                                 top.linkTo(
                                     timeFieldId.bottom,
                                     dimen.dimen_3.dp
@@ -240,6 +312,30 @@ private fun AddReminderContent(
                                 width = Dimension.fillToConstraints
                             }
                     )
+
+                    //check date picker is visible or no
+                    if (uiState.isDatePickerVisible) {
+
+                        //create date picker here
+                        DatePickerSection(
+                            dimen = dimen,
+                            theme = theme,
+                            containerWidth = screenWidth,
+                            onClickOnSaveButton = onCancel,
+                            onClickOnCancelButton = onCancel,
+                            modifier = Modifier
+                                .constrainAs(datePickerId) {
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    bottom.linkTo(parent.bottom)
+                                    top.linkTo(
+                                        addAlarmButtonId.bottom,
+                                        dimen.dimen_7.dp
+                                    )
+                                }
+                        )
+
+                    }//end if
 
                 }//end ConstraintLayout
 

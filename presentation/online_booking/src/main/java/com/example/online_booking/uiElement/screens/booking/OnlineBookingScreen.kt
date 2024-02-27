@@ -1,5 +1,9 @@
 package com.example.online_booking.uiElement.screens.booking
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,12 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.online_booking.uiState.state.OnlineBookingUiState
 import com.example.sharedui.uiElement.components.items.BookedDoctorInformationSection
 import com.example.online_booking.uiState.viewModel.OnlineBookingViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.LoadImageView
+import com.example.sharedui.uiElement.components.items.DialogMessage
+import com.example.sharedui.uiElement.components.items.MessagesDialogSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -31,7 +38,7 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
-fun OnlineBookingScreen(
+internal fun OnlineBookingScreen(
     viewModel: OnlineBookingViewModel = hiltViewModel(),
     popBookingNavGraph: () -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit
@@ -42,7 +49,8 @@ fun OnlineBookingScreen(
     OnlineBookingContent(
         onClickOnBackButton = popBookingNavGraph,
         uiState = state.value,
-        onClickOnBookingButton = navigateToBookingDetailsDestination
+        onClickOnBookingButton = viewModel::onShowBookingSuccessfullyDialog,
+        onClickOnDoneButton = navigateToBookingDetailsDestination
     )
 
 }//end OnlineBookingScreen
@@ -52,8 +60,9 @@ private fun OnlineBookingContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
-    uiState: Int,
-    onClickOnBookingButton: (Int) -> Unit
+    uiState: OnlineBookingUiState,
+    onClickOnBookingButton: () -> Unit,
+    onClickOnDoneButton: (Int) -> Unit
 ) {
 
     //create base screen for define navigation and status bar color
@@ -72,11 +81,75 @@ private fun OnlineBookingContent(
                 )
         ) {
             //create ids for screen components here
-            val (doctorProfileId, infoDoctorId, bookAppointmentId, backButtonId) = createRefs()
+            val (
+                doctorProfileId, successDialogId,
+                infoDoctorId, bookAppointmentId, backButtonId
+            ) = createRefs()
 
             //create guides here
             val guideLineFromTop58P = createGuidelineFromTop(0.5725f)
             val guideLineFromTop60P = createGuidelineFromTop(0.6075f)
+
+            AnimatedVisibility(
+                visible = uiState.bookingSuccessfullyDialogIsVisible,
+                enter = fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 150
+                    )
+                ),
+                exit = fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 150
+                    )
+                )
+            ) {
+
+                //create booking successfully dialog here
+                MessagesDialogSection(
+                    dimen = dimen,
+                    theme = theme,
+                    logo = painterResource(
+                        id = R.drawable.success
+                    ),
+                    logoTint = theme.greenLight,
+                    title = stringResource(
+                        id = R.string.booking_successful
+                    ),
+                    buttonTitle = stringResource(
+                        id = R.string.done
+                    ),
+                    titlePaddingTop = dimen.dimen_2_5,
+                    logoPaddingTop = dimen.dimen_6,
+                    messagesPaddingTop = dimen.dimen_2_5,
+                    buttonPaddingTop = dimen.dimen_2_5,
+                    buttonTitleSize = dimen.dimen_2_25,
+                    buttonTitleColor = theme.background,
+                    buttonBackground = theme.redDark,
+                    onClickOnButton = { onClickOnDoneButton(0) },
+                    messages = arrayOf(
+                        DialogMessage(
+                            message = stringResource(
+                                id = R.string.online_message_during_first_step_in_booking
+                            ),
+                            color = theme.hintIconBottom,
+                            size = (dimen.dimen_1_75 + dimen.dimen_0_125),
+                            paddingTop = dimen.dimen_0,
+                            paddingHorizontal = dimen.dimen_3_25,
+                        )
+                    ),
+                    horizontalMargin = dimen.dimen_1_5,
+                    paddingBottom = dimen.dimen_6,
+                    modifier = Modifier
+                        .constrainAs(successDialogId) {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            width = Dimension.fillToConstraints
+                        }
+                )
+
+            }//end AnimatedVisibility
 
             //create doctor profile here
             LoadImageView(
@@ -119,7 +192,7 @@ private fun OnlineBookingContent(
                 text = stringResource(
                     id = R.string.book_appointment
                 ),
-                onClick = { onClickOnBookingButton(0) },
+                onClick = onClickOnBookingButton,
                 modifier = Modifier
                     .constrainAs(bookAppointmentId) {
                         start.linkTo(

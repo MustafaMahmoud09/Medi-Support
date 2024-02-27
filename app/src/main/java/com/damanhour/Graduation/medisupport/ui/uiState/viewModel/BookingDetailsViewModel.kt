@@ -3,7 +3,7 @@ package com.damanhour.Graduation.medisupport.ui.uiState.viewModel
 import androidx.lifecycle.SavedStateHandle
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details.BookingDetailsArgs
 import com.damanhour.Graduation.medisupport.ui.uiState.state.BookingDetailsUiState
-import com.example.sharedui.uiState.BaseViewModel
+import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

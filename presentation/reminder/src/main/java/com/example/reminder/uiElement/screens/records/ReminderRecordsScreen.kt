@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.reminder.uiElement.components.items.ReminderSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
@@ -21,6 +23,8 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.example.sharedui.uiState.state.BottomNavigationUiState
+import com.example.sharedui.uiState.viewModel.child.BottomNavigationViewModel
 
 @Composable
 internal fun ReminderRecordsScreen(
@@ -28,7 +32,7 @@ internal fun ReminderRecordsScreen(
 ) {
 
     ReminderRecordsContent(
-        onClickBack = popReminderRecordsDestination
+        onClickBack = popReminderRecordsDestination,
     )
 }//end ReminderRecordsScreen
 

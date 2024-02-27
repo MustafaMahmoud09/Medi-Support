@@ -3,6 +3,8 @@
 package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,8 +17,10 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.BottomNavGraph
@@ -44,11 +48,15 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.example.sharedui.uiState.state.BottomNavigationUiState
+import com.example.sharedui.uiState.viewModel.child.BottomNavigationViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import kotlin.reflect.KFunction0
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun BottomScreen(
+    viewModel: BottomNavigationViewModel = hiltViewModel(),
     navHostController: NavHostController = rememberAnimatedNavController(),
     navigateToActivityDestination: () -> Unit,
     navigateToHeartPredictionNavGraph: () -> Unit,
@@ -60,6 +68,8 @@ internal fun BottomScreen(
     navigateToBookingDetailsDestination: (Int) -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit
 ) {
+    //get screen state here
+    val state = viewModel.state.collectAsState()
 
     val items = listOf(
         HOME_VAV_GRAPH_DATA,
@@ -71,6 +81,7 @@ internal fun BottomScreen(
 
     BottomContent(
         navHostController = navHostController,
+        uiState = state.value,
         items = items,
         navigateToActivityDestination = navigateToActivityDestination,
         popProfileDestination = navHostController::popProfileDestination,
@@ -93,10 +104,12 @@ internal fun BottomScreen(
         navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
         navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
         navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
-        navigateToOfflineBookingDestination = navigateToOfflineBookingDestination
+        navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
     )
+
 }//end BottomScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun BottomContent(
@@ -125,7 +138,8 @@ private fun BottomContent(
     navigateToHeartRateNavGraph: KFunction0<Unit>,
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToOfflineBookingDestination: (Int) -> Unit
+    navigateToOfflineBookingDestination: (Int) -> Unit,
+    uiState: BottomNavigationUiState
 ) {
 
     BaseScreen(
@@ -142,31 +156,36 @@ private fun BottomContent(
                 .fillMaxSize(),
             bottomBar = {
 
-                BottomAppBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(
-                            dimen.dimen_8_5.dp
-                        )
-                        .background(
-                            color = theme.background
+                //bottom navigation have visibility or no
+                if (uiState.isVisible) {
+
+                    BottomAppBar(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(
+                                dimen.dimen_8_5.dp
+                            )
+                            .background(
+                                color = theme.background
+                            ),
+                        contentPadding = PaddingValues(
+                            dimen.dimen_0.dp
                         ),
-                    contentPadding = PaddingValues(
-                        dimen.dimen_0.dp
-                    ),
-                    backgroundColor = theme.background,
-                ) {
+                        backgroundColor = theme.background,
+                    ) {
 
-                    BottomNavigationSection(
-                        navController = navHostController,
-                        routeNull = ACTIVITY_NAV_GRAPH_DATA.route,
-                        ifRouteNull = navigateToActivityDestination,
-                        items = items,
-                        dimen = dimen,
-                        theme = theme
-                    )
+                        BottomNavigationSection(
+                            navController = navHostController,
+                            routeNull = ACTIVITY_NAV_GRAPH_DATA.route,
+                            ifRouteNull = navigateToActivityDestination,
+                            items = items,
+                            dimen = dimen,
+                            theme = theme
+                        )
 
-                }//end BottomAppBar
+                    }//end BottomAppBar
+
+                }//end if
 
             }//end bottomBar
 
@@ -179,7 +198,11 @@ private fun BottomContent(
                         color = theme.background
                     )
                     .padding(
-                        bottom = dimen.dimen_8_5.dp
+                        bottom = if (uiState.isVisible) {
+                            dimen.dimen_8_5.dp
+                        } else {
+                            dimen.dimen_0.dp
+                        }
                     )
             ) {
 

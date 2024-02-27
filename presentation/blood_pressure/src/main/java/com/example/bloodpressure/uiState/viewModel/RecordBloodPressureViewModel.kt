@@ -1,7 +1,7 @@
 package com.example.bloodpressure.uiState.viewModel
 
 import com.example.bloodpressure.uiState.state.RecordBloodPressureUiState
-import com.example.sharedui.uiState.BaseViewModel
+import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

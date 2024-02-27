@@ -21,6 +21,6 @@ fun Modifier.appBorder(
         .border(
             width = borderWidth.dp,
             color = borderColor,
-            shape = shape
+            shape = shape,
         )
 )

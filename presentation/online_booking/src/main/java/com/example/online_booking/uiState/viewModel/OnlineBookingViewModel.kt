@@ -1,30 +1,39 @@
 package com.example.online_booking.uiState.viewModel
 
 import androidx.lifecycle.SavedStateHandle
-import com.example.sharedui.uiState.BaseViewModel
+import com.example.online_booking.uiElement.screens.booking.OnlineBookingArgs
+import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+import com.example.online_booking.uiState.state.OnlineBookingUiState
 
 @HiltViewModel
-class OnlineBookingViewModel @Inject constructor(
+internal class OnlineBookingViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(0)
+    private val _state = MutableStateFlow(OnlineBookingUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
 
-    //get booking type
-    private val doctorId: Int = checkNotNull(savedStateHandle["doctor_id"])
+    //get booking arguments here
+    private val doctorId: OnlineBookingArgs = OnlineBookingArgs(savedStateHandle)
 
-    init {
+    //function for make booking successfully dialog is visible
+    fun onShowBookingSuccessfullyDialog(){
 
-        _state.update { doctorId }
-    }
+        //update booking successfully visibility state here
+        _state.update {
+            it.copy(
+                bookingSuccessfullyDialogIsVisible = true
+            )
+        }//update
+
+    }//end onShowBookingSuccessfullyDialog
 
 }//end OfflineBookingViewModel

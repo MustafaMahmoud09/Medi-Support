@@ -1,4 +1,4 @@
-package com.example.sharedui.uiState
+package com.example.sharedui.uiState.viewModel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope

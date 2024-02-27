@@ -17,6 +17,7 @@ fun TextBoldView(
     text: String,
     size: Float,
     color: Color = theme.black,
+    textAlign: TextAlign? = TextAlign.Center,
     modifier: Modifier = Modifier
 ) {
 
@@ -25,7 +26,7 @@ fun TextBoldView(
         fontSize = size.sp,
         color = color,
         fontFamily = robotoBold,
-        textAlign = TextAlign.Center,
+        textAlign = textAlign,
         modifier = modifier,
     )
 }//end TextNormalBackLightView

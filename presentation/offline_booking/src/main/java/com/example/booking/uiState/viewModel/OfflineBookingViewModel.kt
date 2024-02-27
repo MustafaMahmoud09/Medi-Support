@@ -1,7 +1,9 @@
 package com.example.booking.uiState.viewModel
 
 import androidx.lifecycle.SavedStateHandle
-import com.example.sharedui.uiState.BaseViewModel
+import com.example.booking.uiElement.screens.booking.OfflineBookingArgs
+import com.example.booking.uiState.state.OfflineBookingUiState
+import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,17 +16,24 @@ class OfflineBookingViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(0)
+    private val _state = MutableStateFlow(OfflineBookingUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
 
-    //get booking type
-    private val doctorId: Int = checkNotNull(savedStateHandle["doctor_id"])
+    //get booking arguments here
+    private val doctorId: OfflineBookingArgs = OfflineBookingArgs(savedStateHandle)
 
-    init {
+    //function for make booking successfully dialog is visible
+    fun onShowBookingSuccessfullyDialog(){
 
-        _state.update { doctorId }
-    }
+        //update booking successfully visibility state here
+        _state.update {
+            it.copy(
+                bookingSuccessfullyDialogIsVisible = true
+            )
+        }//update
+
+    }//end onShowBookingSuccessfullyDialog
 
 }//end OfflineBookingViewModel

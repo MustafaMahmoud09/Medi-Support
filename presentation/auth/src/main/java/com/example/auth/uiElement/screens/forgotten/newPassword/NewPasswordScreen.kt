@@ -30,7 +30,7 @@ import com.example.auth.uiState.state.ForgottenUiState
 import com.example.auth.uiState.viewModel.ForgottenViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
-import com.example.sharedui.uiElement.components.items.DialogBasicSection
+import com.example.sharedui.uiElement.components.items.BasicDialogSection
 import com.example.sharedui.uiElement.components.items.BasicFieldSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -109,7 +109,7 @@ private fun NewPasswordContent(
                 )
             ) {
 
-                DialogBasicSection(
+                BasicDialogSection(
                     onDismissRequest = {},
                     dimen = dimen,
                     theme = theme,

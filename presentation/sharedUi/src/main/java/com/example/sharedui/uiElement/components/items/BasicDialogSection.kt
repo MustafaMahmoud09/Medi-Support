@@ -24,7 +24,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-fun DialogBasicSection(
+fun BasicDialogSection(
     onDismissRequest: () -> Unit,
     dimen: CustomDimen,
     theme: CustomTheme,
@@ -36,7 +36,7 @@ fun DialogBasicSection(
     modifier: Modifier = Modifier
 ) {
 
-
+    //create alert dialog here
     AlertDialog(
         onDismissRequest = onDismissRequest,
         properties = DialogProperties(
@@ -45,12 +45,14 @@ fun DialogBasicSection(
         modifier = modifier
     ) {
 
+        //create card here
         Card(
             shape = RoundedCornerShape(
                 dimen.dimen_2_5.dp
             )
         ) {
 
+            //create container contain on items here
             ConstraintLayout(
                 modifier = Modifier
                     .fillMaxSize()

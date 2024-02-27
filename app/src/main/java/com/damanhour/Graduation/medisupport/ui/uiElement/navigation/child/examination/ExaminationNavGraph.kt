@@ -14,6 +14,7 @@ import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation
 import kotlin.reflect.KFunction0
+import kotlin.reflect.KFunction1
 
 //create route name here
 internal const val EXAMINATION_NAV_GRAPH_ROUTE = "examinationNavGraph"
@@ -30,7 +31,8 @@ internal fun NavGraphBuilder.examinationNavGraph(
     navigateToOnlineRoomNavGraph: () -> Unit,
     popOnlineRoomGraph: () -> Unit,
     navigateToOnlineRoomDestination: () -> Unit,
-    popOnlineBookingNavGraph: KFunction0<Unit>
+    popOnlineBookingNavGraph: KFunction0<Unit>,
+    navigateToBookingDetailsDestinationWithPopOnlineBookingDestination: KFunction1<Int, Unit>
 ) {
 
     navigation(
@@ -44,7 +46,7 @@ internal fun NavGraphBuilder.examinationNavGraph(
 
         onlineBookingDestination(
             popBookingNavGraph = popOnlineBookingNavGraph,
-            navigateToBookingDetailsDestination = navigateToBookingDetailsDestination
+            navigateToBookingDetailsDestination = navigateToBookingDetailsDestinationWithPopOnlineBookingDestination
         )
 
         offlineBookingDestination(

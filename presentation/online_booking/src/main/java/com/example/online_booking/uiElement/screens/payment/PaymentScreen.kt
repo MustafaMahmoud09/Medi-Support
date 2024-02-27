@@ -1,19 +1,31 @@
 package com.example.online_booking.uiElement.screens.payment
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.online_booking.uiState.state.PaymentUiState
+import com.example.online_booking.uiState.viewModel.PaymentViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LinkView
 import com.example.sharedui.uiElement.components.items.BasicFieldSection
+import com.example.sharedui.uiElement.components.items.DialogMessage
 import com.example.sharedui.uiElement.components.items.HeaderSection
+import com.example.sharedui.uiElement.components.items.MessagesDialogSection
 import com.example.sharedui.uiElement.components.modifier.appDefaultContainer
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -24,13 +36,18 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun PaymentScreen(
+    viewModel: PaymentViewModel = hiltViewModel(),
     popOnlineRoomGraph: () -> Unit,
     navigateToOnlineRoomDestination: () -> Unit
 ) {
+    //get screen state here
+    val state = viewModel.state.collectAsState()
 
     PaymentContent(
+        uiState = state.value,
         onClickOnBackButton = popOnlineRoomGraph,
-        onClickOnPaymentButton = navigateToOnlineRoomDestination
+        onClickOnPaymentButton = viewModel::onShowBookingSuccessfullyDialog,
+        onClickOnStartButton = navigateToOnlineRoomDestination,
     )
 }//end PaymentScreen
 
@@ -39,7 +56,10 @@ private fun PaymentContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
-    onClickOnPaymentButton: () -> Unit
+    onClickOnPaymentButton: () -> Unit,
+    screenWidth: Int = LocalConfiguration.current.screenWidthDp,
+    uiState: PaymentUiState,
+    onClickOnStartButton: () -> Unit
 ) {
 
     //create base screen for define status and navigation bar color
@@ -56,7 +76,68 @@ private fun PaymentContent(
                 )
         ) {
             //create ids for screen components here
-            val (headerId, containerId) = createRefs()
+            val (successDialogId, headerId, containerId) = createRefs()
+
+            AnimatedVisibility(
+                visible = uiState.bookingSuccessfullyDialogIsVisible,
+                enter = fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 150
+                    )
+                ),
+                exit = fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 150
+                    )
+                )
+            ) {
+
+                //create booking successfully dialog here
+                MessagesDialogSection(
+                    dimen = dimen,
+                    theme = theme,
+                    logo = painterResource(
+                        id = R.drawable.success
+                    ),
+                    logoTint = theme.greenLight,
+                    title = stringResource(
+                        id = R.string.payment_successful
+                    ),
+                    buttonTitle = stringResource(
+                        id = R.string.start_now
+                    ),
+                    titlePaddingTop = dimen.dimen_2_5,
+                    logoPaddingTop = dimen.dimen_7,
+                    messagesPaddingTop = dimen.dimen_2_75,
+                    buttonPaddingTop = dimen.dimen_2_5,
+                    buttonTitleSize = dimen.dimen_2_25,
+                    buttonTitleColor = theme.background,
+                    buttonBackground = theme.redDark,
+                    onClickOnButton = onClickOnStartButton,
+                    messages = arrayOf(
+                        DialogMessage(
+                            message = stringResource(
+                                id = R.string.you_will_now_make_video_call_with_doctor
+                            ),
+                            color = theme.hintIconBottom,
+                            size = (dimen.dimen_1_75 + dimen.dimen_0_125),
+                            paddingTop = dimen.dimen_0,
+                            paddingHorizontal = (screenWidth * 0.24f),
+                        )
+                    ),
+                    horizontalMargin = dimen.dimen_1_5,
+                    paddingBottom = dimen.dimen_7,
+                    modifier = Modifier
+                        .constrainAs(successDialogId) {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            width = Dimension.fillToConstraints
+                        }
+                )
+
+            }//end AnimatedVisibility
 
             //create header here
             HeaderSection(
@@ -247,7 +328,7 @@ private fun PaymentContent(
                             ),
                             onClick = onClickOnPaymentButton,
                             modifier = Modifier
-                                .constrainAs(paymentButtonId){
+                                .constrainAs(paymentButtonId) {
                                     start.linkTo(resendOTPAgainLinkId.start)
                                     end.linkTo(resendOTPAgainLinkId.end)
                                     top.linkTo(

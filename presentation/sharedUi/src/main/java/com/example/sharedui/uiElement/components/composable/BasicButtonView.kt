@@ -26,6 +26,7 @@ fun BasicButtonView(
     onClick: () -> Unit,
     fontSize: Float = dimen.dimen_2_25,
     roundSize: Float = dimen.dimen_1_25,
+    fontColor: Color = theme.white,
     modifier: Modifier = Modifier
 ) {
 
@@ -53,11 +54,12 @@ fun BasicButtonView(
             }
     ) {
 
-        TextSemiBoldWhiteView(
+        TextSemiBoldView(
             theme = theme,
             dimen = dimen,
             text = text,
-            size = fontSize
+            size = fontSize,
+            fontColor = fontColor
         )
 
     }//end Box

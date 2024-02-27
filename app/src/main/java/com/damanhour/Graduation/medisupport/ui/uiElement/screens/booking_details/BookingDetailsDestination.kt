@@ -22,7 +22,7 @@ private const val BOOKING_DETAILS_DESTINATION_ROUTE = "bookingDetailsDestination
 const val BOOKING_DETAILS_DESTINATION_ARGS_ROUTE =
     "$BOOKING_DETAILS_DESTINATION_ROUTE/{${BookingDetailsArgs.PAGE_ARG}}"
 
-fun NavHostController.navigateToBookingDetailsDestination(
+fun NavHostController.navigateToBookingDetailsDestinationWithPopOfflineBookingDestination(
     page: Int
 ) {
 
@@ -35,6 +35,18 @@ fun NavHostController.navigateToBookingDetailsDestination(
         ) {
             inclusive = true
         }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToBookingDetailsDestination
+
+fun NavHostController.navigateToBookingDetailsDestinationWithPopOnlineBookingDestination(
+    page: Int
+) {
+
+    navigate(
+        route = "$BOOKING_DETAILS_DESTINATION_ROUTE/$page"
+    ) {
 
         popUpTo(
             route = ONLINE_BOOKING_DESTINATION_ARGS_ROUTE

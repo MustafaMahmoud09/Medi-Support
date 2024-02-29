@@ -31,8 +31,8 @@ import com.example.sharedui.R
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.HealthCareSection
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.HeartPredictionSection
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.TabsSection
-import com.example.booking.uiElement.screens.TopOfflineDoctorsScreen
-import com.example.online_booking.uiElement.screens.TopOnlineDoctorsScreen
+import com.example.offlinebooking.presentation.uiElement.screens.TopOfflineDoctorsScreen
+import com.example.onlinebooking.presentation.uiElement.screens.TopOnlineDoctorsScreen
 import com.damanhour.Graduation.medisupport.ui.uiState.state.TopDoctorsUiState
 import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.TopDoctorsViewModel
 import com.example.sharedui.uiElement.components.composable.LinkView

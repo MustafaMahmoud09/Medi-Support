@@ -2,6 +2,8 @@
 
 package com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.child
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sharedui.uiElement.navigation.data.TabData
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.TabsSection
-import com.example.booking.uiElement.screens.TotalOfflineDoctorsScreen
-import com.example.online_booking.uiElement.screens.TotalOnlineDoctorsScreen
+import com.example.offlinebooking.presentation.uiElement.screens.TotalOfflineDoctorsScreen
+import com.example.onlinebooking.presentation.uiElement.screens.TotalOnlineDoctorsScreen
 import com.damanhour.Graduation.medisupport.ui.uiState.state.TotalDoctorsUiState
 import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.TotalDoctorsViewModel
 import com.example.sharedui.R

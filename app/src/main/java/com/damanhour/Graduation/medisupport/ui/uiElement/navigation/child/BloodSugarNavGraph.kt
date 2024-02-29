@@ -8,9 +8,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
-import com.example.bloodsuger.uiElement.screens.record.RECORD_BLOOD_SUGAR_DESTINATION_ROUTE
-import com.example.bloodsuger.uiElement.screens.record.recordBloodSugarDestination
-import com.example.bloodsuger.uiElement.screens.statistics.statisticsBloodSugarDestination
+import com.example.bloodsugar.presentation.uiElement.screens.record.RECORD_BLOOD_SUGAR_DESTINATION_ROUTE
+import com.example.bloodsugar.presentation.uiElement.screens.record.recordBloodSugarDestination
+import com.example.bloodsugar.presentation.uiElement.screens.statistics.statisticsBloodSugarDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

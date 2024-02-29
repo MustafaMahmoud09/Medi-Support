@@ -56,21 +56,55 @@ android {
 dependencies {
 
     //project
-    implementation(project(':presentation:bmi'))
-    implementation(project(':presentation:auth'))
-    implementation implementation(project(':presentation:blood_sugar',))
-    implementation implementation(project(':presentation:blood_pressure',))
-    implementation(project(':presentation:heartRate'))
-    implementation implementation(project(':presentation:heart_prediction',))
-    implementation(project(':presentation:reminder'))
-    implementation implementation(project(':presentation:offline_booking'))
-    implementation implementation(project(':presentation:online_booking'))
-    implementation(project(':presentation:chat'))
-    implementation(project(':presentation:profile'))
-    implementation(project(':presentation:article'))
-    implementation(project(':presentation:setting'))
-    implementation(project(':presentation:sharedUi'))
-    implementation(project(':presentation:room'))
+
+    //shared ui
+    implementation(project(':libraries:shared-ui'))
+
+    //article
+    implementation(project(':features:article:presentation'))
+
+    //auth
+    implementation(project(':features:auth:presentation'))
+
+    //blood pressure
+    implementation(project(':features:blood-pressure:presentation'))
+
+    //blood sugar
+    implementation(project(':features:blood-sugar:presentation'))
+
+    //bmi
+    implementation(project(':features:bmi:presentation'))
+
+    //chat
+    implementation(project(':features:chat:presentation'))
+
+    //heart prediction
+    implementation(project(':features:heart-prediction:presentation'))
+
+    //heart rate
+    implementation(project(':features:heart-rate:presentation'))
+    implementation implementation(project(':features:offline-booking:presentation',))
+
+    //offline booking
+
+    //online booking
+    implementation(project(':features:online-booking:presentation'))
+
+    //payment
+    implementation(project(':features:payment:presentation'))
+
+    //profile
+    implementation(project(':features:profile:presentation'))
+
+    //reminder
+    implementation(project(':features:reminder:presentation'))
+
+    //room
+    implementation(project(':features:room:presentation'))
+
+    //setting
+    implementation(project(':features:setting:presentation'))
+
 
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"

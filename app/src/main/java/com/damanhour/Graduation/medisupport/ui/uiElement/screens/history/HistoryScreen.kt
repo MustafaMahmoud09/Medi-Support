@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.bmi.uiElement.screens.activities.BMIHistoryScreen
-import com.example.bloodsuger.uiElement.screens.activities.BloodSugarHistoryScreen
-import com.example.heartrate.uiElement.screens.activities.HeartRateHistoryScreen
-import com.example.bloodpressure.uiElement.screens.activities.BloodPressureHistoryScreen
+import com.example.bmi.presentation.uiElement.screens.activities.BMIHistoryScreen
+import com.example.bloodsugar.presentation.uiElement.screens.activities.BloodSugarHistoryScreen
+import com.example.heartrate.presentation.uiElement.screens.activities.HeartRateHistoryScreen
+import com.example.bloodpressure.presentation.uiElement.screens.activities.BloodPressureHistoryScreen
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
@@ -35,7 +35,6 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-import kotlin.reflect.KFunction0
 
 @Composable
 internal fun HistoryScreen(

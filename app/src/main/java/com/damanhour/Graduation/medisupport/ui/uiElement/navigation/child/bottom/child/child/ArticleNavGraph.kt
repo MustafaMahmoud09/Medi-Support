@@ -5,10 +5,10 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.botto
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.article.uiElement.screens.article.SINGLE_ARTICLE_DESTINATION_ROUTE
-import com.example.article.uiElement.screens.article.singleArticleDestination
-import com.example.article.uiElement.screens.articles.ARTICLES_DESTINATION_ROUTE
-import com.example.article.uiElement.screens.articles.articlesDestination
+import com.example.article.presentation.uiElement.screens.article.SINGLE_ARTICLE_DESTINATION_ROUTE
+import com.example.article.presentation.uiElement.screens.article.singleArticleDestination
+import com.example.article.presentation.uiElement.screens.articles.ARTICLES_DESTINATION_ROUTE
+import com.example.article.presentation.uiElement.screens.articles.articlesDestination
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.navigation.data.BottomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero

@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.bmi.uiElement.screens.activities.BMIActivityScreen
-import com.example.bloodsuger.uiElement.screens.activities.BloodSugarActivityScreen
-import com.example.heartrate.uiElement.screens.activities.HeartRateActivityScreen
-import com.example.bloodpressure.uiElement.screens.activities.BloodPressureActivityScreen
+import com.example.bmi.presentation.uiElement.screens.activities.BMIActivityScreen
+import com.example.bloodsugar.presentation.uiElement.screens.activities.BloodSugarActivityScreen
+import com.example.heartrate.presentation.uiElement.screens.activities.HeartRateActivityScreen
+import com.example.bloodpressure.presentation.uiElement.screens.activities.BloodPressureActivityScreen
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.BasicButtonView

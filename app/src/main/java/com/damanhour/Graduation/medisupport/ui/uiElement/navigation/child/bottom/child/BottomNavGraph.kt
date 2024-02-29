@@ -11,7 +11,7 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.articleNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.home.homeNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.moreNavGraph
-import com.example.profile.uiElement.screens.profile.profileDestination
+import com.example.profile.presentation.uiElement.screens.profile.profileDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.AnimatedNavHost

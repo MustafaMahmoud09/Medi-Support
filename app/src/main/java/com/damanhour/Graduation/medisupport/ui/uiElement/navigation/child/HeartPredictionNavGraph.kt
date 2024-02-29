@@ -5,10 +5,10 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.heartprediction.uiElement.screens.prediction.predictionHeartPredictionDestination
-import com.example.heartprediction.uiElement.screens.record.recordHeartPredictionDestination
-import com.example.heartprediction.uiElement.screens.start.START_HEART_PREDICTION_DESTINATION_ROUTE
-import com.example.heartprediction.uiElement.screens.start.startHeartPredictionDestination
+import com.example.heartprediction.presentation.uiElement.screens.prediction.predictionHeartPredictionDestination
+import com.example.heartprediction.presentation.uiElement.screens.record.recordHeartPredictionDestination
+import com.example.heartprediction.presentation.uiElement.screens.start.START_HEART_PREDICTION_DESTINATION_ROUTE
+import com.example.heartprediction.presentation.uiElement.screens.start.startHeartPredictionDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionMain
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition

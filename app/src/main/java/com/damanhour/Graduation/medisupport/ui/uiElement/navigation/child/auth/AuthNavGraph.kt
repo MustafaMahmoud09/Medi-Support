@@ -5,10 +5,10 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.login.loginNavGraph
-import com.example.auth.uiElement.screens.register.registerDestination
-import com.example.auth.uiElement.screens.start.START_DESTINATION_ROUTE
-import com.example.auth.uiElement.screens.start.startDestination
-import com.example.auth.uiElement.screens.welcome.welcomeDestination
+import com.example.auth.presentation.uiElement.screens.register.registerDestination
+import com.example.auth.presentation.uiElement.screens.start.START_DESTINATION_ROUTE
+import com.example.auth.presentation.uiElement.screens.start.startDestination
+import com.example.auth.presentation.uiElement.screens.welcome.welcomeDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

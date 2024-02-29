@@ -10,8 +10,8 @@ import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.home.child.reminderNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.DOCTOR_DESTINATION_ROUTE
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.doctorsDestination
-import com.example.reminder.uiElement.screens.add.ADD_REMINDER_DESTINATION_ROUTE
-import com.example.reminder.uiElement.screens.records.REMINDER_RECORDS_DESTINATION_ROUTE
+import com.example.reminder.presentation.uiElement.screens.add.ADD_REMINDER_DESTINATION_ROUTE
+import com.example.reminder.presentation.uiElement.screens.records.REMINDER_RECORDS_DESTINATION_ROUTE
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.navigation.data.BottomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero

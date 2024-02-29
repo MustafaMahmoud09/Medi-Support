@@ -18,8 +18,8 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sharedui.uiElement.navigation.data.TabData
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.TabsSection
-import com.example.booking.uiElement.screens.OfflineDetailsScreen
-import com.example.online_booking.uiElement.screens.OnlineDetailsScreen
+import com.example.offlinebooking.presentation.uiElement.screens.OfflineDetailsScreen
+import com.example.onlinebooking.presentation.uiElement.screens.OnlineDetailsScreen
 import com.damanhour.Graduation.medisupport.ui.uiState.state.BookingDetailsUiState
 import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.BookingDetailsViewModel
 import com.example.sharedui.R

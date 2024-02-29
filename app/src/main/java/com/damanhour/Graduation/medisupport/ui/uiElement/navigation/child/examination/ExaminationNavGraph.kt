@@ -7,9 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.chatNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.onlineRoomNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details.bookingDetailsDestination
-import com.example.booking.uiElement.screens.booking.offlineBookingDestination
-import com.example.online_booking.uiElement.screens.booking.ONLINE_BOOKING_DESTINATION_ARGS_ROUTE
-import com.example.online_booking.uiElement.screens.booking.onlineBookingDestination
+import com.example.offlinebooking.presentation.uiElement.screens.booking.offlineBookingDestination
+import com.example.onlinebooking.presentation.uiElement.screens.booking.ONLINE_BOOKING_DESTINATION_ARGS_ROUTE
+import com.example.onlinebooking.presentation.uiElement.screens.booking.onlineBookingDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

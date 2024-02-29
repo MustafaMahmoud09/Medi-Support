@@ -8,8 +8,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.booking.uiElement.screens.booking.OFFLINE_BOOKING_DESTINATION_ARGS_ROUTE
-import com.example.online_booking.uiElement.screens.booking.ONLINE_BOOKING_DESTINATION_ARGS_ROUTE
+import com.example.offlinebooking.presentation.uiElement.screens.booking.OFFLINE_BOOKING_DESTINATION_ARGS_ROUTE
+import com.example.onlinebooking.presentation.uiElement.screens.booking.ONLINE_BOOKING_DESTINATION_ARGS_ROUTE
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable

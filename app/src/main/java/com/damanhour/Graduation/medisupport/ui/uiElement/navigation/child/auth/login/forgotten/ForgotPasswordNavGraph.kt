@@ -6,10 +6,10 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.auth.uiElement.screens.forgotten.code.codeDestination
-import com.example.auth.uiElement.screens.forgotten.email.EMAIL_DESTINATION_ROUTE
-import com.example.auth.uiElement.screens.forgotten.email.emailDestination
-import com.example.auth.uiElement.screens.forgotten.newPassword.newPasswordDestination
+import com.example.auth.presentation.uiElement.screens.forgotten.code.codeDestination
+import com.example.auth.presentation.uiElement.screens.forgotten.email.EMAIL_DESTINATION_ROUTE
+import com.example.auth.presentation.uiElement.screens.forgotten.email.emailDestination
+import com.example.auth.presentation.uiElement.screens.forgotten.newPassword.newPasswordDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

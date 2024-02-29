@@ -5,9 +5,9 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.exami
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.chat.uiElement.screens.chat.chatDestination
-import com.example.chat.uiElement.screens.chats.CHATS_DESTINATION_ROUTE
-import com.example.chat.uiElement.screens.chats.chatsDestination
+import com.example.presentation.uiElement.screens.chat.chatDestination
+import com.example.presentation.uiElement.screens.chats.CHATS_DESTINATION_ROUTE
+import com.example.presentation.uiElement.screens.chats.chatsDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

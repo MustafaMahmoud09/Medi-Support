@@ -23,7 +23,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.SearchSection
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.child.TopDoctorsScreen
-import com.example.booking.uiElement.screens.SearchScreen
+import com.example.offlinebooking.presentation.uiElement.screens.SearchScreen
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.child.TotalDoctorsScreen
 import com.damanhour.Graduation.medisupport.ui.uiState.state.HomeUiState
 import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.HomeViewModel

@@ -6,9 +6,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
-import com.example.bmi.uiElement.screens.determination.determinationBMIDestination
-import com.example.bmi.uiElement.screens.record.RECORD_BMI_DESTINATION
-import com.example.bmi.uiElement.screens.record.recordBMIDestination
+import com.example.bmi.presentation.uiElement.screens.determination.determinationBMIDestination
+import com.example.bmi.presentation.uiElement.screens.record.RECORD_BMI_DESTINATION
+import com.example.bmi.presentation.uiElement.screens.record.recordBMIDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

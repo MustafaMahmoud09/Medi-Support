@@ -5,9 +5,9 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.exami
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.online_booking.uiElement.screens.payment.PAYMENT_DESTINATION_ROUTE
-import com.example.online_booking.uiElement.screens.payment.paymentDestination
-import com.example.room.uiElement.screens.room.onlineRoomDestination
+import com.example.payment.presentation.uiElement.screens.payment.PAYMENT_DESTINATION_ROUTE
+import com.example.payment.presentation.uiElement.screens.payment.paymentDestination
+import com.example.room.presentation.uiElement.screens.room.onlineRoomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

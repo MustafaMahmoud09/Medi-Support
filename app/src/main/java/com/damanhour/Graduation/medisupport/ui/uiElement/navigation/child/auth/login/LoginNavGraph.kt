@@ -7,9 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.login.forgotten.FORGOT_PASSWORD_NAV_GRAPH
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.login.forgotten.forgotPasswordNavGraph
-import com.example.auth.uiElement.screens.login.LOGIN_DESTINATION_ROUTE
-import com.example.auth.uiElement.screens.login.loginDestination
-import com.example.auth.uiElement.screens.welcome.WELCOME_DESTINATION_ROUTE
+import com.example.auth.presentation.uiElement.screens.login.LOGIN_DESTINATION_ROUTE
+import com.example.auth.presentation.uiElement.screens.login.loginDestination
+import com.example.auth.presentation.uiElement.screens.welcome.WELCOME_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionMain
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition

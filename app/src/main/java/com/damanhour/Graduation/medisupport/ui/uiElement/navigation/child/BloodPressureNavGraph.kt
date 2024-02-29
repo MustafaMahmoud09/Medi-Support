@@ -6,9 +6,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.activity.ACTIVITY_NAV_GRAPH_DATA
-import com.example.bloodpressure.uiElement.screens.record.RECORD_BLOOD_PRESSURE_DESTINATION_ROUTE
-import com.example.bloodpressure.uiElement.screens.record.recordBloodPressureDestination
-import com.example.bloodpressure.uiElement.screens.statistics.statisticsBloodPressureDestination
+import com.example.bloodpressure.presentation.uiElement.screens.record.RECORD_BLOOD_PRESSURE_DESTINATION_ROUTE
+import com.example.bloodpressure.presentation.uiElement.screens.record.recordBloodPressureDestination
+import com.example.bloodpressure.presentation.uiElement.screens.statistics.statisticsBloodPressureDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation

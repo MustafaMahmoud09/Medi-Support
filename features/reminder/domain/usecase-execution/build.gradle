@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation implementation(project(':features:reminder:domain:domain-model',))
+    implementation implementation(project(':features:reminder:domain:usecase-declarations',))
+
+    //project
+    //model
+
+    //use case interface
+    implementation implementation(project(':features:reminder:domain:repository-declarations',))
+
+    //repository interfaces
+
+}

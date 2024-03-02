@@ -87,10 +87,41 @@
       <module name="MediSupport.features.profile.domain.use-case.main" target="17" />
       <module name="MediSupport.features.profile.domain.use-case.test" target="17" />
       <module name="MediSupport.features.profile.presentation" target="17" />
-      <module name="MediSupport.features.reminder.data.repository" target="17" />
-      <module name="MediSupport.features.reminder.domain.use-case" target="17" />
+      <module name="MediSupport.features.reminder.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.reminder.data.data-source.shared-preferences" target="17" />
+      <module name="MediSupport.features.reminder.data.entity-execution" target="17" />
+      <module name="MediSupport.features.reminder.data.repository-execution" target="17" />
+      <module name="MediSupport.features.reminder.domain.domain-model" target="17" />
+      <module name="MediSupport.features.reminder.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.reminder.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.entity-interfaces.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.entity-interfaces.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.model.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.model.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.reminder.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.repository-declarations.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.repository-interfaces.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.repository-interfaces.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.use-case-implementation.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.use-case-implementation.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.use-case-interfaces.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.use-case-interfaces.test" target="17" />
       <module name="MediSupport.features.reminder.domain.use-case.main" target="17" />
       <module name="MediSupport.features.reminder.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-implementation.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-implementation.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-interfaces.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.usecase-interfaces.test" target="17" />
       <module name="MediSupport.features.reminder.presentation" target="17" />
       <module name="MediSupport.features.room.data.repository" target="17" />
       <module name="MediSupport.features.room.domain.use-case" target="17" />
@@ -104,6 +135,12 @@
       <module name="MediSupport.features.setting.presentation" target="17" />
       <module name="MediSupport.libraries.core.local-data" target="17" />
       <module name="MediSupport.libraries.core.remote-data" target="17" />
+      <module name="MediSupport.libraries.shared-entities.entity-declarations" target="17" />
+      <module name="MediSupport.libraries.shared-entities.entity-declarations.main" target="17" />
+      <module name="MediSupport.libraries.shared-entities.entity-declarations.test" target="17" />
+      <module name="MediSupport.libraries.shared-entities.entity-execution" target="17" />
+      <module name="MediSupport.libraries.shared-entities.entity-interfaces.main" target="17" />
+      <module name="MediSupport.libraries.shared-entities.entity-interfaces.test" target="17" />
       <module name="MediSupport.libraries.shared-ui" target="17" />
       <module name="MediSupport.presentation.about" target="17" />
       <module name="MediSupport.presentation.activity" target="17" />

@@ -34,7 +34,7 @@ dependencies {
 
     //project
     //entity interfaces
-    implementation implementation(project(':features:reminder:domain:entity-declarations'))
+    api(project(':features:reminder:domain:entity-declarations'))
 
     //shared-entity
     implementation implementation(project(':libraries:shared-entities:entity-execution'))

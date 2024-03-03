@@ -93,9 +93,11 @@
             <option value="$PROJECT_DIR$/features/reminder/domain" />
             <option value="$PROJECT_DIR$/features/reminder/domain/domain-model" />
             <option value="$PROJECT_DIR$/features/reminder/domain/entity-declarations" />
+            <option value="$PROJECT_DIR$/features/reminder/domain/mapper-declarations" />
             <option value="$PROJECT_DIR$/features/reminder/domain/repository-declarations" />
             <option value="$PROJECT_DIR$/features/reminder/domain/usecase-declarations" />
             <option value="$PROJECT_DIR$/features/reminder/domain/usecase-execution" />
+            <option value="$PROJECT_DIR$/features/reminder/mapper-execution" />
             <option value="$PROJECT_DIR$/features/reminder/presentation" />
             <option value="$PROJECT_DIR$/features/room" />
             <option value="$PROJECT_DIR$/features/room/data" />

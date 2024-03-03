@@ -38,8 +38,21 @@ dependencies {
 
     //entity
     implementation implementation(project(':features:reminder:data:data-source:local-data:entity-execution'))
+    implementation implementation(project(':libraries:core:local-data',))
 
     //local data
-    implementation(project(':libraries:core:local-data'))
+
+    //shared preferences
+    implementation(project(':features:reminder:data:data-source:shared-preferences'))
+
+
+
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
+
+    //room database
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
 }

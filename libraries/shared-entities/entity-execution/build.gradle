@@ -33,7 +33,7 @@ android {
 dependencies {
 
     //project
-    implementation implementation(project(':libraries:shared-entities:entity-declarations'))
+    api(project(':libraries:shared-entities:entity-declarations'))
 
     //room database
     implementation "androidx.room:room-runtime:$room_version"

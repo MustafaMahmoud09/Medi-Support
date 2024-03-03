@@ -9,15 +9,21 @@ java {
 }
 
 dependencies {
-    implementation implementation(project(':features:reminder:domain:domain-model',))
-    implementation implementation(project(':features:reminder:domain:usecase-declarations',))
 
     //project
     //model
+    implementation implementation(project(':features:reminder:domain:domain-model',))
 
     //use case interface
     implementation implementation(project(':features:reminder:domain:repository-declarations',))
 
     //repository interfaces
+    implementation implementation(project(':features:reminder:domain:usecase-declarations',))
+
+    //mapper declarations
+    implementation(project(':features:reminder:domain:mapper-declarations'))
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
 
 }

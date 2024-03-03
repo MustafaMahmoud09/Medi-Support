@@ -55,7 +55,8 @@ fun BasicFieldSection(
     ),
     borderWidth: Float = dimen.dimen_0_125,
     borderColor: Color = theme.redDark,
-    fontSize: Float = dimen.dimen_2,
+    inputSize: Float = dimen.dimen_2,
+    hintSize: Float = inputSize,
     fontColor: Color = theme.gray,
     onClick: () -> Unit = {},
     enable: Boolean = true,
@@ -141,7 +142,7 @@ fun BasicFieldSection(
                 onValueChange = onChange,
                 textStyle = TextStyle.Default.copy(
                     fontFamily = robotoRegular,
-                    fontSize = fontSize.sp,
+                    fontSize = inputSize.sp,
                     color = fontColor
                 ),
                 visualTransformation = if (isPasswordVisible) {
@@ -188,7 +189,7 @@ fun BasicFieldSection(
                     theme = theme,
                     dimen = dimen,
                     text = hint,
-                    size = fontSize,
+                    size = hintSize,
                     fontColor = fontColor,
                     textAlign = null,
                     modifier = Modifier

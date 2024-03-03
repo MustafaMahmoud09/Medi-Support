@@ -99,6 +99,9 @@
       <module name="MediSupport.features.reminder.domain.entity-declarations.test" target="17" />
       <module name="MediSupport.features.reminder.domain.entity-interfaces.main" target="17" />
       <module name="MediSupport.features.reminder.domain.entity-interfaces.test" target="17" />
+      <module name="MediSupport.features.reminder.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.reminder.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.reminder.domain.mapper-declarations.test" target="17" />
       <module name="MediSupport.features.reminder.domain.model.main" target="17" />
       <module name="MediSupport.features.reminder.domain.model.test" target="17" />
       <module name="MediSupport.features.reminder.domain.repository-declarations" target="17" />
@@ -122,6 +125,11 @@
       <module name="MediSupport.features.reminder.domain.usecase-implementation.test" target="17" />
       <module name="MediSupport.features.reminder.domain.usecase-interfaces.main" target="17" />
       <module name="MediSupport.features.reminder.domain.usecase-interfaces.test" target="17" />
+      <module name="MediSupport.features.reminder.mapper-execution" target="17" />
+      <module name="MediSupport.features.reminder.mapper-execution.main" target="17" />
+      <module name="MediSupport.features.reminder.mapper-execution.test" target="17" />
+      <module name="MediSupport.features.reminder.mapper.main" target="17" />
+      <module name="MediSupport.features.reminder.mapper.test" target="17" />
       <module name="MediSupport.features.reminder.presentation" target="17" />
       <module name="MediSupport.features.room.data.repository" target="17" />
       <module name="MediSupport.features.room.domain.use-case" target="17" />

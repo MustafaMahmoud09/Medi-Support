@@ -5,7 +5,7 @@ object UserInfo {
 
     const val USER_TABLE_NAME = "users"
 
-    const val ID_COLUMN_NAME = "id"
+    const val ID_COLUMN_NAME = "user_id"
 
     const val EMAIL_COLUMN_NAME = "email"
 

@@ -15,7 +15,7 @@ class ReminderPreferencesAccess(
     fun runReminderManager(): RunReminderManager {
 
         return RunReminderManager(
-           context = context
+            context = context
         )
 
     }//end RunReminderManager

@@ -26,7 +26,7 @@ class RunReminderManager(
     //TODO:: Function For Get Run Reminder
     fun getRunReminder(): Boolean {
 
-        return reminderSharedPreferences.getBoolean(RUN_REMINDER_KEY_NAME, false)
+        return reminderSharedPreferences.getBoolean(RUN_REMINDER_KEY_NAME, true)
 
     }//end getRunReminder
 

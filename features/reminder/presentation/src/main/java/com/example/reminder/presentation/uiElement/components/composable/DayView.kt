@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import com.example.reminder.domaim.domain.model.Day
 import com.example.sharedui.uiElement.animation.animateColorAsState
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.modifier.appBorder
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -22,6 +24,9 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 internal fun DayView(
     dimen: CustomDimen,
     theme: CustomTheme,
+    day: Day,
+    daysSelected: List<Long>,
+    onClickOnDay: (Long) -> Unit,
     borderWidth: Float = dimen.dimen_0_125,
     unselectedBorderColor: Color = theme.visibleGray,
     selectedBorderColor: Color = theme.redDark,
@@ -32,18 +37,15 @@ internal fun DayView(
     unselectedBackground: Color = theme.background,
     unselectedTextColor: Color = theme.black,
     selectedTextColor: Color = theme.redDark,
-    dayNumber: Int,
-    day: String,
     fontSize: Float = dimen.dimen_1_5,
-    daysSelected: Array<Int>,
     width: Float = dimen.dimen_5_5,
     height: Float = dimen.dimen_7_75,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     //create animated border color here
     val borderColor by animateColorAsState(
-        targetColor = if (dayNumber in daysSelected) {
+        targetColor = if (day.id in daysSelected) {
             selectedBorderColor
         } else {
             unselectedBorderColor
@@ -53,7 +55,7 @@ internal fun DayView(
 
     //create animated background color here
     val backgroundColor by animateColorAsState(
-        targetColor = if (dayNumber in daysSelected) {
+        targetColor = if (day.id in daysSelected) {
             selectedBackground
         } else {
             unselectedBackground
@@ -63,7 +65,7 @@ internal fun DayView(
 
     //create animated day color here
     val dayColor by animateColorAsState(
-        targetColor = if (dayNumber in daysSelected) {
+        targetColor = if (day.id in daysSelected) {
             selectedTextColor
         } else {
             unselectedTextColor
@@ -86,7 +88,10 @@ internal fun DayView(
             )
             .background(
                 color = backgroundColor
-            ),
+            )
+            .clickableWithoutHover {
+                onClickOnDay(day.id)
+            },
         contentAlignment = Alignment.Center
     ) {
 
@@ -94,7 +99,7 @@ internal fun DayView(
         TextNormalView(
             theme = theme,
             dimen = dimen,
-            text = day,
+            text = day.name,
             size = fontSize,
             fontColor = dayColor
         )

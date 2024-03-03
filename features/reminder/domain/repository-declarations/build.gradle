@@ -9,6 +9,14 @@ java {
 }
 
 dependencies {
-    implementation implementation(project(':features:reminder:domain:entity-declarations',))
+
+    //project
+    //entity declarations
+    implementation(project(':features:reminder:domain:entity-declarations'))
+
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
+
 }
 

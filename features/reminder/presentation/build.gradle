@@ -42,7 +42,14 @@ android {
 dependencies {
 
     //project
+    //shared-ui
     implementation(project(':libraries:shared-ui'))
+
+    //use case declarations
+    implementation(project(':features:reminder:domain:usecase-declarations'))
+
+    //domain model
+    implementation(project(':features:reminder:domain:domain-model'))
 
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"

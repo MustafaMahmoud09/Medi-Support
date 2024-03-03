@@ -4,4 +4,6 @@ import com.example.reminder.domain.usecase.interfaces.IUpdateReminderStatusUseCa
 
 class UpdateReminderStatusUseCase : IUpdateReminderStatusUseCase {
 
+
+
 }//end IUpdateReminderStatusUseCase

@@ -9,7 +9,14 @@ java {
 }
 
 dependencies {
-    implementation implementation(project(':features:reminder:domain:domain-model',))
+
+    //project
+    //domain model
+    implementation implementation(project(':features:reminder:domain:domain-model'))
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
+
 }
 
 

@@ -21,9 +21,14 @@ import com.example.shared.entity.implementation.user.UserInfo
     ]
 )
 data class ReminderEntity(
-    @PrimaryKey @ColumnInfo(
+    @PrimaryKey(
+        autoGenerate = true
+    ) @ColumnInfo(
         name = ReminderInfo.ID_COLUMN_NAME
-    ) override val id: Long,
+    ) override val id: Long = 0,
+    @ColumnInfo(
+        name = ReminderInfo.NAME_COLUMN_NAME
+    ) override val name: String,
     @ColumnInfo(
         name = ReminderInfo.TIME_COLUMN_NAME
     ) override val time: Long,
@@ -35,5 +40,5 @@ data class ReminderEntity(
     ) override val userId: Long,
     @ColumnInfo(
         name = ReminderInfo.CREATED_AT_COLUMN_NAME
-    ) override val createdAt: Long
+    ) override val createdAt: Long = System.currentTimeMillis()
 ) : IReminderEntity

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.reminder.domaim.domain.model.Day
 import com.example.reminder.presentation.uiElement.components.composable.DayView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -18,16 +19,19 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 internal fun DayPickerSection(
     dimen: CustomDimen,
     theme: CustomTheme,
+    onClickOnDay: (Long) -> Unit,
     title: String,
     titleColor: Color = theme.black,
     titleSize: Float = dimen.dimen_2,
-    modifier: Modifier = Modifier
+    weekDays: List<Day>,
+    daysSelected: List<Long>,
+    modifier: Modifier = Modifier,
 ) {
 
     //create container here
     ConstraintLayout(
         modifier = modifier
-    ){
+    ) {
         //create ids for components here
         val (daysTitleId, daysId) = createRefs()
 
@@ -39,7 +43,7 @@ internal fun DayPickerSection(
             size = titleSize,
             fontColor = titleColor,
             modifier = Modifier
-                .constrainAs(daysTitleId){
+                .constrainAs(daysTitleId) {
                     start.linkTo(
                         parent.start,
                         dimen.dimen_2.dp
@@ -50,7 +54,7 @@ internal fun DayPickerSection(
 
         LazyRow(
             modifier = Modifier
-                .constrainAs(daysId){
+                .constrainAs(daysId) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     top.linkTo(
@@ -65,18 +69,18 @@ internal fun DayPickerSection(
             horizontalArrangement = Arrangement.spacedBy(
                 space = dimen.dimen_0_75.dp
             )
-        ){
+        ) {
 
             items(
-                count = 7
-            ){
+                count = weekDays.size
+            ) {
 
                 DayView(
                     dimen = dimen,
                     theme = theme,
-                    dayNumber = 1,
-                    day = "Tue",
-                    daysSelected = arrayOf()
+                    day = weekDays[it],
+                    onClickOnDay = onClickOnDay,
+                    daysSelected = daysSelected
                 )
 
             }//end items

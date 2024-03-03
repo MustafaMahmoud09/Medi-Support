@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.reminder.domaim.domain.model.Day
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.modifier.appBorder
@@ -32,6 +33,13 @@ import java.time.LocalTime
 internal fun DatePickerSection(
     dimen: CustomDimen,
     theme: CustomTheme,
+    onClickOnSaveButton: () -> Unit,
+    onClickOnCancelButton: () -> Unit,
+    onSnappedTime: (snappedTime: LocalTime) -> Unit,
+    weekDays: List<Day>,
+    onClickOnDay: (Long) -> Unit,
+    daysSelected: List<Long>,
+    timeSelected: LocalTime,
     shape: Shape = RoundedCornerShape(
         topStart = dimen.dimen_2_5.dp,
         topEnd = dimen.dimen_2_5.dp
@@ -40,13 +48,10 @@ internal fun DatePickerSection(
     borderWidth: Float = dimen.dimen_0_125,
     timePickerHeight: Float = dimen.dimen_19_5,
     containerWidth: Int,
-    onClickOnSaveButton: () -> Unit,
-    onClickOnCancelButton: () -> Unit,
     buttonBackground: Color = theme.transparent,
     textButtonColor: Color = theme.redDark,
     textButtonSize: Float = dimen.dimen_2,
-    onSnappedTime: (snappedTime: LocalTime) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     //create container here
@@ -113,6 +118,7 @@ internal fun DatePickerSection(
             timePickerHeight = timePickerHeight,
             timePickerWidth = containerWidth - dimen.dimen_2,
             onSnappedTime = onSnappedTime,
+            timeSelected = timeSelected,
             modifier = Modifier
                 .constrainAs(timePickerId) {
                     start.linkTo(
@@ -138,6 +144,9 @@ internal fun DatePickerSection(
             title = stringResource(
                 id = R.string.repeat
             ),
+            weekDays = weekDays,
+            onClickOnDay = onClickOnDay,
+            daysSelected = daysSelected,
             modifier = Modifier
                 .constrainAs(daysPickerId) {
                     start.linkTo(parent.start)

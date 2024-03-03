@@ -31,9 +31,11 @@ import com.example.reminder.domain.entity.interfaces.IReminderDateEntity
     ]
 )
 data class ReminderDateEntity(
-    @PrimaryKey @ColumnInfo(
+    @PrimaryKey(
+        autoGenerate = true
+    ) @ColumnInfo(
         name = ReminderDateInfo.ID_COLUMN_NAME
-    ) override val id: Long,
+    ) override val id: Long = 0,
     @ColumnInfo(
         name = ReminderDateInfo.REMINDER_ID_COLUMN_NAME
     ) override val reminderId: Long,
@@ -42,7 +44,7 @@ data class ReminderDateEntity(
     ) override val dayId: Long,
     @ColumnInfo(
         name = ReminderDateInfo.CREATED_AT_COLUMN_NAME
-    ) override val createdAt: Long
+    ) override val createdAt: Long = System.currentTimeMillis()
 ) : IReminderDateEntity
 
 

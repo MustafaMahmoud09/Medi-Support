@@ -38,6 +38,8 @@ import java.time.LocalTime
 internal fun WheelTimePickerSection(
     dimen: CustomDimen,
     theme: CustomTheme,
+    onSnappedTime: (snappedTime: LocalTime) -> Unit = {},
+    timeSelected: LocalTime,
     timePickerTextStyle: TextStyle = TextStyle.Default.copy(
         color = theme.black,
         fontFamily = robotoMedium,
@@ -57,8 +59,7 @@ internal fun WheelTimePickerSection(
     borderSize: Float = dimen.dimen_0_125,
     timePickerHeight: Float,
     timePickerWidth: Float,
-    onSnappedTime: (snappedTime: LocalTime) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     //create container here
@@ -83,6 +84,7 @@ internal fun WheelTimePickerSection(
             selectorProperties = timePickerSelectorProperties,
             textStyle = timePickerTextStyle,
             onSnappedTime = onSnappedTime,
+            startTime = timeSelected,
             modifier = modifier
                 .constrainAs(timePickerId) {
                     start.linkTo(parent.start)

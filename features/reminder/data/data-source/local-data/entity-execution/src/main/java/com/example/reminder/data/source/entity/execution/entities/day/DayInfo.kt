@@ -5,7 +5,7 @@ object DayInfo {
 
     const val DAY_TABLE_NAME = "days"
 
-    const val ID_COLUMN_NAME = "id"
+    const val ID_COLUMN_NAME = "day_id"
 
     const val DAY_COLUMN_NAME = "day"
 

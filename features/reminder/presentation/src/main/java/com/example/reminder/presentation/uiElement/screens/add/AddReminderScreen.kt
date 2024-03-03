@@ -2,6 +2,10 @@ package com.example.reminder.presentation.uiElement.screens.add
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.reminder.presentation.uiElement.components.items.DatePickerSection
 import com.example.reminder.presentation.uiState.state.AddReminderUiState
 import com.example.reminder.presentation.uiState.viewModel.AddReminderViewModel
 import com.example.sharedui.R
@@ -30,6 +35,7 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import com.example.sharedui.uiState.viewModel.child.BottomNavigationViewModel
+import java.time.LocalTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -44,29 +50,60 @@ internal fun AddReminderScreen(
 
     AddReminderContent(
         uiState = state.value,
-        onCancel = {
-            //change bottom navigation visibility here
-            bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
-                show = true
-            )
-
-             addReminderViewModel.onDatePickerVisibilityChanged(
-                 show = false
-             )
-        },
+        onClickOnDay = addReminderViewModel::onWeekDaySelected,
         onMedicamentNameChanged = addReminderViewModel::onMedicamentNameChanged,
-        onClickOnBack = {
-
+        onTimeValueChanged = addReminderViewModel::onTimeValueChanged,
+        onClickOnDatePickerCancel = {
             //change bottom navigation visibility here
             bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
                 show = true
             )
+
+            //change date picker visibility here
+            addReminderViewModel.onDatePickerVisibilityChanged(
+                show = false
+            )
+
+            //change days selected state
+            addReminderViewModel.onWeekDaysSelectedCanceled()
+
+            //change time selected state
+            addReminderViewModel.onTimeSelectedCanceled()
+        },//end onClickOnDatePickerCancel
+        onClickOnDatePickerConfirm = {
+            //change bottom navigation visibility here
+            bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
+                show = true
+            )
+
+            //change date picker visibility here
+            addReminderViewModel.onDatePickerVisibilityChanged(
+                show = false
+            )
+
+            //change days selected state
+            addReminderViewModel.onWeekDaysSelectedConfirm()
+
+            //change time selected state
+            addReminderViewModel.onTimeSelectedConfirm()
+        },//end onClickOnDatePickerConfirm
+        onClickOnBack = {
 
             //pop reminder destination here
             popAddReminderDestination()
-        },
-        onClickOnTimeSelectorButton = {
 
+            //change bottom navigation visibility here
+            bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
+                show = true
+            )
+
+            //change date picker visibility here
+            addReminderViewModel.onDatePickerVisibilityChanged(
+                show = false
+            )
+
+        },//end onClickOnBack
+        onClickOnTimeSelectorButton = {
             //change bottom navigation visibility here
             bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
                 show = false
@@ -76,9 +113,23 @@ internal fun AddReminderScreen(
             addReminderViewModel.onDatePickerVisibilityChanged(
                 show = true
             )
+        },//end onClickOnTimeSelectorButton
+        onClickOnReminderButton = {
 
-        },
-        onClickOnReminderButton = navigateToReminderRecordsDestination
+            //navigate to reminder records destination here
+            navigateToReminderRecordsDestination()
+
+            //change bottom navigation visibility here
+            bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
+                show = true
+            )
+
+            //change date picker visibility here
+            addReminderViewModel.onDatePickerVisibilityChanged(
+                show = false
+            )
+
+        }//end onClickOnReminderButton
     )
 
 }//end AddReminderScreen
@@ -94,7 +145,10 @@ private fun AddReminderContent(
     onClickOnTimeSelectorButton: () -> Unit,
     uiState: AddReminderUiState,
     onMedicamentNameChanged: (String) -> Unit,
-    onCancel: () -> Unit
+    onClickOnDatePickerCancel: () -> Unit,
+    onClickOnDay: (Long) -> Unit,
+    onClickOnDatePickerConfirm: () -> Unit,
+    onTimeValueChanged: (LocalTime) -> Unit
 ) {
 
     //create container here
@@ -233,11 +287,12 @@ private fun AddReminderContent(
                         hint = stringResource(
                             R.string.every_day
                         ),
-                        value = "",
+                        value = uiState.daysValue,
                         onChange = {},
                         enable = false,
                         onClick = onClickOnTimeSelectorButton,
-                        fontSize = dimen.dimen_2_5,
+                        hintSize = dimen.dimen_2_5,
+                        inputSize = dimen.dimen_1_25,
                         modifier = Modifier
                             .constrainAs(dayFieldId) {
                                 start.linkTo(
@@ -266,11 +321,11 @@ private fun AddReminderContent(
                         hint = stringResource(
                             R.string._7_00_am
                         ),
-                        value = "",
+                        value = uiState.timeValue,
                         onChange = {},
                         enable = false,
                         onClick = onClickOnTimeSelectorButton,
-                        fontSize = dimen.dimen_2_5,
+                        inputSize = dimen.dimen_2_5,
                         modifier = Modifier
                             .constrainAs(timeFieldId) {
                                 end.linkTo(
@@ -313,27 +368,43 @@ private fun AddReminderContent(
                     )
 
                     //check date picker is visible or no
-                    if (uiState.isDatePickerVisible) {
+                    AnimatedVisibility(
+                        visible = uiState.isDatePickerVisible,
+                        enter = fadeIn(
+                            animationSpec = tween(
+                                delayMillis = 50
+                            )
+                        ),
+                        exit = fadeOut(
+                            animationSpec = tween(
+                                delayMillis = 50
+                            )
+                        ),
+                        modifier = Modifier
+                            .constrainAs(datePickerId) {
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                                bottom.linkTo(parent.bottom)
+                                top.linkTo(
+                                    addAlarmButtonId.bottom,
+                                    dimen.dimen_7.dp
+                                )
+                            }
+                    ) {
 
                         //create date picker here
-                        com.example.reminder.presentation.uiElement.components.items.DatePickerSection(
+                        DatePickerSection(
                             dimen = dimen,
                             theme = theme,
                             containerWidth = screenWidth,
-                            onClickOnSaveButton = onCancel,
-                            onClickOnCancelButton = onCancel,
-                            modifier = Modifier
-                                .constrainAs(datePickerId) {
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                    bottom.linkTo(parent.bottom)
-                                    top.linkTo(
-                                        addAlarmButtonId.bottom,
-                                        dimen.dimen_7.dp
-                                    )
-                                }
+                            onClickOnSaveButton = onClickOnDatePickerConfirm,
+                            onClickOnCancelButton = onClickOnDatePickerCancel,
+                            onSnappedTime = onTimeValueChanged,
+                            weekDays = uiState.weekDays,
+                            daysSelected = uiState.daysSelected,
+                            onClickOnDay = onClickOnDay,
+                            timeSelected = uiState.timeSelected,
                         )
-
                     }//end if
 
                 }//end ConstraintLayout

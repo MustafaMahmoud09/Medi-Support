@@ -59,6 +59,9 @@ dependencies {
 
     //shared ui
     implementation(project(':libraries:shared-ui'))
+    implementation implementation(project(':libraries:core:local-data',))
+
+    //local data
 
     //article
     implementation(project(':features:article:presentation'))
@@ -83,9 +86,9 @@ dependencies {
 
     //heart rate
     implementation(project(':features:heart-rate:presentation'))
-    implementation implementation(project(':features:offline-booking:presentation',))
 
     //offline booking
+    implementation implementation(project(':features:offline-booking:presentation',))
 
     //online booking
     implementation(project(':features:online-booking:presentation'))
@@ -98,6 +101,13 @@ dependencies {
 
     //reminder
     implementation(project(':features:reminder:presentation'))
+    implementation(project(':features:reminder:domain:usecase-declarations'))
+    implementation(project(':features:reminder:domain:usecase-execution'))
+    implementation(project(':features:reminder:domain:repository-declarations'))
+    implementation(project(':features:reminder:data:repository-execution'))
+    implementation(project(':features:reminder:data:data-source:shared-preferences'))
+    implementation(project(':features:reminder:domain:mapper-declarations'))
+    implementation(project(':features:reminder:mapper-execution'))
 
     //room
     implementation(project(':features:room:presentation'))
@@ -137,5 +147,9 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
+
+    //room database
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
 }

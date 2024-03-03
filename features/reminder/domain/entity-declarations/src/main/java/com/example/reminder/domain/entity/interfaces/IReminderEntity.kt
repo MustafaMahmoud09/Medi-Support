@@ -5,6 +5,8 @@ interface IReminderEntity {
     //create table columns here
     val id: Long //primary key
 
+    val name: String
+
     val time: Long
 
     val status: Boolean

@@ -53,6 +53,17 @@ internal fun AddReminderScreen(
         onClickOnDay = addReminderViewModel::onWeekDaySelected,
         onMedicamentNameChanged = addReminderViewModel::onMedicamentNameChanged,
         onTimeValueChanged = addReminderViewModel::onTimeValueChanged,
+        onClickOnAddReminderButton = {
+            //store reminder here
+            val storedCheck = addReminderViewModel.onReminderStored()
+
+            //if reminder is stored
+            if (storedCheck) {
+                //navigate to reminders screen here
+                navigateToReminderRecordsDestination()
+            }//end if
+
+        },//end onClickOnAddReminderButton
         onClickOnDatePickerCancel = {
             //change bottom navigation visibility here
             bottomNavigationViewModel.onBottomNavigationVisibilityChanged(
@@ -148,7 +159,8 @@ private fun AddReminderContent(
     onClickOnDatePickerCancel: () -> Unit,
     onClickOnDay: (Long) -> Unit,
     onClickOnDatePickerConfirm: () -> Unit,
-    onTimeValueChanged: (LocalTime) -> Unit
+    onTimeValueChanged: (LocalTime) -> Unit,
+    onClickOnAddReminderButton: () -> Unit
 ) {
 
     //create container here
@@ -348,7 +360,7 @@ private fun AddReminderContent(
                         text = stringResource(
                             id = R.string.add_alarm
                         ),
-                        onClick = { /*TODO*/ },
+                        onClick = onClickOnAddReminderButton,
                         modifier = Modifier
                             .constrainAs(addAlarmButtonId) {
                                 start.linkTo(

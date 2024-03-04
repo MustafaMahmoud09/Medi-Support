@@ -3,7 +3,7 @@ package com.example.repository.interfaces
 import com.example.reminder.domain.entity.interfaces.IDayEntity
 import com.example.reminder.domain.entity.interfaces.IReminderWithDays
 import kotlinx.coroutines.flow.Flow
-import java.sql.Date
+import java.time.LocalTime
 
 interface IReminderRepository {
 
@@ -15,12 +15,12 @@ interface IReminderRepository {
 
     suspend fun getWeekDays(): Flow<List<IDayEntity>>
 
-    fun storeReminder(name: String, time: Date, days: List<Int>)
+    suspend fun storeReminder(name: String, userId: Long, time: LocalTime, days: List<Long>)
 
-    fun getReminders(): Flow<IReminderWithDays>
+    suspend fun getReminders(userId: Long): Flow<List<IReminderWithDays>>
 
-    fun deleteReminder(id: Long)
+    suspend fun deleteReminder(id: Long, userId: Long)
 
-    fun updateReminderStatus(newValue: Boolean)
+    suspend fun updateReminderStatus(reminderId: Long, newValue: Boolean, userId: Long)
 
 }//end IReminderRepository

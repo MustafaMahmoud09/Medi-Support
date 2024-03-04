@@ -10,6 +10,6 @@ interface ReminderDateDao {
 
     //TODO:: Function For Insert Reminder Days
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(reminderDays: List<ReminderDateEntity>)
+    suspend fun insert(reminderDay: ReminderDateEntity)
 
 }//end ReminderDayDao

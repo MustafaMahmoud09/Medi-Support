@@ -2,11 +2,16 @@ package com.example.reminder.presentation.uiState.viewModel
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.viewModelScope
+import com.example.reminder.domaim.domain.model.reminder.ReminderStoreData
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
+import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
+import com.example.reminder.presentation.uiState.state.AddReminderErrorUiState
 import com.example.reminder.presentation.uiState.state.AddReminderUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -22,7 +27,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddReminderViewModel @Inject constructor(
     private val addDaysUseCase: IAddDaysUseCase,
-    private val getDaysUseCase: IGetDaysUseCase
+    private val getDaysUseCase: IGetDaysUseCase,
+    private val addReminderUseCase: IAddReminderUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -43,7 +49,7 @@ class AddReminderViewModel @Inject constructor(
     private fun onWeekDaysStored() {
 
         //create coroutine builder here
-        getCoroutineScope().launch {
+        viewModelScope.launch(Dispatchers.IO) {
 
             //store days here
             addDaysUseCase()
@@ -56,7 +62,7 @@ class AddReminderViewModel @Inject constructor(
     private fun getWeekDays() {
 
         //create coroutine builder here
-        getCoroutineScope().launch {
+        viewModelScope.launch(Dispatchers.IO) {
 
             //collect days when arrived from use case here
             getDaysUseCase().collectLatest { days ->
@@ -235,6 +241,107 @@ class AddReminderViewModel @Inject constructor(
 
     }//end onTimeValueChanged
 
+
+    //fun for store reminder
+    fun onReminderStored(): Boolean {
+
+        var findError = false
+
+        //check user do not select days
+        if (state.value.daysValue.trim().isEmpty()) {
+
+            _state.update {
+                it.copy(
+                    screenError = state.value.screenError.copy(
+                        daysError = true
+                    )
+                )
+            }//end update
+
+            findError = true
+
+        }//end if
+
+        //check user do not select time
+        if (state.value.timeValue.trim().isEmpty()) {
+
+            _state.update {
+                it.copy(
+                    screenError = state.value.screenError.copy(
+                        timeError = true
+                    )
+                )
+            }//end update
+
+            findError = true
+
+        }//end if
+
+        //check user do not write name
+        if (state.value.medicamentName.trim().isEmpty()) {
+
+            _state.update {
+                it.copy(
+                    screenError = state.value.screenError.copy(
+                        medicamentNameError = true
+                    )
+                )
+            }//end update
+
+            findError = true
+
+        }//end if
+
+        if (findError) {
+
+            return false
+        }//end if
+
+        return executeStoreReminder()
+
+    }//end onReminderStored
+
+    //function for execute store reminder
+    private fun executeStoreReminder(): Boolean {
+
+        //change screen state to loading
+        _state.update {
+            it.copy(
+                isLoading = true,
+                screenError = AddReminderErrorUiState(),
+            )
+        }//end update
+
+        //create coroutine builder here
+        val job = viewModelScope.launch(Dispatchers.IO) {
+
+            //store reminder here
+            addReminderUseCase(
+                reminder = ReminderStoreData(
+                    reminderName = state.value.medicamentName.trim(),
+                    days = state.value.daysSelectedBackup,
+                    time = state.value.timeSelectedBackup
+                )
+            )
+
+            //change screen state to loading
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    medicamentName = "",
+                    daysValue = "",
+                    timeValue = "",
+                    timeSelected = LocalTime.now(),
+                    timeSelectedBackup = LocalTime.now(),
+                    daysSelected = emptyList(),
+                    daysSelectedBackup = emptyList(),
+                )
+            }//end update
+
+        }//end launch
+
+        return true
+    }//end executeStoreReminder
 
     //function for change date picker visibility
     fun onDatePickerVisibilityChanged(show: Boolean) {

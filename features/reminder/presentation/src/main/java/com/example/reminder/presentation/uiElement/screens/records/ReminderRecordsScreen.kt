@@ -7,12 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.reminder.presentation.uiElement.components.items.ReminderSection
+import com.example.reminder.presentation.uiState.state.RemindersUiState
+import com.example.reminder.presentation.uiState.viewModel.RemindersViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
@@ -20,15 +25,20 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-
+import kotlin.reflect.KFunction2
 
 @Composable
 internal fun ReminderRecordsScreen(
+    viewModel: RemindersViewModel = hiltViewModel(),
     popReminderRecordsDestination: () -> Unit
 ) {
+    //collect screen state here
+    val state = viewModel.state.collectAsState()
 
     ReminderRecordsContent(
+        uiState = state.value,
         onClickBack = popReminderRecordsDestination,
+        onReminderStatusChanged = viewModel::onReminderStatusUpdated
     )
 }//end ReminderRecordsScreen
 
@@ -36,7 +46,9 @@ internal fun ReminderRecordsScreen(
 private fun ReminderRecordsContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    uiState: RemindersUiState,
+    onReminderStatusChanged: (Boolean, Long) -> Unit
 ) {
 
     //create container here
@@ -134,19 +146,16 @@ private fun ReminderRecordsContent(
 
             //create reminder items here
             items(
-                count = 10
-            ) {
+                count = uiState.reminders.size
+            ) { index ->
 
                 //create single reminder here
-                com.example.reminder.presentation.uiElement.components.items.ReminderSection(
+                ReminderSection(
                     dimen = dimen,
                     theme = theme,
-                    time = "7:00",
-                    timeType = "AM",
-                    days = "Everyday",
-                    background = if (it % 2 == 0) theme.grayECECEC else theme.redLightFF979B,
-                    onCheckedChange = { _, _ -> },
-                    checked = it % 2 == 0,
+                    reminder = uiState.reminders[index],
+                    background = if (index % 2 == 0) theme.grayECECEC else theme.redLightFF979B,
+                    onCheckedChange = onReminderStatusChanged,
                     modifier = Modifier
                         .fillMaxWidth()
                 )

@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 import com.example.reminder.domain.entity.interfaces.IReminderEntity
 import com.example.shared.entity.implementation.user.UserEntity
 import com.example.shared.entity.implementation.user.UserInfo
+import java.time.LocalTime
+import java.util.Date
 
 @Entity(
     tableName = ReminderInfo.REMINDER_TABLE_NAME,
@@ -31,7 +33,7 @@ data class ReminderEntity(
     ) override val name: String,
     @ColumnInfo(
         name = ReminderInfo.TIME_COLUMN_NAME
-    ) override val time: Long,
+    ) override val time: LocalTime,
     @ColumnInfo(
         name = ReminderInfo.STATUS_COLUMN_NAME
     ) override val status: Boolean,

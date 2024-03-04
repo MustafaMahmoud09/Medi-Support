@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.example.reminder.domaim.domain.model.reminder.ReminderPresentationModel
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.material4.Switch
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -19,28 +20,25 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 internal fun ReminderSection(
     dimen: CustomDimen,
     theme: CustomTheme,
+    reminder: ReminderPresentationModel,
     shape: Shape = RoundedCornerShape(
         size = dimen.dimen_1_25.dp
     ),
-    time: String,
     timeColor: Color = theme.black,
     timeSize: Float = dimen.dimen_4_5,
-    timeType: String,
     timeTypeColor: Color = theme.blackTR70,
     timeTypeSize: Float = dimen.dimen_2_25,
-    days: String,
     daysColor: Color = theme.black,
     daysSize: Float = dimen.dimen_1_75,
     background: Color,
-    onCheckedChange: (Boolean, Int) -> Unit,
-    checked: Boolean,
+    onCheckedChange: (Boolean, Long) -> Unit,
     switchHeight: Float = dimen.dimen_3,
     switchWidth: Float = dimen.dimen_7_5,
     uncheckedTrackColor: Color = theme.grayDark6B6B6B,
     checkedTrackColor: Color = theme.blue1DA1F2,
     uncheckedThumbColor: Color = theme.background,
     checkedThumbColor: Color = theme.background,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     ConstraintLayout(
@@ -63,7 +61,7 @@ internal fun ReminderSection(
         TextNormalView(
             theme = theme,
             dimen = dimen,
-            text = time,
+            text = reminder.time,
             size = timeSize,
             fontColor = timeColor,
             modifier = Modifier
@@ -77,7 +75,7 @@ internal fun ReminderSection(
         TextNormalView(
             theme = theme,
             dimen = dimen,
-            text = timeType,
+            text = reminder.timeCode,
             size = timeTypeSize,
             fontColor = timeTypeColor,
             modifier = Modifier
@@ -94,7 +92,7 @@ internal fun ReminderSection(
         TextNormalView(
             theme = theme,
             dimen = dimen,
-            text = days,
+            text = reminder.days,
             size = daysSize,
             fontColor = daysColor,
             modifier = Modifier
@@ -109,8 +107,8 @@ internal fun ReminderSection(
 
         //create switch to control on reminder state here
         Switch(
-            checked = checked,
-            onCheckedChange = { onCheckedChange(!checked, 1) },
+            checked = reminder.status,
+            onCheckedChange = { onCheckedChange(!reminder.status, reminder.id) },
             width = switchWidth.dp,
             height = switchHeight.dp,
             uncheckedTrackColor = uncheckedTrackColor,

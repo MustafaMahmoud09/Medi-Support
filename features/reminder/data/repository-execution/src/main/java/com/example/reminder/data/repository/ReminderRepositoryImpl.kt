@@ -2,12 +2,15 @@ package com.example.reminder.data.repository
 
 import com.example.localdata.MediSupportDatabase
 import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
+import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderEntity
+import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateEntity
 import com.example.reminder.data.source.shared.preferences.ReminderPreferencesAccess
 import com.example.reminder.domain.entity.interfaces.IDayEntity
 import com.example.reminder.domain.entity.interfaces.IReminderWithDays
 import com.example.repository.interfaces.IReminderRepository
+import com.example.shared.entity.implementation.user.UserEntity
 import kotlinx.coroutines.flow.Flow
-import java.sql.Date
+import java.time.LocalTime
 
 class ReminderRepositoryImpl(
     private val reminderPreferencesAccess: ReminderPreferencesAccess,
@@ -46,6 +49,14 @@ class ReminderRepositoryImpl(
 
         }//end forEach
 
+        localDatabase.userDao().insert(
+            user = UserEntity(
+                email = "mustafa@gmail.com",
+                password = "12345678",
+                auth = true
+            )
+        )
+
     }//end storeWeekDays
 
     //fun for select week days
@@ -55,20 +66,67 @@ class ReminderRepositoryImpl(
 
     }//end getWeekDays
 
-    override fun storeReminder(name: String, time: Date, days: List<Int>) {
-        TODO("Not yet implemented")
-    }
+    //function for store reminder
+    override suspend fun storeReminder(
+        name: String,
+        userId: Long,
+        time: LocalTime,
+        days: List<Long>
+    ) {
 
-    override fun getReminders(): Flow<IReminderWithDays> {
-        TODO("Not yet implemented")
-    }
+        //store reminder here
+        val reminderId = localDatabase.reminderDao().insert(
+            reminder = ReminderEntity(
+                name = name,
+                time = time,
+                status = true,
+                userId = userId,
+            )
+        )
 
-    override fun deleteReminder(id: Long) {
-        TODO("Not yet implemented")
-    }
+        //for loop on days here
+        days.forEach {
 
-    override fun updateReminderStatus(newValue: Boolean) {
-        TODO("Not yet implemented")
-    }
+            //create reminder date here
+            localDatabase.reminderDateDao().insert(
+                reminderDay = ReminderDateEntity(
+                    reminderId = reminderId,
+                    dayId = it
+                )
+            )
+
+        }//end forEach
+
+    }//end storeReminder
+
+    //function for get reminders from local database
+    override suspend fun getReminders(userId: Long): Flow<List<IReminderWithDays>> {
+
+        return localDatabase.reminderDao().select(
+            userId = userId
+        )
+
+    }//end getReminders
+
+    //function for delete reminder
+    override suspend fun deleteReminder(id: Long, userId: Long) {
+
+        localDatabase.reminderDao().delete(
+            id = id,
+            userId = userId
+        )
+
+    }//end deleteReminder
+
+    //function for update reminder status
+    override suspend fun updateReminderStatus(reminderId: Long, newValue: Boolean, userId: Long) {
+
+        localDatabase.reminderDao().update(
+            id = reminderId,
+            status = newValue,
+            userId = userId,
+        )
+
+    }//end updateReminderStatus
 
 }//end RepositoryImp

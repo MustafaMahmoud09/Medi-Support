@@ -21,23 +21,28 @@ interface ReminderDao {
     //TODO:: Function For Delete Reminder Row
     @Query(
         "DELETE FROM ${ReminderInfo.REMINDER_TABLE_NAME}" +
-                " WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id"
+                " WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id " +
+                "AND ${ReminderInfo.USER_ID_COLUMN_NAME} = :userId"
     )
-    suspend fun delete(id: Long)
+    suspend fun delete(id: Long, userId: Long)
 
 
     //TODO:: Function For Select All Reminders
     @Transaction
-    @Query("SELECT * FROM ${ReminderInfo.REMINDER_TABLE_NAME} ")
-    fun select(): Flow<List<ReminderWithDays>>
+    @Query(
+        "SELECT * FROM ${ReminderInfo.REMINDER_TABLE_NAME}" +
+                " WHERE ${ReminderInfo.USER_ID_COLUMN_NAME} = :userId"
+    )
+    fun select(userId: Long): Flow<List<ReminderWithDays>>
 
 
     //TODO:: Function For Update Reminder Status
     @Query(
         "UPDATE ${ReminderInfo.REMINDER_TABLE_NAME} SET " +
                 "${ReminderInfo.STATUS_COLUMN_NAME} = :status " +
-                "WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id"
+                "WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id AND " +
+                "${ReminderInfo.USER_ID_COLUMN_NAME} = :userId"
     )
-    suspend fun update(id: Long, status: Boolean)
+    suspend fun update(id: Long, status: Boolean, userId: Long)
 
 }//end ReminderDao

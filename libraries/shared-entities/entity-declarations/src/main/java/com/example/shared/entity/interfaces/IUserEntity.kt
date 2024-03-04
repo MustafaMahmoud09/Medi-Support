@@ -9,4 +9,8 @@ interface IUserEntity {
 
     val password: String
 
+    val auth: Boolean
+
+    val createdAt: Long
+
 }//end IUserEntity

@@ -11,11 +11,19 @@ data class AddReminderUiState(
     val medicamentName: String = "",
     val daysValue: String = "",
     val timeValue: String = "",
+    val screenError: AddReminderErrorUiState = AddReminderErrorUiState(),
+    val isLoading: Boolean = false,
     val timeSelected: LocalTime = LocalTime.now(),
     val timeSelectedBackup: LocalTime = LocalTime.now(),
     val weekDays: List<Day> = emptyList(),
     val daysSelected: List<Long> = emptyList(),
     val daysSelectedBackup: List<Long> = emptyList(),
+)
+
+data class AddReminderErrorUiState(
+    val medicamentNameError: Boolean = false,
+    val daysError: Boolean = false,
+    val timeError: Boolean = false
 )
 
 

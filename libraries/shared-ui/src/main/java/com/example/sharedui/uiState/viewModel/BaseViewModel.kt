@@ -11,7 +11,7 @@ abstract class BaseViewModel : ViewModel() {
 
     fun getCoroutineScope(): CoroutineScope {
 
-        return this.coroutineScope
+        return coroutineScope
 
     }//end getCoroutineScope
 

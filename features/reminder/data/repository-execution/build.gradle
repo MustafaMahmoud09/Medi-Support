@@ -46,6 +46,7 @@ dependencies {
     implementation(project(':features:reminder:data:data-source:shared-preferences'))
 
 
+    implementation(project(':libraries:shared-entities:entity-execution'))
 
 
     //kotlin flow dependency

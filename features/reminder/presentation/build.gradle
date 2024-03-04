@@ -80,4 +80,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
+    //view model scope
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.7.0"
+
 }

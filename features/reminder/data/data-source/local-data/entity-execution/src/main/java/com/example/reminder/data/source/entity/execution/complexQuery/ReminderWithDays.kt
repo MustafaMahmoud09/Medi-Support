@@ -1,6 +1,5 @@
 package com.example.reminder.data.source.entity.execution.complexQuery
 
-import androidx.room.DatabaseView
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
@@ -9,7 +8,6 @@ import com.example.reminder.data.source.entity.execution.entities.reminder.Remin
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateInfo
 import com.example.reminder.domain.entity.interfaces.IReminderWithDays
-
 
 data class ReminderWithDays(
     @Embedded override val reminder: ReminderEntity,

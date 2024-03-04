@@ -1,5 +1,8 @@
 package com.example.reminder.domain.entity.interfaces
 
+import java.time.LocalTime
+import java.util.Date
+
 interface IReminderEntity {
 
     //create table columns here
@@ -7,7 +10,7 @@ interface IReminderEntity {
 
     val name: String
 
-    val time: Long
+    val time: LocalTime
 
     val status: Boolean
 

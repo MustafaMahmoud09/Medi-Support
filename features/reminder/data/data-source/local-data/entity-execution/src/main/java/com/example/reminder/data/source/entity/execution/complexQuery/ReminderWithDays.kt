@@ -7,7 +7,7 @@ import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateInfo
-import com.example.reminder.domain.entity.interfaces.IReminderWithDays
+import com.example.reminder.domain.entity.interfaces.complexQuery.IReminderWithDays
 
 data class ReminderWithDays(
     @Embedded override val reminder: ReminderEntity,

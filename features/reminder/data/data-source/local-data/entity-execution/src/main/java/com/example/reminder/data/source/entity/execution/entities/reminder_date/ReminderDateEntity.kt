@@ -8,7 +8,7 @@ import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
 import com.example.reminder.data.source.entity.execution.entities.day.DayInfo
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderInfo
-import com.example.reminder.domain.entity.interfaces.IReminderDateEntity
+import com.example.reminder.domain.entity.interfaces.entity.IReminderDateEntity
 
 //create entity here
 @Entity(

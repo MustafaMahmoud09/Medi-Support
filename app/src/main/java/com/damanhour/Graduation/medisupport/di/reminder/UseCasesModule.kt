@@ -1,12 +1,14 @@
 package com.damanhour.Graduation.medisupport.di.reminder
 
 import com.example.reminder.domain.mapper.declarations.child.IDayEntityToDayModelMapper
+import com.example.reminder.domain.mapper.declarations.child.INearestReminderEntityToNearestReminderModelMapper
 import com.example.reminder.domain.mapper.declarations.child.IReminderWithDaysEntityToReminderModelMapper
 import com.example.reminder.domain.usecase.AddDaysUseCase
 import com.example.reminder.domain.usecase.AddReminderUseCase
 import com.example.reminder.domain.usecase.CheckAppFirstRunUseCase
 import com.example.reminder.domain.usecase.DeleteReminderUseCase
 import com.example.reminder.domain.usecase.GetDaysUseCase
+import com.example.reminder.domain.usecase.GetNearestReminderUseCase
 import com.example.reminder.domain.usecase.GetUserRemindersUseCase
 import com.example.reminder.domain.usecase.UpdateReminderStatusUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
@@ -14,6 +16,7 @@ import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.ICheckAppFirstRunUseCase
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetNearestRemindersUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
 import com.example.reminder.domain.usecase.interfaces.IUpdateReminderStatusUseCase
 import com.example.repository.interfaces.IReminderRepository
@@ -121,5 +124,21 @@ object UseCasesModule {
         )
 
     }//end provideDeleteReminderUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideGetNearestRemindersUseCase(
+        reminderRepository: IReminderRepository,
+        nearestReminderEntityNearestReminderModelMapper: INearestReminderEntityToNearestReminderModelMapper
+    ): IGetNearestRemindersUseCase {
+
+        return GetNearestReminderUseCase(
+            reminderRepository = reminderRepository,
+            nearestReminderEntityNearestReminderModelMapper = nearestReminderEntityNearestReminderModelMapper
+        )
+
+    }//end provideGetNearestRemindersUseCase
+
 
 }//end UseCaseModule

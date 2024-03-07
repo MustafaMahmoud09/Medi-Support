@@ -1,7 +1,8 @@
 package com.example.repository.interfaces
 
-import com.example.reminder.domain.entity.interfaces.IDayEntity
-import com.example.reminder.domain.entity.interfaces.IReminderWithDays
+import com.example.reminder.domain.entity.interfaces.complexQuery.INearestReminder
+import com.example.reminder.domain.entity.interfaces.entity.IDayEntity
+import com.example.reminder.domain.entity.interfaces.complexQuery.IReminderWithDays
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
 
@@ -18,6 +19,8 @@ interface IReminderRepository {
     suspend fun storeReminder(name: String, userId: Long, time: LocalTime, days: List<Long>)
 
     suspend fun getReminders(userId: Long): Flow<List<IReminderWithDays>>
+
+    suspend fun getNearestReminder(status: Boolean): Flow<List<INearestReminder>>
 
     suspend fun deleteReminder(id: Long, userId: Long)
 

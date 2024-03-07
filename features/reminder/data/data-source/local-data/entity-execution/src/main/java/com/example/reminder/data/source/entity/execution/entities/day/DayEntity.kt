@@ -3,7 +3,7 @@ package com.example.reminder.data.source.entity.execution.entities.day
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.reminder.domain.entity.interfaces.IDayEntity
+import com.example.reminder.domain.entity.interfaces.entity.IDayEntity
 
 @Entity(tableName = DayInfo.DAY_TABLE_NAME)
 data class DayEntity(

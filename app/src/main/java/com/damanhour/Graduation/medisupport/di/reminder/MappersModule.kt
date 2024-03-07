@@ -1,8 +1,10 @@
 package com.damanhour.Graduation.medisupport.di.reminder
 
 import com.example.reminder.domain.mapper.declarations.child.IDayEntityToDayModelMapper
+import com.example.reminder.domain.mapper.declarations.child.INearestReminderEntityToNearestReminderModelMapper
 import com.example.reminder.domain.mapper.declarations.child.IReminderWithDaysEntityToReminderModelMapper
 import com.example.reminder.mapper.DayEntityToDayModelMapper
+import com.example.reminder.mapper.NearestReminderEntityToNearestReminderModelMapper
 import com.example.reminder.mapper.ReminderWithDaysEntityToReminderModelMapper
 import dagger.Module
 import dagger.Provides
@@ -27,12 +29,22 @@ object MappersModule {
     @Singleton
     fun provideReminderWithDaysEntityToReminderModelMapper(
         dayEntityToDayModelMapper: IDayEntityToDayModelMapper
-    ): IReminderWithDaysEntityToReminderModelMapper{
+    ): IReminderWithDaysEntityToReminderModelMapper {
 
         return ReminderWithDaysEntityToReminderModelMapper(
             dayEntityToDayModelMapper = dayEntityToDayModelMapper
         )
 
     }//end IReminderWithDaysEntityToReminderModelMapper
+
+
+    @Provides
+    @Singleton
+    fun provideNearestReminderEntityNearestReminderModelMapper()
+            : INearestReminderEntityToNearestReminderModelMapper {
+
+        return NearestReminderEntityToNearestReminderModelMapper()
+
+    }//end provideNearestReminderEntityNearestReminderModelMapper
 
 }//end MappersModule

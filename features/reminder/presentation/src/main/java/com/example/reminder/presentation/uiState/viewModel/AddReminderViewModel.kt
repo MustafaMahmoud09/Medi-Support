@@ -1,5 +1,7 @@
 package com.example.reminder.presentation.uiState.viewModel
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
@@ -7,6 +9,7 @@ import com.example.reminder.domaim.domain.model.reminder.ReminderStoreData
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
+import com.example.reminder.presentation.uiElement.ReminderService
 import com.example.reminder.presentation.uiState.state.AddReminderErrorUiState
 import com.example.reminder.presentation.uiState.state.AddReminderUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
@@ -28,7 +31,8 @@ import javax.inject.Inject
 class AddReminderViewModel @Inject constructor(
     private val addDaysUseCase: IAddDaysUseCase,
     private val getDaysUseCase: IGetDaysUseCase,
-    private val addReminderUseCase: IAddReminderUseCase
+    private val addReminderUseCase: IAddReminderUseCase,
+    private val context: Context
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -41,9 +45,16 @@ class AddReminderViewModel @Inject constructor(
 
         onWeekDaysStored()
         getWeekDays()
+        runReminderService()
 
     }//end init
 
+    private fun runReminderService() {
+
+        val serviceIntent = Intent(context, ReminderService::class.java)
+        context.startForegroundService(serviceIntent)
+
+    }//end runReminderService
 
     //function for store week days
     private fun onWeekDaysStored() {

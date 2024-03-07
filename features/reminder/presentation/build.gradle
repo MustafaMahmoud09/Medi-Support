@@ -83,4 +83,7 @@ dependencies {
     //view model scope
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.7.0"
 
+    //permission request
+    implementation("com.google.accompanist:accompanist-permissions:$accompanist_version")
+
 }

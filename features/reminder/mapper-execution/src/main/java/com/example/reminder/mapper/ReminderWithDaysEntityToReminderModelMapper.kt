@@ -3,7 +3,7 @@ package com.example.reminder.mapper
 
 import com.example.reminder.domaim.domain.model.Day
 import com.example.reminder.domaim.domain.model.reminder.ReminderPresentationModel
-import com.example.reminder.domain.entity.interfaces.IReminderWithDays
+import com.example.reminder.domain.entity.interfaces.complexQuery.IReminderWithDays
 import com.example.reminder.domain.mapper.declarations.child.IDayEntityToDayModelMapper
 import com.example.reminder.domain.mapper.declarations.child.IReminderWithDaysEntityToReminderModelMapper
 import java.time.format.DateTimeFormatter

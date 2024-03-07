@@ -5,8 +5,9 @@ import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateEntity
 import com.example.reminder.data.source.shared.preferences.ReminderPreferencesAccess
-import com.example.reminder.domain.entity.interfaces.IDayEntity
-import com.example.reminder.domain.entity.interfaces.IReminderWithDays
+import com.example.reminder.domain.entity.interfaces.complexQuery.INearestReminder
+import com.example.reminder.domain.entity.interfaces.entity.IDayEntity
+import com.example.reminder.domain.entity.interfaces.complexQuery.IReminderWithDays
 import com.example.repository.interfaces.IReminderRepository
 import com.example.shared.entity.implementation.user.UserEntity
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,7 @@ import java.time.LocalTime
 class ReminderRepositoryImpl(
     private val reminderPreferencesAccess: ReminderPreferencesAccess,
     private val localDatabase: MediSupportDatabase
-) : IReminderRepository {
+) : IReminderRepository {//end RepositoryImp
 
     //fun return false if used the reminder feature before else return true
     override fun getRunReminderFeature(): Boolean {
@@ -108,6 +109,17 @@ class ReminderRepositoryImpl(
 
     }//end getReminders
 
+    //function for provide nearest reminder
+    override suspend fun getNearestReminder(status: Boolean): Flow<List<INearestReminder>> {
+
+        return localDatabase
+            .reminderDao()
+            .nearestReminder(
+                status = status
+            )
+
+    }//end getNearestReminder
+
     //function for delete reminder
     override suspend fun deleteReminder(id: Long, userId: Long) {
 
@@ -129,4 +141,4 @@ class ReminderRepositoryImpl(
 
     }//end updateReminderStatus
 
-}//end RepositoryImp
+}

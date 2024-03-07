@@ -1,7 +1,7 @@
 package com.example.reminder.mapper
 
 import com.example.reminder.domaim.domain.model.Day
-import com.example.reminder.domain.entity.interfaces.IDayEntity
+import com.example.reminder.domain.entity.interfaces.entity.IDayEntity
 import com.example.reminder.domain.mapper.declarations.child.IDayEntityToDayModelMapper
 
 class DayEntityToDayModelMapper : IDayEntityToDayModelMapper {

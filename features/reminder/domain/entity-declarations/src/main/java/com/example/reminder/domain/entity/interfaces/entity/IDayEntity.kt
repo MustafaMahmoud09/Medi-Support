@@ -1,4 +1,4 @@
-package com.example.reminder.domain.entity.interfaces
+package com.example.reminder.domain.entity.interfaces.entity
 
 interface IDayEntity {
 

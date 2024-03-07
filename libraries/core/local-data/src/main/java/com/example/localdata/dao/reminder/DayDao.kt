@@ -4,8 +4,11 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.reminder.data.source.entity.execution.complexQuery.NearestReminder
 import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
 import com.example.reminder.data.source.entity.execution.entities.day.DayInfo
+import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderInfo
+import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao

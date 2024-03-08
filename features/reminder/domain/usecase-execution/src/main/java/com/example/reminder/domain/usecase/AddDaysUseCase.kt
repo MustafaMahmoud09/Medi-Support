@@ -16,8 +16,8 @@ class AddDaysUseCase(
         if (checkAppFirstRunUseCase()) {
 
             //set run reminder feature here
-            reminderRepository.setRunReminderFeature(
-                value = false
+            reminderRepository.setRunningReminderFeatureState(
+                value = true
             )
 
             //store week days here

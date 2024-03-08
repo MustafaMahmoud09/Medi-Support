@@ -7,17 +7,23 @@ import com.example.reminder.domain.usecase.AddDaysUseCase
 import com.example.reminder.domain.usecase.AddReminderUseCase
 import com.example.reminder.domain.usecase.CheckAppFirstRunUseCase
 import com.example.reminder.domain.usecase.DeleteReminderUseCase
+import com.example.reminder.domain.usecase.GetActiveRemindersSizeUseCase
 import com.example.reminder.domain.usecase.GetDaysUseCase
 import com.example.reminder.domain.usecase.GetNearestReminderUseCase
+import com.example.reminder.domain.usecase.GetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.GetUserRemindersUseCase
+import com.example.reminder.domain.usecase.SetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.UpdateReminderStatusUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.ICheckAppFirstRunUseCase
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetActiveRemindersSizeUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetNearestRemindersUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
+import com.example.reminder.domain.usecase.interfaces.ISetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.interfaces.IUpdateReminderStatusUseCase
 import com.example.repository.interfaces.IReminderRepository
 import dagger.Module
@@ -140,5 +146,43 @@ object UseCasesModule {
 
     }//end provideGetNearestRemindersUseCase
 
+
+    @Provides
+    @Singleton
+    fun provideSetReminderServiceRunningStateUseCase(
+        reminderRepository: IReminderRepository
+    ): ISetReminderServiceRunningStateUseCase {
+
+        return SetReminderServiceRunningStateUseCase(
+            reminderRepository = reminderRepository
+        )
+
+    }//end provideSetReminderServiceRunningStateUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideGetReminderServiceRunningStateUseCase(
+        reminderRepository: IReminderRepository
+    ): IGetReminderServiceRunningStateUseCase {
+
+        return GetReminderServiceRunningStateUseCase(
+            reminderRepository = reminderRepository
+        )
+
+    }//end provideGetReminderServiceRunningStateUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideGetReminderActiveSizeUseCase(
+        reminderRepository: IReminderRepository
+    ): IGetActiveRemindersSizeUseCase {
+
+        return GetActiveRemindersSizeUseCase(
+            reminderRepository = reminderRepository
+        )
+
+    }//end provideGetReminderActiveSizeUseCase
 
 }//end UseCaseModule

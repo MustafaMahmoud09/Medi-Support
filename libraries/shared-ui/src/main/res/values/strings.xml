@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MediSupport</string>
     <string name="medi">Medi</string>
+    <string name="medication_appointment">Medication appointment</string>
     <string name="support">Support</string>
     <string name="next">Next</string>
     <string name="get_started">Get Started</string>
@@ -119,4 +120,5 @@
     <string name="you_will_now_make_video_call_with_doctor">you will now make video call with doctor</string>
     <string name="payment_successful">Payment Successful</string>
     <string name="start_now">Start Now</string>
+    <string name="the_remaining_time">The remaining time</string>
 </resources>

@@ -8,6 +8,7 @@ import com.example.reminder.data.source.shared.preferences.ReminderPreferencesAc
 import com.example.reminder.domain.entity.interfaces.complexQuery.INearestReminder
 import com.example.reminder.domain.entity.interfaces.entity.IDayEntity
 import com.example.reminder.domain.entity.interfaces.complexQuery.IReminderWithDays
+import com.example.reminder.domain.entity.interfaces.entity.IReminderEntity
 import com.example.repository.interfaces.IReminderRepository
 import com.example.shared.entity.implementation.user.UserEntity
 import kotlinx.coroutines.flow.Flow
@@ -16,23 +17,48 @@ import java.time.LocalTime
 class ReminderRepositoryImpl(
     private val reminderPreferencesAccess: ReminderPreferencesAccess,
     private val localDatabase: MediSupportDatabase
-) : IReminderRepository {//end RepositoryImp
+) : IReminderRepository {//end ReminderRepositoryImpl//end RepositoryImp
 
     //fun return false if used the reminder feature before else return true
-    override fun getRunReminderFeature(): Boolean {
+    override fun getRunningReminderFeatureState(): Boolean {
 
-        return reminderPreferencesAccess.runReminderManager().getRunReminder()
+        return reminderPreferencesAccess
+            .runningReminderManager()
+            .getRunningReminderFeatureState()
 
     }//end getRunReminderFeature
 
     //fun for set use reminder feature
-    override fun setRunReminderFeature(value: Boolean) {
+    override fun setRunningReminderFeatureState(value: Boolean) {
 
-        reminderPreferencesAccess.runReminderManager().setRunReminder(
-            value = value
-        )
+        reminderPreferencesAccess
+            .runningReminderManager()
+            .setRunningReminderFeatureState(
+                value = value
+            )
 
     }//end setRunReminderFeature
+
+
+    //function for set reminder service state
+    override fun setReminderServiceState(value: Boolean) {
+
+        reminderPreferencesAccess
+            .runningReminderServiceManager()
+            .setReminderServiceState(
+                value = value
+            )
+
+    }//end setReminderServiceState
+
+    //function for get reminder service state
+    override fun getReminderServiceState(): Boolean {
+
+        return reminderPreferencesAccess
+            .runningReminderServiceManager()
+            .getReminderServiceState()
+
+    }//end getReminderServiceState
 
 
     //fun for store week days
@@ -66,6 +92,7 @@ class ReminderRepositoryImpl(
         return localDatabase.dayDao().select()
 
     }//end getWeekDays
+
 
     //function for store reminder
     override suspend fun storeReminder(
@@ -101,7 +128,9 @@ class ReminderRepositoryImpl(
     }//end storeReminder
 
     //function for get reminders from local database
-    override suspend fun getReminders(userId: Long): Flow<List<IReminderWithDays>> {
+    override suspend fun getReminders(
+        userId: Long
+    ): Flow<List<IReminderWithDays>> {
 
         return localDatabase.reminderDao().select(
             userId = userId
@@ -109,19 +138,36 @@ class ReminderRepositoryImpl(
 
     }//end getReminders
 
+    override suspend fun getRemindersByStatus(
+        status: Boolean
+    ): Flow<List<IReminderEntity>> {
+
+        return localDatabase.reminderDao().selectRemindersByStatus(
+            status = status
+        )
+
+    }//end getRemindersByStatus
+
     //function for provide nearest reminder
-    override suspend fun getNearestReminder(status: Boolean): Flow<List<INearestReminder>> {
+    override suspend fun getNearestReminder(
+        status: Boolean,
+        localTime: LocalTime
+    ): Flow<List<INearestReminder>> {
 
         return localDatabase
             .reminderDao()
             .nearestReminder(
-                status = status
+                status = status,
+                localTime = localTime
             )
 
     }//end getNearestReminder
 
     //function for delete reminder
-    override suspend fun deleteReminder(id: Long, userId: Long) {
+    override suspend fun deleteReminder(
+        id: Long,
+        userId: Long
+    ) {
 
         localDatabase.reminderDao().delete(
             id = id,
@@ -131,7 +177,11 @@ class ReminderRepositoryImpl(
     }//end deleteReminder
 
     //function for update reminder status
-    override suspend fun updateReminderStatus(reminderId: Long, newValue: Boolean, userId: Long) {
+    override suspend fun updateReminderStatus(
+        reminderId: Long,
+        newValue: Boolean,
+        userId: Long
+    ) {
 
         localDatabase.reminderDao().update(
             id = reminderId,

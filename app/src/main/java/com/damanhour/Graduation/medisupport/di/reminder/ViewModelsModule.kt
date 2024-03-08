@@ -6,9 +6,12 @@ import androidx.annotation.RequiresApi
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetActiveRemindersSizeUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetNearestRemindersUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
+import com.example.reminder.domain.usecase.interfaces.ISetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.interfaces.IUpdateReminderStatusUseCase
 import com.example.reminder.presentation.uiState.viewModel.AddReminderViewModel
 import com.example.reminder.presentation.uiState.viewModel.ReminderServiceViewModel
@@ -47,6 +50,9 @@ object ViewModelsModule {
         addDaysUseCase: IAddDaysUseCase,
         getDaysUseCase: IGetDaysUseCase,
         addReminderUseCase: IAddReminderUseCase,
+        getReminderActiveSizeUseCase: IGetActiveRemindersSizeUseCase,
+        setReminderServiceRunningStateUseCase: ISetReminderServiceRunningStateUseCase,
+        getReminderServiceRunningStateUseCase: IGetReminderServiceRunningStateUseCase,
         @ApplicationContext context: Context
     ): AddReminderViewModel {
 
@@ -54,6 +60,9 @@ object ViewModelsModule {
             addDaysUseCase = addDaysUseCase,
             getDaysUseCase = getDaysUseCase,
             addReminderUseCase = addReminderUseCase,
+            getReminderActiveSizeUseCase = getReminderActiveSizeUseCase,
+            setReminderServiceRunningStateUseCase = setReminderServiceRunningStateUseCase,
+            getReminderServiceRunningStateUseCase = getReminderServiceRunningStateUseCase,
             context = context
         )
 

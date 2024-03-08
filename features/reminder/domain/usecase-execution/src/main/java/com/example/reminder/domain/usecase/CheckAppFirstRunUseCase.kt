@@ -10,7 +10,7 @@ class CheckAppFirstRunUseCase(
     //fun return false if used the reminder feature before else return true
     override fun invoke(): Boolean {
 
-        return reminderRepository.getRunReminderFeature()
+        return !reminderRepository.getRunningReminderFeatureState()
 
     }//end invoke
 

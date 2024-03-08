@@ -1,7 +1,8 @@
 package com.example.reminder.data.source.shared.preferences
 
 import android.content.Context
-import com.example.reminder.data.source.shared.preferences.managers.child.RunReminderManager
+import com.example.reminder.data.source.shared.preferences.managers.child.RunningReminderManager
+import com.example.reminder.data.source.shared.preferences.managers.child.RunningReminderServiceManager
 
 class ReminderPreferencesAccess(
     private val context: Context
@@ -12,9 +13,23 @@ class ReminderPreferencesAccess(
      *
      * @return RunReminderManager
      **/
-    fun runReminderManager(): RunReminderManager {
+    fun runningReminderManager(): RunningReminderManager {
 
-        return RunReminderManager(
+        return RunningReminderManager(
+            context = context
+        )
+
+    }//end RunReminderManager
+
+
+    /**
+     * function for provide run reminder service manager
+     *
+     * @return RunReminderServiceManager
+     **/
+    fun runningReminderServiceManager(): RunningReminderServiceManager {
+
+        return RunningReminderServiceManager(
             context = context
         )
 

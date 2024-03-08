@@ -7,6 +7,7 @@ import com.example.repository.interfaces.IReminderRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import java.time.LocalTime
 
 class GetNearestReminderUseCase(
     private val reminderRepository: IReminderRepository,
@@ -15,7 +16,8 @@ class GetNearestReminderUseCase(
 
     //function for provide nearest reminder
     override suspend fun invoke(
-        status: Boolean
+        status: Boolean,
+        localTime: LocalTime
     ): Flow<List<NearestReminderPresentationModel>> {
 
         //create stream of data here
@@ -23,7 +25,8 @@ class GetNearestReminderUseCase(
 
             //observe repository flow here
             reminderRepository.getNearestReminder(
-                status = status
+                status = status,
+                localTime = localTime
             ).collect { reminder ->
 
                 //convert reminder from entity to model here

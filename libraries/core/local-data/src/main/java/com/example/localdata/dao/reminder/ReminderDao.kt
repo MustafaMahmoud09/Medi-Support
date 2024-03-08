@@ -13,6 +13,7 @@ import com.example.reminder.data.source.entity.execution.entities.reminder.Remin
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderInfo
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateInfo
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalTime
 
 
 @Dao
@@ -64,7 +65,7 @@ interface ReminderDao {
         } AS day, " +
                 "CASE WHEN CAST(strftime('%w', 'now') AS INTEGER) - day.${
                     DayInfo.ID_COLUMN_NAME
-                } - 1 = 0 AND CAST(strftime('%H:%M:%S','now', 'localtime') AS LONG )> reminder.${
+                } - 1 = 0 AND :localTime > reminder.${
                     ReminderInfo.TIME_COLUMN_NAME
                 } THEN 7 " +
                 "WHEN CAST(strftime('%w', 'now') AS INTEGER) - day.${
@@ -98,34 +99,20 @@ interface ReminderDao {
                 } ASC " +
                 "LIMIT 1"
     )
-    fun nearestReminder(status: Boolean): Flow<List<NearestReminder>>
+    fun nearestReminder(
+        status: Boolean,
+        localTime: LocalTime
+    ): Flow<List<NearestReminder>>
 
+
+    //TODO:: Function For Get Reminders By Status it
+    @Query(
+        "SELECT * FROM ${
+            ReminderInfo.REMINDER_TABLE_NAME
+        } WHERE ${
+            ReminderInfo.STATUS_COLUMN_NAME
+        } = :status"
+    )
+    fun selectRemindersByStatus(status: Boolean): Flow<List<ReminderEntity>>
 
 }//end ReminderDao
-
-//AND(" +
-//"(CAST(strftime('%w', 'now') AS INTEGER) > day.${
-//DayInfo.ID_COLUMN_NAME
-//} - 1 ) OR ( CAST(strftime('%w', 'now') AS INTEGER) = day.${
-//DayInfo.ID_COLUMN_NAME
-//} - 1 AND" +
-//" reminder.${
-//ReminderInfo.TIME_COLUMN_NAME
-//} > TIME('now')" +
-//"  )" +
-//") OR
-
-//@Query(
-//    "SELECT reminder.${ReminderInfo.ID_COLUMN_NAME} AS id," +
-//            "reminder.${ReminderInfo.NAME_COLUMN_NAME} AS name," +
-//            "reminder.${ReminderInfo.TIME_COLUMN_NAME} AS time," +
-//            "day.${DayInfo.DAY_COLUMN_NAME} AS day " +
-//            "FROM ${ReminderInfo.REMINDER_TABLE_NAME} AS reminder " +
-//            "INNER JOIN ${ReminderDateInfo.REMINDER_DATE_TABLE_NANE} AS reminder_date ON " +
-//            "reminder.${ReminderInfo.ID_COLUMN_NAME} = " +
-//            "reminder_date.${ReminderDateInfo.REMINDER_ID_COLUMN_NAME} " +
-//            "INNER JOIN ${DayInfo.DAY_TABLE_NAME} AS day ON " +
-//            "reminder_date.${ReminderDateInfo.DAY_ID_COLUMN_NAME} = " +
-//            "day.${DayInfo.ID_COLUMN_NAME} " +
-//            "WHERE reminder.${ReminderInfo.STATUS_COLUMN_NAME} = :status "
-//)

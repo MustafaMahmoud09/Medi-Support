@@ -6,7 +6,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.viewModelScope
+import com.example.sharedui.R
 import com.example.reminder.presentation.uiState.viewModel.ReminderServiceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -42,24 +42,32 @@ class ReminderService : Service() {
 
     private fun showForegroundSeNotification() {
 
-        //check sdk version greater than 25
+        //check sdk version greater or equal than 26
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
 
             CoroutineScope(Dispatchers.IO).launch {
 
                 viewModel.state.collectLatest {
 
                     val notification = notificationBuilder
-                        .setContentTitle("reminder")
-                        .setContentText("$it")
-                        .setSmallIcon(com.example.sharedui.R.drawable.reminder_icon)
+                        .setContentTitle(it.reminderNameValue)
+                        .setContentText(
+                            "${
+                                getString(
+                                    R.string.medication_appointment
+                                )
+                            } : ${it.reminderTimeValue} \n${
+                                getString(
+                                    R.string.the_remaining_time
+                                )
+                            } : ${it.reminderRemainingTimeValue}"
+                        )
+                        .setSmallIcon(R.drawable.reminder_icon)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .build()
 
 
                     startForeground(1, notification)
-
 
                 }
 

@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.example.reminder.data.source.shared.preferences.managers.SharedPreferencesManager
 
-class RunReminderManager(
+class RunningReminderServiceManager(
     context: Context
 ) : SharedPreferencesManager() {
 
@@ -14,25 +14,25 @@ class RunReminderManager(
 
 
     //TODO:: Function For Set Run Reminder
-    fun setRunReminder(value: Boolean) {
+    fun setReminderServiceState(value: Boolean) {
 
         //set run reminder value here
         reminderSharedPreferences.edit {
-            putBoolean(RUN_REMINDER_KEY_NAME, value)
+            putBoolean(RUN_SERVICE_KEY_NAME, value)
         }//end edit
 
-    }//end setRunReminder
+    }//end setReminderServiceState
 
     //TODO:: Function For Get Run Reminder
-    fun getRunReminder(): Boolean {
+    fun getReminderServiceState(): Boolean {
 
-        return reminderSharedPreferences.getBoolean(RUN_REMINDER_KEY_NAME, true)
+        return reminderSharedPreferences.getBoolean(RUN_SERVICE_KEY_NAME, false)
 
-    }//end getRunReminder
+    }//end getReminderServiceState
 
 
     companion object {
-        private const val RUN_REMINDER_KEY_NAME = "run_reminder_key"
+        private const val RUN_SERVICE_KEY_NAME = "run_service_key"
     }//end companion object
 
-}//end RunReminderManager
+}//end RunServiceManager

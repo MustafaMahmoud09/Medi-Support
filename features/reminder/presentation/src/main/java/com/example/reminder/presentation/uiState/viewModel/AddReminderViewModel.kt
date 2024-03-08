@@ -8,7 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.reminder.domaim.domain.model.reminder.ReminderStoreData
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetActiveRemindersSizeUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetReminderServiceRunningStateUseCase
+import com.example.reminder.domain.usecase.interfaces.ISetReminderServiceRunningStateUseCase
 import com.example.reminder.presentation.uiElement.ReminderService
 import com.example.reminder.presentation.uiState.state.AddReminderErrorUiState
 import com.example.reminder.presentation.uiState.state.AddReminderUiState
@@ -21,9 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.LinkedList
-import java.util.Locale
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -32,6 +33,9 @@ class AddReminderViewModel @Inject constructor(
     private val addDaysUseCase: IAddDaysUseCase,
     private val getDaysUseCase: IGetDaysUseCase,
     private val addReminderUseCase: IAddReminderUseCase,
+    private val getReminderActiveSizeUseCase: IGetActiveRemindersSizeUseCase,
+    private val setReminderServiceRunningStateUseCase: ISetReminderServiceRunningStateUseCase,
+    private val getReminderServiceRunningStateUseCase: IGetReminderServiceRunningStateUseCase,
     private val context: Context
 ) : BaseViewModel() {
 
@@ -45,16 +49,59 @@ class AddReminderViewModel @Inject constructor(
 
         onWeekDaysStored()
         getWeekDays()
-        runReminderService()
+        onReminderServiceStateChanged()
 
     }//end init
 
-    private fun runReminderService() {
+
+    //function for run reminder service
+    private fun onReminderServiceStateChanged() {
 
         val serviceIntent = Intent(context, ReminderService::class.java)
-        context.startForegroundService(serviceIntent)
+
+        //create coroutine builder here
+        viewModelScope.launch(Dispatchers.IO) {
+
+            //collect user reminders here
+            getReminderActiveSizeUseCase().collectLatest { remindersSize ->
+
+                //check service is not running
+                if (
+                    remindersSize == 1L &&
+                    !getReminderServiceRunningStateUseCase()
+                ) {
+
+                    //start foreground service here
+                    context.startForegroundService(serviceIntent)
+
+                    //change reminder service state here
+                    setReminderServiceRunningStateUseCase(
+                        status = true
+                    )
+
+                }//end if
+
+                //check service is running
+                else if (
+                    remindersSize == 0L &&
+                    getReminderServiceRunningStateUseCase()
+                ) {
+
+                    context.stopService(serviceIntent)
+
+                    //change reminder service state here
+                    setReminderServiceRunningStateUseCase(
+                        status = false
+                    )
+
+                }//end else if
+
+            }//end collectLatest
+
+        }//end launch
 
     }//end runReminderService
+
 
     //function for store week days
     private fun onWeekDaysStored() {
@@ -237,16 +284,13 @@ class AddReminderViewModel @Inject constructor(
     //function for change time value
     private fun onTimeValueChanged() {
 
-        //make format on time selected here
-        val timeFormatter = DateTimeFormatter.ofPattern("hh:mm a")
-        val timeSelectedValue = state.value.timeSelected
-            .format(timeFormatter)
-            .uppercase(Locale.getDefault())
-
         //update time value here
         _state.update {
             it.copy(
-                timeValue = timeSelectedValue
+                timeValue = formatLocalTime(
+                    localTime = state.value.timeSelected,
+                    pattern = "hh:mm a"
+                )
             )
         }//end update
 

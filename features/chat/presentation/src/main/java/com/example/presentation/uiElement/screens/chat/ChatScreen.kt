@@ -3,7 +3,9 @@
 package com.example.presentation.uiElement.screens.chat
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,11 +29,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.sharedui.R
-import com.example.presentation.uiElement.components.items.ChatToolsSection
 import com.example.presentation.uiElement.components.items.GuestUserMessageSection
 import com.example.presentation.uiElement.components.items.OwnerUserMessageSection
-import com.example.presentation.uiElement.components.items.UserActiveSection
+import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.modifier.appDefaultContainer
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -49,6 +49,20 @@ internal fun ChatScreen(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    //create files launcher here
+    val filesLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetMultipleContents(),
+        onResult = {}
+    )
+
+    //create camera launcher here
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+        onResult = { check ->
+
+        }
+    )
+
     ChatContent(
         onClickOnBackButton = {
 
@@ -64,6 +78,13 @@ internal fun ChatScreen(
 
         },
         keyboardIsVisible = isKeyboardVisible,
+        onClickOnOpenFileButton = {
+
+            filesLauncher.launch("*/*")
+        },
+        onClickOnOpenCameraButton = {
+            cameraLauncher.launch(Uri.parse(""))
+        }
     )
 }//end ChatScreen
 
@@ -74,6 +95,8 @@ private fun ChatContent(
     theme: CustomTheme = MediSupportAppTheme(),
     keyboardIsVisible: Boolean,
     onClickOnBackButton: () -> Unit,
+    onClickOnOpenFileButton: () -> Unit,
+    onClickOnOpenCameraButton: () -> Unit,
 ) {
 
     var value by remember {
@@ -145,9 +168,9 @@ private fun ChatContent(
                     hint = stringResource(
                         id = R.string.write_your_message
                     ),
-                    onClickOnFileButton = {},
+                    onClickOnFileButton = onClickOnOpenFileButton,
                     onClickOnStickerButton = {},
-                    onClickOnCameraButton = {},
+                    onClickOnCameraButton = onClickOnOpenCameraButton,
                     onClickOnSoundButton = {},
                     onClickOnSendButton = {},
                     keyboardIsVisible = keyboardIsVisible,
@@ -183,7 +206,7 @@ private fun ChatContent(
 
                         if (it % 2 == 0 && it <= 9) {
 
-                            com.example.presentation.uiElement.components.items.OwnerUserMessageSection(
+                            OwnerUserMessageSection(
                                 dimen = dimen,
                                 theme = theme,
                                 message = "hatGPT is a free-to-use AI system. Use it for engaging conversations, gain insights, hatGPT is a free-to-use AI system. Use it for engaging conversations, gain insights",
@@ -196,7 +219,7 @@ private fun ChatContent(
 
                         else if (it % 2 == 1 && it <= 9) {
 
-                            com.example.presentation.uiElement.components.items.GuestUserMessageSection(
+                            GuestUserMessageSection(
                                 dimen = dimen,
                                 theme = theme,
                                 message = "Chat is an intelligent and secure communication and collaboration tool, built for teams. From ad-hoc messaging to topic-based workstream ",
@@ -208,7 +231,7 @@ private fun ChatContent(
 
                         } else if (it in 10..15) {
 
-                            com.example.presentation.uiElement.components.items.OwnerUserMessageSection(
+                            OwnerUserMessageSection(
                                 dimen = dimen,
                                 theme = theme,
                                 message = "conversations, gain insights, hatGPT is a free-to-use AI system.",
@@ -219,7 +242,7 @@ private fun ChatContent(
 
                         } else if (it in 16..20) {
 
-                            com.example.presentation.uiElement.components.items.GuestUserMessageSection(
+                            GuestUserMessageSection(
                                 dimen = dimen,
                                 theme = theme,
                                 message = "communication and collaboration tool, built for teams. From ad-hoc messaging to topic-based workstream ",
@@ -231,7 +254,7 @@ private fun ChatContent(
 
                         } else {
 
-                            com.example.presentation.uiElement.components.items.OwnerUserMessageSection(
+                            OwnerUserMessageSection(
                                 dimen = dimen,
                                 theme = theme,
                                 message = "communication and collaboration tool, built for teams. From ad-hoc messaging to topic-based workstream ",

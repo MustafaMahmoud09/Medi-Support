@@ -1,5 +1,7 @@
 package com.example.profile.presentation.uiElement.screens.profile
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,8 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.profile.presentation.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sharedui.R
 import com.example.profile.presentation.uiElement.components.items.UserProfileSection
+import com.example.profile.presentation.uiState.state.ProfileUiState
+import com.example.profile.presentation.uiState.viewModel.ProfileViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.items.BasicFieldSection
@@ -37,11 +43,26 @@ import kotlinx.coroutines.delay
 
 @Composable
 internal fun ProfileScreen(
+    viewModel: ProfileViewModel = hiltViewModel(),
     popProfileDestination: () -> Unit
 ) {
+    //collect screen state here
+    val state = viewModel.state.collectAsState()
+
+    //create gallery launcher here
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri -> viewModel.onImageUriChanged(uri) }
+    )
 
     ProfileContent(
-        onClickBack = popProfileDestination
+        onClickBack = popProfileDestination,
+        uiState = state.value,
+        onPasswordChanged = viewModel::onPasswordChanged,
+        onPasswordConfirmationChanged = viewModel::onPasswordConfirmationChanged,
+        onFirstNameChanged = viewModel::onFirstNameChanged,
+        onLastNameChanged = viewModel::onLastNameChanged,
+        onClickOnProfileEditButton = { galleryLauncher.launch("image/*") },
     )
 }//end ProfileScreen
 
@@ -49,7 +70,13 @@ internal fun ProfileScreen(
 private fun ProfileContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    uiState: ProfileUiState,
+    onPasswordChanged: (String) -> Unit,
+    onPasswordConfirmationChanged: (String) -> Unit,
+    onFirstNameChanged: (String) -> Unit,
+    onLastNameChanged: (String) -> Unit,
+    onClickOnProfileEditButton: () -> Unit,
 ) {
 
     var stateDialog by rememberSaveable {
@@ -87,7 +114,7 @@ private fun ProfileContent(
                 dimen = dimen,
                 theme = theme,
                 logo = painterResource(
-                    id = com.example.sharedui.R.drawable.success_bold
+                    id = R.drawable.success_bold
                 ),
                 tint = theme.green,
                 modifier = Modifier
@@ -124,13 +151,11 @@ private fun ProfileContent(
         )
 
         //create profile image user section here
-        com.example.profile.presentation.uiElement.components.items.UserProfileSection(
+        UserProfileSection(
             theme = theme,
             dimen = dimen,
-            painter = painterResource(
-                id = R.drawable.image
-            ),
-            onClick = {},
+            painter = uiState.imageUri,
+            onClick = onClickOnProfileEditButton,
             modifier = Modifier
                 .constrainAs(profile) {
                     start.linkTo(parent.start)
@@ -146,7 +171,7 @@ private fun ProfileContent(
         TextSemiBoldView(
             theme = theme,
             dimen = dimen,
-            text = "mustafa.salem",
+            text = uiState.userName,
             size = dimen.dimen_2_25,
             fontColor = theme.black,
             modifier = Modifier
@@ -210,20 +235,66 @@ private fun ProfileContent(
                 key = 1
             ) {
 
-                BasicFieldSection(
-                    theme = theme,
-                    dimen = dimen,
-                    title = stringResource(
-                        R.string.full_name
-                    ),
-                    hint = stringResource(
-                        R.string.your_name
-                    ),
-                    value = "",
-                    onChange = {},
+                //create user name container here
+                ConstraintLayout(
                     modifier = Modifier
                         .fillMaxWidth()
-                )
+                ) {
+                    //create ids for components here
+                    val (lastNameId, firstNameId) = createRefs()
+
+                    //create guides here
+                    val guideLineFromStart50P = createGuidelineFromStart(.5f)
+
+                    //create first name field here
+                    BasicFieldSection(
+                        theme = theme,
+                        dimen = dimen,
+                        title = stringResource(
+                            R.string.first_name
+                        ),
+                        hint = stringResource(
+                            R.string.fname
+                        ),
+                        value = uiState.firstNameValue,
+                        onChange = onFirstNameChanged,
+                        modifier = Modifier
+                            .constrainAs(firstNameId) {
+                                end.linkTo(
+                                    guideLineFromStart50P,
+                                    dimen.dimen_1.dp
+                                )
+                                start.linkTo(parent.start)
+                                top.linkTo(parent.top)
+                                width = Dimension.fillToConstraints
+                            }//end constrainAs
+                    )
+
+                    //create last name field here
+                    BasicFieldSection(
+                        theme = theme,
+                        dimen = dimen,
+                        title = stringResource(
+                            R.string.last_name
+                        ),
+                        hint = stringResource(
+                            R.string.lname
+                        ),
+                        value = uiState.lastNameValue,
+                        onChange = onLastNameChanged,
+                        modifier = Modifier
+                            .constrainAs(lastNameId) {
+                                start.linkTo(
+                                    guideLineFromStart50P,
+                                    dimen.dimen_1.dp
+                                )
+                                end.linkTo(parent.end)
+                                top.linkTo(parent.top)
+                                width = Dimension.fillToConstraints
+                            }//end constrainAs
+                    )
+
+                }//end ConstraintLayout
 
             }//end item
 
@@ -241,9 +312,9 @@ private fun ProfileContent(
                     hint = stringResource(
                         com.example.sharedui.R.string.your_password
                     ),
-                    value = "",
+                    value = uiState.passwordValue,
                     fieldIsPassword = true,
-                    onChange = {},
+                    onChange = onPasswordChanged,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -262,11 +333,11 @@ private fun ProfileContent(
                         R.string.confirm_password
                     ),
                     hint = stringResource(
-                        com.example.sharedui.R.string.your_password
+                        R.string.your_password
                     ),
-                    value = "",
+                    value = uiState.passwordConfirmPassword,
                     fieldIsPassword = true,
-                    onChange = {},
+                    onChange = onPasswordConfirmationChanged,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -282,7 +353,7 @@ private fun ProfileContent(
                     dimen = dimen,
                     theme = theme,
                     text = stringResource(
-                        com.example.sharedui.R.string.save
+                        R.string.save
                     ),
                     onClick = { stateDialog = !stateDialog },
                     modifier = Modifier

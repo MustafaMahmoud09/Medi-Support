@@ -12,6 +12,8 @@ interface INearestReminder {
 
     val day: String
 
-    val endResultDaysDifferent: Any
+    val endResultDaysDifferent: Int
+
+    val dayId: Long
 
 }//end INearestReminder

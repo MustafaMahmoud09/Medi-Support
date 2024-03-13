@@ -3,6 +3,8 @@ package com.damanhour.Graduation.medisupport.di.reminder
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
@@ -72,11 +74,17 @@ object ViewModelsModule {
     @Provides
     @Singleton
     fun provideReminderServiceViewModel(
-        getNearestRemindersUseCase: IGetNearestRemindersUseCase
+        getNearestRemindersUseCase: IGetNearestRemindersUseCase,
+        notificationBuilder: NotificationCompat.Builder,
+        notificationManager: NotificationManagerCompat,
+        @ApplicationContext context: Context
     ): ReminderServiceViewModel {
 
         return ReminderServiceViewModel(
-            getNearestRemindersUseCase = getNearestRemindersUseCase
+            getNearestRemindersUseCase = getNearestRemindersUseCase,
+            notificationBuilder = notificationBuilder,
+            notificationManager = notificationManager,
+            context = context
         )
 
     }//end provideReminderServiceViewModel

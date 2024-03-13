@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.auth.presentation.R
+import com.example.sharedui.R
 import com.example.auth.presentation.uiState.state.ForgottenUiState
 import com.example.auth.presentation.uiState.viewModel.ForgottenViewModel
 import com.example.sharedui.uiElement.components.composable.IconButtonView

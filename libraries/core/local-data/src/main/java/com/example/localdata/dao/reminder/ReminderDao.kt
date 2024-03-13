@@ -1,6 +1,5 @@
 package com.example.localdata.dao.reminder
 
-
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,7 +13,6 @@ import com.example.reminder.data.source.entity.execution.entities.reminder.Remin
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateInfo
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
-
 
 @Dao
 interface ReminderDao {
@@ -63,19 +61,23 @@ interface ReminderDao {
         } AS time,day.${
             DayInfo.DAY_COLUMN_NAME
         } AS day, " +
-                "CASE WHEN CAST(strftime('%w', 'now') AS INTEGER) - day.${
+                "day.${
                     DayInfo.ID_COLUMN_NAME
-                } - 1 = 0 AND :localTime > reminder.${
+                } AS dayId, " +
+                "CASE WHEN day.${
+                    DayInfo.ID_COLUMN_NAME
+                } - CAST(strftime('%w', 'now') AS INTEGER)  - 1 == 0 AND :localTime > reminder.${
                     ReminderInfo.TIME_COLUMN_NAME
-                } THEN 7 " +
-                "WHEN CAST(strftime('%w', 'now') AS INTEGER) - day.${
+                } THEN 6 " +
+                "WHEN day.${
                     DayInfo.ID_COLUMN_NAME
-                } - 1 >= 0 THEN CAST(strftime('%w', 'now') AS INTEGER) - day.${
+                } - CAST(strftime('%w', 'now') AS INTEGER)  - 1 >= 0 THEN " +
+                "day.${
                     DayInfo.ID_COLUMN_NAME
-                } - 1 " +
-                "ELSE CAST(strftime('%w', 'now') AS INTEGER) - day.${
+                } - CAST(strftime('%w', 'now') AS INTEGER) - 1 " +
+                "ELSE 6 - CAST(strftime('%w', 'now') AS INTEGER) + day.${
                     DayInfo.ID_COLUMN_NAME
-                } - 1 + 7 END AS endResultDaysDifferent " +
+                } - 1 END AS endResultDaysDifferent " +
                 "FROM ${
                     ReminderInfo.REMINDER_TABLE_NAME
                 } AS reminder INNER JOIN ${
@@ -92,7 +94,10 @@ interface ReminderDao {
                     DayInfo.ID_COLUMN_NAME
                 } WHERE reminder.${
                     ReminderInfo.STATUS_COLUMN_NAME
-                } = :status " +
+                } = :status AND " +
+                "reminder.${
+                    ReminderInfo.USER_ID_COLUMN_NAME
+                } = :userId " +
                 "ORDER BY endResultdaysDifferent ASC," +
                 "reminder.${
                     ReminderInfo.TIME_COLUMN_NAME
@@ -101,7 +106,8 @@ interface ReminderDao {
     )
     fun nearestReminder(
         status: Boolean,
-        localTime: LocalTime
+        localTime: LocalTime,
+        userId: Long
     ): Flow<List<NearestReminder>>
 
 
@@ -111,8 +117,12 @@ interface ReminderDao {
             ReminderInfo.REMINDER_TABLE_NAME
         } WHERE ${
             ReminderInfo.STATUS_COLUMN_NAME
-        } = :status"
+        } = :status AND " +
+                "${ReminderInfo.USER_ID_COLUMN_NAME} = :userId"
     )
-    fun selectRemindersByStatus(status: Boolean): Flow<List<ReminderEntity>>
+    fun selectRemindersByStatus(
+        status: Boolean,
+        userId: Long
+    ): Flow<List<ReminderEntity>>
 
 }//end ReminderDao

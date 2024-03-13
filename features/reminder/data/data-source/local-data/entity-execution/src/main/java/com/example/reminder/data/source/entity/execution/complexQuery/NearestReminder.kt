@@ -8,5 +8,6 @@ data class NearestReminder(
     override val name: String,
     override val time: LocalTime,
     override val day: String,
-    override val endResultDaysDifferent: Any
+    override val endResultDaysDifferent: Int,
+    override val dayId: Long
 ) : INearestReminder

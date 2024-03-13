@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.example.reminder.presentation.uiElement.ReminderService
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,10 @@ class MainActivity : ComponentActivity() {
 
         //CUT SYSTEM UI (STATUS AND NAVIGATION)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        //
+//        installSplashScreen()
+
         setContent {
             //SINGLE ACTIVITY --- MULTI SCREENS
             App()

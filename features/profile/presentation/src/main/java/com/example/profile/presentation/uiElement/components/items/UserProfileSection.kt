@@ -1,5 +1,6 @@
 package com.example.profile.presentation.uiElement.components.items
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.sharedui.uiElement.components.composable.LoadImageView
+import com.example.sharedui.uiElement.components.composable.LoadImageViewII
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -29,7 +30,7 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 internal fun UserProfileSection(
     theme: CustomTheme,
     dimen: CustomDimen,
-    painter: Painter,
+    painter: Uri?,
     onClick: () -> Unit,
     size: Float = dimen.dimen_18_75,
     profileBorderColor: Color = theme.redDark,
@@ -80,14 +81,16 @@ internal fun UserProfileSection(
         ) {
 
             //create image here
-            LoadImageView(
-                painter = painter,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(
-                        shape = CircleShape
-                    )
-            )
+            painter?.let {
+                LoadImageViewII(
+                    imageUri = it,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(
+                            shape = CircleShape
+                        )
+                )
+            }
 
         }//end Box
 
@@ -103,10 +106,10 @@ internal fun UserProfileSection(
                 }
                 .size(
                     width = editBoxWidth.dp,
-                    height =  editBoxHeight.dp
+                    height = editBoxHeight.dp
                 )
                 .appBorder(
-                    borderColor =  editBorderColor,
+                    borderColor = editBorderColor,
                     borderWidth = editBorderWidth,
                     shape = editShape
                 )

@@ -139,11 +139,13 @@ class ReminderRepositoryImpl(
     }//end getReminders
 
     override suspend fun getRemindersByStatus(
-        status: Boolean
+        status: Boolean,
+        userId: Long
     ): Flow<List<IReminderEntity>> {
 
         return localDatabase.reminderDao().selectRemindersByStatus(
-            status = status
+            status = status,
+            userId = userId
         )
 
     }//end getRemindersByStatus
@@ -151,14 +153,16 @@ class ReminderRepositoryImpl(
     //function for provide nearest reminder
     override suspend fun getNearestReminder(
         status: Boolean,
-        localTime: LocalTime
+        localTime: LocalTime,
+        userId: Long
     ): Flow<List<INearestReminder>> {
 
         return localDatabase
             .reminderDao()
             .nearestReminder(
                 status = status,
-                localTime = localTime
+                localTime = localTime,
+                userId = userId
             )
 
     }//end getNearestReminder

@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.auth.presentation.R
+import com.example.auth.presentation.uiElement.components.composable.IconStartButtonView
+import com.example.sharedui.R
 import com.example.auth.presentation.uiState.state.RegisterUiState
 import com.example.auth.presentation.uiState.viewModel.RegisterViewModel
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
@@ -289,11 +290,11 @@ private fun RegisterContent(
                                 }
                         )
 
-                        com.example.auth.presentation.uiElement.components.composable.IconStartButtonView(
+                        IconStartButtonView(
                             theme = theme,
                             dimen = dimen,
                             icon = painterResource(
-                                id = R.drawable.google
+                                id = com.example.auth.presentation.R.drawable.google
                             ),
                             text = stringResource(
                                 R.string.log_in_with_google
@@ -317,11 +318,11 @@ private fun RegisterContent(
                                 }
                         )
 
-                        com.example.auth.presentation.uiElement.components.composable.IconStartButtonView(
+                        IconStartButtonView(
                             theme = theme,
                             dimen = dimen,
                             icon = painterResource(
-                                id = R.drawable.facebook
+                                id = com.example.auth.presentation.R.drawable.facebook
                             ),
                             text = stringResource(
                                 R.string.log_in_with_facebook

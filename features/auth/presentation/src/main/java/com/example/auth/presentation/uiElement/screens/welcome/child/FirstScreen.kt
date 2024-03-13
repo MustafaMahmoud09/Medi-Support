@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.auth.presentation.R
+import com.example.sharedui.R
 import com.example.auth.presentation.uiElement.components.items.WelcomeSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -30,16 +30,16 @@ private fun FirstContent(
     dimen: CustomDimen,
 ) {
 
-    ConstraintLayout (
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-    ){
+    ) {
 
-        com.example.auth.presentation.uiElement.components.items.WelcomeSection(
+        WelcomeSection(
             theme = theme,
             dimen = dimen,
             image = painterResource(
-                id = R.drawable.welcome_one
+                id = com.example.auth.presentation.R.drawable.welcome_one
             ),
             title = stringResource(
                 R.string.welcome_to_medisupport

@@ -20,7 +20,7 @@ object NotificationModule {
 
     @Singleton
     @Provides
-    fun provideNotificationBuilder(
+    fun provideRemainingNotificationBuilder(
         @ApplicationContext context: Context,
         @Named("chanel_id") chanelId: String
     ): NotificationCompat.Builder {

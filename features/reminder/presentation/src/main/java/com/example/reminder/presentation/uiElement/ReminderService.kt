@@ -34,8 +34,7 @@ class ReminderService : Service() {
         //show foreground service notification here
         showForegroundSeNotification()
 
-
-        //for infinite loop
+        // If we get killed, after returning from here, restart
         return super.onStartCommand(intent, flags, startId)
 
     }//end onStartCommand
@@ -45,10 +44,13 @@ class ReminderService : Service() {
         //check sdk version greater or equal than 26
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
+            //create coroutine builder here
             CoroutineScope(Dispatchers.IO).launch {
 
+                //collect view model state here
                 viewModel.state.collectLatest {
 
+                    //make remaining notification here
                     val notification = notificationBuilder
                         .setContentTitle(it.reminderNameValue)
                         .setContentText(
@@ -64,14 +66,15 @@ class ReminderService : Service() {
                         )
                         .setSmallIcon(R.drawable.reminder_icon)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setSilent(true)
                         .build()
 
 
                     startForeground(1, notification)
 
-                }
+                }//end collectLatest
 
-            }
+            }//end coroutine scope
 
         }//end if
 

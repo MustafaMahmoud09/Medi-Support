@@ -12,6 +12,9 @@ buildscript {
         room_version = "2.6.1"
         kotlin_flow = "1.5.0"
         coil_version = "2.4.0"
+        min_sdk = 26
+        max_sdk = 34
+        compile_sdk = 34
     }
 
     repositories {
@@ -23,8 +26,8 @@ buildscript {
 
 
 plugins {
-    id 'com.android.application' version '8.3.0' apply false
-    id 'com.android.library' version '8.3.0' apply false
+    id 'com.android.application' version '8.3.0-alpha18' apply false
+    id 'com.android.library' version '8.3.0-alpha18' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
     id 'org.jetbrains.kotlin.jvm' version '1.8.10' apply false

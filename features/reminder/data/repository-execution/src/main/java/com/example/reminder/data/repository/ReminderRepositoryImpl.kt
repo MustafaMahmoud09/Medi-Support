@@ -1,6 +1,7 @@
 package com.example.reminder.data.repository
 
-import com.example.localdata.MediSupportDatabase
+import com.example.database_creator.MediSupportDatabase
+import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
 import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateEntity
@@ -10,7 +11,6 @@ import com.example.reminder.domain.entity.interfaces.entity.IDayEntity
 import com.example.reminder.domain.entity.interfaces.complexQuery.IReminderWithDays
 import com.example.reminder.domain.entity.interfaces.entity.IReminderEntity
 import com.example.repository.interfaces.IReminderRepository
-import com.example.shared.entity.implementation.user.UserEntity
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
 

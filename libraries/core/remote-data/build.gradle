@@ -5,10 +5,11 @@ plugins {
 
 android {
     namespace 'com.example.remotedata'
-    compileSdk 34
+    compileSdk compile_sdk
 
     defaultConfig {
-        minSdk 24
+        minSdk min_sdk
+        targetSdk max_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace 'com.example.reminder.data.repository'
-    compileSdk 34
+    compileSdk compile_sdk
 
     defaultConfig {
-        minSdk 21
-        targetSdk 34
+        minSdk min_sdk
+        targetSdk max_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -34,19 +34,22 @@ dependencies {
 
     //project
     //repository interfaces
-    implementation implementation(project(':features:reminder:domain:repository-declarations'))
+    implementation(project(':features:reminder:domain:repository-declarations'))
+
+    //data access object
+    implementation(project(':features:reminder:data:data-source:local-data:data-access-object'))
 
     //entity
     implementation implementation(project(':features:reminder:data:data-source:local-data:entity-execution'))
-    implementation implementation(project(':libraries:core:local-data',))
 
     //local data
+    implementation implementation(project(':libraries:core:local-data:database-creator'))
 
     //shared preferences
     implementation(project(':features:reminder:data:data-source:shared-preferences'))
 
 
-    implementation(project(':libraries:shared-entities:entity-execution'))
+    implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
 
 
     //kotlin flow dependency

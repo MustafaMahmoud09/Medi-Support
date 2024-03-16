@@ -1,7 +1,7 @@
 package com.damanhour.Graduation.medisupport.di.reminder
 
 import android.content.Context
-import com.example.localdata.MediSupportDatabase
+import com.example.database_creator.MediSupportDatabase
 import com.example.reminder.data.repository.ReminderRepositoryImpl
 import com.example.reminder.data.source.shared.preferences.ReminderPreferencesAccess
 import com.example.repository.interfaces.IReminderRepository

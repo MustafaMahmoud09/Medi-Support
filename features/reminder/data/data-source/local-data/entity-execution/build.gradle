@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace 'com.example.reminder.data.source.entity.execution'
-    compileSdk 34
+    compileSdk compile_sdk
 
     defaultConfig {
-        minSdk 21
-        targetSdk 34
+        minSdk min_sdk
+        targetSdk max_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -37,7 +37,7 @@ dependencies {
     api(project(':features:reminder:domain:entity-declarations'))
 
     //shared-entity
-    implementation implementation(project(':libraries:shared-entities:entity-execution'))
+    implementation implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
 
     //room database
     implementation "androidx.room:room-runtime:$room_version"

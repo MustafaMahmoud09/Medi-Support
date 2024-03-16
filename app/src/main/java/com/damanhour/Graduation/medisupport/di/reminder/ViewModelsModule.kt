@@ -25,7 +25,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Module
 @InstallIn(SingletonComponent::class)
 object ViewModelsModule {

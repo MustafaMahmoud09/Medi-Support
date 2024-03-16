@@ -5,13 +5,13 @@ import com.example.reminder.domain.entity.interfaces.complexQuery.INearestRemind
 import com.example.reminder.domain.mapper.declarations.child.INearestReminderEntityToNearestReminderModelMapper
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class NearestReminderEntityToNearestReminderModelMapper
     : INearestReminderEntityToNearestReminderModelMapper {
 
-    override fun listConvertor(list: List<INearestReminder>): List<NearestReminderPresentationModel> {
+    override fun listConvertor(
+        list: List<INearestReminder>
+    ): List<NearestReminderPresentationModel> {
 
         return list.map { nearestReminder ->
             objectConvertor(nearestReminder)
@@ -34,7 +34,7 @@ class NearestReminderEntityToNearestReminderModelMapper
 
     }//end objectConvertor
 
-
+    //function for calculate different days between today and reminder days
     private fun Long.calculateDifferentDays(time: LocalTime): Int {
 
         //define now day
@@ -42,35 +42,36 @@ class NearestReminderEntityToNearestReminderModelMapper
 
         val ordinal = today.value
 
-        return if (
-            this.toInt() == ordinal &&
-            LocalTime.now().isBefore(time) &&
-            formatLocalTime(
-                localTime = LocalTime.now(),
-                pattern = "hh:mm:ss a"
-            ) == formatLocalTime(
-                localTime = time,
-                pattern = "hh:mm:ss a"
-            )
-        ) {
-            0
-        }//end if
+        //0 - reminder day number - 6
+        //to day have number id
+        //calculate different between today and reminder number
+        return if (this.toInt() - 1 > ordinal || ((this.toInt() - ordinal - 1) == 0 && !LocalTime.now().isAfter(time))) {
 
+            if (LocalTime.now().isBefore(time)) {
+
+                this.toInt() - ordinal - 1
+
+            } else {
+
+                this.toInt() - ordinal - 2
+
+            }//end else
+
+        }//end if
         else {
-            (6 - ordinal + this - 1).toInt()
-        }//end else if
+
+            if (LocalTime.now().isBefore(time)) {
+
+                6 - ordinal + this.toInt()
+
+            } else {
+
+                6 - ordinal + this.toInt() - 1
+
+            }//end else
+
+        }//end else
 
     }//end calculateDifferentDays
 
-    fun formatLocalTime(localTime: LocalTime, pattern: String): String {
-
-        val timeFormatter = DateTimeFormatter.ofPattern(pattern)
-        val timeSelectedValue = localTime
-            .format(timeFormatter)
-            .uppercase(Locale.getDefault())
-
-        return timeSelectedValue
-
-    }//end formatLocalTime
-
-}
+}//end NearestReminderEntityToNearestReminderModelMapper

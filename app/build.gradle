@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk compile_sdk
 
     defaultConfig {
         multiDexEnabled true
@@ -14,8 +14,8 @@ android {
 
     defaultConfig {
         applicationId "com.damanhour.Graduation.medisupport"
-        minSdk 21
-        targetSdk 34
+        minSdk min_sdk
+        targetSdk max_sdk
         versionCode 1
         versionName "1.0"
 
@@ -59,7 +59,7 @@ dependencies {
 
     //shared ui
     implementation(project(':libraries:shared-ui'))
-    implementation implementation(project(':libraries:core:local-data',))
+    implementation implementation(project(':libraries:core:local-data:database-creator',))
 
     //local data
 

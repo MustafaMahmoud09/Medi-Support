@@ -3,7 +3,6 @@ package com.damanhour.Graduation.medisupport.di.reminder
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.Module
@@ -18,7 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NotificationModule {
 
-    @Singleton
+
     @Provides
     fun provideRemainingNotificationBuilder(
         @ApplicationContext context: Context,
@@ -41,14 +40,12 @@ object NotificationModule {
 
         val notificationManager = NotificationManagerCompat.from(context)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                chanelId,
-                chanelName,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel(
+            chanelId,
+            chanelName,
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationManager.createNotificationChannel(channel)
 
         return notificationManager
 

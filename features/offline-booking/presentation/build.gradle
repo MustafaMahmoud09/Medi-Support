@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'com.example.offline.booking.presentation'
-    compileSdk 34
+    compileSdk compile_sdk
 
     defaultConfig {
-        minSdk 21
-        targetSdk 34
+        minSdk min_sdk
+        targetSdk max_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

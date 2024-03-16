@@ -87,6 +87,7 @@
       <module name="MediSupport.features.profile.domain.use-case.main" target="17" />
       <module name="MediSupport.features.profile.domain.use-case.test" target="17" />
       <module name="MediSupport.features.profile.presentation" target="17" />
+      <module name="MediSupport.features.reminder.data.data-source.local-data.data-access-object" target="17" />
       <module name="MediSupport.features.reminder.data.data-source.local-data.entity-execution" target="17" />
       <module name="MediSupport.features.reminder.data.data-source.shared-preferences" target="17" />
       <module name="MediSupport.features.reminder.data.entity-execution" target="17" />
@@ -141,12 +142,15 @@
       <module name="MediSupport.features.setting.domain.use-case.main" target="17" />
       <module name="MediSupport.features.setting.domain.use-case.test" target="17" />
       <module name="MediSupport.features.setting.presentation" target="17" />
-      <module name="MediSupport.libraries.core.local-data" target="17" />
+      <module name="MediSupport.libraries.core.local-data.database-creator" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations.main" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations.test" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-entities.entity-execution" target="17" />
+      <module name="MediSupport.libraries.core.local-datas" target="17" />
       <module name="MediSupport.libraries.core.remote-data" target="17" />
-      <module name="MediSupport.libraries.shared-entities.entity-declarations" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-declarations.main" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-declarations.test" target="17" />
-      <module name="MediSupport.libraries.shared-entities.entity-execution" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-interfaces.main" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-interfaces.test" target="17" />
       <module name="MediSupport.libraries.shared-ui" target="17" />

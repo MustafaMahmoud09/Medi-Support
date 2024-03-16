@@ -154,4 +154,6 @@
     <string name="full_name">Full Name</string>
     <string name="the_time_now_is">The time now is</string>
     <string name="remember_you_now_have_an_appointment_to_take_your_medication">Remember, you now have an appointment to take your medication</string>
+    <string name="snooze">SNOOZE</string>
+    <string name="stop">STOP</string>
 </resources>

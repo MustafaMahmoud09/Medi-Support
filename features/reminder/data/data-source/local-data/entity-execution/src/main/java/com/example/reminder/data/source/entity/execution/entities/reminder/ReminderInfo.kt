@@ -1,6 +1,6 @@
 package com.example.reminder.data.source.entity.execution.entities.reminder
 
-import com.example.shared.entity.implementation.user.UserInfo
+import com.example.libraries.local.data.shared.entities.entity.execution.user.UserInfo
 
 //create columns name in this object
 object ReminderInfo {
@@ -15,7 +15,7 @@ object ReminderInfo {
 
     const val STATUS_COLUMN_NAME = "status"
 
-    const val USER_ID_COLUMN_NAME = UserInfo.ID_COLUMN_NAME
+    const val USER_ID_COLUMN_NAME = com.example.libraries.local.data.shared.entities.entity.execution.user.UserInfo.ID_COLUMN_NAME
 
     const val CREATED_AT_COLUMN_NAME = "created_at"
 

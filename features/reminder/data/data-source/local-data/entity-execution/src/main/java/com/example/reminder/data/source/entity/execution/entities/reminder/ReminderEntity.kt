@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.reminder.domain.entity.interfaces.entity.IReminderEntity
-import com.example.shared.entity.implementation.user.UserEntity
-import com.example.shared.entity.implementation.user.UserInfo
+import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
+import com.example.libraries.local.data.shared.entities.entity.execution.user.UserInfo
 import java.time.LocalTime
 
 @Entity(

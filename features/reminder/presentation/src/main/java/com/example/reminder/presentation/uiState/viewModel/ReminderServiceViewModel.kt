@@ -2,14 +2,20 @@ package com.example.reminder.presentation.uiState.viewModel
 
 import android.annotation.SuppressLint
 import android.app.Notification
+import android.app.PendingIntent
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
+import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.viewModelScope
 import com.example.reminder.domain.usecase.interfaces.IGetNearestRemindersUseCase
+import com.example.reminder.presentation.R
+import com.example.reminder.presentation.uiElement.receivers.CancelReminderNotificationReceiver
+import com.example.reminder.presentation.uiElement.receivers.StopReminderNotificationReceiver
 import com.example.reminder.presentation.uiState.state.ReminderServiceUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,6 +45,7 @@ class ReminderServiceViewModel @Inject constructor(
 
     init {
 
+        onAlarmMediaPlaySoundCreated()
         onTimeNowChanged()
         getNearestActiveReminder()
         onReminderRemainingTimeChanged()
@@ -46,6 +53,32 @@ class ReminderServiceViewModel @Inject constructor(
 
     }//end init
 
+    //function for create alarm media play object
+    private fun onAlarmMediaPlaySoundCreated() {
+
+        //get notification sound uri here
+        val notificationSoundUri =
+            Uri.parse(
+                "${
+                    ContentResolver.SCHEME_ANDROID_RESOURCE
+                }://${
+                    context.packageName
+                }/${
+                    R.raw.alarm_notification_sound
+                }"
+            )
+
+        //create alarm sound here
+        val alarmSound = MediaPlayer.create(context, notificationSoundUri)
+
+        //update alarm sound here
+        _state.update {
+            it.copy(
+                alarmSound = alarmSound
+            )
+        }//end update
+
+    }//end onAlarmMediaPlaySoundCreated
 
     //function for change time now each one second
     private fun onTimeNowChanged() {
@@ -61,20 +94,21 @@ class ReminderServiceViewModel @Inject constructor(
                     LocalTime.now()
                 }//end update
 
-
                 if (
+                    state.value.currentNearestReminder.differentDays == 0 &&
                     formatLocalTime(
-                        localTime = state.value.timeNowState.value,
+                        localTime = state.value.currentNearestReminder.time,
                         pattern = "hh:mm:ss a"
                     ) == formatLocalTime(
-                        localTime = state.value.nearestReminder.time,
+                        localTime = state.value.timeNowState.value,
                         pattern = "hh:mm:ss a"
                     )
+
                 ) {
 
                     _state.update {
                         it.copy(
-                            lastReminder = state.value.nearestReminder
+                            lastNearestReminder = state.value.currentNearestReminder
                         )
                     }//end update
 
@@ -118,7 +152,7 @@ class ReminderServiceViewModel @Inject constructor(
                         //change reminder values here
                         _state.update {
                             it.copy(
-                                nearestReminder = reminder[0],
+                                currentNearestReminder = reminder[0],
                                 reminderNameValue = reminder[0].name,
                                 reminderTimeValue = formatLocalTime(
                                     localTime = reminder[0].time,
@@ -148,27 +182,19 @@ class ReminderServiceViewModel @Inject constructor(
             state.value.timeNowState.collectLatest { timeNow ->
 
                 //calculate remaining time here
-                var result = state.value.nearestReminder.time.minusNanos(
+                var result = state.value.currentNearestReminder.time.minusNanos(
                     timeNow.toNanoOfDay()
                 )
-
-                val differentDays = state.value.nearestReminder.differentDays
-
-                //if different days greater than 0 increase 24 * different days - 1
-                if (differentDays > 0) {
-
-                    //calculate final result here
-                    result = result.plusHours((24 * (differentDays - 1)).toLong())
-
-                }//end if
 
                 //update remaining time state here
                 _state.update {
                     it.copy(
-                        reminderRemainingTimeValue = formatLocalTime(
-                            localTime = result,
-                            pattern = "HH:mm:ss"
-                        )
+                        reminderRemainingTimeValue = "${state.value.currentNearestReminder.differentDays} ${
+                            formatLocalTime(
+                                localTime = result,
+                                pattern = "HH:mm:ss"
+                            )
+                        }"
                     )
                 }//end update
 
@@ -189,6 +215,7 @@ class ReminderServiceViewModel @Inject constructor(
 
     }//end onReminderNotificationVisibilityChanged
 
+    //function for notify reminder notification
     @SuppressLint("MissingPermission")
     private fun onReminderNotificationIsVisible() {
 
@@ -196,22 +223,25 @@ class ReminderServiceViewModel @Inject constructor(
         viewModelScope.launch {
 
             //observe reminder notification visible state here
-            state.value.reminderNotificationVisible.collectLatest { state ->
+            state.value.reminderNotificationVisible.collectLatest { visibility ->
 
                 //if state is true execute this body
-                if (state) {
+                if (visibility) {
+
+                    playReminderNotificationSound()
+
+                    //change notification state
+                    _state.update {
+                        it.copy(
+                            alarmNotification = createReminderNotification()
+                        )
+                    }//end update
 
                     //show notification here
                     notificationManager.notify(
                         100,
-                        createReminderNotification()
+                        state.value.alarmNotification!!
                     )
-
-                    //delay 60 second here
-                    delay(60 * 1000)
-
-                    //cancel notification here
-                    notificationManager.cancel(100)
 
                     //change reminder notification visibility state here
                     onReminderNotificationVisibilityChanged(
@@ -226,14 +256,34 @@ class ReminderServiceViewModel @Inject constructor(
 
     }//end onReminderNotificationIsVisible
 
+    //function for create reminder notification
     private fun createReminderNotification(): Notification {
 
-        //get notification sound uri here
-        val notificationSoundUri =
-            Uri.parse("${ContentResolver.SCHEME_ANDROID_RESOURCE}://${context.packageName}/raw/reminder_notification_sound")
+        //make cancel button action here
+        val cancelReminderIntent =
+            Intent(context, CancelReminderNotificationReceiver::class.java)
+        val snoozeReminderIntentAction =
+            PendingIntent.getBroadcast(
+                context,
+                0,
+                cancelReminderIntent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
+
+        //make stop button action here
+        val stopReminderIntent =
+            Intent(context, StopReminderNotificationReceiver::class.java)
+        val stopReminderIntentAction =
+            PendingIntent.getBroadcast(
+                context,
+                0,
+                stopReminderIntent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
+
 
         //create notification here
-        val notification = notificationBuilder
+        return notificationBuilder
             .setContentTitle(
                 "${
                     context.getString(
@@ -241,7 +291,7 @@ class ReminderServiceViewModel @Inject constructor(
                     )
                 } ${
                     formatLocalTime(
-                        localTime = state.value.lastReminder.time,
+                        localTime = state.value.lastNearestReminder.time,
                         pattern = "hh:mm:ss a"
                     )
                 }"
@@ -251,19 +301,78 @@ class ReminderServiceViewModel @Inject constructor(
                     com.example.sharedui.R.string.remember_you_now_have_an_appointment_to_take_your_medication
                 )
             )
-            .setSmallIcon(
-                com.example.sharedui.R.drawable.alarm_notification
-            )
+            .setOngoing(true)
+            .setSmallIcon(com.example.sharedui.R.drawable.reminder_icon_health_care)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setSound(
-                notificationSoundUri,
-                Notification.AUDIO_ATTRIBUTES_DEFAULT.contentType
+            .addAction(
+                1, context.getString(
+                    com.example.sharedui.R.string.stop
+                ), stopReminderIntentAction
+            )
+            .addAction(
+                1, context.getString(
+                    com.example.sharedui.R.string.cancel
+                ).uppercase(), snoozeReminderIntentAction
             )
             .build()
 
-        //return notification here
-        return notification
-
     }//end createNotification
+
+    //function for play alarm notification sound
+    private fun playReminderNotificationSound() {
+
+        //stop reminder sound here
+        onReminderSoundStopped()
+
+        //start sound here
+        state.value.alarmSound?.start()
+
+    }//end onReminderNotificationPlayed
+
+
+    //function for stop reminder sound if running
+    private fun onReminderSoundStopped() {
+
+        //check pre alarm sound is playing
+        if (state.value.alarmSound?.isPlaying == true) {
+
+            //stop pre alarm sound here
+            state.value.alarmSound?.apply {
+                stop()
+                release()
+            }
+
+            //update media player value here
+            _state.update {
+                it.copy(
+                    alarmSound = null
+                )
+            }//end update
+
+            //create alarm media play here
+            onAlarmMediaPlaySoundCreated()
+
+        }//end if
+
+    }//end onReminderSoundStopped
+
+
+    //function for cancel reminder notification
+    fun onReminderNotificationCanceled() {
+
+        //stop reminder sound here
+        onReminderSoundStopped()
+
+        notificationManager.cancel(100)
+
+    }//end onReminderNotificationCanceled
+
+
+    fun onReminderNotificationStopped() {
+
+        //stop reminder sound here
+        onReminderSoundStopped()
+
+    }//end onReminderNotificationStopped
 
 }//end ReminderServiceViewModel

@@ -4,7 +4,6 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
@@ -88,6 +87,7 @@
             <option value="$PROJECT_DIR$/features/reminder/data" />
             <option value="$PROJECT_DIR$/features/reminder/data/data-source" />
             <option value="$PROJECT_DIR$/features/reminder/data/data-source/local-data" />
+            <option value="$PROJECT_DIR$/features/reminder/data/data-source/local-data/data-access-object" />
             <option value="$PROJECT_DIR$/features/reminder/data/data-source/local-data/entity-execution" />
             <option value="$PROJECT_DIR$/features/reminder/data/data-source/shared-preferences" />
             <option value="$PROJECT_DIR$/features/reminder/data/repository-execution" />
@@ -115,10 +115,11 @@
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/core" />
             <option value="$PROJECT_DIR$/libraries/core/local-data" />
+            <option value="$PROJECT_DIR$/libraries/core/local-data/database-creator" />
+            <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities" />
+            <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities/entity-declarations" />
+            <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities/entity-execution" />
             <option value="$PROJECT_DIR$/libraries/core/remote-data" />
-            <option value="$PROJECT_DIR$/libraries/shared-entities" />
-            <option value="$PROJECT_DIR$/libraries/shared-entities/entity-declarations" />
-            <option value="$PROJECT_DIR$/libraries/shared-entities/entity-execution" />
             <option value="$PROJECT_DIR$/libraries/shared-ui" />
           </set>
         </option>

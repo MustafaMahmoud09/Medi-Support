@@ -2,7 +2,7 @@ package com.damanhour.Graduation.medisupport.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.localdata.MediSupportDatabase
+import com.example.database_creator.MediSupportDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

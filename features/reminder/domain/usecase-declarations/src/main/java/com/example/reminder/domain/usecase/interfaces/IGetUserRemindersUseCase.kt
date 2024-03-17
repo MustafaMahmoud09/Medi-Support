@@ -5,6 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface IGetUserRemindersUseCase {
 
-    suspend operator fun invoke(): Flow<List<ReminderPresentationModel>>
+    suspend operator fun invoke(
+        page: Int,
+        pageSize: Int
+    ): List<ReminderPresentationModel>
 
 }//end IGetUserRemindersUseCase

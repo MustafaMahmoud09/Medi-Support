@@ -17,7 +17,7 @@ import java.time.LocalTime
 class ReminderRepositoryImpl(
     private val reminderPreferencesAccess: ReminderPreferencesAccess,
     private val localDatabase: MediSupportDatabase
-) : IReminderRepository {//end ReminderRepositoryImpl//end RepositoryImp
+) : IReminderRepository {
 
     //fun return false if used the reminder feature before else return true
     override fun getRunningReminderFeatureState(): Boolean {
@@ -129,11 +129,15 @@ class ReminderRepositoryImpl(
 
     //function for get reminders from local database
     override suspend fun getReminders(
-        userId: Long
-    ): Flow<List<IReminderWithDays>> {
+        userId: Long,
+        pageSize: Int,
+        page: Int
+    ): List<IReminderWithDays> {
 
         return localDatabase.reminderDao().select(
-            userId = userId
+            userId = userId,
+            pageSize = pageSize,
+            page = page
         )
 
     }//end getReminders
@@ -195,4 +199,4 @@ class ReminderRepositoryImpl(
 
     }//end updateReminderStatus
 
-}
+}//end ReminderRepositoryImpl

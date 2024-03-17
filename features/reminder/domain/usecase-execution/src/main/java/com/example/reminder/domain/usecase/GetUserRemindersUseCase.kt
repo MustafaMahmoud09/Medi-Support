@@ -4,9 +4,6 @@ import com.example.reminder.domaim.domain.model.reminder.ReminderPresentationMod
 import com.example.reminder.domain.mapper.declarations.child.IReminderWithDaysEntityToReminderModelMapper
 import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
 import com.example.repository.interfaces.IReminderRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 
 class GetUserRemindersUseCase(
     private val reminderRepository: IReminderRepository,
@@ -14,27 +11,22 @@ class GetUserRemindersUseCase(
 ) : IGetUserRemindersUseCase {
 
     //function for get user reminders
-    override suspend fun invoke(): Flow<List<ReminderPresentationModel>> {
+    override suspend fun invoke(
+        page: Int,
+        pageSize: Int
+    ): List<ReminderPresentationModel> {
 
-        //return stream of data
-        return flow {
+        //get reminders from data source
+        val remindersEntity = reminderRepository.getReminders(
+            userId = 1,
+            page = page,
+            pageSize = pageSize
+        )
 
-            //collect data from repo and map this data to model
-            reminderRepository.getReminders(
-                userId = 1
-            ).collect { reminders ->
-
-                //map data from entity to model here
-                val remindersModel = reminderEntityToReminderModelMapper.listConvertor(
-                    list = reminders
-                )
-
-                //emit data in stream here
-                emit(remindersModel)
-
-            }//end collect
-
-        }//end flow
+        //map reminders from entity to domain model and return it
+        return reminderEntityToReminderModelMapper.listConvertor(
+            list = remindersEntity
+        )
 
     }//end invoke
 

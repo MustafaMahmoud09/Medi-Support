@@ -62,10 +62,39 @@
       <module name="MediSupport.features.heart-prediction.domain.use-case.main" target="17" />
       <module name="MediSupport.features.heart-prediction.domain.use-case.test" target="17" />
       <module name="MediSupport.features.heart-prediction.presentation" target="17" />
-      <module name="MediSupport.features.heart-rate.data.repository" target="17" />
-      <module name="MediSupport.features.heart-rate.domain.use-case" target="17" />
+      <module name="MediSupport.features.heart-rate.data.data-source.local-data.data-access-object" target="17" />
+      <module name="MediSupport.features.heart-rate.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.heart-rate.data.data-source.paginations" target="17" />
+      <module name="MediSupport.features.heart-rate.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.heart-rate.data.data-source.shared-preferences" target="17" />
+      <module name="MediSupport.features.heart-rate.data.repository-execution" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.domain-model" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.heart-rate.domain.use-case.main" target="17" />
       <module name="MediSupport.features.heart-rate.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.heart-rate.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.heart-rate.mapper-execution" target="17" />
+      <module name="MediSupport.features.heart-rate.mapper-execution.main" target="17" />
+      <module name="MediSupport.features.heart-rate.mapper-execution.test" target="17" />
+      <module name="MediSupport.features.heart-rate.paginations" target="17" />
       <module name="MediSupport.features.heart-rate.presentation" target="17" />
       <module name="MediSupport.features.offline-booking.data.repository" target="17" />
       <module name="MediSupport.features.offline-booking.domain.use-case" target="17" />
@@ -131,6 +160,7 @@
       <module name="MediSupport.features.reminder.mapper-execution.test" target="17" />
       <module name="MediSupport.features.reminder.mapper.main" target="17" />
       <module name="MediSupport.features.reminder.mapper.test" target="17" />
+      <module name="MediSupport.features.reminder.paginations" target="17" />
       <module name="MediSupport.features.reminder.presentation" target="17" />
       <module name="MediSupport.features.room.data.repository" target="17" />
       <module name="MediSupport.features.room.domain.use-case" target="17" />

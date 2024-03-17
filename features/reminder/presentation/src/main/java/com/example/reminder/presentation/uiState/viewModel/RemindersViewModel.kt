@@ -2,10 +2,18 @@ package com.example.reminder.presentation.uiState.viewModel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LoadState
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.filter
+import androidx.paging.flatMap
+import androidx.paging.map
+import com.example.reminder.domaim.domain.model.reminder.ReminderPresentationModel
 import com.example.reminder.domaim.domain.model.reminder.ReminderUpdateData
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
 import com.example.reminder.domain.usecase.interfaces.IUpdateReminderStatusUseCase
+import com.example.reminder.paginations.RemindersDataSource
 import com.example.reminder.presentation.uiState.state.RemindersUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,29 +42,29 @@ class RemindersViewModel @Inject constructor(
     init {
 
         getReminders()
+
     }//end init
 
     //function for get reminder from local database
     private fun getReminders() {
 
-        //create coroutine builder here
-        viewModelScope.launch(Dispatchers.IO) {
+        //get current page reminders here
+        val currentPageReminders = Pager(
+            config = PagingConfig(
+                pageSize = 10
+            )
+        ) {
+            RemindersDataSource(
+                getUserRemindersUseCase = getUserRemindersUseCase
+            )
+        }.flow
 
-            //collect reminder from use case here
-            getUserRemindersUseCase().collectLatest { reminders ->
-
-                Log.d("TAG", reminders.toString())
-
-                //update reminders state here by new reminders
-                _state.update {
-                    it.copy(
-                        reminders = reminders
-                    )
-                }
-
-            }//end collectLatest
-
-        }//end launch
+        //change reminders state here
+        _state.update {
+            it.copy(
+                reminders = currentPageReminders
+            )
+        }
 
     }//end getReminders
 
@@ -63,18 +72,53 @@ class RemindersViewModel @Inject constructor(
     //function for update reminder status
     fun onReminderStatusUpdated(status: Boolean, reminderId: Long) {
 
-        //create coroutine builder here
-        viewModelScope.launch(Dispatchers.IO) {
+        try {
 
-            //update status here
-            updateReminderStatusUseCase(
-                reminder = ReminderUpdateData(
-                    reminderId = reminderId,
-                    status = status
+            //create coroutine builder here
+            viewModelScope.launch(Dispatchers.IO) {
+
+                //update status here
+                updateReminderStatusUseCase(
+                    reminder = ReminderUpdateData(
+                        reminderId = reminderId,
+                        status = status
+                    )
                 )
-            )
 
-        }//end launch
+                //update reminder state from ui reminders
+                val newReminders = state.value.reminders?.map { reminders ->
+
+                    //map reminders here
+                    reminders.map { reminder ->
+
+                        if (reminder.id == reminderId) {
+                            reminder.copy(
+                                status = status
+                            )
+                        }//end if
+
+                        else {
+                            reminder
+                        }//end else
+
+                    }//end child map
+
+                }//end parent map
+
+                _state.update {
+                    it.copy(
+                        reminders = newReminders
+                    )
+                }//end update
+
+            }//end launch
+
+        }//end try
+        catch (ex: Exception) {
+
+            Log.d("ERROR", ex.message.toString())
+
+        }//end catch
 
     }//end onReminderStatusUpdated
 
@@ -93,5 +137,15 @@ class RemindersViewModel @Inject constructor(
         }//end launch
 
     }//end onReminderDeleted
+
+    fun onReminderBackupCreated(){
+
+        _state.update {
+            it.copy(
+                remindersBackup = state.value.reminders
+            )
+        }
+
+    }//end onReminderBackupCreated
 
 }//end ReminderViewModel

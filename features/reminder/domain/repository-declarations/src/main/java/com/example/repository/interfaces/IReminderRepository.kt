@@ -28,8 +28,10 @@ interface IReminderRepository {
     )
 
     suspend fun getReminders(
-        userId: Long
-    ): Flow<List<IReminderWithDays>>
+        userId: Long,
+        pageSize: Int,
+        page: Int
+    ): List<IReminderWithDays>
 
     suspend fun getNearestReminder(
         status: Boolean,

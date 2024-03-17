@@ -51,8 +51,12 @@ dependencies {
     //domain model
     implementation(project(':features:reminder:domain:domain-model'))
 
+    //pagination
+    implementation(project(':features:reminder:paginations'))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
+
 
     //compose
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -85,5 +89,11 @@ dependencies {
 
     //permission request
     implementation("com.google.accompanist:accompanist-permissions:$accompanist_version")
+
+    //pagination
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
+    // optional - Jetpack Compose integration
+    implementation "androidx.paging:paging-compose:$compose_paging_version"
 
 }

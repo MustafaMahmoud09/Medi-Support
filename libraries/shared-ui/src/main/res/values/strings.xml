@@ -156,4 +156,5 @@
     <string name="remember_you_now_have_an_appointment_to_take_your_medication">Remember, you now have an appointment to take your medication</string>
     <string name="snooze">SNOOZE</string>
     <string name="stop">STOP</string>
+    <string name="next_medication_appointment">Next medication appointment</string>
 </resources>

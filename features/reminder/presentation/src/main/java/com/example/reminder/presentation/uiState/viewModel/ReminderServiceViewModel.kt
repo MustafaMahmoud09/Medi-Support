@@ -14,8 +14,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.viewModelScope
 import com.example.reminder.domain.usecase.interfaces.IGetNearestRemindersUseCase
 import com.example.reminder.presentation.R
-import com.example.reminder.presentation.uiElement.receivers.CancelReminderNotificationReceiver
-import com.example.reminder.presentation.uiElement.receivers.StopReminderNotificationReceiver
+import com.example.reminder.presentation.uiElement.services.CancelReminderNotificationService
+import com.example.reminder.presentation.uiElement.services.StopReminderNotificationService
 import com.example.reminder.presentation.uiState.state.ReminderServiceUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -261,9 +261,9 @@ class ReminderServiceViewModel @Inject constructor(
 
         //make cancel button action here
         val cancelReminderIntent =
-            Intent(context, CancelReminderNotificationReceiver::class.java)
-        val snoozeReminderIntentAction =
-            PendingIntent.getBroadcast(
+            Intent(context, CancelReminderNotificationService::class.java)
+        val cancelReminderIntentAction =
+            PendingIntent.getService(
                 context,
                 0,
                 cancelReminderIntent,
@@ -272,9 +272,9 @@ class ReminderServiceViewModel @Inject constructor(
 
         //make stop button action here
         val stopReminderIntent =
-            Intent(context, StopReminderNotificationReceiver::class.java)
+            Intent(context, StopReminderNotificationService::class.java)
         val stopReminderIntentAction =
-            PendingIntent.getBroadcast(
+            PendingIntent.getService(
                 context,
                 0,
                 stopReminderIntent,
@@ -312,7 +312,10 @@ class ReminderServiceViewModel @Inject constructor(
             .addAction(
                 1, context.getString(
                     com.example.sharedui.R.string.cancel
-                ).uppercase(), snoozeReminderIntentAction
+                ).uppercase(), cancelReminderIntentAction
+            )
+            .addAction(
+                1, "", null
             )
             .build()
 

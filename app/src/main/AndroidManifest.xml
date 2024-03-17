@@ -17,7 +17,9 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.MediSupport"
         tools:targetApi="34">
-        <service android:name="com.example.reminder.presentation.uiElement.ReminderService" />
+        <service android:name="com.example.reminder.presentation.uiElement.services.ReminderService" />
+        <service android:name="com.example.reminder.presentation.uiElement.services.CancelReminderNotificationService"/>
+        <service android:name="com.example.reminder.presentation.uiElement.services.StopReminderNotificationService"/>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -31,9 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name="com.example.reminder.presentation.uiElement.receivers.CancelReminderNotificationReceiver" />
-        <receiver android:name="com.example.reminder.presentation.uiElement.receivers.StopReminderNotificationReceiver" />
     </application>
 
 </manifest>

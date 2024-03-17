@@ -12,7 +12,7 @@ import com.example.reminder.domain.usecase.interfaces.IGetActiveRemindersSizeUse
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.interfaces.ISetReminderServiceRunningStateUseCase
-import com.example.reminder.presentation.uiElement.ReminderService
+import com.example.reminder.presentation.uiElement.services.ReminderService
 import com.example.reminder.presentation.uiState.state.AddReminderErrorUiState
 import com.example.reminder.presentation.uiState.state.AddReminderUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel

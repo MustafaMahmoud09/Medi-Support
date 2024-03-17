@@ -36,9 +36,11 @@ interface ReminderDao {
     @Query(
         "SELECT * FROM ${ReminderInfo.REMINDER_TABLE_NAME}" +
                 " WHERE ${ReminderInfo.USER_ID_COLUMN_NAME} = :userId " +
-                "ORDER BY ${ReminderInfo.TIME_COLUMN_NAME} ASC"
+                "ORDER BY ${ReminderInfo.TIME_COLUMN_NAME} ASC " +
+                "LIMIT :pageSize " +
+                "OFFSET ((:page - 1) * :pageSize)"
     )
-    fun select(userId: Long): Flow<List<ReminderWithDays>>
+    suspend fun select(userId: Long, pageSize: Int, page: Int): List<ReminderWithDays>
 
 
     //TODO:: Function For Update Reminder Status

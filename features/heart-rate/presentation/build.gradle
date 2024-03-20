@@ -43,6 +43,8 @@ dependencies {
     //project
     implementation(project(':libraries:shared-ui'))
 
+    implementation(project(':features:heart-rate:domain:usecase-declarations'))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
@@ -77,4 +79,7 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //camera
+    implementation "androidx.camera:camera-core:1.0.0"
 }

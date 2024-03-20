@@ -86,6 +86,10 @@ dependencies {
 
     //heart rate
     implementation(project(':features:heart-rate:presentation'))
+    implementation(project(':features:heart-rate:domain:usecase-declarations'))
+    implementation(project(':features:heart-rate:domain:usecase-execution'))
+    implementation(project(':features:heart-rate:data:repository-execution'))
+    implementation(project(':features:heart-rate:domain:repository-declarations'))
 
     //offline booking
     implementation implementation(project(':features:offline-booking:presentation',))

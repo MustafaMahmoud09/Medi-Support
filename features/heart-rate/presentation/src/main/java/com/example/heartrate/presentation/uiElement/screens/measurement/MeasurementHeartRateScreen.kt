@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -14,7 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.heartrate.presentation.uiElement.components.items.CalculateHeartRateSection
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.heartrate.presentation.uiState.viewModel.MeasurementHeartRateViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
@@ -24,24 +25,25 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-import kotlinx.coroutines.delay
+
 
 @Composable
 internal fun MeasurementHeartRateScreen(
+    viewModel: MeasurementHeartRateViewModel = hiltViewModel(),
     popMeasurementHeartRateDestination: () -> Unit,
-    navigateToStatisticsHeartRateDestination: () -> Unit
+    navigateToStatisticsHeartRateDestination: () -> Unit,
 ) {
+    //collect screen state here
+    val state = viewModel.state.collectAsState()
 
-    MeasurementHeartRateContent(
-        onClickOnBackButton = popMeasurementHeartRateDestination
-    )
+    if(state.value.isPPGTechnologySupported) {
 
-    LaunchedEffect(
-        key1 = true
-    ) {
-        delay(5000)
-        navigateToStatisticsHeartRateDestination()
-    }//end LaunchedEffect
+        MeasurementHeartRateContent(
+            onClickOnBackButton = popMeasurementHeartRateDestination
+        )
+
+    }
+
 
 }//end MeasurementHeartRateScreen
 

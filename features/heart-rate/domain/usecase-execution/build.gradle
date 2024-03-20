@@ -7,3 +7,14 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    //project
+    //heart rate use case declarations
+    implementation(project(':features:heart-rate:domain:usecase-declarations'))
+
+    //heart rate repository declarations
+    implementation(project(':features:heart-rate:domain:repository-declarations'))
+
+}

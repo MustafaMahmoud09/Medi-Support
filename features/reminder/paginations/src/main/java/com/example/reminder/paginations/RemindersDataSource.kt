@@ -14,7 +14,10 @@ class RemindersDataSource(
         state: PagingState<Int, ReminderPresentationModel>
     ): Int? {
 
-        return state.anchorPosition
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
 
     }//end getRefreshKey
 
@@ -40,7 +43,7 @@ class RemindersDataSource(
             LoadResult.Page(
                 data = data,
                 prevKey = if (numberOfCurrentPage == 1) null else numberOfCurrentPage.minus(1),
-                nextKey = if (data.size < pageSize) null else numberOfCurrentPage.plus(1)
+                nextKey = if (data.size <= pageSize) null else numberOfCurrentPage.plus(1)
             )
 
         }//end try

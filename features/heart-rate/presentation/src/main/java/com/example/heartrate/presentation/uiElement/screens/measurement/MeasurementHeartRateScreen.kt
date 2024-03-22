@@ -1,13 +1,24 @@
+@file:OptIn(ExperimentalPermissionsApi::class)
+
 package com.example.heartrate.presentation.uiElement.screens.measurement
 
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraControl
+import androidx.camera.core.ImageProxy
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -15,7 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.heartrate.presentation.uiState.viewModel.MeasurementHeartRateViewModel
+import com.example.heartrate.presentation.uiElement.components.composable.CameraPreviewView
+import com.example.heartrate.presentation.uiElement.components.items.CalculateHeartRateSection
+import com.example.heartrate.presentation.uiState.state.MeasurementHeartRateUiState
+import com.example.heartrate.presentation.uiState.viewModel.measurement.MeasurementHeartRateViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
@@ -25,6 +39,10 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 
 
 @Composable
@@ -36,14 +54,30 @@ internal fun MeasurementHeartRateScreen(
     //collect screen state here
     val state = viewModel.state.collectAsState()
 
-    if(state.value.isPPGTechnologySupported) {
+    val cameraPermissionState =
+        rememberPermissionState(permission = android.Manifest.permission.CAMERA)
+
+    if (state.value.isPPGTechnologySupported) {
 
         MeasurementHeartRateContent(
-            onClickOnBackButton = popMeasurementHeartRateDestination
+            onClickOnBackButton = popMeasurementHeartRateDestination,
+            cameraPermissionState = cameraPermissionState,
+            onImageAnalysed = viewModel::onImageAnalysed,
+            onCameraObjectDefined = viewModel::onCameraObjectDefined,
+            uiState = state.value
         )
 
     }
 
+    LaunchedEffect(
+        key1 = cameraPermissionState.status.isGranted
+    ) {
+
+        if (!cameraPermissionState.status.isGranted) {
+            cameraPermissionState.launchPermissionRequest()
+        }//end if
+
+    }//end LaunchedEffect
 
 }//end MeasurementHeartRateScreen
 
@@ -51,7 +85,11 @@ internal fun MeasurementHeartRateScreen(
 private fun MeasurementHeartRateContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
-    onClickOnBackButton: () -> Unit
+    onClickOnBackButton: () -> Unit,
+    cameraPermissionState: PermissionState,
+    uiState: MeasurementHeartRateUiState,
+    onImageAnalysed: (ImageProxy) -> Unit,
+    onCameraObjectDefined: (Camera) -> CameraControl
 ) {
 
     //create base screen to set navigation and status bar color here
@@ -119,7 +157,7 @@ private fun MeasurementHeartRateContent(
                             .fillMaxWidth()
                     ) {
                         //create ids for components here
-                        val (heartRateIconId, calculateHeartRateId, measuringTextId, messageId) = createRefs()
+                        val (heartRateIconId, calculateHeartRateId, measuringTextId, messageId, cameraId) = createRefs()
 
                         //create guides here
                         val guideFromStart21P = createGuidelineFromStart(0.21f)
@@ -150,7 +188,7 @@ private fun MeasurementHeartRateContent(
                         )
 
                         //create calculate heart rate section here
-                        com.example.heartrate.presentation.uiElement.components.items.CalculateHeartRateSection(
+                        CalculateHeartRateSection(
                             dimen = dimen,
                             theme = theme,
                             unit = "BPM",
@@ -166,6 +204,41 @@ private fun MeasurementHeartRateContent(
                                     width = Dimension.fillToConstraints
                                 }
                         )
+
+                        //create box contain on camera
+                        Box(
+                            modifier = Modifier
+                                .constrainAs(cameraId) {
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    top.linkTo(
+                                        calculateHeartRateId.bottom,
+                                        dimen.dimen_4_75.dp
+                                    )
+                                }
+                                .size(
+                                    size = dimen.dimen_15.dp
+                                )
+                                .clip(
+                                    shape = CircleShape
+                                )
+                        ) {
+
+                            //if camera permission state equal true
+                            if (cameraPermissionState.status.isGranted) {
+
+                                //open camera and flash
+                                CameraPreviewView(
+                                    onImageAnalyzed = onImageAnalysed,
+                                    onCameraObjectDefined = onCameraObjectDefined,
+                                    processCameraProvider = uiState.processCameraProvider,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+
+                            }//end if
+
+                        }//end Box
 
                         //create measuring text here
                         TextSemiBoldView(
@@ -188,8 +261,8 @@ private fun MeasurementHeartRateContent(
                                         dimen.dimen_1.dp
                                     )
                                     top.linkTo(
-                                        calculateHeartRateId.bottom,
-                                        dimen.dimen_4_75.dp
+                                        cameraId.bottom,
+                                        dimen.dimen_3.dp
                                     )
                                     width = Dimension.fillToConstraints
                                 }

@@ -333,4 +333,5 @@ private fun StatisticsHeartRateContent(
 
     }//end BaseScreen
 
+
 }//end StatisticsHeartRateContent

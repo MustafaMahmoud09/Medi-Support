@@ -5,10 +5,18 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.BODY_SENSORS"/>
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera.flash" />
-    <uses-feature android:name="android.hardware.sensor.light" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 
     <application
         android:name=".MediSupportApplication"
@@ -22,8 +30,9 @@
         android:theme="@style/Theme.MediSupport"
         tools:targetApi="34">
         <service android:name="com.example.reminder.presentation.uiElement.services.ReminderService" />
-        <service android:name="com.example.reminder.presentation.uiElement.services.CancelReminderNotificationService"/>
-        <service android:name="com.example.reminder.presentation.uiElement.services.StopReminderNotificationService"/>
+        <service android:name="com.example.reminder.presentation.uiElement.services.CancelReminderNotificationService" />
+        <service android:name="com.example.reminder.presentation.uiElement.services.StopReminderNotificationService" />
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"

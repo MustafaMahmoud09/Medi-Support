@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.7">
       <module name="AndroidStudioProjects.MediSupport.presentation.blood_pressure" target="17" />
       <module name="AndroidStudioProjects.MediSupport.presentation.bmi" target="17" />
+      <module name="Medi-Support-main.MediSupport.features.offline-booking.presentation" target="17" />
       <module name="MediSupport.app" target="17" />
       <module name="MediSupport.core.local" target="17" />
       <module name="MediSupport.core.remote" target="17" />
@@ -179,6 +180,7 @@
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-execution" target="17" />
       <module name="MediSupport.libraries.core.local-datas" target="17" />
       <module name="MediSupport.libraries.core.remote-data" target="17" />
+      <module name="MediSupport.libraries.open-cv" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-declarations.main" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-declarations.test" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-interfaces.main" target="17" />

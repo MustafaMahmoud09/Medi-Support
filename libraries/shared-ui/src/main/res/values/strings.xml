@@ -158,4 +158,6 @@
     <string name="stop">STOP</string>
     <string name="next_medication_appointment">Next medication appointment</string>
     <string name="chatting_now">Chatting Now</string>
+    <string name="notifications">Notifications</string>
+    <string name="mark_all_read">Mark all read</string>
 </resources>

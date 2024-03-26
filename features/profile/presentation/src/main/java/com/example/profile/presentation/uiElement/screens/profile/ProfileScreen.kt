@@ -144,7 +144,7 @@ private fun ProfileContent(
                     )
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                     width = Dimension.fillToConstraints
                 }

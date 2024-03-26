@@ -15,7 +15,6 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.WorkerView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
-import com.example.sharedui.uiElement.components.items.BookingStatusSection
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme

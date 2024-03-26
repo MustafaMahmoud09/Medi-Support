@@ -96,4 +96,7 @@ dependencies {
     // optional - Jetpack Compose integration
     implementation "androidx.paging:paging-compose:$compose_paging_version"
 
+    //permission request accompanist
+    implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
+
 }

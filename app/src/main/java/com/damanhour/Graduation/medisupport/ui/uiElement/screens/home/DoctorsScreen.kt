@@ -27,6 +27,7 @@ import com.example.offlinebooking.presentation.uiElement.screens.SearchScreen
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.child.TotalDoctorsScreen
 import com.damanhour.Graduation.medisupport.ui.uiState.state.HomeUiState
 import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.HomeViewModel
+import com.example.notification.presentation.uiElement.screens.NotificationScreen
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -73,17 +74,41 @@ internal fun DoctorsScreen(
         navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
         focusRequester = focusRequester,
         coroutineScope = coroutineScope,
-        onClickOnSearchField = viewModel::onFocusOnSearchField,
+        onClickOnSearchField = {
+
+            //on search page pushed
+            viewModel.onNewPagePushed(
+                newPage = 1,
+                focusOnSearch = true
+            )
+        },//end onClickOnSearchField
         navigateToHeartPredictionNavGraph = navigateToHeartPredictionNavGraph,
         uiState = uiState,
         navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
         onSearchKeyChanged = viewModel::onSearchKeyChanged,
-        onClickOnNotificationButton = navigateToBookingDetailsDestination,
         navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
+        onClickOnNotificationButton = {
+
+            //change current page and prev page
+            viewModel.onNewPagePushed(
+                newPage = 3,
+                focusOnSearch = false
+            )
+
+            //execute scroll to notification screen here
+            pagerState.scrollToPage(
+                coroutineScope = coroutineScope,
+                page = 3
+            )
+
+        },
         onClickSeeAll = {
 
             //change current page and prev page
-            viewModel.onScrollToTotalDoctorsPage()
+            viewModel.onNewPagePushed(
+                newPage = 2,
+                focusOnSearch = false
+            )
 
             //execute scroll to see all doctor screen here
             pagerState.scrollToPage(
@@ -95,10 +120,10 @@ internal fun DoctorsScreen(
         onClickBack = {
 
             //get prev page here
-            val prevPage = uiState.prevPage
+            val prevPage = viewModel.getPrevPage()
 
             //change current page and prev page
-            viewModel.onBack()
+            viewModel.onLastScreenPopped()
 
             //on back scroll to prev page
             pagerState.scrollToPage(
@@ -131,7 +156,7 @@ private fun DoctorsContent(
     uiState: HomeUiState,
     onSearchKeyChanged: (String) -> Unit,
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
-    onClickOnNotificationButton: (Int) -> Unit,
+    onClickOnNotificationButton: () -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
 ) {
 
@@ -157,7 +182,7 @@ private fun DoctorsContent(
             dimen = dimen,
             theme = theme,
             onClick = onClickOnReminder,
-            tint = theme.hintIconBottom,
+            tint = theme.redDark,
             modifier = Modifier
                 .constrainAs(reminderButtonId) {
                     end.linkTo(
@@ -176,17 +201,18 @@ private fun DoctorsContent(
             ),
             dimen = dimen,
             theme = theme,
-            onClick = { onClickOnNotificationButton(0) },
-            tint = theme.hintIconBottom,
+            onClick = onClickOnNotificationButton,
+            tint = theme.redDark,
             size =
             /**if exist in page 0**/
-            if (uiState.currentPage == 0) {
-                dimen.dimen_3_5
-            }
+//            if (uiState.currentPage == 0) {
+            dimen.dimen_3_5
+//            }
             /**if exist in page 1 or 2**/
-            else {
-                dimen.dimen_0
-            },
+//            else {
+//                dimen.dimen_0
+//            },
+            ,
             modifier = Modifier
                 .constrainAs(notificationButtonId) {
                     end.linkTo(
@@ -215,7 +241,7 @@ private fun DoctorsContent(
                     start.linkTo(
                         parent.start,
                         //if exist in page 0
-                        if (uiState.currentPage == 0) {
+                        if (uiState.pagerStack.last() == 0) {
                             dimen.dimen_2.dp
                         }//end if
                         //if exist in page 1 or 2
@@ -226,13 +252,13 @@ private fun DoctorsContent(
                     end.linkTo(
                         parent.end,
                         //if exist in page 0
-                        if (uiState.currentPage == 0) {
-                            dimen.dimen_10_75.dp
-                        }//end if
+//                        if (uiState.currentPage == 0) {
+                        dimen.dimen_10_75.dp
+//                        }//end if
                         //if exist in page 1 or 2
-                        else {
-                            dimen.dimen_6_25.dp
-                        }
+//                        else {
+//                            dimen.dimen_6_25.dp
+//                        }
                     )
                     top.linkTo(
                         parent.top,
@@ -249,7 +275,7 @@ private fun DoctorsContent(
             onClick = onClickBack,
             size =
             /**if exist in page 0**/
-            if (uiState.currentPage == 0) {
+            if (uiState.pagerStack.last() == 0) {
                 dimen.dimen_0
             }
             /**if exist in page 1 or 2**/
@@ -271,7 +297,7 @@ private fun DoctorsContent(
         //create horizontal pager here
         HorizontalPager(
             state = pagerState,
-            pageCount = 3,
+            pageCount = 4,
             userScrollEnabled = false,
             modifier = Modifier
                 .constrainAs(searchPagerId) {
@@ -285,7 +311,7 @@ private fun DoctorsContent(
         ) { page ->
             //condition for show pages
             when (page) {
-                //if page is 0 show home screen
+                //if page number equal 0 show home screen
                 0 -> {
 
                     TopDoctorsScreen(
@@ -301,7 +327,7 @@ private fun DoctorsContent(
                         navigateToOfflineBookingDestination = navigateToOfflineBookingDestination
                     )
                 }//end case
-                //if page is 1 show search screen
+                //if page number equal 1 show search screen
                 1 -> {
 
                     SearchScreen(
@@ -310,7 +336,7 @@ private fun DoctorsContent(
                         navigateToBookingNavGraph = navigateToOfflineBookingDestination
                     )
                 }//end case
-                //if page is 2 show see all doctor screen
+                //if page number equal 2 show see all doctor screen
                 2 -> {
 
                     TotalDoctorsScreen(
@@ -319,6 +345,12 @@ private fun DoctorsContent(
                         navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
                         navigateToOfflineBookingDestination = navigateToOfflineBookingDestination
                     )
+                }//end case
+
+                //if page number equal 3 show notification screen
+                3 -> {
+
+                    NotificationScreen()
                 }//end case
 
             }//end when

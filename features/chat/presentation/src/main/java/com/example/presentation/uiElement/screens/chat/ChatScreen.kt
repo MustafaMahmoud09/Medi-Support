@@ -29,8 +29,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.presentation.uiElement.components.items.ChatToolsSection
 import com.example.presentation.uiElement.components.items.GuestUserMessageSection
 import com.example.presentation.uiElement.components.items.OwnerUserMessageSection
+import com.example.presentation.uiElement.components.items.UserActiveSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.modifier.appDefaultContainer
@@ -52,7 +54,9 @@ internal fun ChatScreen(
     //create files launcher here
     val filesLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetMultipleContents(),
-        onResult = {}
+        onResult = {
+
+        }
     )
 
     //create camera launcher here
@@ -160,7 +164,7 @@ private fun ChatContent(
                 val (chatToolsId, messagesContainerId) = createRefs()
 
                 //create chat tools section here
-                com.example.presentation.uiElement.components.items.ChatToolsSection(
+                ChatToolsSection(
                     dimen = dimen,
                     theme = theme,
                     editTextValue = value,
@@ -296,7 +300,7 @@ private fun ChatTopBarContent(
         val (backButtonId, userActiveId) = createRefs()
 
         //create other user in top screen here
-        com.example.presentation.uiElement.components.items.UserActiveSection(
+        UserActiveSection(
             dimen = dimen,
             theme = theme,
             modifier = Modifier
@@ -311,7 +315,7 @@ private fun ChatTopBarContent(
                     )
                     top.linkTo(
                         parent.top,
-                        (dimen.dimen_2_5 + dimen.dimen_0_125).dp
+                        dimen.dimen_2.dp
                     )
                     width = Dimension.fillToConstraints
                 }

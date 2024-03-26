@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.auth.presentation.uiElement.components.composable.IconStartButtonView
+import com.example.auth.presentation.uiElement.components.composable.CenterIconTextButtonView
 import com.example.sharedui.R
 import com.example.auth.presentation.uiState.state.LoginUiState
 import com.example.auth.presentation.uiState.viewModel.LoginViewModel
@@ -339,7 +339,7 @@ private fun LoginContent(
                                     }
                             )
 
-                            IconStartButtonView(
+                            CenterIconTextButtonView(
                                 theme = theme,
                                 dimen = dimen,
                                 icon = painterResource(
@@ -367,7 +367,7 @@ private fun LoginContent(
                                     }
                             )
 
-                            IconStartButtonView(
+                            CenterIconTextButtonView(
                                 theme = theme,
                                 dimen = dimen,
                                 icon = painterResource(

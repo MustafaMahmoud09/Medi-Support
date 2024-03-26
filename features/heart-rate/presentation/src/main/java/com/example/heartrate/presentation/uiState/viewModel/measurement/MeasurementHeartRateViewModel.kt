@@ -3,6 +3,7 @@
 package com.example.heartrate.presentation.uiState.viewModel.measurement
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.Camera
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import org.opencv.android.OpenCVLoader
+import org.opencv.android.Utils
 import org.opencv.core.Mat
 import javax.inject.Inject
 
@@ -66,10 +68,29 @@ class MeasurementHeartRateViewModel @Inject constructor(
 
         Log.d("TAG", processingImageResult.toString())
 
+        val imageResult = matToBitmap(processingImageResult)
+
+        _state.update {
+            it.copy(
+                imageResult = imageResult
+            )
+        }
+
         // Close the ImageProxy
         imageProxy.close()
 
     }//end onImageAnalysed
+
+    // تحويل مصفوفة الصورة (Mat) إلى Bitmap
+    private fun matToBitmap(mat: Mat): Bitmap {
+        // إنشاء Bitmap فارغة لتخزين الصورة
+        val bitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888)
+
+        // تحويل مصفوفة الصورة (Mat) إلى Bitmap
+        Utils.matToBitmap(mat, bitmap)
+
+        return bitmap
+    }
 
     //function for execute processing on image
     private fun ImageProxy.onImageProcessing(): Mat {
@@ -89,11 +110,6 @@ class MeasurementHeartRateViewModel @Inject constructor(
             inputMat = matrix
         )
 
-        //detect the edge of the image here
-        matrix = imageProcessingHelper.applyCannyEdgeDetection(
-            inputMat = matrix
-        )
-
         //uniformity of lighting here
         matrix = imageProcessingHelper.applyHistogramEqualization(
             inputMat = matrix
@@ -107,6 +123,19 @@ class MeasurementHeartRateViewModel @Inject constructor(
         //increase brightness to image here
         matrix = imageProcessingHelper.increaseBrightness(
             inputMat = matrix
+        )
+
+        //detect the edge of the image here
+        matrix = imageProcessingHelper.applyCannyEdgeDetection(
+            inputMat = matrix
+        )
+
+        matrix = reflectedLightSignalHelper.convertToHSV(
+            inputMat = matrix
+        )
+
+        matrix = reflectedLightSignalHelper.detectPPGRegions(
+            hsvMat = matrix
         )
 
         return matrix

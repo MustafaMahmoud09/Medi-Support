@@ -37,7 +37,7 @@ internal fun UserActiveSection(
         val (profileId, userInfoId) = createRefs()
 
         //create profile image section here
-        com.example.presentation.uiElement.components.composable.ProfileView(
+        ProfileView(
             dimen = dimen,
             theme = theme,
             modifier = Modifier

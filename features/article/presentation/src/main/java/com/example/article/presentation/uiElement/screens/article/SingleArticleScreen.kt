@@ -63,7 +63,7 @@ private fun SingleArticleContent(
                     )
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )
@@ -81,7 +81,7 @@ private fun SingleArticleContent(
                     end.linkTo(parent.end)
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )

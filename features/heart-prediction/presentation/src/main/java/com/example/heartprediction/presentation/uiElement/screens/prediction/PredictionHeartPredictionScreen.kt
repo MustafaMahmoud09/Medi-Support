@@ -72,7 +72,7 @@ private fun PredictionHeartPredictionContent(
                     id = R.string.heart_disease_prediction
                 ),
                 modifier = Modifier
-                    .constrainAs(headerId){
+                    .constrainAs(headerId) {
                         start.linkTo(
                             parent.start,
                             dimen.dimen_2.dp
@@ -80,7 +80,7 @@ private fun PredictionHeartPredictionContent(
                         end.linkTo(parent.end)
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_3_25.dp
+                            dimen.dimen_2_5.dp
                         )
 
                         width = Dimension.fillToConstraints
@@ -116,7 +116,7 @@ private fun PredictionHeartPredictionContent(
                 ) {
 
                     //create message here
-                    com.example.heartprediction.presentation.uiElement.components.items.ResultPredictionSection(
+                    ResultPredictionSection(
                         dimen = dimen,
                         theme = theme,
                         parentMessage = stringResource(

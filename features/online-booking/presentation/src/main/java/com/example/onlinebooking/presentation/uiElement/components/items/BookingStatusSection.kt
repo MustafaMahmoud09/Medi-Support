@@ -1,4 +1,4 @@
-package com.example.sharedui.uiElement.components.items
+package com.example.onlinebooking.presentation.uiElement.components.items
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

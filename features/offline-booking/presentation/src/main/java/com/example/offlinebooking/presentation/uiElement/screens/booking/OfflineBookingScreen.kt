@@ -185,7 +185,7 @@ private fun OfflineBookingContent(
                         )
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_8.dp
+                            (dimen.dimen_7_5 - dimen.dimen_0_125).dp
                         )
                     }
             )

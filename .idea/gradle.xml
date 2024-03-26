@@ -74,6 +74,8 @@
             <option value="$PROJECT_DIR$/features/heart-rate/mapper-execution" />
             <option value="$PROJECT_DIR$/features/heart-rate/paginations" />
             <option value="$PROJECT_DIR$/features/heart-rate/presentation" />
+            <option value="$PROJECT_DIR$/features/notification" />
+            <option value="$PROJECT_DIR$/features/notification/presentation" />
             <option value="$PROJECT_DIR$/features/offline-booking" />
             <option value="$PROJECT_DIR$/features/offline-booking/data" />
             <option value="$PROJECT_DIR$/features/offline-booking/data/repository" />

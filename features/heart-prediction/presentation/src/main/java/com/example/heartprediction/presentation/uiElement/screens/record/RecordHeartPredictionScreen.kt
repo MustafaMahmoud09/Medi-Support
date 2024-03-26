@@ -30,11 +30,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.heartprediction.presentation.uiElement.components.items.InputFieldSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
-import com.example.sharedui.uiElement.components.composable.IconButtonView
-import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -144,7 +141,7 @@ private fun RecordHeartPredictionContent(
                         end.linkTo(parent.end)
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_3_25.dp
+                            dimen.dimen_2_5.dp
                         )
 
                         width = Dimension.fillToConstraints

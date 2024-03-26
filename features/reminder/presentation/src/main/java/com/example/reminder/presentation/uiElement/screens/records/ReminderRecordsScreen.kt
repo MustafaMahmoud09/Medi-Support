@@ -88,7 +88,7 @@ private fun ReminderRecordsContent(
                     )
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )
@@ -107,7 +107,7 @@ private fun ReminderRecordsContent(
                     end.linkTo(parent.end)
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )
@@ -129,7 +129,7 @@ private fun ReminderRecordsContent(
                     )
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )

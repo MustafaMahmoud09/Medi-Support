@@ -1,7 +1,9 @@
+@file:OptIn(ExperimentalPermissionsApi::class)
+
 package com.example.reminder.presentation.uiElement.screens.add
 
+import android.Manifest
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -35,9 +38,11 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import com.example.sharedui.uiState.viewModel.child.BottomNavigationViewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import java.time.LocalTime
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun AddReminderScreen(
     bottomNavigationViewModel: BottomNavigationViewModel = hiltViewModel(),
@@ -47,6 +52,13 @@ internal fun AddReminderScreen(
 ) {
     //collect screen state here
     val state = addReminderViewModel.state.collectAsState()
+
+    val postNotificationPermissionState =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            TODO("VERSION.SDK_INT < TIRAMISU")
+        }
 
     AddReminderContent(
         uiState = state.value,
@@ -143,9 +155,26 @@ internal fun AddReminderScreen(
         }//end onClickOnReminderButton
     )
 
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+        LaunchedEffect(
+            key1 = postNotificationPermissionState.status.isGranted
+        ) {
+
+            if (!postNotificationPermissionState.status.isGranted) {
+
+                postNotificationPermissionState.launchPermissionRequest()
+
+            }//end if
+
+        }//end LaunchedEffect
+
+    }//end if
+
 }//end AddReminderScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 private fun AddReminderContent(
     dimen: CustomDimen = MediSupportAppDimen(),
@@ -194,7 +223,7 @@ private fun AddReminderContent(
                     )
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                     width = Dimension.fillToConstraints
                 }
@@ -217,7 +246,7 @@ private fun AddReminderContent(
                     )
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )

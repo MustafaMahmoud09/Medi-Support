@@ -15,7 +15,6 @@ const val ADD_REMINDER_DESTINATION_ROUTE = "addReminderDestination"
 
 
 //function for create add reminder destination and create screen in it
-@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.addReminderDestination(
     popAddReminderDestination: () -> Unit,
     navigateToReminderRecordsDestination: () -> Unit

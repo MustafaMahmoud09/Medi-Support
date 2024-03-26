@@ -68,7 +68,7 @@ private fun AboutContent(
                     )
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )
@@ -86,7 +86,7 @@ private fun AboutContent(
                     end.linkTo(parent.end)
                     top.linkTo(
                         parent.top,
-                        dimen.dimen_4.dp
+                        dimen.dimen_3.dp
                     )
                 }//end constrainAs
         )

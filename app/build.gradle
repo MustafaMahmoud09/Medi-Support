@@ -84,6 +84,9 @@ dependencies {
     //heart prediction
     implementation(project(':features:heart-prediction:presentation'))
 
+    //notification
+    implementation(project(':features:notification:presentation'))
+
     //heart rate
     implementation(project(':features:heart-rate:presentation'))
     implementation(project(':features:heart-rate:domain:usecase-declarations'))

@@ -14,8 +14,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.WorkerView
-import com.example.sharedui.uiElement.components.composable.IconButtonView
-import com.example.sharedui.uiElement.components.items.BookingStatusSection
 import com.example.sharedui.uiElement.components.items.IconTextSection
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -35,11 +33,6 @@ internal fun OfflineBookingSection(
     doctorNameColor: Color = theme.black,
     jopSize: Float = dimen.dimen_1_5,
     jopColor: Color = theme.grayA7A6A5,
-    chatIcon: Painter = painterResource(
-        id = R.drawable.chat_icon
-    ),
-    chatIconSize: Float = dimen.dimen_2_5,
-    chatIconTint: Color = theme.greenLight,
     addressTextColor: Color = theme.hintIconBottom,
     addressTextSize: Float = dimen.dimen_1_75,
     addressIcon: Painter = painterResource(
@@ -54,8 +47,24 @@ internal fun OfflineBookingSection(
     ),
     timeIconSize: Float = dimen.dimen_2_25,
     timeIconTint: Color = theme.black,
+    chatSectionTitle: String,
+    chatSectionTitleColor: Color = theme.green33A351,
+    chatSectionTitleSize: Float = dimen.dimen_1_5,
+    chatSectionBackground: Color,
+    chatSectionShape: Shape = RoundedCornerShape(
+        percent = 90
+    ),
+    chatSectionElevation: Float = dimen.dimen_0_5,
+    chatSectionAmbientColor: Color = theme.black,
+    chatSectionSpotColor: Color = theme.black,
+    chatSectionHeight: Float = dimen.dimen_2_5,
+    chatIcon: Painter = painterResource(
+        id = R.drawable.chat_icon
+    ),
+    chatIconSize: Float = dimen.dimen_2,
+    chatIconTint: Color = theme.green33A351,
+    onClickOnChatButton: () -> Unit,
     modifier: Modifier = Modifier,
-    onClickOnChatButton: () -> Unit
 ) {
 
     //create container here
@@ -162,13 +171,23 @@ internal fun OfflineBookingSection(
                 }
         )
 
-        //create status section here
-        BookingStatusSection(
-            dimen = dimen,
+        //create chat section here
+        BookingChatSection(
             theme = theme,
-            status = "Accept",
-            statusColor = theme.green33A351,
-            background = theme.green8CFFAB,
+            dimen = dimen,
+            title = chatSectionTitle,
+            titleColor = chatSectionTitleColor,
+            background = chatSectionBackground,
+            titleSize = chatSectionTitleSize,
+            shape = chatSectionShape,
+            elevation = chatSectionElevation,
+            ambientColor = chatSectionAmbientColor,
+            spotColor = chatSectionSpotColor,
+            height = chatSectionHeight,
+            chatIcon = chatIcon,
+            chatIconSize = chatIconSize,
+            chatIconTint = chatIconTint,
+            onClickOnChatButton = onClickOnChatButton,
             modifier = Modifier
                 .constrainAs(statusId) {
                     start.linkTo(timeId.start)
@@ -178,25 +197,6 @@ internal fun OfflineBookingSection(
                         dimen.dimen_1_75.dp
                     )
                     width = Dimension.fillToConstraints
-                }
-        )
-
-        //create chat button here
-        IconButtonView(
-            dimen = dimen,
-            theme = theme,
-            onClick = onClickOnChatButton,
-            size = chatIconSize,
-            icon = chatIcon,
-            tint = chatIconTint,
-            modifier = Modifier
-                .constrainAs(chatButtonId) {
-                    start.linkTo(
-                        statusId.end,
-                        dimen.dimen_2.dp
-                    )
-                    top.linkTo(statusId.top)
-                    bottom.linkTo(statusId.bottom)
                 }
         )
 

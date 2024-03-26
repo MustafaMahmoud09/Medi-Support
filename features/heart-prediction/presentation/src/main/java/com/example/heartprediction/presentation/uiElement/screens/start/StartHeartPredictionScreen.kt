@@ -80,7 +80,7 @@ private fun StartHeartPredictionContent(
                         end.linkTo(parent.end)
                         top.linkTo(
                             parent.top,
-                            dimen.dimen_3_25.dp
+                            dimen.dimen_2_5.dp
                         )
 
                         width = Dimension.fillToConstraints
@@ -88,7 +88,7 @@ private fun StartHeartPredictionContent(
             )
 
 
-            com.example.heartprediction.presentation.uiElement.components.items.StartRecordHeartPredictionSection(
+            StartRecordHeartPredictionSection(
                 dimen = dimen,
                 theme = theme,
                 parentText = stringResource(

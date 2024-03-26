@@ -1,7 +1,5 @@
 package com.example.bloodsugar.presentation.uiElement.screens.statistics
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
@@ -31,8 +29,6 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
-
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun StatisticsBloodSugarScreen(
     popStatisticsBloodSugarDestination: () -> Unit,
@@ -45,7 +41,7 @@ internal fun StatisticsBloodSugarScreen(
     )
 }//end StatisticsBloodSugarScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 private fun StatisticsBloodSugarContent(
     dimen: CustomDimen = MediSupportAppDimen(),
@@ -96,6 +92,7 @@ private fun StatisticsBloodSugarContent(
                     }//end constrainAs
             )
 
+            //create add record button here
             BasicButtonView(
                 dimen = dimen,
                 theme = theme,
@@ -150,7 +147,7 @@ private fun StatisticsBloodSugarContent(
                             .fillMaxWidth()
                     ) {
                         //create ids for screen components here
-                        val (dateId, daysId, statusSheetId, resultSectionId, chartId, recommendedId) = createRefs()
+                        val (dateId, daysId, resultSectionId, chartId, recommendedId) = createRefs()
 
                         //create guides here
                         val guideFromEnd37P = createGuidelineFromEnd(0.37f)
@@ -184,28 +181,6 @@ private fun StatisticsBloodSugarContent(
                                 }//end constrainAs
                         )
 
-
-                        //create status sheet section here
-                        com.example.bloodsugar.presentation.uiElement.components.items.StatusSection(
-                            theme = theme,
-                            dimen = dimen,
-                            icon = painterResource(
-                                id = R.drawable.drop_sheet_icon
-                            ),
-                            onClick = { /*TODO*/ },
-                            status = "Default",
-                            modifier = Modifier
-                                .constrainAs(statusSheetId) {
-                                    end.linkTo(
-                                        parent.end,
-                                        dimen.dimen_2.dp
-                                    )
-                                    start.linkTo(guideFromEnd37P)
-                                    top.linkTo(parent.top)
-                                    width = Dimension.fillToConstraints
-                                }
-                        )
-
                         //create row contain on days here
                         LazyRow(
                             contentPadding = PaddingValues(
@@ -219,7 +194,7 @@ private fun StatisticsBloodSugarContent(
                                     start.linkTo(parent.start)
                                     end.linkTo(parent.end)
                                     top.linkTo(
-                                        statusSheetId.bottom,
+                                        dateId.bottom,
                                         dimen.dimen_3.dp
                                     )
                                     width = Dimension.fillToConstraints

@@ -157,4 +157,5 @@
     <string name="snooze">SNOOZE</string>
     <string name="stop">STOP</string>
     <string name="next_medication_appointment">Next medication appointment</string>
+    <string name="chatting_now">Chatting Now</string>
 </resources>

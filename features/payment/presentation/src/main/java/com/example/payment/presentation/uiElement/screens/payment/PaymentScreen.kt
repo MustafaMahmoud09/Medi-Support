@@ -156,7 +156,7 @@ private fun PaymentContent(
                         end.linkTo(parent.end)
                         top.linkTo(
                             parent.top,
-                            (dimen.dimen_3_5 + dimen.dimen_0_125).dp
+                            dimen.dimen_3.dp
                         )
 
                         width = Dimension.fillToConstraints

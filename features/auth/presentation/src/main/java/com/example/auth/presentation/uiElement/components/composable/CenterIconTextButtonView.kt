@@ -23,7 +23,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun IconStartButtonView(
+internal fun CenterIconTextButtonView(
     theme: CustomTheme,
     dimen: CustomDimen,
     icon: Painter,

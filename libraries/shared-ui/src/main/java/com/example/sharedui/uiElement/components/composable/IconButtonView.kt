@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.sharedui.R
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -36,12 +37,9 @@ fun IconButtonView(
             .size(
                 size = size.dp
             )
-            .clickable(
-                interactionSource = remember {
-                    MutableInteractionSource()
-                },
-                indication = null
-            ) { onClick() }
+            .clickableWithoutHover {
+                onClick()
+            }
     )
 
 }//end BackIconView

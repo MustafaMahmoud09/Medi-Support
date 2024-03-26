@@ -149,7 +149,7 @@ private fun BookingDetailsContent(
                         end.linkTo(parent.end)
                         top.linkTo(
                             parent.top,
-                            (dimen.dimen_3_5 + dimen.dimen_0_125).dp
+                            dimen.dimen_3.dp
                         )
 
                         width = Dimension.fillToConstraints
@@ -231,7 +231,9 @@ private fun BookingDetailsContent(
     ) {
 
         //change current booking details page here
-        onCurrentBookingDetailsPageChanged(pagerState.currentPage)
+        onCurrentBookingDetailsPageChanged(
+            pagerState.currentPage
+        )
 
     }//end LaunchedEffect
 

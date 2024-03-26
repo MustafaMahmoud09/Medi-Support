@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.auth.presentation.uiElement.components.composable.IconStartButtonView
+import com.example.auth.presentation.uiElement.components.composable.CenterIconTextButtonView
+import com.example.auth.presentation.uiElement.components.items.RememberSection
 import com.example.sharedui.R
 import com.example.auth.presentation.uiState.state.RegisterUiState
 import com.example.auth.presentation.uiState.viewModel.RegisterViewModel
@@ -225,7 +226,6 @@ private fun RegisterContent(
                             ),
                             value = uiState.passwordKey,
                             fieldIsPassword = true,
-                            endIconColor = theme.visibleGray,
                             onChange = onPasswordChanged,
                             modifier = Modifier
                                 .constrainAs(passwordFailed) {
@@ -245,7 +245,7 @@ private fun RegisterContent(
                                 }
                         )
 
-                        com.example.auth.presentation.uiElement.components.items.RememberSection(
+                        RememberSection(
                             dimen = dimen,
                             theme = theme,
                             fontColor = theme.black,
@@ -290,7 +290,7 @@ private fun RegisterContent(
                                 }
                         )
 
-                        IconStartButtonView(
+                        CenterIconTextButtonView(
                             theme = theme,
                             dimen = dimen,
                             icon = painterResource(
@@ -318,7 +318,7 @@ private fun RegisterContent(
                                 }
                         )
 
-                        IconStartButtonView(
+                        CenterIconTextButtonView(
                             theme = theme,
                             dimen = dimen,
                             icon = painterResource(

@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -157,7 +158,10 @@ private fun MeasurementHeartRateContent(
                             .fillMaxWidth()
                     ) {
                         //create ids for components here
-                        val (heartRateIconId, calculateHeartRateId, measuringTextId, messageId, cameraId) = createRefs()
+                        val (
+                            heartRateIconId, calculateHeartRateId,
+                            measuringTextId, messageId, cameraId
+                        ) = createRefs()
 
                         //create guides here
                         val guideFromStart21P = createGuidelineFromStart(0.21f)
@@ -208,9 +212,8 @@ private fun MeasurementHeartRateContent(
                         //create box contain on camera
                         Box(
                             modifier = Modifier
-                                .constrainAs(cameraId) {
+                                .constrainAs(createRef()) {
                                     start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
                                     top.linkTo(
                                         calculateHeartRateId.bottom,
                                         dimen.dimen_4_75.dp
@@ -237,6 +240,38 @@ private fun MeasurementHeartRateContent(
                                 )
 
                             }//end if
+
+                        }
+
+                        //create box contain on camera
+                        Box(
+                            modifier = Modifier
+                                .constrainAs(cameraId) {
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    top.linkTo(
+                                        calculateHeartRateId.bottom,
+                                        dimen.dimen_4_75.dp
+                                    )
+                                }
+                                .size(
+                                    size = dimen.dimen_15.dp
+                                )
+//                                .clip(
+//                                    shape = CircleShape
+//                                )
+                        ) {
+
+                            if (uiState.imageResult != null) {
+
+                                Image(
+                                    bitmap = uiState.imageResult.asImageBitmap(),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+
+                            }
 
                         }//end Box
 

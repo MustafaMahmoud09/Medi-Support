@@ -97,6 +97,7 @@
       <module name="MediSupport.features.heart-rate.mapper-execution.test" target="17" />
       <module name="MediSupport.features.heart-rate.paginations" target="17" />
       <module name="MediSupport.features.heart-rate.presentation" target="17" />
+      <module name="MediSupport.features.notification.presentation" target="17" />
       <module name="MediSupport.features.offline-booking.data.repository" target="17" />
       <module name="MediSupport.features.offline-booking.domain.use-case" target="17" />
       <module name="MediSupport.features.offline-booking.domain.use-case.main" target="17" />

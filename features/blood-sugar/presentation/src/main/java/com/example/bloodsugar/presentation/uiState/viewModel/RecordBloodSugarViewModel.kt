@@ -1,5 +1,6 @@
 package com.example.bloodsugar.presentation.uiState.viewModel
 
+import com.example.bloodsugar.presentation.uiState.state.RecordBloodSugarUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +12,7 @@ import javax.inject.Inject
 internal class RecordBloodSugarViewModel @Inject constructor() : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(com.example.bloodsugar.presentation.uiState.state.RecordBloodSugarUiState())
+    private val _state = MutableStateFlow(RecordBloodSugarUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
@@ -27,5 +28,17 @@ internal class RecordBloodSugarViewModel @Inject constructor() : BaseViewModel()
         }
 
     }//end onSugarLevelChanged
+
+    //function for reverse status state
+    fun onStatusStateReversed() {
+
+        //reverse status state here
+        _state.update {
+            it.copy(
+                statusState = !state.value.statusState
+            )
+        }//end update
+
+    }//end onStatusStateChanged
 
 }//end RecordBloodSugarViewModel

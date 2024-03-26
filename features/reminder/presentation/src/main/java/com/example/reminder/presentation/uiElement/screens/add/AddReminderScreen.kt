@@ -53,13 +53,6 @@ internal fun AddReminderScreen(
     //collect screen state here
     val state = addReminderViewModel.state.collectAsState()
 
-    val postNotificationPermissionState =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            TODO("VERSION.SDK_INT < TIRAMISU")
-        }
-
     AddReminderContent(
         uiState = state.value,
         onClickOnDay = addReminderViewModel::onWeekDaySelected,
@@ -155,15 +148,22 @@ internal fun AddReminderScreen(
         }//end onClickOnReminderButton
     )
 
-
+    //if android sdk >= 33 ,send post notification permission for user
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+        //create post notification permission here
+        val postNotificationPermissionState =
+            rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
 
         LaunchedEffect(
             key1 = postNotificationPermissionState.status.isGranted
         ) {
 
+            //if user do not take permission to post notification
+            //make permission request
             if (!postNotificationPermissionState.status.isGranted) {
 
+                //make permission request here
                 postNotificationPermissionState.launchPermissionRequest()
 
             }//end if
@@ -382,14 +382,20 @@ private fun AddReminderContent(
                             }
                     )
 
-                    //create add alarm button here
-                    BasicButtonView(
-                        dimen = dimen,
-                        theme = theme,
-                        text = stringResource(
-                            id = R.string.add_alarm
+                    //if data picker not visible now
+                    //create add record button
+                    AnimatedVisibility(
+                        visible = !uiState.isDatePickerVisible,
+                        enter = fadeIn(
+                            animationSpec = tween(
+                                delayMillis = 50
+                            )
                         ),
-                        onClick = onClickOnAddReminderButton,
+                        exit = fadeOut(
+                            animationSpec = tween(
+                                delayMillis = 50
+                            )
+                        ),
                         modifier = Modifier
                             .constrainAs(addAlarmButtonId) {
                                 start.linkTo(
@@ -406,7 +412,21 @@ private fun AddReminderContent(
                                 )
                                 width = Dimension.fillToConstraints
                             }
-                    )
+                    ) {
+
+                        //create add alarm button here
+                        BasicButtonView(
+                            dimen = dimen,
+                            theme = theme,
+                            text = stringResource(
+                                id = R.string.add_alarm
+                            ),
+                            onClick = onClickOnAddReminderButton,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+
+                    }//end AnimatedVisibility
 
                     //check date picker is visible or no
                     AnimatedVisibility(
@@ -427,8 +447,8 @@ private fun AddReminderContent(
                                 end.linkTo(parent.end)
                                 bottom.linkTo(parent.bottom)
                                 top.linkTo(
-                                    addAlarmButtonId.bottom,
-                                    dimen.dimen_7.dp
+                                    timeFieldId.bottom,
+                                    dimen.dimen_16_5.dp
                                 )
                             }
                     ) {

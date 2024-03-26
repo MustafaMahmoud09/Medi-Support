@@ -3,9 +3,11 @@
 package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -53,7 +55,6 @@ import com.example.sharedui.uiState.viewModel.child.BottomNavigationViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import kotlin.reflect.KFunction0
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun BottomScreen(
     viewModel: BottomNavigationViewModel = hiltViewModel(),
@@ -109,7 +110,7 @@ internal fun BottomScreen(
 
 }//end BottomScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun BottomContent(
@@ -156,8 +157,20 @@ private fun BottomContent(
                 .fillMaxSize(),
             bottomBar = {
 
-                //bottom navigation have visibility or no
-                if (uiState.isVisible) {
+                //if bottom navigation is visible
+                AnimatedVisibility(
+                    visible = uiState.isVisible,
+                    enter = fadeIn(
+                        animationSpec = tween(
+                            delayMillis = 0
+                        )
+                    ),
+                    exit = fadeOut(
+                        animationSpec = tween(
+                            delayMillis = 50
+                        )
+                    ),
+                ) {
 
                     BottomAppBar(
                         modifier = Modifier

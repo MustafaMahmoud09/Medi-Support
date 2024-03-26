@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.bloodsugar.presentation.uiElement.components.items.SugarLevelResultSection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.ColumnChartView
@@ -219,7 +220,7 @@ private fun StatisticsBloodSugarContent(
                         }//end LazyRow
 
                         //create result section here
-                        com.example.bloodsugar.presentation.uiElement.components.items.StatusResultSection(
+                        SugarLevelResultSection(
                             dimen = dimen,
                             theme = theme,
                             status = "Pre-diabetes:",

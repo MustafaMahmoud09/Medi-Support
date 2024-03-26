@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.bloodsugar.presentation.uiElement.screens.record
 
 import androidx.compose.foundation.layout.Arrangement
@@ -5,6 +7,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -14,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bloodsugar.presentation.uiElement.components.items.LazySliderSection
+import com.example.bloodsugar.presentation.uiElement.components.items.StatusMenuSection
+import com.example.bloodsugar.presentation.uiElement.components.items.StatusSection
 import com.example.bloodsugar.presentation.uiState.state.RecordBloodSugarUiState
 import com.example.bloodsugar.presentation.uiState.viewModel.RecordBloodSugarViewModel
 import com.example.sharedui.R
@@ -28,7 +37,8 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-import kotlin.reflect.KFunction1
+import kotlin.reflect.KFunction0
+
 
 @Composable
 internal fun RecordBloodSugarScreen(
@@ -39,11 +49,15 @@ internal fun RecordBloodSugarScreen(
     //get screen state from view model here
     val state = viewModel.state.collectAsState()
 
+    val statusSheetState = rememberModalBottomSheetState()
+
     RecordBloodSugarContent(
         onClickOnBackButton = popRecordBloodSugarDestination,
         onClickOnAddRecordButton = navigateToStatisticsBloodSugarDestination,
         uiState = state.value,
         onSugarLevelChanged = viewModel::onSugarLevelChanged,
+        onStatusStateReversed = viewModel::onStatusStateReversed,
+        statusSheetState = statusSheetState
     )
 }//end RecordBloodSugarScreen
 
@@ -55,6 +69,8 @@ private fun RecordBloodSugarContent(
     onClickOnAddRecordButton: () -> Unit,
     uiState: RecordBloodSugarUiState,
     onSugarLevelChanged: (Float) -> Unit,
+    statusSheetState: SheetState,
+    onStatusStateReversed: KFunction0<Unit>,
 ) {
 
     //create base screen for define status and navigation bar color here
@@ -71,7 +87,7 @@ private fun RecordBloodSugarContent(
                 )
         ) {
             //create ids for screen components here
-            val (headerId, recyclerContainerId) = createRefs()
+            val (headerId, recyclerContainerId, statusBottomSheetId) = createRefs()
 
             //create header here
             HeaderSection(
@@ -79,7 +95,7 @@ private fun RecordBloodSugarContent(
                 theme = theme,
                 onClickOnBackButton = onClickOnBackButton,
                 title = stringResource(
-                    id = com.example.sharedui.R.string.blood_suger
+                    id = R.string.blood_suger
                 ),
                 modifier = Modifier
                     .constrainAs(headerId) {
@@ -164,13 +180,15 @@ private fun RecordBloodSugarContent(
 
 
                         //create status sheet section here
-                        com.example.bloodsugar.presentation.uiElement.components.items.StatusSection(
+                        StatusMenuSection(
                             theme = theme,
                             dimen = dimen,
-                            icon = painterResource(
+                            icon = if (!uiState.statusState) painterResource(
                                 id = R.drawable.drop_sheet_icon
+                            ) else painterResource(
+                                id = R.drawable.drag_sheet_icon
                             ),
-                            onClick = { /*TODO*/ },
+                            onClick = onStatusStateReversed,
                             status = "Default",
                             modifier = Modifier
                                 .constrainAs(statusSheetId) {
@@ -222,7 +240,7 @@ private fun RecordBloodSugarContent(
                         }//end LazyRow
 
                         //create blood sugar slider here
-                        com.example.bloodsugar.presentation.uiElement.components.items.LazySliderSection(
+                        LazySliderSection(
                             dimen = dimen,
                             theme = theme,
                             unit = stringResource(
@@ -275,6 +293,48 @@ private fun RecordBloodSugarContent(
                 }//end item
 
             }//end LazyColumn
+
+            //if status state equal true create modal sheet
+            if (uiState.statusState) {
+
+                //create modal bottom sheet
+                ModalBottomSheet(
+                    onDismissRequest = { onStatusStateReversed() },
+                    sheetState = statusSheetState,
+                    containerColor = theme.background
+                ) {
+
+                    //create column contain on status here
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentPadding = PaddingValues(
+                            horizontal = dimen.dimen_1_75.dp,
+                            vertical = dimen.dimen_2.dp
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(
+                            space = dimen.dimen_3.dp
+                        )
+                    ) {
+
+                        items(
+                            count = 10
+                        ){
+
+                            StatusSection(
+                                dimen = dimen,
+                                theme = theme,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+
+                        }
+
+                    }//end LazyColumn
+
+                }//end ModalBottomSheet
+
+            }//end if
 
         }//end ConstraintLayout
 

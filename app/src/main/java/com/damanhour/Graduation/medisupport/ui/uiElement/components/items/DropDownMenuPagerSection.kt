@@ -46,8 +46,10 @@ fun DropDownMenuPagerSection(
             val (textSelectedId, iconSelectedId, dropDownMenuId) = createRefs()
 
             Icon(
-                painter = painterResource(
-                    id = R.drawable.drop_icon
+                painter = if(menusExpanded) painterResource(
+                    id = R.drawable.drag_menu_icon
+                ) else painterResource(
+                    id = R.drawable.drop_menu_icon
                 ),
                 contentDescription = "drop icon",
                 modifier = Modifier

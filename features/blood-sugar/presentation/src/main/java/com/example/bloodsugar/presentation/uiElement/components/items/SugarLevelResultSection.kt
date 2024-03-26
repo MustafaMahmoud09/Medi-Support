@@ -10,7 +10,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
-internal fun StatusResultSection(
+internal fun SugarLevelResultSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     status: String,

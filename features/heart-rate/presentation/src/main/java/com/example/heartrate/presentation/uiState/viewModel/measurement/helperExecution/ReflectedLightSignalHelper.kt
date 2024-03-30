@@ -4,24 +4,56 @@ import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDe
 import org.opencv.core.Core
 import org.opencv.core.Mat
 import org.opencv.core.Scalar
-import org.opencv.imgproc.Imgproc
 
-class ReflectedLightSignalHelper : IReflectedLightSignalHelper {//end ReflectedLightSignalHelper
+class ReflectedLightSignalHelper : IReflectedLightSignalHelper {
 
-    override fun convertToHSV(inputMat: Mat): Mat {
-        val hsvMat = Mat()
-        Imgproc.cvtColor(inputMat, inputMat, Imgproc.COLOR_GRAY2BGR)
-        Imgproc.cvtColor(inputMat, hsvMat, Imgproc.COLOR_BGR2HSV)
-        return hsvMat
-    }
-
+    //function for detect ppg signal regions
     override fun detectPPGRegions(hsvMat: Mat): Mat {
-        val lowerThreshold = Scalar(90.0, 60.0, 60.0) // قيمة العتبة السفلية لكل قناة لونية
-        val upperThreshold = Scalar(140.0, 255.0, 255.0) // قيمة العتبة العلوية لكل قناة لونية
-        val maskedImage = Mat()
-        Core.inRange(hsvMat, lowerThreshold, upperThreshold, maskedImage)
-        return maskedImage
-    }
 
+        //detect region color attributes
+        //ppg region signal have red color
+        val firstLowerRed = Scalar(0.0, 50.0, 20.0)
+        val firstUpperRed = Scalar(3.0, 255.0, 255.0)
 
-}
+        //
+        val secondLowerRed = Scalar(175.0, 50.0, 20.0)
+        val secondUpperRed = Scalar(180.0, 255.0, 255.0)
+
+        //detect ppg region in image here
+        val firstMask = Mat()
+        val secondMask = Mat()
+        //
+        Core.inRange(hsvMat, firstLowerRed, firstUpperRed, firstMask)
+        //
+        Core.inRange(hsvMat, secondLowerRed, secondUpperRed, secondMask)
+
+        //detect final ppg region in image
+        val finalMask = Mat()
+        Core.bitwise_or(firstMask, secondMask, finalMask)
+
+        //return image after detected
+        return finalMask
+
+    }//end detectPPGRegions
+
+    //function for detect mean intensity signal in ppg regions
+    override fun computeMeanIntensityInPPGRegions(image: Mat, mask: Mat): Scalar {
+
+        // Compute mean value of pixels in ppg regions
+        val meanScalar = Core.mean(image, mask)
+
+        // Extract mean value for each channel
+        val meanB = meanScalar.`val`[0]
+        val meanG = meanScalar.`val`[1]
+        val meanR = meanScalar.`val`[2]
+
+        // Print mean intensity for debugging or logging
+        println("Mean intensity in red regions:")
+        println("B: $meanB, G: $meanG, R: $meanR")
+
+        // Return the mean intensity as a Scalar object
+        return meanScalar
+
+    }//end computeMeanIntensityInPPGRegions
+
+}//end ReflectedLightSignalHelper

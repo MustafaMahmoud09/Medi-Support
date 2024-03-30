@@ -26,15 +26,31 @@ class ImageProcessingHelper : IImageProcessingHelper {
         return mat
     }//end imageProxyToMatrix
 
+
+    //function for convert image from rgb to hsv system
+    //to deal with image color by effectively
+    override fun convertToHSV(inputMat: Mat): Mat {
+
+        //create empty matrix for result
+        val hsvMat = Mat()
+        //convert image from rgb to hsv
+        Imgproc.cvtColor(inputMat, hsvMat, Imgproc.COLOR_RGB2HSV)
+        //return result matrix
+        return hsvMat
+
+    }//end convertToHSV
+
+
+
     //function for improve image contrast
     override fun applyImproveImageContrast(input: Mat): Mat {
 
-        // convert image to gray matrix
+        //convert image to gray matrix
         val grayMat = Mat(input.rows(), input.cols(), CvType.CV_8UC1)
         Imgproc.cvtColor(input, grayMat, Imgproc.COLOR_RGB2GRAY)
 
         //Improve image contrast
-        val equalizedMat = Mat(grayMat.rows(), grayMat.cols(), CvType.CV_8UC1)
+        val equalizedMat = Mat(input.rows(), input.cols(), CvType.CV_8UC1)
         Imgproc.equalizeHist(grayMat, equalizedMat)
 
         //return to image improved
@@ -49,36 +65,36 @@ class ImageProcessingHelper : IImageProcessingHelper {
         val outputMat = Mat()
 
         //apply median blur on image
-        Imgproc.medianBlur(inputMat, outputMat, 5)
+        Imgproc.medianBlur(inputMat, outputMat, 7)
 
         //return output image after apply median blur
         return outputMat
 
     }//end applyMedianBlur
-
-    //function for apply edge detection on picture
-    override fun applyCannyEdgeDetection(inputMat: Mat): Mat {
-
-        // إنشاء مصفوفة لتخزين الصورة المحسنة
-        val edgeMat = Mat()
-
-        // حساب القيم الأقصى والأدنى للبكسلات
-        val minMaxValues = Core.minMaxLoc(inputMat)
-        val maxVal = minMaxValues.maxVal
-        val minVal = minMaxValues.minVal
-
-        // حساب الحدود (thresholds) بناءً على القيم الأقصى والأدنى للبكسلات
-        val threshold1 =
-            minVal + (maxVal - minVal) * 0.1 // قيمة threshold1 تكون 10% من الفارق بين القيمة الأقصى والأدنى
-        val threshold2 =
-            minVal + (maxVal - minVal) * 0.3 // قيمة threshold2 تكون 30% من الفارق بين القيمة الأقصى والأدنى
-
-        // تطبيق تقنية Canny لاكتشاف الحواف
-        Imgproc.Canny(inputMat, edgeMat, threshold1, threshold2)
-
-        return edgeMat
-    }//end applyCannyEdgeDetection
-
+//
+//    //function for apply edge detection on picture
+//    override fun applyCannyEdgeDetection(inputMat: Mat): Mat {
+//
+//        // إنشاء مصفوفة لتخزين الصورة المحسنة
+//        val edgeMat = Mat()
+//
+//        // حساب القيم الأقصى والأدنى للبكسلات
+//        val minMaxValues = Core.minMaxLoc(inputMat)
+//        val maxVal = minMaxValues.maxVal
+//        val minVal = minMaxValues.minVal
+//
+//        // حساب الحدود (thresholds) بناءً على القيم الأقصى والأدنى للبكسلات
+//        val threshold1 =
+//            minVal + (maxVal - minVal) * 0.1 // قيمة threshold1 تكون 10% من الفارق بين القيمة الأقصى والأدنى
+//        val threshold2 =
+//            minVal + (maxVal - minVal) * 0.3 // قيمة threshold2 تكون 30% من الفارق بين القيمة الأقصى والأدنى
+//
+//        // تطبيق تقنية Canny لاكتشاف الحواف
+//        Imgproc.Canny(inputMat, edgeMat, threshold1, threshold2)
+//
+//        return edgeMat
+//    }//end applyCannyEdgeDetection
+//
     //function for apply histogram equalization
     override fun applyHistogramEqualization(inputMat: Mat): Mat {
 

@@ -19,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -195,8 +194,10 @@ private fun MeasurementHeartRateContent(
                         CalculateHeartRateSection(
                             dimen = dimen,
                             theme = theme,
-                            unit = "BPM",
-                            rate = "00",
+                            unit = stringResource(
+                                id = R.string.bpm
+                            ),
+                            rate = "${uiState.heartRateResultValue}",
                             modifier = Modifier
                                 .constrainAs(calculateHeartRateId) {
                                     start.linkTo(guideFromStart21P)
@@ -209,39 +210,26 @@ private fun MeasurementHeartRateContent(
                                 }
                         )
 
-                        //create box contain on camera
-                        Box(
-                            modifier = Modifier
-                                .constrainAs(createRef()) {
-                                    start.linkTo(parent.start)
-                                    top.linkTo(
-                                        calculateHeartRateId.bottom,
-                                        dimen.dimen_4_75.dp
-                                    )
-                                }
-                                .size(
-                                    size = dimen.dimen_15.dp
-                                )
-                                .clip(
-                                    shape = CircleShape
-                                )
-                        ) {
-
-                            //if camera permission state equal true
-                            if (cameraPermissionState.status.isGranted) {
-
-                                //open camera and flash
-                                CameraPreviewView(
-                                    onImageAnalyzed = onImageAnalysed,
-                                    onCameraObjectDefined = onCameraObjectDefined,
-                                    processCameraProvider = uiState.processCameraProvider,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                )
-
-                            }//end if
-
-                        }
+//                        //create box contain on camera
+//                        Box(
+//                            modifier = Modifier
+//                                .constrainAs(createRef()) {
+//                                    start.linkTo(parent.start)
+//                                    top.linkTo(
+//                                        calculateHeartRateId.bottom,
+//                                        dimen.dimen_4_75.dp
+//                                    )
+//                                }
+//                                .size(
+//                                    size = dimen.dimen_15.dp
+//                                )
+//                                .clip(
+//                                    shape = CircleShape
+//                                )
+//                        ) {
+//
+//
+//                        }
 
                         //create box contain on camera
                         Box(
@@ -257,21 +245,35 @@ private fun MeasurementHeartRateContent(
                                 .size(
                                     size = dimen.dimen_15.dp
                                 )
-//                                .clip(
-//                                    shape = CircleShape
-//                                )
+                                .clip(
+                                    shape = CircleShape
+                                )
                         ) {
 
-                            if (uiState.imageResult != null) {
+//                            if (uiState.imageResult != null) {
+//
+//                                Image(
+//                                    bitmap = uiState.imageResult.asImageBitmap(),
+//                                    contentDescription = "",
+//                                    modifier = Modifier
+//                                        .fillMaxSize()
+//                                )
+//
+//                            }
 
-                                Image(
-                                    bitmap = uiState.imageResult.asImageBitmap(),
-                                    contentDescription = "",
+                            //if camera permission state equal true
+                            if (cameraPermissionState.status.isGranted) {
+
+                                //open camera and flash
+                                CameraPreviewView(
+                                    onImageAnalyzed = onImageAnalysed,
+                                    onCameraObjectDefined = onCameraObjectDefined,
+                                    processCameraProvider = uiState.processCameraProvider,
                                     modifier = Modifier
                                         .fillMaxSize()
                                 )
 
-                            }
+                            }//end if
 
                         }//end Box
 
@@ -281,7 +283,11 @@ private fun MeasurementHeartRateContent(
                             dimen = dimen,
                             text = stringResource(
                                 id = R.string.measuring
-                            ),
+                            ) + if (uiState.measurementRatio == 0f) {
+                                "...."
+                            } else {
+                                ".(${uiState.measurementRatio}%)"
+                            },
                             size = dimen.dimen_2,
                             fontColor = theme.black,
                             textAlign = TextAlign.Center,
@@ -307,9 +313,15 @@ private fun MeasurementHeartRateContent(
                         TextSemiBoldView(
                             theme = theme,
                             dimen = dimen,
-                            text = stringResource(
-                                id = R.string.calculate_heart_rate_message
-                            ),
+                            text = if (!uiState.measurementState) {
+                                stringResource(
+                                    id = R.string.calculate_heart_rate_message
+                                )
+                            } else {
+                                stringResource(
+                                    id = R.string.your_pulse_is_being_detected_just_wait
+                                )
+                            },
                             size = dimen.dimen_1_75,
                             fontColor = theme.black,
                             textAlign = TextAlign.Center,

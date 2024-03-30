@@ -82,7 +82,7 @@
     <string name="systolic_blood_pressure">Systolic blood pressure</string>
     <string name="diastolic_blood_pressure">Diastolic blood pressure</string>
     <string name="mg_gl">mg/gl</string>
-    <string name="measuring">Measuring....</string>
+    <string name="measuring">Measuring</string>
     <string name="calculate_heart_rate_message">Press your finger on camera</string>
     <string name="doctors_online">Doctors Online</string>
     <string name="doctors_offline">Doctors Offline</string>
@@ -160,4 +160,6 @@
     <string name="chatting_now">Chatting Now</string>
     <string name="notifications">Notifications</string>
     <string name="mark_all_read">Mark all read</string>
+    <string name="bpm">BPM</string>
+    <string name="your_pulse_is_being_detected_just_wait">Your pulse is being detected. just wait!</string>
 </resources>

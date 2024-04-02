@@ -5,6 +5,7 @@ import com.example.reminder.domain.mapper.declarations.child.INearestReminderEnt
 import com.example.reminder.domain.mapper.declarations.child.IReminderWithDaysEntityToReminderModelMapper
 import com.example.reminder.domain.usecase.AddDaysUseCase
 import com.example.reminder.domain.usecase.AddReminderUseCase
+import com.example.reminder.domain.usecase.CalculateDifferentDaysUseCase
 import com.example.reminder.domain.usecase.CheckAppFirstRunUseCase
 import com.example.reminder.domain.usecase.DeleteReminderUseCase
 import com.example.reminder.domain.usecase.GetActiveRemindersSizeUseCase
@@ -16,6 +17,7 @@ import com.example.reminder.domain.usecase.SetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.UpdateReminderStatusUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
+import com.example.reminder.domain.usecase.interfaces.ICalculateDifferentDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.ICheckAppFirstRunUseCase
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetActiveRemindersSizeUseCase
@@ -184,5 +186,14 @@ object UseCasesModule {
         )
 
     }//end provideGetReminderActiveSizeUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideCalculateDifferentDaysUseCase(): ICalculateDifferentDaysUseCase {
+
+        return CalculateDifferentDaysUseCase()
+
+    }//end provideCalculateDifferentDaysUseCase
 
 }//end UseCaseModule

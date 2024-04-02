@@ -6,6 +6,7 @@ import org.opencv.android.Utils
 import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
+import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 
 class ImageProcessingHelper : IImageProcessingHelper {
@@ -41,7 +42,6 @@ class ImageProcessingHelper : IImageProcessingHelper {
     }//end convertToHSV
 
 
-
     //function for improve image contrast
     override fun applyImproveImageContrast(input: Mat): Mat {
 
@@ -58,6 +58,7 @@ class ImageProcessingHelper : IImageProcessingHelper {
 
     }//end applyImproveImageContrast
 
+
     //function for apply median blur
     override fun applyMedianBlur(inputMat: Mat): Mat {
 
@@ -65,36 +66,51 @@ class ImageProcessingHelper : IImageProcessingHelper {
         val outputMat = Mat()
 
         //apply median blur on image
-        Imgproc.medianBlur(inputMat, outputMat, 7)
+        Imgproc.medianBlur(inputMat, outputMat, 9)
 
         //return output image after apply median blur
         return outputMat
 
     }//end applyMedianBlur
-//
-//    //function for apply edge detection on picture
-//    override fun applyCannyEdgeDetection(inputMat: Mat): Mat {
-//
-//        // إنشاء مصفوفة لتخزين الصورة المحسنة
-//        val edgeMat = Mat()
-//
-//        // حساب القيم الأقصى والأدنى للبكسلات
-//        val minMaxValues = Core.minMaxLoc(inputMat)
-//        val maxVal = minMaxValues.maxVal
-//        val minVal = minMaxValues.minVal
-//
-//        // حساب الحدود (thresholds) بناءً على القيم الأقصى والأدنى للبكسلات
-//        val threshold1 =
-//            minVal + (maxVal - minVal) * 0.1 // قيمة threshold1 تكون 10% من الفارق بين القيمة الأقصى والأدنى
-//        val threshold2 =
-//            minVal + (maxVal - minVal) * 0.3 // قيمة threshold2 تكون 30% من الفارق بين القيمة الأقصى والأدنى
-//
-//        // تطبيق تقنية Canny لاكتشاف الحواف
-//        Imgproc.Canny(inputMat, edgeMat, threshold1, threshold2)
-//
-//        return edgeMat
-//    }//end applyCannyEdgeDetection
-//
+
+
+    //function for apply gaussian blur
+    override fun applyGaussianBlur(inputMat: Mat): Mat {
+
+        val outputMat = Mat()
+
+        // Apply Gaussian blur
+        Imgproc.GaussianBlur(inputMat, outputMat, Size(5.0, 5.0), 0.0)
+
+        //return output image after apply gaussian blur
+        return outputMat
+
+    }//end applyMedianBlur
+
+    //function for apply edge detection on picture
+    override fun applyCannyEdgeDetection(inputMat: Mat): Mat {
+
+        // إنشاء مصفوفة لتخزين الصورة المحسنة
+        val edgeMat = Mat()
+
+        // حساب القيم الأقصى والأدنى للبكسلات
+        val minMaxValues = Core.minMaxLoc(inputMat)
+        val maxVal = minMaxValues.maxVal
+        val minVal = minMaxValues.minVal
+
+        // حساب الحدود (thresholds) بناءً على القيم الأقصى والأدنى للبكسلات
+        val threshold1 =
+            minVal + (maxVal - minVal) * 0.1 // قيمة threshold1 تكون 10% من الفارق بين القيمة الأقصى والأدنى
+        val threshold2 =
+            minVal + (maxVal - minVal) * 0.3 // قيمة threshold2 تكون 30% من الفارق بين القيمة الأقصى والأدنى
+
+        // تطبيق تقنية Canny لاكتشاف الحواف
+        Imgproc.Canny(inputMat, edgeMat, threshold1, threshold2)
+
+        return edgeMat
+    }//end applyCannyEdgeDetection
+
+
     //function for apply histogram equalization
     override fun applyHistogramEqualization(inputMat: Mat): Mat {
 
@@ -104,6 +120,7 @@ class ImageProcessingHelper : IImageProcessingHelper {
 
         return equalizedMat
     }//end applyHistogramEqualization
+
 
     //function for enhance colors
     override fun enhanceColors(inputMat: Mat): Mat {
@@ -121,6 +138,7 @@ class ImageProcessingHelper : IImageProcessingHelper {
         // إرجاع الصورة المحسنة
         return equalizedMat
     }//end enhanceColors
+
 
     //function for increase brightness to picture
     override fun increaseBrightness(inputMat: Mat): Mat {

@@ -7,23 +7,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.LocalTime
 
 data class ReminderServiceUiState(
-    val timeNowState: MutableStateFlow<LocalTime> = MutableStateFlow(LocalTime.now()),
-    val reminderNameValue: String = "",
+    val currentTimeState: MutableStateFlow<LocalTime> = MutableStateFlow(LocalTime.now()),
     val reminderTimeValue: String = "",
-    val reminderNotificationVisible: MutableStateFlow<Boolean> = MutableStateFlow(false),
     val currentNearestReminder: NearestReminderPresentationModel = NearestReminderPresentationModel(
         id = 0L,
         name = "",
         time = LocalTime.now().plusHours(1),
         day = "",
-        differentDays = 0
-    ),
-    val lastNearestReminder: NearestReminderPresentationModel = NearestReminderPresentationModel(
-        id = 0L,
-        name = "",
-        time = LocalTime.now().plusHours(1),
-        day = "",
-        differentDays = 0
+        dayNumber = 0
     ),
     val reminderRemainingTimeValue: String = "",
     val alarmSound: MediaPlayer? = null,

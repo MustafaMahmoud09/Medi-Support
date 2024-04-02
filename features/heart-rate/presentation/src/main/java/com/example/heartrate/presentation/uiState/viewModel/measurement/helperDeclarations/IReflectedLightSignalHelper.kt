@@ -11,4 +11,6 @@ interface IReflectedLightSignalHelper {
     //function for detect mean intensity signal in ppg regions
     fun computeMeanIntensityInPPGRegions(image: Mat, mask: Mat): Scalar
 
+    fun calculateMaskPercentage(mask: Mat): Double
+
 }//end IReflectedLightSignalHelper

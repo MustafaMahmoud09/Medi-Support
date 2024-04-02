@@ -2,8 +2,6 @@ package com.example.reminder.presentation.uiState.viewModel
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import com.example.reminder.domaim.domain.model.reminder.ReminderStoreData
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
@@ -27,7 +25,6 @@ import java.time.LocalTime
 import java.util.LinkedList
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class AddReminderViewModel @Inject constructor(
     private val addDaysUseCase: IAddDaysUseCase,

@@ -1,12 +1,12 @@
 package com.damanhour.Graduation.medisupport.di.reminder
 
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.reminder.domain.usecase.CalculateDifferentDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IAddReminderUseCase
+import com.example.reminder.domain.usecase.interfaces.ICalculateDifferentDaysUseCase
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetActiveRemindersSizeUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetDaysUseCase
@@ -16,8 +16,9 @@ import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
 import com.example.reminder.domain.usecase.interfaces.ISetReminderServiceRunningStateUseCase
 import com.example.reminder.domain.usecase.interfaces.IUpdateReminderStatusUseCase
 import com.example.reminder.presentation.uiState.viewModel.AddReminderViewModel
-import com.example.reminder.presentation.uiState.viewModel.ReminderServiceViewModel
+import com.example.reminder.presentation.uiState.viewModel.reminderService.ReminderServiceViewModel
 import com.example.reminder.presentation.uiState.viewModel.RemindersViewModel
+import com.example.reminder.presentation.uiState.viewModel.reminderService.helperDeclarations.IReminderNotificationHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -75,16 +76,14 @@ object ViewModelsModule {
     @Singleton
     fun provideReminderServiceViewModel(
         getNearestRemindersUseCase: IGetNearestRemindersUseCase,
-        notificationBuilder: NotificationCompat.Builder,
-        notificationManager: NotificationManagerCompat,
-        @ApplicationContext context: Context
+        reminderNotificationHelper: IReminderNotificationHelper,
+        calculateDifferentDaysUseCase: ICalculateDifferentDaysUseCase
     ): ReminderServiceViewModel {
 
         return ReminderServiceViewModel(
             getNearestRemindersUseCase = getNearestRemindersUseCase,
-            notificationBuilder = notificationBuilder,
-            notificationManager = notificationManager,
-            context = context
+            reminderNotificationHelper = reminderNotificationHelper,
+            calculateDifferentDaysUseCase = calculateDifferentDaysUseCase
         )
 
     }//end provideReminderServiceViewModel

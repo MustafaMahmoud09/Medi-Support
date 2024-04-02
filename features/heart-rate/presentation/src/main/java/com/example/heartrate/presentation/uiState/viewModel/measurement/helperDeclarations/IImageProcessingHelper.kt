@@ -13,18 +13,18 @@ interface IImageProcessingHelper {
     fun convertToHSV(inputMat: Mat): Mat
 
 
-
     //function for improve image contrast
     fun applyImproveImageContrast(input: Mat): Mat
 
 
     //function for apply median blur
     fun applyMedianBlur(inputMat: Mat): Mat
-//
-//
-//    //function for apply edge detection on picture
-//    fun applyCannyEdgeDetection(inputMat: Mat): Mat
-//
+
+    fun applyGaussianBlur(inputMat: Mat): Mat
+
+    //function for apply edge detection on picture
+    fun applyCannyEdgeDetection(inputMat: Mat): Mat
+
 
     //function for apply histogram equalization
     fun applyHistogramEqualization(inputMat: Mat): Mat

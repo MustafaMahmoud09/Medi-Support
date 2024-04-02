@@ -14,6 +14,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.lifecycle.viewModelScope
 import com.example.heart.rate.domain.usecase.declarations.ICheckPPGTechnologySupportedUseCase
 import com.example.heartrate.presentation.uiState.state.MeasurementHeartRateUiState
+import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IDetectHeartBeatHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IImageProcessingHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IReflectedLightSignalHelper
 import com.example.sharedui.uiState.viewModel.BaseViewModel
@@ -37,6 +38,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
     private val context: Context,
     private val imageProcessingHelper: IImageProcessingHelper,
     private val reflectedLightSignalHelper: IReflectedLightSignalHelper,
+    private val detectHeartBeatHelper: IDetectHeartBeatHelper,
     private val checkPPGTechnologySupportedUseCase: ICheckPPGTechnologySupportedUseCase
 ) : BaseViewModel() {
 
@@ -77,6 +79,8 @@ class MeasurementHeartRateViewModel @Inject constructor(
             var checkMeasurementStopped = 0
 
             while (true) {
+
+                state.value.camera?.cameraControl?.enableTorch(true)
 
                 //delay one second
                 delay(100)
@@ -139,7 +143,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
         _state.update {
             it.copy(
                 measurementTime = 0f,
-                measurementRatio = 0f,
+                measurementRatio = "0",
                 heartRateResultValue = 0,
                 peaksCount = 0
             )
@@ -163,39 +167,50 @@ class MeasurementHeartRateViewModel @Inject constructor(
             //detect ppg region here
             val ppgRegionMask = matrixImage.onPPGRegionDetected()
 
-            //image after execute filters
-            val imageFilter = matrixImage.onImageProcessingExecuted()
+            val imageResult = matToBitmap(ppgRegionMask)
 
-            //compute mean intensity in ppg regions
-            val meanIntensityInPPGRegion =
-                reflectedLightSignalHelper.computeMeanIntensityInPPGRegions(
-                    image = imageFilter,
-                    mask = ppgRegionMask
+
+            _state.update {
+                it.copy(
+                    imageResult = imageResult
+                )
+            }
+
+            //if ppg region percentage greater than or equal 95 ,calculate heart rate
+            if (reflectedLightSignalHelper.calculateMaskPercentage(ppgRegionMask) >= 98f) {
+
+                //image after execute filters
+                val imageFilter = matrixImage.onImageProcessingExecuted()
+
+                //compute mean intensity in ppg regions
+                val meanIntensityInPPGRegion =
+                    reflectedLightSignalHelper.computeMeanIntensityInPPGRegions(
+                        image = imageFilter,
+                        mask = ppgRegionMask
+                    )
+
+                //change mean intensities state here
+                onMeanIntensitiesChanged(
+                    newValue = meanIntensityInPPGRegion
                 )
 
-            //change mean intensities state here
-            onMeanIntensitiesChanged(
-                newValue = meanIntensityInPPGRegion
-            )
+            }//end if
 
-
-//            val imageResult = matToBitmap(ppgRegionMask)
-//
-//
-//            _state.update {
-//                it.copy(
-//                    imageResult = imageResult
-//                )
-//            }
+            else {
+                //change measurement state here
+                _state.update {
+                    it.copy(
+                        measurementState = false,
+                    )
+                }
+            }//end else
 
         }//end if
-
 
         // Close the ImageProxy
         imageProxy.close()
 
     }//end onImageAnalysed
-
 
     //function for execute processing on image
     private fun Mat.onPPGRegionDetected(): Mat {
@@ -218,26 +233,15 @@ class MeasurementHeartRateViewModel @Inject constructor(
     //function for execute image processing on image
     private fun Mat.onImageProcessingExecuted(): Mat {
 
-        var matrixImage = imageProcessingHelper.applyImproveImageContrast(
-            input = this
+        //for apply median blur
+        var matrixImage = imageProcessingHelper.applyMedianBlur(
+            inputMat = this
         )
 
-        matrixImage = imageProcessingHelper.applyMedianBlur(
+        //for apply gaussian blur
+        matrixImage = imageProcessingHelper.applyGaussianBlur(
             inputMat = matrixImage
         )
-
-        matrixImage = imageProcessingHelper.applyHistogramEqualization(
-            inputMat = matrixImage
-        )
-
-        matrixImage = imageProcessingHelper.enhanceColors(
-            inputMat = matrixImage
-        )
-
-
-//        matrixImage = imageProcessingHelper.increaseBrightness(
-//            inputMat = matrixImage
-//        )
 
         return matrixImage
 
@@ -247,44 +251,26 @@ class MeasurementHeartRateViewModel @Inject constructor(
     //function change mean intensities state
     private fun onMeanIntensitiesChanged(newValue: Scalar) {
 
-        val meanBlue = newValue.`val`[0]
+        Log.d("TAG", newValue.`val`[0].toString())
 
-        Log.d("TAG", newValue.toString())
-
-        if (meanBlue.toInt() >= 100) {
-
-            //add new mean intensities here
-            val meanIntensitiesForPPGRegion =
-                LinkedList(state.value.meanIntensitiesForPPGRegion.value)
-            meanIntensitiesForPPGRegion.add(newValue)
+        //add new mean intensities here
+        val meanIntensitiesForPPGRegion =
+            LinkedList(state.value.meanIntensitiesForPPGRegion.value)
+        meanIntensitiesForPPGRegion.add(newValue)
 
 
-            //update mean intensities for PPG region
-            _state.value.meanIntensitiesForPPGRegion.update {
-                meanIntensitiesForPPGRegion
-            }
+        //update mean intensities for PPG region
+        _state.value.meanIntensitiesForPPGRegion.update {
+            meanIntensitiesForPPGRegion
+        }
 
-            //update measurement state here
-            _state.update {
-                it.copy(
-                    measurementRatio = "%.1f".format((state.value.measurementTime / 15f) * 100)
-                        .toFloat(),
-                    measurementState = true
-                )
-            }//end update
-
-        }//end if
-
-        else {
-
-            //change measurement state here
-            _state.update {
-                it.copy(
-                    measurementState = false,
-                )
-            }
-
-        }//end else
+        //update measurement state here
+        _state.update {
+            it.copy(
+                measurementRatio = "%.1f".format((state.value.measurementTime / 15f) * 100),
+                measurementState = true
+            )
+        }//end update
 
     }//end onMeanIntensitiesChanged
 
@@ -297,40 +283,21 @@ class MeasurementHeartRateViewModel @Inject constructor(
             //collect mean intensities state here
             state.value.meanIntensitiesForPPGRegion.collectLatest { intensities ->
 
-                if (intensities.size > 2) {
+                //calculate peaks count
+                val peaksCount = detectHeartBeatHelper.calculatePeeks(
+                    list = intensities
+                )
 
-                    val threshold = 0.368
-
-                    //get last 3 Intensity
-                    val prevIntensity = intensities[intensities.size - 3].`val`[0]
-                    val currentIntensity = intensities[intensities.size - 2].`val`[0]
-                    val nextIntensity = intensities[intensities.size - 1].`val`[0]
-
-                    //if exist heart beat now or no
-                    if (
-                        currentIntensity > prevIntensity + threshold &&
-                        currentIntensity > nextIntensity + threshold
-                    ) {
-
-                        //change peaks count
-                        val peaksCount = state.value.peaksCount + 1
-
-                        //change peaks count and heart rate rate value
-                        _state.update {
-                            it.copy(
-                                peaksCount = peaksCount,
-                                heartRateResultValue = if (state.value.measurementTime > 0) {
-                                    ((peaksCount.toFloat() / state.value.measurementTime) * 60f).toInt()
-                                }//end if
-                                else {
-                                    0
-                                }//end else
-                            )
-                        }//end update
-
-                    }//end if
-
-                }//end if
+                //change peaks count and heart rate rate value
+                _state.update {
+                    it.copy(
+                        peaksCount = peaksCount,
+                        heartRateResultValue = detectHeartBeatHelper.calculateHeartRate(
+                            beats = peaksCount,
+                            time = state.value.measurementTime
+                        )
+                    )
+                }//end update
 
             }//end collectLatest
 

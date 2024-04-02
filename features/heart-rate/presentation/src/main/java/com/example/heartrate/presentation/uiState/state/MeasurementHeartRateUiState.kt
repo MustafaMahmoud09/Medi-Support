@@ -10,7 +10,7 @@ import org.opencv.core.Scalar
 data class MeasurementHeartRateUiState(
     val isPPGTechnologySupported: Boolean = false,
     val heartRateResultValue: Int = 0,
-    val measurementRatio: Float = 0f,
+    val measurementRatio: String = "0",
     val measurementState: Boolean = true,
     val measurementTime: Float = 0f,
     val imageResult: Bitmap? = null,

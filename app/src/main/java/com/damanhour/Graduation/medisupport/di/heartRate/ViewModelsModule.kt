@@ -3,6 +3,7 @@ package com.damanhour.Graduation.medisupport.di.heartRate
 import android.content.Context
 import com.example.heart.rate.domain.usecase.declarations.ICheckPPGTechnologySupportedUseCase
 import com.example.heartrate.presentation.uiState.viewModel.measurement.MeasurementHeartRateViewModel
+import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IDetectHeartBeatHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IImageProcessingHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IReflectedLightSignalHelper
 import dagger.Module
@@ -20,14 +21,16 @@ object ViewModelsModule {
         @ApplicationContext context: Context,
         checkPPGTechnologySupportedUseCase: ICheckPPGTechnologySupportedUseCase,
         imageProcessingHelper: IImageProcessingHelper,
-        reflectedLightSignalHelper: IReflectedLightSignalHelper
+        reflectedLightSignalHelper: IReflectedLightSignalHelper,
+         detectHeartBeatHelper: IDetectHeartBeatHelper
     ): MeasurementHeartRateViewModel {
 
         return MeasurementHeartRateViewModel(
             context = context,
             checkPPGTechnologySupportedUseCase = checkPPGTechnologySupportedUseCase,
             imageProcessingHelper = imageProcessingHelper,
-            reflectedLightSignalHelper = reflectedLightSignalHelper
+            reflectedLightSignalHelper = reflectedLightSignalHelper,
+            detectHeartBeatHelper = detectHeartBeatHelper
         )
 
     }//end provideMeasurementHeartRateViewModel

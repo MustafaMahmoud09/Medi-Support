@@ -2,18 +2,18 @@ package com.example.reminder.presentation.uiElement.services
 
 import android.app.Service
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.sharedui.R
-import com.example.reminder.presentation.uiState.viewModel.ReminderServiceViewModel
+import com.example.reminder.presentation.uiState.viewModel.reminderService.ReminderServiceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class ReminderService : Service() {
@@ -27,6 +27,10 @@ class ReminderService : Service() {
     @Inject
     lateinit var viewModel: ReminderServiceViewModel
 
+//    @Inject
+//    @Named("foreground_reminder_notification_id")
+//    var notificationId: Int? = null
+
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -35,7 +39,7 @@ class ReminderService : Service() {
         showForegroundSeNotification()
 
         // If we get killed, after returning from here, restart
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
 
     }//end onStartCommand
 

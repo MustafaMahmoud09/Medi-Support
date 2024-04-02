@@ -3,7 +3,7 @@ package com.example.reminder.presentation.uiElement.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.example.reminder.presentation.uiState.viewModel.ReminderServiceViewModel
+import com.example.reminder.presentation.uiState.viewModel.reminderService.ReminderServiceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

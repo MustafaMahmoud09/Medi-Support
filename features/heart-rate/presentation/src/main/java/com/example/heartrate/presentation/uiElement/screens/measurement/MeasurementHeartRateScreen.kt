@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -210,26 +211,37 @@ private fun MeasurementHeartRateContent(
                                 }
                         )
 
-//                        //create box contain on camera
-//                        Box(
-//                            modifier = Modifier
-//                                .constrainAs(createRef()) {
-//                                    start.linkTo(parent.start)
-//                                    top.linkTo(
-//                                        calculateHeartRateId.bottom,
-//                                        dimen.dimen_4_75.dp
-//                                    )
-//                                }
-//                                .size(
-//                                    size = dimen.dimen_15.dp
-//                                )
+                        //create box contain on camera
+                        Box(
+                            modifier = Modifier
+                                .constrainAs(createRef()) {
+                                    start.linkTo(parent.start)
+                                    top.linkTo(
+                                        calculateHeartRateId.bottom,
+                                        dimen.dimen_4_75.dp
+                                    )
+                                }
+                                .size(
+                                    size = dimen.dimen_15.dp
+                                )
 //                                .clip(
 //                                    shape = CircleShape
 //                                )
-//                        ) {
-//
-//
-//                        }
+                        ) {
+
+
+                            if (uiState.imageResult != null) {
+
+                                Image(
+                                    bitmap = uiState.imageResult.asImageBitmap(),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+
+                            }
+
+                        }
 
                         //create box contain on camera
                         Box(
@@ -249,17 +261,6 @@ private fun MeasurementHeartRateContent(
                                     shape = CircleShape
                                 )
                         ) {
-
-//                            if (uiState.imageResult != null) {
-//
-//                                Image(
-//                                    bitmap = uiState.imageResult.asImageBitmap(),
-//                                    contentDescription = "",
-//                                    modifier = Modifier
-//                                        .fillMaxSize()
-//                                )
-//
-//                            }
 
                             //if camera permission state equal true
                             if (cameraPermissionState.status.isGranted) {
@@ -283,7 +284,7 @@ private fun MeasurementHeartRateContent(
                             dimen = dimen,
                             text = stringResource(
                                 id = R.string.measuring
-                            ) + if (uiState.measurementRatio == 0f) {
+                            ) + if (uiState.measurementRatio == "0") {
                                 "...."
                             } else {
                                 ".(${uiState.measurementRatio}%)"

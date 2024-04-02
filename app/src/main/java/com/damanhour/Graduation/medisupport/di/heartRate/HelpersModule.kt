@@ -1,7 +1,9 @@
 package com.damanhour.Graduation.medisupport.di.heartRate
 
+import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IDetectHeartBeatHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IImageProcessingHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IReflectedLightSignalHelper
+import com.example.heartrate.presentation.uiState.viewModel.measurement.helperExecution.DetectHeartBeatHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperExecution.ImageProcessingHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperExecution.ReflectedLightSignalHelper
 import dagger.Module
@@ -30,5 +32,15 @@ object HelpersModule {
         return ReflectedLightSignalHelper()
 
     }//end provideReflectedLightSignalHelper
+
+
+    @Provides
+    @Singleton
+    fun provideDetectHeartBeatHelper(): IDetectHeartBeatHelper {
+
+        return DetectHeartBeatHelper()
+
+    }//end provideReflectedLightSignalHelper
+
 
 }//end HelpersModule

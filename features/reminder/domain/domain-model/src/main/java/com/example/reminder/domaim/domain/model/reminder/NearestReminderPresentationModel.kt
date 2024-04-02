@@ -7,5 +7,5 @@ data class NearestReminderPresentationModel(
     val name: String,
     val time: LocalTime,
     val day: String,
-    val differentDays: Int
+    val dayNumber: Long,
 )

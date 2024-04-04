@@ -59,9 +59,13 @@ dependencies {
 
     //shared ui
     implementation(project(':libraries:shared-ui'))
-    implementation implementation(project(':libraries:core:local-data:database-creator',))
+
+    //remote data
+    implementation(project(':libraries:core:remote-data'))
 
     //local data
+    implementation(project(':libraries:core:local-data:database-creator',))
+
 
     //article
     implementation(project(':features:article:presentation'))
@@ -122,7 +126,6 @@ dependencies {
     //setting
     implementation(project(':features:setting:presentation'))
 
-
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
@@ -139,6 +142,10 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"

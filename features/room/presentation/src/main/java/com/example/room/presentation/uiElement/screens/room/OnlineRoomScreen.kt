@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.example.room.presentation.uiElement.components.items.VideoCallToolsSection
 import com.example.room.presentation.uiElement.data.VideoToolData
 import com.example.sharedui.uiElement.components.composable.FloatingActionButtonView
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -65,10 +66,10 @@ internal fun OnlineRoomScreen() {
 private fun OnlineRoomContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
-    soundData: com.example.room.presentation.uiElement.data.VideoToolData,
-    chatData: com.example.room.presentation.uiElement.data.VideoToolData,
-    cameraData: com.example.room.presentation.uiElement.data.VideoToolData,
-    rotateData: com.example.room.presentation.uiElement.data.VideoToolData
+    soundData: VideoToolData,
+    chatData: VideoToolData,
+    cameraData: VideoToolData,
+    rotateData: VideoToolData
 ) {
 
     //create base screen for define status and navigation bar color
@@ -96,7 +97,7 @@ private fun OnlineRoomContent(
                 ) {
 
                     //create video tools section here
-                    com.example.room.presentation.uiElement.components.items.VideoCallToolsSection(
+                    VideoCallToolsSection(
                         dimen = dimen,
                         theme = theme,
                         soundData = soundData,
@@ -114,6 +115,8 @@ private fun OnlineRoomContent(
 
                 //create call button here
                 FloatingActionButtonView(
+                    dimen = dimen,
+                    theme = theme,
                     icon = painterResource(
                         id = R.drawable.call_icon
                     ),

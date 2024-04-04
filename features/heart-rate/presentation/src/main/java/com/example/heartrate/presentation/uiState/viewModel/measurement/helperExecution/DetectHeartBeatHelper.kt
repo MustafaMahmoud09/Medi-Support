@@ -33,7 +33,7 @@ class DetectHeartBeatHelper : IDetectHeartBeatHelper {
                 val prevPPGIntensity = peeks.get(0, count - 1)[0]
                 val nextPPGIntensity = peeks.get(0, count + 1)[0]
 
-                val minThreshold = 0.009
+                val minThreshold = 0.012
 
                 val maxThreshold = 0.5
 

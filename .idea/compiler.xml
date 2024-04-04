@@ -21,12 +21,30 @@
       <module name="MediSupport.features.article.domain.useCase.main" target="17" />
       <module name="MediSupport.features.article.domain.useCase.test" target="17" />
       <module name="MediSupport.features.article.presentation" target="17" />
+      <module name="MediSupport.features.auth.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.auth.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.auth.data.repository" target="17" />
+      <module name="MediSupport.features.auth.data.repository-execution" target="17" />
+      <module name="MediSupport.features.auth.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.auth.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.auth.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.auth.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.auth.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.auth.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.auth.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.auth.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.auth.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.auth.domain.use-case" target="17" />
       <module name="MediSupport.features.auth.domain.use-case.main" target="17" />
       <module name="MediSupport.features.auth.domain.use-case.test" target="17" />
       <module name="MediSupport.features.auth.domain.use_case.main" target="17" />
       <module name="MediSupport.features.auth.domain.use_case.test" target="17" />
+      <module name="MediSupport.features.auth.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.auth.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.auth.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.auth.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.auth.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.auth.domain.usecase-execution.test" target="17" />
       <module name="MediSupport.features.auth.domain.useCase.main" target="17" />
       <module name="MediSupport.features.auth.domain.useCase.test" target="17" />
       <module name="MediSupport.features.auth.presentation" target="17" />

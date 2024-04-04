@@ -13,9 +13,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import com.example.sharedui.uiElement.components.modifier.appShadow
 import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
+import com.example.sharedui.uiElement.style.dimens.CustomDimen
+import com.example.sharedui.uiElement.style.theme.CustomTheme
 
 @Composable
 fun FloatingActionButtonView(
+    dimen: CustomDimen,
+    theme: CustomTheme,
     icon: Painter,
     iconSize: Float,
     tint: Color,
@@ -50,9 +54,11 @@ fun FloatingActionButtonView(
     ) {
 
         //create icon here
-        BasicIconView(
-            painter = icon,
-            color = tint,
+        IconView(
+            dimen = dimen,
+            theme = theme,
+            icon = icon,
+            tint = tint,
             size = iconSize
         )
 

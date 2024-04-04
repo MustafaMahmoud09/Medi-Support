@@ -172,6 +172,8 @@ internal fun ChatToolsSection(
 
                 //create send button here
                 FloatingActionButtonView(
+                    dimen = dimen,
+                    theme = theme,
                     icon = sendIcon,
                     iconSize = sendIconSize,
                     tint = sendIconTint,

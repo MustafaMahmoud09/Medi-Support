@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,11 +29,13 @@ import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.composable.TextNormalRedView
 import com.example.sharedui.uiElement.components.items.BasicFieldSection
+import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import kotlin.reflect.KFunction0
 
 @Composable
 internal fun RegisterScreen(
@@ -48,8 +51,22 @@ internal fun RegisterScreen(
         onLastNameChanged = viewModel::onLastNameChange,
         onEmailChanged = viewModel::onEmailChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
-        onRememberChanged = viewModel::onRememberChanged
+        onRememberChanged = viewModel::onRememberChanged,
+        onClickOnRegisterButton = viewModel::onUserAccountCreated
     )
+
+    LaunchedEffect(
+        key1 = state.value.registerEventState.registerSuccess
+    ) {
+
+        if (state.value.registerEventState.registerSuccess) {
+
+            popRegisterDestination()
+
+        }//end if
+
+    }//end LaunchedEffect
+
 }//end RegisterScreen
 
 @Composable
@@ -62,7 +79,8 @@ private fun RegisterContent(
     onLastNameChanged: (String) -> Unit,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
-    onRememberChanged: (Boolean) -> Unit
+    onRememberChanged: (Boolean) -> Unit,
+    onClickOnRegisterButton: () -> Unit
 ) {
 
     BaseScreen(
@@ -270,7 +288,7 @@ private fun RegisterContent(
                             text = stringResource(
                                 id = R.string.sign_up
                             ),
-                            onClick = { /*TODO*/ },
+                            onClick = onClickOnRegisterButton,
                             fontSize = dimen.dimen_2_5,
                             modifier = Modifier
                                 .constrainAs(registerButton) {
@@ -383,12 +401,7 @@ private fun RegisterContent(
                                         dimen.dimen_4.dp
                                     )
                                 }
-                                .clickable(
-                                    interactionSource = remember {
-                                        MutableInteractionSource()
-                                    },
-                                    indication = null
-                                ) { onClickLogin() }
+                                .clickableWithoutHover { onClickLogin() }
                         )
 
                     }//end ConstraintLayout

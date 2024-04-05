@@ -2,21 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices. -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <!-- For Android 12 and above devices, the following permission is also required. -->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
 
@@ -41,13 +31,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.MediSupport"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="34">
+
         <service
             android:name="com.example.reminder.presentation.uiElement.services.ReminderService"
-            android:enabled="true"
-            android:exported="true"
-            android:directBootAware="true"
-            />
+            android:foregroundServiceType="connectedDevice"
+            android:exported="false"
+            tools:ignore="ForegroundServicePermission" />
         <service android:name="com.example.reminder.presentation.uiElement.services.CancelReminderNotificationService" />
         <service android:name="com.example.reminder.presentation.uiElement.services.StopReminderNotificationService" />
 
@@ -65,18 +56,18 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name="com.example.reminder.presentation.uiElement.BootReminderReceiver"
-            android:permission="android.permission.BIND_DEVICE_ADMIN"
-            android:exported="true"
-            android:enabled="true">
-            <meta-data
-                android:name="android.app.device_admin"
-                android:resource="@xml/device_admin_receiver" />
-            <intent-filter>
-                <action android:name="android.intent.action.DEVICE_ADMIN_ENABLED" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver-->
+<!--            android:name="com.example.reminder.presentation.uiElement.BootReminderReceiver"-->
+<!--            android:permission="android.permission.BIND_DEVICE_ADMIN"-->
+<!--            android:exported="true"-->
+<!--            android:enabled="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.device_admin"-->
+<!--                android:resource="@xml/device_admin_receiver" />-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.DEVICE_ADMIN_ENABLED" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
     </application>
 

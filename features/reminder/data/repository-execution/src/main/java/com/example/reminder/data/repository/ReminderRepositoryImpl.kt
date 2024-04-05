@@ -5,7 +5,7 @@ import com.example.libraries.local.data.shared.entities.entity.execution.user.Us
 import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateEntity
-import com.example.reminder.data.source.shared.preferences.ReminderPreferencesAccess
+import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
 import com.example.reminder.domain.entity.interfaces.complexQuery.INearestReminder
 import com.example.reminder.domain.entity.interfaces.entity.IDayEntity
 import com.example.reminder.domain.entity.interfaces.complexQuery.IReminderWithDays
@@ -15,14 +15,14 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalTime
 
 class ReminderRepositoryImpl(
-    private val reminderPreferencesAccess: ReminderPreferencesAccess,
+    private val sharedPreferencesAccessObject: SharedPreferencesAccessObject,
     private val localDatabase: MediSupportDatabase
 ) : IReminderRepository {
 
     //fun return false if used the reminder feature before else return true
     override fun getRunningReminderFeatureState(): Boolean {
 
-        return reminderPreferencesAccess
+        return sharedPreferencesAccessObject
             .runningReminderManager()
             .getRunningReminderFeatureState()
 
@@ -31,7 +31,7 @@ class ReminderRepositoryImpl(
     //fun for set use reminder feature
     override fun setRunningReminderFeatureState(value: Boolean) {
 
-        reminderPreferencesAccess
+        sharedPreferencesAccessObject
             .runningReminderManager()
             .setRunningReminderFeatureState(
                 value = value
@@ -43,7 +43,7 @@ class ReminderRepositoryImpl(
     //function for set reminder service state
     override fun setReminderServiceState(value: Boolean) {
 
-        reminderPreferencesAccess
+        sharedPreferencesAccessObject
             .runningReminderServiceManager()
             .setReminderServiceState(
                 value = value
@@ -54,7 +54,7 @@ class ReminderRepositoryImpl(
     //function for get reminder service state
     override fun getReminderServiceState(): Boolean {
 
-        return reminderPreferencesAccess
+        return sharedPreferencesAccessObject
             .runningReminderServiceManager()
             .getReminderServiceState()
 

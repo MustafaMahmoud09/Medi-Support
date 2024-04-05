@@ -145,6 +145,8 @@
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities/entity-declarations" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities/entity-execution" />
+            <option value="$PROJECT_DIR$/libraries/core/local-data/shared-preferences-access-object" />
+            <option value="$PROJECT_DIR$/libraries/core/local-data/shared-preferences-manager" />
             <option value="$PROJECT_DIR$/libraries/core/remote-data" />
             <option value="$PROJECT_DIR$/libraries/open-cv" />
             <option value="$PROJECT_DIR$/libraries/shared-ui" />

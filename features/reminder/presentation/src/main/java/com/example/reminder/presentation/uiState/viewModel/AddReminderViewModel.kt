@@ -2,6 +2,7 @@ package com.example.reminder.presentation.uiState.viewModel
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.reminder.domaim.domain.model.reminder.ReminderStoreData
 import com.example.reminder.domain.usecase.interfaces.IAddDaysUseCase
@@ -62,36 +63,44 @@ class AddReminderViewModel @Inject constructor(
             //collect user reminders here
             getReminderActiveSizeUseCase().collectLatest { remindersSize ->
 
-                //check service is not running
-                if (
-                    remindersSize == 1L &&
-                    !getReminderServiceRunningStateUseCase()
-                ) {
+                try {
 
-                    //start foreground service here
-                    context.startForegroundService(serviceIntent)
+                    //check service is not running
+                    if (
+                        remindersSize == 1L &&
+                        !getReminderServiceRunningStateUseCase()
+                    ) {
 
-                    //change reminder service state here
-                    setReminderServiceRunningStateUseCase(
-                        status = true
-                    )
+                        //start foreground service here
+                        context.startForegroundService(serviceIntent)
 
-                }//end if
+                        //change reminder service state here
+                        setReminderServiceRunningStateUseCase(
+                            status = true
+                        )
 
-                //check service is running
-                else if (
-                    remindersSize == 0L &&
-                    getReminderServiceRunningStateUseCase()
-                ) {
+                    }//end if
 
-                    context.stopService(serviceIntent)
+                    //check service is running
+                    else if (
+                        remindersSize == 0L &&
+                        getReminderServiceRunningStateUseCase()
+                    ) {
 
-                    //change reminder service state here
-                    setReminderServiceRunningStateUseCase(
-                        status = false
-                    )
+                        context.stopService(serviceIntent)
 
-                }//end else if
+                        //change reminder service state here
+                        setReminderServiceRunningStateUseCase(
+                            status = false
+                        )
+
+                    }//end else if
+
+                } catch (ex: Exception) {
+
+                    ex.message?.let { Log.e("ERROR", it) }
+
+                }//end ex
 
             }//end collectLatest
 

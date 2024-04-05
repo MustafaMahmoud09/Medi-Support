@@ -1,9 +1,17 @@
 package com.example.auth.presentation.uiState.state
 
-internal data class RegisterUiState(
+data class RegisterUiState(
     val firstNameKey: String = "",
     val lastNameKey: String = "",
     val emailKey: String = "",
     val passwordKey: String = "",
-    val rememberKey: Boolean = false
+    val rememberKey: Boolean = false,
+    val registerEventState: RegisterEventState = RegisterEventState()
+)
+
+
+data class RegisterEventState(
+    val inputsError: Boolean = false,
+    val registerSuccess: Boolean = false,
+    val serverError: Boolean = false
 )

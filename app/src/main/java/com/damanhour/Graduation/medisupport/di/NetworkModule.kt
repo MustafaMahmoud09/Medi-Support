@@ -1,6 +1,7 @@
 package com.damanhour.Graduation.medisupport.di
 
 import com.example.remotedata.AuthorizationInterceptor
+import com.example.remotedata.JsonFormatInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,6 +10,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -16,17 +18,20 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-
     @Provides
     @Singleton
     @Named("retrofit_without_token")
     fun provideRetrofitWithoutToken(
         @Named("base_url") baseUrl: String,
-        converter: GsonConverterFactory
+        converter: GsonConverterFactory,
+        @Named("time_out_client") timeOutClient: OkHttpClient,
+        @Named("json_format_interceptor_client") jsonFormatClient: OkHttpClient
     ): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(baseUrl)
+            .client(timeOutClient)
+            .client(jsonFormatClient)
             .addConverterFactory(converter)
             .build()
 
@@ -39,13 +44,17 @@ object NetworkModule {
     fun provideRetrofitWithToken(
         @Named("base_url") baseUrl: String,
         converter: GsonConverterFactory,
-        okHttpClient: OkHttpClient
+        @Named("auth_interceptor_client") authInterceptorClient: OkHttpClient,
+        @Named("time_out_client") timeOutClient: OkHttpClient,
+        @Named("json_format_interceptor_client") jsonFormatClient: OkHttpClient
     ): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(converter)
-            .client(okHttpClient)
+            .client(authInterceptorClient)
+            .client(timeOutClient)
+            .client(jsonFormatClient)
             .build()
 
     }//end provideRetrofitWithToken
@@ -53,7 +62,23 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkhttpClient(
+    @Named("time_out_client")
+    fun provideTimeOutClient(): OkHttpClient {
+
+        return OkHttpClient.Builder()
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .followRedirects(false)
+            .build()
+
+    }//end provideTimeOutClient
+
+
+    @Provides
+    @Singleton
+    @Named("auth_interceptor_client")
+    fun provideAuthInterceptorClient(
         @Named("token_interceptor") interceptor: Interceptor
     ): OkHttpClient {
 
@@ -63,13 +88,35 @@ object NetworkModule {
 
     }//end provideOkhttpClient
 
-
     @Provides
     @Singleton
     @Named("token_interceptor")
     fun provideAuthInterceptor(): Interceptor {
 
         return AuthorizationInterceptor()
+
+    }//end provideAuthInterceptor
+
+
+    @Provides
+    @Singleton
+    @Named("json_format_interceptor_client")
+    fun provideJsonFormatInterceptorClient(
+        @Named("json_format_interceptor") interceptor: Interceptor
+    ): OkHttpClient {
+
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
+    }//end provideOkhttpClient
+
+    @Provides
+    @Singleton
+    @Named("json_format_interceptor")
+    fun provideJsonFormatInterceptor(): Interceptor {
+
+        return JsonFormatInterceptor()
 
     }//end provideAuthInterceptor
 
@@ -88,7 +135,7 @@ object NetworkModule {
     @Named("base_url")
     fun provideBaseUrl(): String {
 
-        return "https://156d-197-63-222-113.ngrok-free.app/api/"
+        return "https://2e42-154-183-39-103.ngrok-free.app/api/"
 
     }//end provideBaseUrl
 

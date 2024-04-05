@@ -5,10 +5,11 @@ plugins {
 
 android {
     namespace 'com.example.auth.data.repository.execution'
-    compileSdk 34
+    compileSdk compile_sdk
 
     defaultConfig {
-        minSdk 24
+        minSdk min_sdk
+        targetSdk max_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -21,15 +22,36 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 }
 
 dependencies {
+
+    //project
+    //repository declarations
+    implementation(project(":features:auth:domain:repository-declarations"))
+
+    //dto executions
+    implementation(project(":features:auth:data:data-source:remote-data:dto-execution"))
+
+    //repository declarations
+    implementation(project(":features:auth:domain:repository-declarations"))
+
+    //requests
+    implementation(project(":features:auth:data:data-source:remote-data:requests"))
+
+    //dto execution
+    implementation(project(":features:auth:data:data-source:remote-data:dto-execution"))
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
 
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -37,4 +59,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
 }

@@ -40,7 +40,11 @@ android {
 dependencies {
 
     //project
+    //shared ui
     implementation(project(':libraries:shared-ui'))
+
+    //use case declarations
+    implementation(project(":features:auth:domain:usecase-declarations"))
 
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"

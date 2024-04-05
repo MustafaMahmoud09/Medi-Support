@@ -66,12 +66,19 @@ dependencies {
     //local data
     implementation(project(':libraries:core:local-data:database-creator',))
 
+    //shared preferences access object
+    implementation(project(":libraries:core:local-data:shared-preferences-access-object"))
 
     //article
     implementation(project(':features:article:presentation'))
 
     //auth
     implementation(project(':features:auth:presentation'))
+    implementation(project(':features:auth:domain:usecase-declarations'))
+    implementation(project(':features:auth:domain:usecase-execution'))
+    implementation(project(':features:auth:domain:repository-declarations'))
+    implementation(project(':features:auth:data:repository-execution'))
+    implementation(project(':features:auth:data:data-source:remote-data:requests'))
 
     //blood pressure
     implementation(project(':features:blood-pressure:presentation'))
@@ -116,7 +123,6 @@ dependencies {
     implementation(project(':features:reminder:domain:usecase-execution'))
     implementation(project(':features:reminder:domain:repository-declarations'))
     implementation(project(':features:reminder:data:repository-execution'))
-    implementation(project(':features:reminder:data:data-source:shared-preferences'))
     implementation(project(':features:reminder:domain:mapper-declarations'))
     implementation(project(':features:reminder:mapper-execution'))
 

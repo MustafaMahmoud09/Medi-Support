@@ -1,6 +1,9 @@
 package com.example.auth.data.source.remote.data.requests
 
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface AuthRequest {
@@ -8,14 +11,15 @@ interface AuthRequest {
     /***
      * function for make register request on server
      ***/
+    @FormUrlEncoded
     @POST("auth/user/register")
-    fun register(
+    suspend fun register(
         @Field("name") name: String,
         @Field("last_name") lastName: String,
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("password_confirmation") confirmPassword: String
-    )
+        @Field("password_confirmation") passwordConfirmation: String
+    ): Response<Any>
 
 
     /***

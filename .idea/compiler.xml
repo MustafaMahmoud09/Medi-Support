@@ -197,6 +197,8 @@
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations.main" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations.test" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-execution" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-preferences-access-object" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-preferences-manager" target="17" />
       <module name="MediSupport.libraries.core.local-datas" target="17" />
       <module name="MediSupport.libraries.core.remote-data" target="17" />
       <module name="MediSupport.libraries.open-cv" target="17" />

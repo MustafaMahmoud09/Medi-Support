@@ -7,3 +7,17 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    //project
+    //use case declarations
+    implementation(project(':features:auth:domain:usecase-declarations'))
+
+    //repository declarations
+    implementation(project(':features:auth:domain:repository-declarations'))
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
+
+}

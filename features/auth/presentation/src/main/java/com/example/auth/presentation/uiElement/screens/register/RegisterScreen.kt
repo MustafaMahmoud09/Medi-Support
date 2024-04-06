@@ -1,8 +1,6 @@
 package com.example.auth.presentation.uiElement.screens.register
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,7 +32,6 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-import kotlin.reflect.KFunction0
 
 @Composable
 internal fun RegisterScreen(
@@ -56,10 +52,10 @@ internal fun RegisterScreen(
     )
 
     LaunchedEffect(
-        key1 = state.value.registerEventState.registerSuccess
+        key1 = state.value.registerEventState.success
     ) {
 
-        if (state.value.registerEventState.registerSuccess) {
+        if (state.value.registerEventState.success) {
 
             popRegisterDestination()
 
@@ -163,6 +159,7 @@ private fun RegisterContent(
                             ),
                             value = uiState.firstNameKey,
                             onChange = onFirstNameChanged,
+                            enable = !uiState.registerEventState.loading,
                             modifier = Modifier
                                 .constrainAs(firstName) {
                                     start.linkTo(
@@ -189,6 +186,7 @@ private fun RegisterContent(
                             ),
                             value = uiState.lastNameKey,
                             onChange = onLastNameChanged,
+                            enable = !uiState.registerEventState.loading,
                             modifier = Modifier
                                 .constrainAs(lastName) {
                                     start.linkTo(
@@ -215,6 +213,7 @@ private fun RegisterContent(
                             ),
                             value = uiState.emailKey,
                             onChange = onEmailChanged,
+                            enable = !uiState.registerEventState.loading,
                             modifier = Modifier
                                 .constrainAs(emailFailed) {
                                     start.linkTo(
@@ -244,6 +243,7 @@ private fun RegisterContent(
                             ),
                             value = uiState.passwordKey,
                             fieldIsPassword = true,
+                            enable = !uiState.registerEventState.loading,
                             onChange = onPasswordChanged,
                             modifier = Modifier
                                 .constrainAs(passwordFailed) {
@@ -269,6 +269,7 @@ private fun RegisterContent(
                             fontColor = theme.black,
                             checked = uiState.rememberKey,
                             onCheckedChange = onRememberChanged,
+                            enable = !uiState.registerEventState.loading,
                             modifier = Modifier
                                 .constrainAs(rememberSection) {
                                     start.linkTo(
@@ -288,7 +289,11 @@ private fun RegisterContent(
                             text = stringResource(
                                 id = R.string.sign_up
                             ),
-                            onClick = onClickOnRegisterButton,
+                            onClick = if (!uiState.registerEventState.loading) {
+                                onClickOnRegisterButton
+                            } else {
+                                {}
+                            },
                             fontSize = dimen.dimen_2_5,
                             modifier = Modifier
                                 .constrainAs(registerButton) {
@@ -317,7 +322,11 @@ private fun RegisterContent(
                             text = stringResource(
                                 R.string.log_in_with_google
                             ),
-                            onClick = { /*TODO*/ },
+                            onClick = if (!uiState.registerEventState.loading) {
+                                {}
+                            } else {
+                                {}
+                            },
                             modifier = Modifier
                                 .constrainAs(googleButton) {
                                     start.linkTo(
@@ -345,7 +354,11 @@ private fun RegisterContent(
                             text = stringResource(
                                 R.string.log_in_with_facebook
                             ),
-                            onClick = { /*TODO*/ },
+                            onClick = if (!uiState.registerEventState.loading) {
+                                {}
+                            } else {
+                                {}
+                            },
                             modifier = Modifier
                                 .constrainAs(facebookButton) {
                                     start.linkTo(

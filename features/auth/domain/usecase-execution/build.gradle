@@ -14,6 +14,9 @@ dependencies {
     //use case declarations
     implementation(project(':features:auth:domain:usecase-declarations'))
 
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
     //repository declarations
     implementation(project(':features:auth:domain:repository-declarations'))
 

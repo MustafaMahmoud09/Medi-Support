@@ -11,7 +11,10 @@ data class RegisterUiState(
 
 
 data class RegisterEventState(
-    val inputsError: Boolean = false,
-    val registerSuccess: Boolean = false,
-    val serverError: Boolean = false
+    val emailNotValid: Boolean = false,
+    val success: Boolean = false,
+    val serverError: Boolean = false,
+    val loading: Boolean = false,
+    val internetError: Boolean = false,
+    val inputsError: Boolean = false
 )

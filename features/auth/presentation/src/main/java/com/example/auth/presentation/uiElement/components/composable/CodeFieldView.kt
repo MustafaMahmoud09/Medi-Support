@@ -34,6 +34,7 @@ internal fun CodeFieldView(
     size: Float = dimen.dimen_8,
     fontSize: Float = dimen.dimen_2,
     fontColor: Color = theme.gray,
+    enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
 
@@ -77,6 +78,7 @@ internal fun CodeFieldView(
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
             ),
+            enabled = enabled,
             modifier = Modifier
                 .constrainAs(basic) {
                     start.linkTo(parent.start)

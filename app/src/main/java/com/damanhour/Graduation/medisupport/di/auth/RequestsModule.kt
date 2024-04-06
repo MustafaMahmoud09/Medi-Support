@@ -1,6 +1,7 @@
 package com.damanhour.Graduation.medisupport.di.auth
 
 import com.example.auth.data.source.remote.data.requests.AuthRequest
+import com.example.auth.data.source.remote.data.requests.ResetPasswordRequest
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +21,17 @@ object RequestsModule {
     ): AuthRequest {
 
         return retrofit.create(AuthRequest::class.java)
+
+    }//end provideAuthRequest
+
+
+    @Provides
+    @Singleton
+    fun provideResetPasswordRequest(
+        @Named("retrofit_without_token") retrofit: Retrofit
+    ): ResetPasswordRequest {
+
+        return retrofit.create(ResetPasswordRequest::class.java)
 
     }//end provideAuthRequest
 

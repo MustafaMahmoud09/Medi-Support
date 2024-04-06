@@ -2,6 +2,7 @@ package com.example.auth.domain.usecase.execution
 
 import com.example.auth.domain.repository.declarations.IAuthRepository
 import com.example.auth.domain.usecase.declarations.ICreateNewUserUseCase
+import com.example.libraries.core.remote.data.response.status.Status
 import kotlinx.coroutines.flow.Flow
 
 class CreateNewUserUseCase(
@@ -14,7 +15,7 @@ class CreateNewUserUseCase(
         email: String,
         password: String,
         confirmPassword: String
-    ): Flow<Int> {
+    ): Flow<Status<Int>> {
 
         return authRepository.register(
             name = name,

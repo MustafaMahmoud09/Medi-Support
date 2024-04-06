@@ -31,7 +31,6 @@ abstract class BaseViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        coroutineScope.cancel()
     }//end onCleared
 
 }//end BaseViewModel

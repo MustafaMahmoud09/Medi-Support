@@ -147,7 +147,10 @@
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities/entity-execution" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-preferences-access-object" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-preferences-manager" />
-            <option value="$PROJECT_DIR$/libraries/core/remote-data" />
+            <option value="$PROJECT_DIR$/libraries/core/remote-database" />
+            <option value="$PROJECT_DIR$/libraries/core/remote-database/interceptors" />
+            <option value="$PROJECT_DIR$/libraries/core/remote-database/request-status" />
+            <option value="$PROJECT_DIR$/libraries/core/remote-database/response-wrapper" />
             <option value="$PROJECT_DIR$/libraries/open-cv" />
             <option value="$PROJECT_DIR$/libraries/shared-ui" />
           </set>

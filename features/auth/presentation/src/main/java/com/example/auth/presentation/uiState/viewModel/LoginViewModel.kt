@@ -14,7 +14,7 @@ import javax.inject.Inject
 internal class LoginViewModel @Inject constructor() : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(com.example.auth.presentation.uiState.state.LoginUiState())
+    private val _state = MutableStateFlow(LoginUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()

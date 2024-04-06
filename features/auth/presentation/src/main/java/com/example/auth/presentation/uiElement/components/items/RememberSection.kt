@@ -1,11 +1,9 @@
 package com.example.auth.presentation.uiElement.components.items
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.material3.CheckboxDefaults
@@ -28,6 +26,7 @@ internal fun RememberSection(
     fontColor: Color,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
+    enable: Boolean = true,
     modifier: Modifier = Modifier
 ) {
 
@@ -46,7 +45,8 @@ internal fun RememberSection(
             colors = CheckboxDefaults.colors(
                 checkedColor = theme.redDark,
                 uncheckedColor = theme.redDark
-            )
+            ),
+            enabled = enable,
         )
 
         Spacer(

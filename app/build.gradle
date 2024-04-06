@@ -61,7 +61,7 @@ dependencies {
     implementation(project(':libraries:shared-ui'))
 
     //remote data
-    implementation(project(':libraries:core:remote-data'))
+    implementation(project(':libraries:core:remote-database:interceptors'))
 
     //local data
     implementation(project(':libraries:core:local-data:database-creator',))

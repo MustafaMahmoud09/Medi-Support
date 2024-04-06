@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,10 +37,24 @@ internal fun EmailScreen(
 
     EmailContent(
         onClickBack = popForgotPasswordNavGraph,
-        onClickSendEmail = navigateToCodeDestination,
+        onClickSendEmail = viewModel::onUserEmailSending,
         uiState = state.value,
         onEmailChanged = viewModel::onEmailChanged
     )
+
+    //on email sending navigate to code screen
+    LaunchedEffect(
+        key1 = state.value.sendEmailEventStatus.success
+    ) {
+
+        //check if sending email event status is success
+        //navigate to code screen
+        if (state.value.sendEmailEventStatus.success) {
+            navigateToCodeDestination()
+        }//end if
+
+    }//end LaunchedEffect
+
 }//end EmailScreen
 
 @Composable
@@ -143,6 +158,7 @@ private fun EmailContent(
                 ),
                 value = uiState.emailKey,
                 onChange = onEmailChanged,
+                enable = !uiState.sendEmailEventStatus.loading,
                 modifier = Modifier
                     .constrainAs(emailFailed) {
                         start.linkTo(
@@ -167,7 +183,11 @@ private fun EmailContent(
                 text = stringResource(
                     R.string.send_email
                 ),
-                onClick = onClickSendEmail,
+                onClick = if (!uiState.sendEmailEventStatus.loading) {
+                    onClickSendEmail
+                } else {
+                    {}
+                },
                 fontSize = dimen.dimen_2_5,
                 modifier = Modifier
                     .constrainAs(sendButton) {

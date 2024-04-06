@@ -48,6 +48,9 @@ dependencies {
     //dto execution
     implementation(project(":features:auth:data:data-source:remote-data:dto-execution"))
 
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"

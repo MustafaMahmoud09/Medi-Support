@@ -1,6 +1,5 @@
 package com.example.auth.data.source.remote.data.requests
 
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -35,6 +34,7 @@ interface AuthRequest {
     /***
      * function for make login with email request on server
      ***/
+    @FormUrlEncoded
     @POST("auth/user/login")
     fun loginWithEmail(
         @Field("email") email: String,

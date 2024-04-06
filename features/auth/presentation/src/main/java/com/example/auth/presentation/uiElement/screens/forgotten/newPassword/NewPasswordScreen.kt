@@ -15,9 +15,6 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +34,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import kotlin.reflect.KFunction0
 
 @Composable
 internal fun NewPasswordScreen(
@@ -49,8 +47,10 @@ internal fun NewPasswordScreen(
         onClickBackLogin = backToLoginNavGraph,
         uiState = state.value,
         onNewPasswordChanged = viewModel::onNewPasswordChanged,
+        onClickOnResetPasswordButton = viewModel::onResetUserPassword,
         onConfirmPasswordChanged = viewModel::onConfirmPasswordChanged
     )
+
 }//end NewPasswordScreen
 
 @Composable
@@ -60,21 +60,20 @@ private fun NewPasswordContent(
     onClickBackLogin: () -> Unit,
     uiState: ForgottenUiState,
     onNewPasswordChanged: (String) -> Unit,
-    onConfirmPasswordChanged: (String) -> Unit
+    onConfirmPasswordChanged: (String) -> Unit,
+    onClickOnResetPasswordButton: KFunction0<Unit>
 ) {
-
-    var isShowDialog by rememberSaveable { mutableStateOf(false) }
 
     //create title animated color here
     val titleAnimatedColor by animateColorAsState(
-        targetValue = if (isShowDialog) theme.redDark else theme.black,
+        targetValue = if (uiState.resetPasswordEventStatus.success) theme.redDark else theme.black,
         label = "titleAnimatedColor",
         animationSpec = snap()
     )
 
     //create title animated size here
     val titleAnimatedSize by animateFloatAsState(
-        targetValue = if (isShowDialog) dimen.dimen_2_75 else dimen.dimen_2_5,
+        targetValue = if (uiState.resetPasswordEventStatus.success) dimen.dimen_2_75 else dimen.dimen_2_5,
         animationSpec = snap(),
         label = "titleAnimatedSize"
     )
@@ -96,7 +95,7 @@ private fun NewPasswordContent(
 
             //dialog back to login destination
             AnimatedVisibility(
-                visible = isShowDialog,
+                visible = uiState.resetPasswordEventStatus.success,
                 enter = fadeIn(
                     animationSpec = tween(
                         durationMillis = 150
@@ -114,7 +113,7 @@ private fun NewPasswordContent(
                     dimen = dimen,
                     theme = theme,
                     logo = painterResource(
-                        id = com.example.sharedui.R.drawable.success
+                        id = R.drawable.success
                     ),
                     tint = theme.greenLight,
                     buttonTitle = stringResource(
@@ -178,6 +177,7 @@ private fun NewPasswordContent(
                 value = uiState.newPasswordKey,
                 fieldIsPassword = true,
                 onChange = onNewPasswordChanged,
+                enable = !uiState.resetPasswordEventStatus.loading,
                 modifier = Modifier
                     .constrainAs(passwordFailed) {
                         start.linkTo(
@@ -207,6 +207,7 @@ private fun NewPasswordContent(
                 ),
                 value = uiState.confirmNewPasswordKey,
                 fieldIsPassword = true,
+                enable = !uiState.resetPasswordEventStatus.loading,
                 onChange = onConfirmPasswordChanged,
                 modifier = Modifier
                     .constrainAs(confirmPassword) {
@@ -230,7 +231,11 @@ private fun NewPasswordContent(
                 dimen = dimen,
                 theme = theme,
                 text = stringResource(R.string.resat_password),
-                onClick = { isShowDialog = true },
+                onClick = if (!uiState.resetPasswordEventStatus.loading) {
+                    onClickOnResetPasswordButton
+                } else {
+                    {}
+                },
                 fontSize = dimen.dimen_2_5,
                 modifier = Modifier
                     .constrainAs(resetPasswordButton) {

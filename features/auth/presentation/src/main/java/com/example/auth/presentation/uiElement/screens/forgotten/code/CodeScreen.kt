@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.auth.presentation.uiElement.components.composable.CodeFieldView
 import com.example.sharedui.R
 import com.example.auth.presentation.uiState.state.ForgottenUiState
 import com.example.auth.presentation.uiState.viewModel.ForgottenViewModel
@@ -35,20 +37,34 @@ internal fun CodeScreen(
     val state = viewModel.state.collectAsState()
 
     CodeContent(
-        onClickNewPassword = { navigateToNewPasswordDestination() },
+        onClickOnVerifyButton = viewModel::onVerifyCodeSending,
         uiState = state.value,
         onFirstCodeChanged = viewModel::onFirstCodeChanged,
         onSecondCodeChanged = viewModel::onSecondCodeChanged,
         onThirdCodeChanged = viewModel::onThirdCodeChanged,
         onFourthCodeChanged = viewModel::onFourthCodeChanged
     )
+
+    //on code sending navigate to new password destination
+    LaunchedEffect(
+        key1 = state.value.verifyCodeEventStatus.success
+    ) {
+
+        //check if sending code event status is success
+        //navigate to new password screen
+        if (state.value.verifyCodeEventStatus.success) {
+            navigateToNewPasswordDestination()
+        }//end if
+
+    }//end LaunchedEffect
+
 }//end CodeScreen
 
 @Composable
 private fun CodeContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
-    onClickNewPassword: () -> Unit,
+    onClickOnVerifyButton: () -> Unit,
     uiState: ForgottenUiState,
     onFirstCodeChanged: (String) -> Unit,
     onSecondCodeChanged: (String) -> Unit,
@@ -143,31 +159,35 @@ private fun CodeContent(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                com.example.auth.presentation.uiElement.components.composable.CodeFieldView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.firstCodeKey,
+                    enabled = !uiState.verifyCodeEventStatus.loading,
                     onChange = onFirstCodeChanged
                 )
 
-                com.example.auth.presentation.uiElement.components.composable.CodeFieldView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.secondCodeKey,
+                    enabled = !uiState.verifyCodeEventStatus.loading,
                     onChange = onSecondCodeChanged
                 )
 
-                com.example.auth.presentation.uiElement.components.composable.CodeFieldView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.thirdCodeKey,
+                    enabled = !uiState.verifyCodeEventStatus.loading,
                     onChange = onThirdCodeChanged
                 )
 
-                com.example.auth.presentation.uiElement.components.composable.CodeFieldView(
+                CodeFieldView(
                     dimen = dimen,
                     theme = theme,
                     value = uiState.fourthCodeKey,
+                    enabled = !uiState.verifyCodeEventStatus.loading,
                     onChange = onFourthCodeChanged
                 )
 
@@ -179,7 +199,11 @@ private fun CodeContent(
                 text = stringResource(
                     R.string.verify
                 ),
-                onClick = onClickNewPassword,
+                onClick = if (!uiState.verifyCodeEventStatus.loading) {
+                    onClickOnVerifyButton
+                } else {
+                    {}
+                },
                 fontSize = dimen.dimen_2_5,
                 modifier = Modifier
                     .constrainAs(verifyButton) {

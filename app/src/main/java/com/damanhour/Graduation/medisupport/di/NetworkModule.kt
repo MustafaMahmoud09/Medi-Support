@@ -1,7 +1,6 @@
 package com.damanhour.Graduation.medisupport.di
 
-import com.example.remotedata.AuthorizationInterceptor
-import com.example.remotedata.JsonFormatInterceptor
+import com.example.libraries.core.remote.database.interceptors.JsonFormatInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -93,7 +92,7 @@ object NetworkModule {
     @Named("token_interceptor")
     fun provideAuthInterceptor(): Interceptor {
 
-        return AuthorizationInterceptor()
+        return com.example.libraries.core.remote.database.interceptors.AuthorizationInterceptor()
 
     }//end provideAuthInterceptor
 
@@ -135,7 +134,7 @@ object NetworkModule {
     @Named("base_url")
     fun provideBaseUrl(): String {
 
-        return "https://2e42-154-183-39-103.ngrok-free.app/api/"
+        return "https://97cd-154-183-39-103.ngrok-free.app/api/"
 
     }//end provideBaseUrl
 

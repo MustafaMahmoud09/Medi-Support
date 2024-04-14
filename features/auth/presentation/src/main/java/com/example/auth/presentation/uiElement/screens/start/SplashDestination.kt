@@ -10,8 +10,9 @@ import com.google.accompanist.navigation.animation.composable
 
 const val START_DESTINATION_ROUTE = "startDestination"
 
-fun NavGraphBuilder.startDestination(
-    navigateToWelcomeDestination: () -> Unit
+fun NavGraphBuilder.splashDestination(
+    navigateToWelcomeDestination: () -> Unit,
+    navigateToBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -22,8 +23,9 @@ fun NavGraphBuilder.startDestination(
         popEnterTransition = { enterTransitionZero() },
     ) {
 
-        StartScreen(
-            navigateToWelcomeDestination = navigateToWelcomeDestination
+        SplashScreen(
+            navigateToWelcomeDestination = navigateToWelcomeDestination,
+            navigateToBottomDestination = navigateToBottomDestination
         )
 
     }//end composable

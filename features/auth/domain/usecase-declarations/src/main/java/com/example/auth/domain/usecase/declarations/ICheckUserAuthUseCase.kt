@@ -1,4 +1,4 @@
 package com.example.auth.domain.usecase.declarations
 
-interface ILoginWithFacebookUseCase {
+interface CheckUserAuthUseCase {
 }

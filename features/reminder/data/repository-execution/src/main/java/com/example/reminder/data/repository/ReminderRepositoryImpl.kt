@@ -76,13 +76,13 @@ class ReminderRepositoryImpl(
 
         }//end forEach
 
-        localDatabase.userDao().insert(
-            user = UserEntity(
-                email = "mustafa@gmail.com",
-                password = "12345678",
-                auth = true
-            )
-        )
+//        localDatabase.userDao().insert(
+//            user = UserEntity(
+//                email = "mustafa@gmail.com",
+//                password = "12345678",
+//                auth = true
+//            )
+//        )
 
     }//end storeWeekDays
 

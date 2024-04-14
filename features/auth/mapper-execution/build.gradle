@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+
+    //project
+    //dto declarations
+    implementation(project(':features:auth:domain:dto-declarations'))
+
+    //shared entity declarations
+    implementation(project(':libraries:core:local-data:shared-entities:entity-declarations'))
+
+    //mapper declarations
+    implementation(project(':features:auth:domain:mapper-declarations'))
+
+}

@@ -1,13 +1,14 @@
 package com.example.data.source.remote.data.dto.execution.response.socialUser
 
 
+import com.example.auth.domain.dto.declarations.socialUser.ISocialUserDto
 import com.google.gson.annotations.SerializedName
 
-data class SocialUser(
+data class SocialUserDto(
     @SerializedName("data")
-    val data: Data?,
+    override val data: Data?,
     @SerializedName("error")
-    val error: Boolean?,
+    override val error: Boolean?,
     @SerializedName("message")
-    val message: String?
-)
+    override val message: String?
+) : ISocialUserDto

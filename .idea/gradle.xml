@@ -30,6 +30,7 @@
             <option value="$PROJECT_DIR$/features/auth/domain/repository-declarations" />
             <option value="$PROJECT_DIR$/features/auth/domain/usecase-declarations" />
             <option value="$PROJECT_DIR$/features/auth/domain/usecase-execution" />
+            <option value="$PROJECT_DIR$/features/auth/mapper-execution" />
             <option value="$PROJECT_DIR$/features/auth/presentation" />
             <option value="$PROJECT_DIR$/features/blood-pressure" />
             <option value="$PROJECT_DIR$/features/blood-pressure/data" />

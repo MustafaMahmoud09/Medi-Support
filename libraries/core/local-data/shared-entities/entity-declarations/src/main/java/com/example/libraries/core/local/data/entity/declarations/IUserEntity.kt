@@ -5,11 +5,21 @@ interface IUserEntity {
     //create table columns here
     val id: Long
 
-    val email: String
+    val firstName: String?
 
-    val password: String
+    val lastName: String?
+
+    val email: String?
+
+    val token: String?
+
+    val path: String?
 
     val auth: Boolean
+
+    val remember: Boolean
+
+    val count: Int
 
     val createdAt: Long
 

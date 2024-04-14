@@ -132,6 +132,9 @@ dependencies {
     //setting
     implementation(project(':features:setting:presentation'))
 
+    //response wrapper
+    implementation(project(":libraries:core:remote-database:response-wrapper"))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
@@ -174,5 +177,8 @@ dependencies {
 
     // Splash API
     implementation 'androidx.core:core-splashscreen:1.0.1'
+
+    //facebook sign in
+    implementation 'com.facebook.android:facebook-login:latest.release'
 
 }

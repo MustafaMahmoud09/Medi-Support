@@ -6,29 +6,56 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.auth.presentation.uiElement.components.items.LogoSection
+import com.example.auth.presentation.uiState.viewModel.SplashViewModel
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-import kotlinx.coroutines.delay
+
 
 @Composable
-internal fun StartScreen(
-    navigateToWelcomeDestination: () -> Unit
+internal fun SplashScreen(
+    viewModel: SplashViewModel = hiltViewModel(),
+    navigateToWelcomeDestination: () -> Unit,
+    navigateToBottomDestination: () -> Unit
 ) {
+    //collect screen state here
+    val state = viewModel.state.collectAsState()
 
-    StartContent(
+    SplashContent(
         navigateToWelcomeDestination = navigateToWelcomeDestination
     )
+
+    LaunchedEffect(
+        key1 = state.value.userIsAuth
+    ) {
+
+        if (state.value.userIsAuth != null) {
+
+            //if user is auth navigate to bottom destination
+            if (state.value.userIsAuth!!) {
+                navigateToBottomDestination()
+            }//end if
+            //else navigate to welcome destination
+            else {
+                navigateToWelcomeDestination()
+            }//end else
+
+        }//end if
+
+    }//end LaunchedEffect
 
 }//end StartScreen
 
 @Composable
-private fun StartContent(
+private fun SplashContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     navigateToWelcomeDestination: () -> Unit
@@ -51,7 +78,7 @@ private fun StartContent(
             contentAlignment = Alignment.Center
         ) {
 
-            com.example.auth.presentation.uiElement.components.items.LogoSection(
+            LogoSection(
                 theme = theme,
                 dimen = dimen
             )
@@ -59,14 +86,5 @@ private fun StartContent(
         }//end Box
 
     }//end BaseScreen
-
-    LaunchedEffect(
-        key1 = true
-    ) {
-
-        delay(1000)
-        navigateToWelcomeDestination()
-
-    }//end LaunchedEffect
 
 }//end StartContent

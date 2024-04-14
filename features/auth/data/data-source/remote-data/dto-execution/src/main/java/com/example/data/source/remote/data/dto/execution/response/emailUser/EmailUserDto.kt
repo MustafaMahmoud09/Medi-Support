@@ -1,13 +1,14 @@
 package com.example.data.source.remote.data.dto.execution.response.emailUser
 
 
+import com.example.auth.domain.dto.declarations.emailUser.IEmailUserDto
 import com.google.gson.annotations.SerializedName
 
 data class EmailUserDto(
     @SerializedName("access_token")
-    val accessToken: String?,
+    override val accessToken: String?,
     @SerializedName("token_type")
-    val tokenType: String?,
+    override val tokenType: String?,
     @SerializedName("user")
-    val user: User?
-)
+    override val user: User?
+) : IEmailUserDto

@@ -4,10 +4,13 @@ import com.example.auth.data.repository.execution.AuthRepositoryImpl
 import com.example.auth.data.source.remote.data.requests.AuthRequest
 import com.example.auth.data.source.remote.data.requests.ResetPasswordRequest
 import com.example.auth.domain.repository.declarations.IAuthRepository
+import com.example.database_creator.MediSupportDatabase
+import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -18,12 +21,18 @@ object RepositoriesModule {
     @Singleton
     fun provideAuthRepository(
         authRequest: AuthRequest,
-        resetPasswordRequest: ResetPasswordRequest
+        resetPasswordRequest: ResetPasswordRequest,
+        responseWrapper: ResponseWrapper,
+        localDatabase: MediSupportDatabase,
+        @Named("host") host: String
     ): IAuthRepository {
 
         return AuthRepositoryImpl(
             authRequest = authRequest,
-            resetPasswordRequest = resetPasswordRequest
+            resetPasswordRequest = resetPasswordRequest,
+            responseWrapper = responseWrapper,
+            localDatabase = localDatabase,
+            host = host
         )
 
     }//end provideAuthRepository

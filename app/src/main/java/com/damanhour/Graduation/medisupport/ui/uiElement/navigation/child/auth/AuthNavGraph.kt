@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.login.loginNavGraph
 import com.example.auth.presentation.uiElement.screens.register.registerDestination
 import com.example.auth.presentation.uiElement.screens.start.START_DESTINATION_ROUTE
-import com.example.auth.presentation.uiElement.screens.start.startDestination
+import com.example.auth.presentation.uiElement.screens.start.splashDestination
 import com.example.auth.presentation.uiElement.screens.welcome.welcomeDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
@@ -39,8 +39,9 @@ internal fun NavGraphBuilder.authNavGraph(
         exitTransition = { exitTransition() },
     ) {
         //add destinations to auth nav graph
-        startDestination(
-            navigateToWelcomeDestination = navigateToWelcomeDestination
+        splashDestination(
+            navigateToWelcomeDestination = navigateToWelcomeDestination,
+            navigateToBottomDestination = navigateToBottomDestination
         )
 
         welcomeDestination(
@@ -58,7 +59,8 @@ internal fun NavGraphBuilder.authNavGraph(
         )
 
         registerDestination(
-            popRegisterDestination = popRegisterDestination
+            popRegisterDestination = popRegisterDestination,
+            navigateToBottomDestination = navigateToBottomDestination
         )
 
     }//end navigation

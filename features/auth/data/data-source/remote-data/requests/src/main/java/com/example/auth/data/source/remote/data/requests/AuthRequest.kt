@@ -1,5 +1,7 @@
 package com.example.auth.data.source.remote.data.requests
 
+import com.example.data.source.remote.data.dto.execution.response.emailUser.EmailUserDto
+import com.example.data.source.remote.data.dto.execution.response.socialUser.SocialUserDto
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -24,11 +26,12 @@ interface AuthRequest {
     /***
      * function for make login with social media request on server
      ***/
+    @FormUrlEncoded
     @POST("auth/user/social-login")
-    fun loginWithSocial(
+    suspend fun loginWithSocial(
         @Field("access_provider_token") token: String,
         @Field("provider") provider: String
-    )
+    ): Response<SocialUserDto>
 
 
     /***
@@ -36,10 +39,10 @@ interface AuthRequest {
      ***/
     @FormUrlEncoded
     @POST("auth/user/login")
-    fun loginWithEmail(
+    suspend fun loginWithEmail(
         @Field("email") email: String,
         @Field("password") password: String
-    )
+    ): Response<EmailUserDto>
 
 
 }//end AuthRequest

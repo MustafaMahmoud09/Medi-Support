@@ -36,25 +36,34 @@ dependencies {
     //repository declarations
     implementation(project(":features:auth:domain:repository-declarations"))
 
-    //dto executions
-    implementation(project(":features:auth:data:data-source:remote-data:dto-execution"))
-
-    //repository declarations
-    implementation(project(":features:auth:domain:repository-declarations"))
-
     //requests
     implementation(project(":features:auth:data:data-source:remote-data:requests"))
 
     //dto execution
     implementation(project(":features:auth:data:data-source:remote-data:dto-execution"))
 
+    //dto declarations
+    implementation(project(':features:auth:domain:dto-declarations'))
+
+    //shared entity execution
+    implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
+
     //request status
     implementation(project(":libraries:core:remote-database:request-status"))
+
+    //response wrapper
+    implementation(project(":libraries:core:remote-database:response-wrapper"))
+
+    //database creator
+    implementation(project(':libraries:core:local-data:database-creator'))
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
+    //room database
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

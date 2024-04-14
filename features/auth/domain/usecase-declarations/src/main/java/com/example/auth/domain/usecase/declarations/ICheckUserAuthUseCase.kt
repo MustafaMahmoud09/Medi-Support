@@ -1,4 +1,7 @@
 package com.example.auth.domain.usecase.declarations
 
-interface CheckUserAuthUseCase {
-}
+interface ICheckUserAuthUseCase {
+
+    suspend operator fun invoke(): Boolean
+
+}//end CheckUserAuthUseCase

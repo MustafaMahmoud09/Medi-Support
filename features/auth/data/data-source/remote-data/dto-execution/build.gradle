@@ -32,5 +32,11 @@ android {
 
 dependencies {
 
+    //project
+    //dto declarations
+    implementation(project(':features:auth:domain:dto-declarations'))
+
+    //retrofit
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
 }

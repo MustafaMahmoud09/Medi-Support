@@ -30,7 +30,8 @@ fun NavHostController.popRegisterDestination() {
 }//end popRegisterDestination
 
 fun NavGraphBuilder.registerDestination(
-    popRegisterDestination: () -> Unit
+    popRegisterDestination: () -> Unit,
+    navigateToBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -42,7 +43,8 @@ fun NavGraphBuilder.registerDestination(
     ) {
 
         RegisterScreen(
-            popRegisterDestination = popRegisterDestination
+            popRegisterDestination = popRegisterDestination,
+            navigateToBottomDestination = navigateToBottomDestination
         )
 
     }//end composable

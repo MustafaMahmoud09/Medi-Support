@@ -1,3 +1,5 @@
 package com.example.auth.presentation.uiState.state
 
-internal class WelcomeUiState()
+data class SplashUiState(
+    val userIsAuth: Boolean? = null,
+)

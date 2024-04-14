@@ -20,6 +20,12 @@ dependencies {
     //repository declarations
     implementation(project(':features:auth:domain:repository-declarations'))
 
+    //shared entities
+    implementation(project(':libraries:core:local-data:shared-entities:entity-declarations'))
+
+    //dto declarations
+    implementation(project(':features:auth:domain:dto-declarations'))
+
     //kotlin flow dependency
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
 

@@ -3,7 +3,7 @@ package com.example.auth.presentation.uiState.viewModel
 import com.example.auth.domain.usecase.declarations.IResetPasswordUseCase
 import com.example.auth.domain.usecase.declarations.ISendUserEmailUseCase
 import com.example.auth.domain.usecase.declarations.IVerifyCodeUseCase
-import com.example.auth.presentation.uiState.state.ForgottenEventStatus
+import com.example.auth.presentation.uiState.state.EventStatus
 import com.example.auth.presentation.uiState.state.ForgottenUiState
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.sharedui.uiState.viewModel.BaseViewModel
@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -153,109 +154,124 @@ class ForgottenViewModel @Inject constructor(
                     ).collectLatest { status ->
 
                         //if send email status equal success
-                        if (status is Status.Success) {
+                        when (status) {
 
-                            //if send email status equal 200
-                            if (status.toData() == 200) {
+                            is Status.Success -> {
 
-                                //update send email event status to success here
-                                _state.update {
-                                    it.copy(
-                                        sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
-                                            success = true,
-                                            loading = false,
-                                            internetError = false,
-                                            serverError = false,
-                                            dataNotValid = false,
-                                            dataNotFound = false
-                                        )
-                                    )
-                                }//end update
+                                //if send email status equal 200
+                                when (status.toData()?.statusCode) {
+
+                                    200 -> {
+
+                                        //update send email event status to success here
+                                        _state.update {
+                                            it.copy(
+                                                sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
+                                                    success = true,
+                                                    loading = false,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                    //end if
+
+                                    //if send email equal 404
+                                    404, 400 -> {
+
+                                        //update send email event status to account not found
+                                        _state.update {
+                                            it.copy(
+                                                sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    dataNotValid = !state.value.sendEmailEventStatus.dataNotValid,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                    //end else if
+
+                                    //if send email equal 404
+                                    500 -> {
+
+                                        //update send email event status to server error
+                                        _state.update {
+                                            it.copy(
+                                                sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.sendEmailEventStatus.serverError,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                }//end else if
 
                             }//end if
 
-                            //if send email equal 404
-                            else if (status.toData() == 404) {
+                            //if send email status equal loading
+                            is Status.Loading -> {
 
-                                //update send email event status to account not found
+                                //update send email event status to loading
                                 _state.update {
                                     it.copy(
                                         sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
                                             success = false,
-                                            loading = false,
-                                            internetError = false,
-                                            serverError = false,
-                                            dataNotValid = true,
-                                            dataNotFound = false
+                                            loading = true,
                                         )
                                     )
                                 }//end update
 
                             }//end else if
 
-                            //if send email equal 404
-                            else if (status.toData() == 500) {
+                            //if send email status equal error
+                            is Status.Error -> {
 
-                                //update send email event status to server error
-                                _state.update {
-                                    it.copy(
-                                        sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
-                                            success = false,
-                                            loading = false,
-                                            internetError = false,
-                                            serverError = true,
-                                            dataNotValid = false,
-                                            dataNotFound = false
-                                        )
-                                    )
-                                }//end update
+                                when (status.status) {
 
-                            }//end else if
+                                    400 -> {
 
-                        }//end if
+                                        //update send email event status to account not found
+                                        _state.update {
+                                            it.copy(
+                                                sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    internetError = !state.value.sendEmailEventStatus.internetError,
+                                                )
+                                            )
+                                        }//end update
 
-                        //if send email status equal loading
-                        else if (status is Status.Loading) {
+                                    }//end internet error case
 
-                            //update send email event status to loading
-                            _state.update {
-                                it.copy(
-                                    sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
-                                        success = false,
-                                        loading = true,
-                                        internetError = false,
-                                        serverError = false,
-                                        dataNotValid = false,
-                                        dataNotFound = false
-                                    )
-                                )
-                            }//end update
+                                    500 -> {
 
-                        }//end else if
+                                        //update send email event status to account not found
+                                        _state.update {
+                                            it.copy(
+                                                sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.sendEmailEventStatus.serverError,
+                                                )
+                                            )
+                                        }//end update
 
-                        //if send email status equal error
-                        else if (status is Status.Error) {
+                                    }//end server error case
 
-                            //update send email event status to account not found
-                            _state.update {
-                                it.copy(
-                                    sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
-                                        success = false,
-                                        loading = false,
-                                        internetError = true,
-                                        serverError = false,
-                                        dataNotValid = false,
-                                        dataNotFound = false
-                                    )
-                                )
-                            }//end update
+                                }//end when
+
+                            }
 
                         }//end else if
 
                     }//end sendUserEmailUseCase
 
                 }//end coroutine builder
-                catch (ex: Exception) {
+                catch (ex: IOException) {
 
                     //update send email event status to account not found
                     _state.update {
@@ -263,10 +279,7 @@ class ForgottenViewModel @Inject constructor(
                             sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
                                 success = false,
                                 loading = false,
-                                internetError = true,
-                                serverError = false,
-                                dataNotValid = false,
-                                dataNotFound = false
+                                internetError = !state.value.sendEmailEventStatus.internetError,
                             )
                         )
                     }//end update
@@ -286,10 +299,7 @@ class ForgottenViewModel @Inject constructor(
                     sendEmailEventStatus = state.value.sendEmailEventStatus.copy(
                         success = false,
                         loading = false,
-                        internetError = false,
-                        serverError = false,
-                        dataNotValid = false,
-                        dataNotFound = true
+                        dataNotFound = !state.value.sendEmailEventStatus.dataNotFound
                     )
                 )
             }//end update
@@ -330,119 +340,128 @@ class ForgottenViewModel @Inject constructor(
 
                         //if verify code status is success
                         //execute body code
-                        if (status is Status.Success) {
+                        when (status) {
 
-                            //if verify code status equal 200
-                            //update event status to success
-                            if (status.toData() == 200) {
+                            is Status.Success -> {
 
-                                _state.update {
-                                    it.copy(
-                                        verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
-                                            success = true,
-                                            loading = false,
-                                            dataNotValid = false,
-                                            internetError = false,
-                                            serverError = false,
-                                            dataNotFound = false
-                                        )
-                                    )
-                                }//end update
+                                //if verify code status equal 200
+                                //update event status to success
+                                when (status.toData()?.statusCode) {
+                                    200 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
+                                                    success = true,
+                                                    loading = false,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                    //end if
+
+                                    //if verify code status equal 422
+                                    //update event status to code not valid
+                                    422 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    dataNotValid = !state.value.verifyCodeEventStatus.dataNotValid,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                    //end if
+
+                                    //if verify code status equal 500
+                                    //update event status to server error
+                                    500 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = state.value.verifyCodeEventStatus.serverError,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                }//end if
 
                             }//end if
 
-                            //if verify code status equal 422
-                            //update event status to code not valid
-                            if (status.toData() == 422) {
+                            //if verify code status is loading
+                            //update event status to loading
+                            is Status.Loading -> {
 
                                 _state.update {
                                     it.copy(
                                         verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
                                             success = false,
-                                            loading = false,
-                                            dataNotValid = true,
-                                            internetError = false,
-                                            serverError = false,
-                                            dataNotFound = false
+                                            loading = true,
                                         )
                                     )
                                 }//end update
 
-                            }//end if
+                            }//end else if
 
-                            //if verify code status equal 500
-                            //update event status to server error
-                            if (status.toData() == 500) {
+                            //if verify code status is error
+                            //update event status to error
+                            is Status.Error -> {
 
-                                _state.update {
-                                    it.copy(
-                                        verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
-                                            success = false,
-                                            loading = false,
-                                            dataNotValid = false,
-                                            internetError = false,
-                                            serverError = true,
-                                            dataNotFound = false
-                                        )
-                                    )
-                                }//end update
+                                when (status.status) {
 
-                            }//end if
+                                    400 -> {
 
-                        }//end if
+                                        _state.update {
+                                            it.copy(
+                                                verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    internetError = !state.value.verifyCodeEventStatus.internetError,
+                                                )
+                                            )
+                                        }//end update
 
-                        //if verify code status is loading
-                        //update event status to loading
-                        else if (status is Status.Loading) {
+                                    }//end internet error case
 
-                            _state.update {
-                                it.copy(
-                                    verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
-                                        success = false,
-                                        loading = true,
-                                        dataNotValid = false,
-                                        internetError = false,
-                                        serverError = false,
-                                        dataNotFound = false
-                                    )
-                                )
-                            }//end update
+                                    500 -> {
 
-                        }//end else if
+                                        _state.update {
+                                            it.copy(
+                                                verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.verifyCodeEventStatus.serverError,
+                                                )
+                                            )
+                                        }//end update
 
-                        //if verify code status is error
-                        //update event status to error
-                        else if (status is Status.Error) {
+                                    }//end server error case
 
-                            _state.update {
-                                it.copy(
-                                    verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
-                                        success = false,
-                                        loading = false,
-                                        dataNotValid = false,
-                                        internetError = true,
-                                        serverError = false,
-                                        dataNotFound = false
-                                    )
-                                )
-                            }//end update
+                                }//end when
 
+                            }
                         }//end else if
 
                     }//end collect latest
 
                 }//end try
-                catch (ex: Exception) {
+                catch (ex: IOException) {
 
                     _state.update {
                         it.copy(
                             verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
                                 success = false,
                                 loading = false,
-                                dataNotValid = false,
-                                internetError = true,
-                                serverError = false,
-                                dataNotFound = false
+                                internetError = !state.value.verifyCodeEventStatus.internetError,
                             )
                         )
                     }//end update
@@ -461,10 +480,7 @@ class ForgottenViewModel @Inject constructor(
                     verifyCodeEventStatus = state.value.verifyCodeEventStatus.copy(
                         success = false,
                         loading = false,
-                        dataNotValid = false,
-                        internetError = false,
-                        serverError = false,
-                        dataNotFound = true
+                        dataNotFound = !state.value.verifyCodeEventStatus.dataNotFound
                     )
                 )
             }//end update
@@ -503,119 +519,130 @@ class ForgottenViewModel @Inject constructor(
 
                         //if verify code status is success
                         //execute body code
-                        if (status is Status.Success) {
+                        when (status) {
 
-                            //if verify code status equal 200
-                            //update event status to success
-                            if (status.toData() == 200) {
+                            is Status.Success -> {
 
-                                _state.update {
-                                    it.copy(
-                                        resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
-                                            success = true,
-                                            loading = false,
-                                            dataNotValid = false,
-                                            internetError = false,
-                                            serverError = false,
-                                            dataNotFound = false
-                                        ),
-                                    )
-                                }//end update
+                                //if verify code status equal 200
+                                //update event status to success
+                                when (status.toData()?.statusCode) {
+                                    200 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                newPasswordKey = "",
+                                                confirmNewPasswordKey = "",
+                                                resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
+                                                    success = true,
+                                                    loading = false,
+                                                ),
+                                            )
+                                        }//end update
+
+                                    }
+                                    //end if
+
+                                    //if verify code status equal 422
+                                    //update event status to code not valid
+                                    422 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    dataNotValid = !state.value.resetPasswordEventStatus.dataNotValid,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                    //end if
+
+                                    //if verify code status equal 500
+                                    //update event status to server error
+                                    500 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.resetPasswordEventStatus.serverError,
+                                                )
+                                            )
+                                        }//end update
+
+                                    }
+                                }//end if
 
                             }//end if
 
-                            //if verify code status equal 422
-                            //update event status to code not valid
-                            if (status.toData() == 422) {
+                            //if verify code status is loading
+                            //update event status to loading
+                            is Status.Loading -> {
 
                                 _state.update {
                                     it.copy(
                                         resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
                                             success = false,
-                                            loading = false,
-                                            dataNotValid = true,
-                                            internetError = false,
-                                            serverError = false,
-                                            dataNotFound = false
+                                            loading = true,
                                         )
                                     )
                                 }//end update
 
-                            }//end if
+                            }//end else if
 
-                            //if verify code status equal 500
-                            //update event status to server error
-                            if (status.toData() == 500) {
+                            //if verify code status is error
+                            //update event status to error
+                            is Status.Error -> {
 
-                                _state.update {
-                                    it.copy(
-                                        resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
-                                            success = false,
-                                            loading = false,
-                                            dataNotValid = false,
-                                            internetError = false,
-                                            serverError = true,
-                                            dataNotFound = false
-                                        )
-                                    )
-                                }//end update
+                                when (status.status) {
 
-                            }//end if
+                                    400 -> {
 
-                        }//end if
+                                        _state.update {
+                                            it.copy(
+                                                resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    internetError = !state.value.resetPasswordEventStatus.internetError
+                                                )
+                                            )
+                                        }//end update
 
-                        //if verify code status is loading
-                        //update event status to loading
-                        else if (status is Status.Loading) {
+                                    }//end internet error case
 
-                            _state.update {
-                                it.copy(
-                                    resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
-                                        success = false,
-                                        loading = true,
-                                        dataNotValid = false,
-                                        internetError = false,
-                                        serverError = false,
-                                        dataNotFound = false
-                                    )
-                                )
-                            }//end update
+                                    500 -> {
 
-                        }//end else if
+                                        _state.update {
+                                            it.copy(
+                                                resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.resetPasswordEventStatus.serverError
+                                                )
+                                            )
+                                        }//end update
 
-                        //if verify code status is error
-                        //update event status to error
-                        else if (status is Status.Error) {
+                                    }//end server error case
 
-                            _state.update {
-                                it.copy(
-                                    resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
-                                        success = false,
-                                        loading = false,
-                                        dataNotValid = false,
-                                        internetError = true,
-                                        serverError = false,
-                                        dataNotFound = false
-                                    )
-                                )
-                            }//end update
+                                }//end when
 
+                            }
                         }//end else if
 
                     }//end collectLatest
 
                 }//end try
-                catch (ex: Exception) {
+                catch (ex: IOException) {
 
                     _state.update {
                         it.copy(
                             resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
                                 success = false,
                                 loading = false,
-                                dataNotValid = false,
-                                internetError = true,
-                                serverError = false,
-                                dataNotFound = false
+                                internetError = !state.value.resetPasswordEventStatus.internetError,
                             )
                         )
                     }//end update
@@ -634,10 +661,7 @@ class ForgottenViewModel @Inject constructor(
                     resetPasswordEventStatus = state.value.resetPasswordEventStatus.copy(
                         success = false,
                         loading = false,
-                        dataNotValid = false,
-                        internetError = false,
-                        serverError = false,
-                        dataNotFound = true
+                        dataNotFound = !state.value.resetPasswordEventStatus.dataNotFound
                     )
                 )
             }//end update
@@ -660,9 +684,9 @@ class ForgottenViewModel @Inject constructor(
                 fourthCodeKey = "",
                 newPasswordKey = "",
                 confirmNewPasswordKey = "",
-                sendEmailEventStatus = ForgottenEventStatus(),
-                verifyCodeEventStatus = ForgottenEventStatus(),
-                resetPasswordEventStatus = ForgottenEventStatus()
+                sendEmailEventStatus = EventStatus(),
+                verifyCodeEventStatus = EventStatus(),
+                resetPasswordEventStatus = EventStatus()
             )
         }//end update
 
@@ -670,7 +694,11 @@ class ForgottenViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        onClearedForgottenFeatureState()
+
+        if (state.value.resetPasswordEventStatus.success) {
+            onClearedForgottenFeatureState()
+        }//end if
+
     }//end onCleared
 
 }//end ForgottenViewModel

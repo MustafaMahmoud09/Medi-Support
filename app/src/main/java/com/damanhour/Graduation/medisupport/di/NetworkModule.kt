@@ -1,5 +1,6 @@
 package com.damanhour.Graduation.medisupport.di
 
+import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import com.example.libraries.core.remote.database.interceptors.JsonFormatInterceptor
 import dagger.Module
 import dagger.Provides
@@ -134,8 +135,27 @@ object NetworkModule {
     @Named("base_url")
     fun provideBaseUrl(): String {
 
-        return "https://97cd-154-183-39-103.ngrok-free.app/api/"
+        return "https://3f88-154-183-55-234.ngrok-free.app/api/"
 
     }//end provideBaseUrl
+
+
+    @Provides
+    @Singleton
+    @Named("host")
+    fun provideHost(): String {
+
+        return "0566-154-183-55-234.ngrok-free.app"
+
+    }//end provideBaseUrl
+
+
+    @Provides
+    @Singleton
+    fun provideResponseWrapper(): ResponseWrapper {
+
+        return ResponseWrapper()
+
+    }//end provideResponseWrapper
 
 }//end NetworkModule

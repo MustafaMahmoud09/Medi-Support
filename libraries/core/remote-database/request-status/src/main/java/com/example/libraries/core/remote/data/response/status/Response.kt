@@ -1,8 +1,7 @@
-package com.example.data.source.remote.data.dto.execution.response
+package com.example.libraries.core.remote.data.response.status
 
-import com.example.auth.domain.dto.declarations.IResponse
 
 data class Response<T>(
-    override val statusCode: Int,
-    override val body: T?
-) : IResponse<T>
+    val statusCode: Int,
+    val body: T?
+)

@@ -28,4 +28,7 @@ dependencies {
     //repository declarations
     implementation(project(':features:article:domain:repository-declarations'))
 
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
 }

@@ -39,6 +39,9 @@ dependencies {
     //domain model
     implementation(project(':features:article:domain:domain-model'))
 
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
     //pagination
     implementation "androidx.paging:paging-runtime:$paging_version"
 

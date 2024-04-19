@@ -1,6 +1,6 @@
 package com.example.libraries.core.remote.data.response.wrapper
 
-import com.example.libraries.core.remote.data.response.status.Response
+import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -11,7 +11,7 @@ class ResponseWrapper {
 
     inline fun <reified PT, CT> wrapper(
         crossinline request: suspend () -> retrofit2.Response<CT>
-    ): Flow<Status<Response<PT>>> {
+    ): Flow<Status<EffectResponse<PT>>> {
 
         return channelFlow {
 
@@ -29,11 +29,11 @@ class ResponseWrapper {
                 //emit success status
                 send(
                     element = Status.Success(
-                        data = Response(
+                        data = EffectResponse(
                             statusCode = response.code(),
                             body = response.body()
                         )
-                    ) as Status<Response<PT>>
+                    ) as Status<EffectResponse<PT>>
                 )
 
             }//end try

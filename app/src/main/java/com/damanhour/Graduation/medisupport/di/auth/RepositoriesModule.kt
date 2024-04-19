@@ -6,6 +6,7 @@ import com.example.auth.data.source.remote.data.requests.ResetPasswordRequest
 import com.example.auth.domain.repository.declarations.IAuthRepository
 import com.example.database_creator.MediSupportDatabase
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
+import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +25,7 @@ object RepositoriesModule {
         resetPasswordRequest: ResetPasswordRequest,
         responseWrapper: ResponseWrapper,
         localDatabase: MediSupportDatabase,
-        @Named("host") host: String
+        sharedPreferencesAccessObject: SharedPreferencesAccessObject
     ): IAuthRepository {
 
         return AuthRepositoryImpl(
@@ -32,7 +33,7 @@ object RepositoriesModule {
             resetPasswordRequest = resetPasswordRequest,
             responseWrapper = responseWrapper,
             localDatabase = localDatabase,
-            host = host
+            sharedPreferencesAccessObject = sharedPreferencesAccessObject
         )
 
     }//end provideAuthRepository

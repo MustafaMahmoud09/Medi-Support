@@ -34,6 +34,12 @@ android {
 
 dependencies {
 
+    //shared preferences access object
+    implementation(project(":libraries:core:local-data:shared-preferences-access-object"))
+
+    //shared keys preferences
+    implementation(project(":libraries:core:local-data:shared-keys-preferences"))
+
     //interceptor
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
 

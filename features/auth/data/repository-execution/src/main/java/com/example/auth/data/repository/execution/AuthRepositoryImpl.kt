@@ -9,10 +9,11 @@ import com.example.data.source.remote.data.dto.execution.response.emailUser.Emai
 import com.example.data.source.remote.data.dto.execution.response.socialUser.SocialUserDto
 import com.example.database_creator.MediSupportDatabase
 import com.example.libraries.core.local.data.entity.declarations.IUserEntity
-import com.example.libraries.core.remote.data.response.status.Response
+import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
+import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
 import kotlinx.coroutines.flow.Flow
 
 class AuthRepositoryImpl(
@@ -20,7 +21,7 @@ class AuthRepositoryImpl(
     private val resetPasswordRequest: ResetPasswordRequest,
     private val responseWrapper: ResponseWrapper,
     private val localDatabase: MediSupportDatabase,
-    private val host: String
+    private val sharedPreferencesAccessObject: SharedPreferencesAccessObject
 ) : IAuthRepository {
 
     //function for make register request
@@ -30,7 +31,7 @@ class AuthRepositoryImpl(
         email: String,
         password: String,
         confirmPassword: String
-    ): Flow<Status<Response<Any>>> {
+    ): Flow<Status<EffectResponse<Any>>> {
 
         //execute register request here
         return responseWrapper.wrapper<Any, Any> {
@@ -50,7 +51,7 @@ class AuthRepositoryImpl(
     override suspend fun loginWithEmail(
         email: String,
         password: String
-    ): Flow<Status<Response<IEmailUserDto>>> {
+    ): Flow<Status<EffectResponse<IEmailUserDto>>> {
 
         //execute login with email request here
         return responseWrapper.wrapper<IEmailUserDto, EmailUserDto> {
@@ -67,7 +68,7 @@ class AuthRepositoryImpl(
     override suspend fun loginWithSocial(
         accessToken: String,
         provider: String
-    ): Flow<Status<Response<ISocialUserDto>>> {
+    ): Flow<Status<EffectResponse<ISocialUserDto>>> {
 
         //execute login with social request here
         return responseWrapper.wrapper<ISocialUserDto, SocialUserDto> {
@@ -93,6 +94,11 @@ class AuthRepositoryImpl(
         val user = localDatabase.userDao().getUserByEmail(
             email = email
         ).isNotEmpty()
+
+        //set access token in shared preferences here
+        sharedPreferencesAccessObject.accessTokenManager().setAccessToken(
+            value = token
+        )
 
         //if user exist update user data to default value
         if (user) {
@@ -137,7 +143,7 @@ class AuthRepositoryImpl(
     //function for send email for reset user password
     override suspend fun sendEmail(
         email: String,
-    ): Flow<Status<Response<Any>>> {
+    ): Flow<Status<EffectResponse<Any>>> {
 
         //execute send email request here
         return responseWrapper.wrapper<Any, Any> {
@@ -152,7 +158,7 @@ class AuthRepositoryImpl(
     override suspend fun verifyCode(
         email: String,
         code: String
-    ): Flow<Status<Response<Any>>> {
+    ): Flow<Status<EffectResponse<Any>>> {
 
         //execute verify code request here
         return responseWrapper.wrapper<Any, Any> {
@@ -169,7 +175,7 @@ class AuthRepositoryImpl(
         email: String,
         password: String,
         passwordConfirmation: String
-    ): Flow<Status<Response<Any>>> {
+    ): Flow<Status<EffectResponse<Any>>> {
 
         //execute reset password request here
         return responseWrapper.wrapper<Any, Any> {

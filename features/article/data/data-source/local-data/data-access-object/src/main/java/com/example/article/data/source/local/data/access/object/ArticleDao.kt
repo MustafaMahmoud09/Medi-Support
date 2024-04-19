@@ -50,4 +50,13 @@ interface ArticleDao {
     )
     suspend fun selectPageArticle(pageSize: Int, page: Int): List<ArticleEntity>
 
+
+    //TODO:: FUNCTION FOR PROVIDE ARTICLE RECORD COUNT
+    @Query(
+        "SELECT COUNT(*) FROM ${
+            ArticleInfo.ARTICLE_TABLE_NAME
+        }"
+    )
+    suspend fun selectArticleCount(): Long
+
 }//end ArticleDao

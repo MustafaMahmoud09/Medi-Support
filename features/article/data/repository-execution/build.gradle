@@ -59,6 +59,9 @@ dependencies {
     //response wrapper
     implementation(project(":libraries:core:remote-database:response-wrapper"))
 
+    //data access object
+    implementation(project(":features:article:data:data-source:local-data:data-access-object"))
+
     //database creator
     implementation(project(':libraries:core:local-data:database-creator'))
 

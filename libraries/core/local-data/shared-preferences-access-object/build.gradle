@@ -36,4 +36,6 @@ dependencies {
     //reminder
     implementation(project(":features:reminder:data:data-source:shared-preferences"))
 
+    //shared keys
+    implementation(project(":libraries:core:local-data:shared-keys-preferences"))
 }

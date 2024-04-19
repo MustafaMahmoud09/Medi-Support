@@ -1,9 +1,12 @@
 package com.example.libraries.core.remote.database.interceptors
 
+import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthorizationInterceptor() : Interceptor {
+class AuthorizationInterceptor(
+    private val sharedPreferencesAccessObject: SharedPreferencesAccessObject
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
@@ -13,7 +16,7 @@ class AuthorizationInterceptor() : Interceptor {
             .newBuilder()
             .addHeader(
                 "Authorization",
-                ""
+                "Bearer ${sharedPreferencesAccessObject.accessTokenManager().getAccessToken()}"
             ).build()
 
         //return server response

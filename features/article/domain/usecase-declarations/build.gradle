@@ -13,4 +13,6 @@ dependencies {
     //domain model
     implementation(project(':features:article:domain:domain-model'))
 
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
 }

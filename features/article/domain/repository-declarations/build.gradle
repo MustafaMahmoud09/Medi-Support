@@ -16,4 +16,7 @@ dependencies {
     //entity declaration
     implementation(project(':features:article:domain:entity-declarations'))
 
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
 }

@@ -41,6 +41,7 @@ dependencies {
     //article
     implementation(project(':features:article:data:data-source:local-data:entity-execution'))
     implementation(project(':features:article:data:data-source:local-data:data-access-object'))
+    implementation(project(':features:article:domain:entity-declarations'))
 
     //shared-entity
     implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))

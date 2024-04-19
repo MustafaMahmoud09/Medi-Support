@@ -24,7 +24,7 @@ import com.example.reminder.data.source.entity.execution.entities.reminder_date.
         ReminderDateEntity::class,
         ArticleEntity::class
     ],
-    version = 3
+    version = 1
 )
 @TypeConverters(Convertors::class)
 abstract class MediSupportDatabase : RoomDatabase() {

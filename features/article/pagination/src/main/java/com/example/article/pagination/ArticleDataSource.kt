@@ -9,17 +9,6 @@ class ArticleDataSource(
     private val getPageArticlesUseCase: IGetPageArticlesUseCase,
 ) : PagingSource<Int, TitleArticleModel>() {
 
-    override fun getRefreshKey(
-        state: PagingState<Int, TitleArticleModel>
-    ): Int? {
-
-        return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-        }
-
-    }//end getRefreshKey
-
     override suspend fun load(
         params: LoadParams<Int>
     ): LoadResult<Int, TitleArticleModel> {
@@ -40,9 +29,9 @@ class ArticleDataSource(
 
             //return current page here
             LoadResult.Page(
-                data = data,
+                data = data.body ?: emptyList(),
                 prevKey = if (currentPageNumber == 1) null else currentPageNumber.minus(1),
-                nextKey = if (data.size <= pageSize) null else currentPageNumber.plus(1)
+                nextKey = if (data.lastPageNumber == currentPageNumber) null else currentPageNumber.plus(1)
             )
 
         }//end try
@@ -56,5 +45,11 @@ class ArticleDataSource(
         }//end catch
 
     }//end load
+
+    override fun getRefreshKey(
+        state: PagingState<Int, TitleArticleModel>
+    ): Int? {
+        return state.anchorPosition
+    }//end getRefreshKey
 
 }//end RemindersDataSource

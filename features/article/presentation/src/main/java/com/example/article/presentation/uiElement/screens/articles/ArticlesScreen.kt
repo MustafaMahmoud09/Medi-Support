@@ -116,22 +116,24 @@ private fun ArticlesContent(
                 animationSpec = tween(
                     durationMillis = 50
                 )
-            )
+            ),
+            modifier = Modifier
+                .constrainAs(articlesId) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(
+                        backButtonId.bottom,
+                        dimen.dimen_2.dp
+                    )
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
         ) {
 
             LazyColumn(
                 modifier = Modifier
-                    .constrainAs(articlesId) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        top.linkTo(
-                            backButtonId.bottom,
-                            dimen.dimen_2.dp
-                        )
-                        bottom.linkTo(parent.bottom)
-                        width = Dimension.fillToConstraints
-                        height = Dimension.fillToConstraints
-                    },
+                    .fillMaxSize(),
                 contentPadding = PaddingValues(
                     start = dimen.dimen_2.dp,
                     end = dimen.dimen_2.dp,

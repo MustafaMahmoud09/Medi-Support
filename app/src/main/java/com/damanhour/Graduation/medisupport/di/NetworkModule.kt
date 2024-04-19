@@ -3,6 +3,7 @@ package com.damanhour.Graduation.medisupport.di
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import com.example.libraries.core.remote.database.interceptors.AuthorizationInterceptor
 import com.example.libraries.core.remote.database.interceptors.JsonFormatInterceptor
+import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,96 +22,21 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Named("retrofit_without_token")
-    fun provideRetrofitWithoutToken(
-        @Named("base_url") baseUrl: String,
-        converter: GsonConverterFactory,
-        @Named("time_out_client") timeOutClient: OkHttpClient,
-        @Named("json_format_interceptor_client") jsonFormatClient: OkHttpClient
-    ): Retrofit {
+    fun provideGsonConverterFactory(): GsonConverterFactory {
 
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-//            .client(timeOutClient)
-            .client(jsonFormatClient)
-            .addConverterFactory(converter)
-            .build()
+        return GsonConverterFactory.create()
 
-    }//end provideRetrofitWithoutToken
-
+    }//end provideGsonConvertorFactory
 
     @Provides
     @Singleton
-    @Named("retrofit_with_token")
-    fun provideRetrofitWithToken(
-        @Named("base_url") baseUrl: String,
-        converter: GsonConverterFactory,
-        @Named("auth_interceptor_client") authInterceptorClient: OkHttpClient,
-        @Named("time_out_client") timeOutClient: OkHttpClient,
-        @Named("json_format_interceptor_client") jsonFormatClient: OkHttpClient
-    ): Retrofit {
+    @Named("base_url")
+    fun provideBaseUrl(): String {
 
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(converter)
-            .client(authInterceptorClient)
-//            .client(timeOutClient)
-            .client(jsonFormatClient)
-            .build()
+        return "https://2fab-197-63-228-175.ngrok-free.app/api/"
 
-    }//end provideRetrofitWithToken
+    }//end provideBaseUrl
 
-
-    @Provides
-    @Singleton
-    @Named("time_out_client")
-    fun provideTimeOutClient(): OkHttpClient {
-
-        return OkHttpClient.Builder()
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .followRedirects(false)
-            .build()
-
-    }//end provideTimeOutClient
-
-
-    @Provides
-    @Singleton
-    @Named("auth_interceptor_client")
-    fun provideAuthInterceptorClient(
-        @Named("token_interceptor") interceptor: Interceptor
-    ): OkHttpClient {
-
-        return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
-
-    }//end provideOkhttpClient
-
-    @Provides
-    @Singleton
-    @Named("token_interceptor")
-    fun provideAuthInterceptor(): Interceptor {
-
-        return AuthorizationInterceptor()
-
-    }//end provideAuthInterceptor
-
-
-    @Provides
-    @Singleton
-    @Named("json_format_interceptor_client")
-    fun provideJsonFormatInterceptorClient(
-        @Named("json_format_interceptor") interceptor: Interceptor
-    ): OkHttpClient {
-
-        return OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
-
-    }//end provideOkhttpClient
 
     @Provides
     @Singleton
@@ -124,31 +50,85 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGsonConverterFactory(): GsonConverterFactory {
+    @Named("retrofit_without_token")
+    fun provideRetrofitWithoutToken(
+        @Named("base_url") baseUrl: String,
+        converter: GsonConverterFactory,
+        @Named("json_format_interceptor_client") jsonFormatClient: OkHttpClient
+    ): Retrofit {
 
-        return GsonConverterFactory.create()
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(jsonFormatClient)
+            .addConverterFactory(converter)
+            .build()
 
-    }//end provideGsonConvertorFactory
+    }//end provideRetrofitWithoutToken
+
+    @Provides
+    @Singleton
+    @Named("json_format_interceptor_client")
+    fun provideJsonFormatInterceptorClient(
+        @Named("json_format_interceptor") interceptor: Interceptor
+    ): OkHttpClient {
+
+        return OkHttpClient.Builder()
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .build()
+
+    }//end provideOkhttpClient
 
 
     @Provides
     @Singleton
-    @Named("base_url")
-    fun provideBaseUrl(): String {
+    @Named("retrofit_with_token")
+    fun provideRetrofitWithToken(
+        @Named("base_url") baseUrl: String,
+        converter: GsonConverterFactory,
+        @Named("auth_interceptor_client") authInterceptorClient: OkHttpClient,
+    ): Retrofit {
 
-        return "https://3f0f-154-183-33-48.ngrok-free.app/api/"
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(authInterceptorClient)
+            .addConverterFactory(converter)
+            .build()
 
-    }//end provideBaseUrl
-
+    }//end provideRetrofitWithToken
 
     @Provides
     @Singleton
-    @Named("host")
-    fun provideHost(): String {
+    @Named("auth_interceptor_client")
+    fun provideAuthInterceptorClient(
+        @Named("token_interceptor") authInterceptor: Interceptor,
+        @Named("json_format_interceptor") jsonInterceptor: Interceptor
+    ): OkHttpClient {
 
-        return "423d-197-63-203-14.ngrok-free.app"
+        return OkHttpClient.Builder()
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(authInterceptor)
+            .addInterceptor(jsonInterceptor)
+            .build()
 
-    }//end provideBaseUrl
+    }//end provideOkhttpClient
+
+    @Provides
+    @Singleton
+    @Named("token_interceptor")
+    fun provideAuthInterceptor(
+        sharedPreferencesAccessObject: SharedPreferencesAccessObject
+    ): Interceptor {
+
+        return AuthorizationInterceptor(
+            sharedPreferencesAccessObject = sharedPreferencesAccessObject
+        )
+
+    }//end provideAuthInterceptor
 
 
     @Provides

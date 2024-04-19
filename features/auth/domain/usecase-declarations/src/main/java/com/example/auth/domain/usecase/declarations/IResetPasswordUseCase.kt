@@ -1,6 +1,6 @@
 package com.example.auth.domain.usecase.declarations
 
-import com.example.libraries.core.remote.data.response.status.Response
+import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import kotlinx.coroutines.flow.Flow
 
@@ -10,6 +10,6 @@ interface IResetPasswordUseCase {
         email: String,
         password: String,
         passwordConfirmation: String
-    ): Flow<Status<Response<Any>>>
+    ): Flow<Status<EffectResponse<Any>>>
 
 }//end IResetPasswordUseCase

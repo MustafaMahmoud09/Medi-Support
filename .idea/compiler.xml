@@ -228,6 +228,9 @@
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations.main" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations.test" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-execution" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-keys-preferences" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-keys-preferences.main" target="17" />
+      <module name="MediSupport.libraries.core.local-data.shared-keys-preferences.test" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-preferences-access-object" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-preferences-manager" target="17" />
       <module name="MediSupport.libraries.core.local-datas" target="17" />

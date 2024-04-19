@@ -159,6 +159,7 @@
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities/entity-declarations" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-entities/entity-execution" />
+            <option value="$PROJECT_DIR$/libraries/core/local-data/shared-keys-preferences" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-preferences-access-object" />
             <option value="$PROJECT_DIR$/libraries/core/local-data/shared-preferences-manager" />
             <option value="$PROJECT_DIR$/libraries/core/remote-database" />

@@ -11,6 +11,7 @@ import com.example.article.domain.mapper.declarations.child.IArticleDtoToArticle
 import com.example.artocle.domain.repository.declarations.IArticleRepository
 import com.example.database_creator.MediSupportDatabase
 import com.example.libraries.core.remote.data.response.status.Status
+import com.example.libraries.core.remote.data.response.status.UnEffectResponse
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import kotlinx.coroutines.flow.collectLatest
 
@@ -25,7 +26,9 @@ class ArticleRepositoryImpl(
     override suspend fun getPageArticles(
         page: Int,
         pageSize: Int
-    ): List<IArticleEntity> {
+    ): UnEffectResponse<List<IArticleEntity>> {
+
+        var lastPage = 0
 
         //make request on server here
         //collect and handle response here
@@ -43,7 +46,7 @@ class ArticleRepositoryImpl(
                     //process is success
                     if (status.toData()?.statusCode == 200) {
                         //make cache article in local database here
-                        cacheArticles(status.toData()!!.body)
+                        lastPage = cacheArticles(status.toData()!!.body)
                     }//end if
                     return@collectLatest
                 }//end Success
@@ -59,16 +62,32 @@ class ArticleRepositoryImpl(
 
         }//end collectLatest
 
-        return localDatabase.articleDao().selectPageArticle(
-            page = page,
-            pageSize = pageSize
+        //get article size
+        val articleSize = localDatabase.articleDao().selectArticleCount()
+
+        //if last page equal 0 get last page number in local database
+        if (lastPage == 0) {
+            lastPage =
+                if ((articleSize.toFloat() / pageSize.toFloat()) - (articleSize / pageSize) != 0f) {
+                    (articleSize / pageSize) + 1
+                }//end if
+                else {
+                    (articleSize / pageSize)
+                }.toInt()//end else
+        }//end if
+
+        return UnEffectResponse(
+            lastPageNumber = lastPage,
+            body = localDatabase.articleDao().selectPageArticle(
+                page = page,
+                pageSize = pageSize
+            )
         )
 
     }//end getAllArticles
 
-
     //function for cache articles in local database
-    private suspend fun cacheArticles(articles: IArticleResponseDto?) {
+    private suspend fun cacheArticles(articles: IArticleResponseDto?): Int {
 
         try {
 
@@ -95,14 +114,28 @@ class ArticleRepositoryImpl(
                     )
 
                 }//end if
+                else {
+
+                    val prevArticles = localDatabase.articleDao().selectPageArticle(
+                        page = articles.meta?.currentPage!! - 1,
+                        pageSize = 10
+                    )
+
+                    //execute delete here
+                    localDatabase.articleDao().deleteArticlesFromIdToId(
+                        startId = prevArticles[prevArticles.size - 1].id,
+                        endId = articleEntities[0].id
+                    )
+
+                }//end else
 
                 //execute delete between items here
                 for (count in 0 until articleEntities.size - 1) {
 
                     //execute delete here
                     localDatabase.articleDao().deleteArticlesFromIdToId(
-                        startId = 0L,
-                        endId = articleEntities[0].id
+                        startId = articleEntities[count].id,
+                        endId = articleEntities[count + 1].id
                     )
 
                 }//end for
@@ -124,6 +157,8 @@ class ArticleRepositoryImpl(
         catch (ex: Exception) {
             ex.message?.let { Log.d("TAG", it) }
         }//end catch
+
+        return articles?.meta?.lastPage!!
 
     }//end cacheArticles
 

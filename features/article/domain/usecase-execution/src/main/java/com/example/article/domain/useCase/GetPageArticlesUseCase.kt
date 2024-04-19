@@ -4,6 +4,7 @@ import com.example.article.domain.mapper.declarations.child.IArticleEntityToArti
 import com.example.article.domain.model.TitleArticleModel
 import com.example.article.domain.usecase.declarations.IGetPageArticlesUseCase
 import com.example.artocle.domain.repository.declarations.IArticleRepository
+import com.example.libraries.core.remote.data.response.status.UnEffectResponse
 
 class GetPageArticlesUseCase(
     private val articleRepository: IArticleRepository,
@@ -14,17 +15,22 @@ class GetPageArticlesUseCase(
     override suspend fun invoke(
         page: Int,
         pageSize: Int
-    ): List<TitleArticleModel> {
+    ): UnEffectResponse<List<TitleArticleModel>> {
 
         //get entity articles here
-        val articleEntities = articleRepository.getPageArticles(
+        val articleResponse = articleRepository.getPageArticles(
             page = page,
             pageSize = pageSize
         )
 
         //map articles from entity to model here
-        return articleEntityToArticleTitleModelMapper.listConvertor(
-            list = articleEntities
+        val articleModel = articleEntityToArticleTitleModelMapper.listConvertor(
+            list = articleResponse.body ?: emptyList()
+        )
+
+        return UnEffectResponse(
+            lastPageNumber = articleResponse.lastPageNumber,
+            body = articleModel
         )
 
     }//end invoke

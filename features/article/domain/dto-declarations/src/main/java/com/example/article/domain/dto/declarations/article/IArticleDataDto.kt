@@ -1,14 +1,14 @@
 package com.example.article.domain.dto.declarations.article
 
-interface IData {
+interface IArticleDataDto {
 
     val body: String?
 
     val createdAt: String?
 
-    val doctorId: Int?
+    val doctorId: Long?
 
-    val id: Int?
+    val id: Long?
 
     val image: String?
 

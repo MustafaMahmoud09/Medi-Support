@@ -1,5 +1,9 @@
 package com.example.article.presentation.uiElement.screens.articles
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,12 +11,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.article.domain.model.TitleArticleModel
+import com.example.article.presentation.uiElement.components.items.ArticleSection
+import com.example.article.presentation.uiState.state.ArticlesUiState
+import com.example.article.presentation.uiState.viewModel.ArticlesViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
@@ -23,13 +36,18 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun ArticlesScreen(
+    viewModel: ArticlesViewModel = hiltViewModel(),
     popArticleNavGraph: () -> Unit,
     navigateToSingleDestination: () -> Unit
 ) {
+    //collect screen state here
+    val state = viewModel.state.collectAsState()
 
     ArticlesContent(
         onClickBack = popArticleNavGraph,
-        onClickReadNow = navigateToSingleDestination
+        onClickReadNow = navigateToSingleDestination,
+        uiState = state.value,
+        articlesState = state.value.articles?.collectAsLazyPagingItems()
     )
 }//end ArticlesScreen
 
@@ -38,7 +56,9 @@ private fun ArticlesContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
     onClickBack: () -> Unit,
-    onClickReadNow: () -> Unit
+    onClickReadNow: () -> Unit,
+    uiState: ArticlesUiState,
+    articlesState: LazyPagingItems<TitleArticleModel>?
 ) {
 
     ConstraintLayout(
@@ -85,49 +105,67 @@ private fun ArticlesContent(
                 }//end constrainAs
         )
 
-        LazyColumn(
-            modifier = Modifier
-                .constrainAs(articlesId) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(
-                        backButtonId.bottom,
-                        dimen.dimen_2.dp
-                    )
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
-                },
-            contentPadding = PaddingValues(
-                start = dimen.dimen_2.dp,
-                end = dimen.dimen_2.dp,
-                top = dimen.dimen_1.dp,
-                bottom = dimen.dimen_2.dp
+        AnimatedVisibility(
+            visible = articlesState?.loadState?.refresh is LoadState.NotLoading,
+            enter = fadeIn(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
             ),
-            verticalArrangement = Arrangement.spacedBy(
-                space = dimen.dimen_2_25.dp
+            exit = fadeOut(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
             )
         ) {
 
-            items(
-                count = 10
+            LazyColumn(
+                modifier = Modifier
+                    .constrainAs(articlesId) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(
+                            backButtonId.bottom,
+                            dimen.dimen_2.dp
+                        )
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.fillToConstraints
+                    },
+                contentPadding = PaddingValues(
+                    start = dimen.dimen_2.dp,
+                    end = dimen.dimen_2.dp,
+                    top = dimen.dimen_1.dp,
+                    bottom = dimen.dimen_2.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(
+                    space = dimen.dimen_2_25.dp
+                )
             ) {
 
-                com.example.article.presentation.uiElement.components.items.ArticleSection(
-                    dimen = dimen,
-                    theme = theme,
-                    src = if (it % 2 == 0) painterResource(id = R.drawable.test_article_1) else painterResource(
-                        id = R.drawable.test_article_2
-                    ),
-                    title = "Heart Rate",
-                    onClickOnButton = onClickReadNow,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
+                articlesState?.let { articles ->
+                    items(
+                        count = articles.itemCount
+                    ) { count ->
 
-            }//end items
+                        ArticleSection(
+                            dimen = dimen,
+                            theme = theme,
+                            src = if (count % 2 == 0) painterResource(id = R.drawable.test_article_1) else painterResource(
+                                id = R.drawable.test_article_2
+                            ),
+                            title = articles[count]!!.title,
+                            onClickOnButton = onClickReadNow,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
 
-        }//end LazyColumn
+                    }
+                }//end items
+
+            }//end LazyColumn
+
+        }//end AnimatedVisibility
 
     }//end ConstraintLayout
 

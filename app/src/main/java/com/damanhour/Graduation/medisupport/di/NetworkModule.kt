@@ -1,6 +1,7 @@
 package com.damanhour.Graduation.medisupport.di
 
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
+import com.example.libraries.core.remote.database.interceptors.AuthorizationInterceptor
 import com.example.libraries.core.remote.database.interceptors.JsonFormatInterceptor
 import dagger.Module
 import dagger.Provides
@@ -30,7 +31,7 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(timeOutClient)
+//            .client(timeOutClient)
             .client(jsonFormatClient)
             .addConverterFactory(converter)
             .build()
@@ -53,7 +54,7 @@ object NetworkModule {
             .baseUrl(baseUrl)
             .addConverterFactory(converter)
             .client(authInterceptorClient)
-            .client(timeOutClient)
+//            .client(timeOutClient)
             .client(jsonFormatClient)
             .build()
 
@@ -93,7 +94,7 @@ object NetworkModule {
     @Named("token_interceptor")
     fun provideAuthInterceptor(): Interceptor {
 
-        return com.example.libraries.core.remote.database.interceptors.AuthorizationInterceptor()
+        return AuthorizationInterceptor()
 
     }//end provideAuthInterceptor
 
@@ -135,7 +136,7 @@ object NetworkModule {
     @Named("base_url")
     fun provideBaseUrl(): String {
 
-        return "https://3f88-154-183-55-234.ngrok-free.app/api/"
+        return "https://3f0f-154-183-33-48.ngrok-free.app/api/"
 
     }//end provideBaseUrl
 
@@ -145,7 +146,7 @@ object NetworkModule {
     @Named("host")
     fun provideHost(): String {
 
-        return "0566-154-183-55-234.ngrok-free.app"
+        return "423d-197-63-203-14.ngrok-free.app"
 
     }//end provideBaseUrl
 

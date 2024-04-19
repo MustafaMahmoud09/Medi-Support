@@ -8,6 +8,7 @@ import com.example.auth.domain.usecase.declarations.ILoginWithEmailUseCase
 import com.example.auth.domain.usecase.declarations.ILoginWithSocialUseCase
 import com.example.auth.domain.usecase.declarations.IResetPasswordUseCase
 import com.example.auth.domain.usecase.declarations.ISendUserEmailUseCase
+import com.example.auth.domain.usecase.declarations.IUpdateUsersAuthCountUseCase
 import com.example.auth.domain.usecase.declarations.IVerifyCodeUseCase
 import com.example.auth.domain.usecase.execution.CachingUserDataUseCase
 import com.example.auth.domain.usecase.execution.CheckUserAuthUseCase
@@ -16,6 +17,7 @@ import com.example.auth.domain.usecase.execution.LoginWithEmailUseCase
 import com.example.auth.domain.usecase.execution.LoginWithSocialUseCase
 import com.example.auth.domain.usecase.execution.ResetPasswordUseCase
 import com.example.auth.domain.usecase.execution.SendUserEmailUseCase
+import com.example.auth.domain.usecase.execution.UpdateUsersAuthCountUseCase
 import com.example.auth.domain.usecase.execution.VerifyCodeUseCase
 import dagger.Module
 import dagger.Provides
@@ -126,12 +128,25 @@ object UseCasesModule {
     @Singleton
     fun provideCheckUserAuthUseCase(
         authRepository: IAuthRepository
-    ): ICheckUserAuthUseCase{
+    ): ICheckUserAuthUseCase {
 
         return CheckUserAuthUseCase(
             authRepository = authRepository
         )
 
     }//end provideCheckUserAuthUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideUpdateUsersAuthCountUseCase(
+        authRepository: IAuthRepository
+    ): IUpdateUsersAuthCountUseCase {
+
+        return UpdateUsersAuthCountUseCase(
+            authRepository = authRepository
+        )
+
+    }//end provideUpdateUsersAuthCountUseCase
 
 }//end UseCasesModule

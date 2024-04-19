@@ -1,3 +1,9 @@
 package com.example.article.presentation.uiState.state
 
-data class ArticleUiState()
+import androidx.paging.PagingData
+import com.example.article.domain.model.TitleArticleModel
+import kotlinx.coroutines.flow.Flow
+
+data class ArticlesUiState(
+    val articles: Flow<PagingData<TitleArticleModel>>? = null,
+)

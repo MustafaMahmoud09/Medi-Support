@@ -7,3 +7,25 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    //dto declarations
+    implementation(project(':features:article:domain:dto-declarations'))
+
+    //entity declaration
+    implementation(project(':features:article:domain:entity-declarations'))
+
+    //domain model
+    implementation(project(':features:article:domain:domain-model'))
+
+    //mapper declaration
+    implementation(project(':features:article:domain:mapper-declarations'))
+
+    //use case declarations
+    implementation(project(':features:article:domain:usecase-declarations'))
+
+    //repository declarations
+    implementation(project(':features:article:domain:repository-declarations'))
+
+}

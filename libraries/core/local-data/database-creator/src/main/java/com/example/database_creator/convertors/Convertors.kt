@@ -2,6 +2,7 @@ package com.example.database_creator.convertors
 
 import androidx.room.TypeConverter
 import java.time.LocalTime
+import java.util.Date
 
 class Convertors {
 
@@ -20,5 +21,23 @@ class Convertors {
         }
 
     }//end longToLocalTime
+
+
+    @TypeConverter
+    fun dateToLong(date: Date?): Long? {
+
+        return date?.time
+
+    }//end dateToLong
+
+    @TypeConverter
+    fun longToDate(value: Long?): Date? {
+
+        return value?.let {
+            Date(it)
+        }
+
+    }//end longToDate
+
 
 }//end LocalTimeToLongConvertor

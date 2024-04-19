@@ -3,6 +3,8 @@ package com.example.database_creator
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.article.data.source.local.data.access.`object`.ArticleDao
+import com.example.article.data.source.local.entity.execution.entities.article.ArticleEntity
 import com.example.database_creator.convertors.Convertors
 import com.example.database_creator.dao.UserDao
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
@@ -19,9 +21,10 @@ import com.example.reminder.data.source.entity.execution.entities.reminder_date.
         UserEntity::class,
         ReminderEntity::class,
         DayEntity::class,
-        ReminderDateEntity::class
+        ReminderDateEntity::class,
+        ArticleEntity::class
     ],
-    version = 1
+    version = 3
 )
 @TypeConverters(Convertors::class)
 abstract class MediSupportDatabase : RoomDatabase() {
@@ -56,5 +59,13 @@ abstract class MediSupportDatabase : RoomDatabase() {
      * @return UserDao
      * */
     abstract fun userDao(): UserDao
+
+
+    /**
+     *abstract function for provide article dao
+     *
+     * @return ArticleDao
+     **/
+    abstract fun articleDao(): ArticleDao
 
 }//end MediSupportDatabase

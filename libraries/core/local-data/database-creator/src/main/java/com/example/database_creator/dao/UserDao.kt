@@ -59,20 +59,34 @@ interface UserDao {
         remember: Boolean
     )
 
-    //TODO::FUNCTION FOR GET USER AUTH NOW
+
+    //TODO:: FUNCTION FOR GET USER AUTH NOW
     @Query(
         "SELECT * FROM ${
             UserInfo.USER_TABLE_NAME
-        } WHERE ${
+        } WHERE (${
             UserInfo.AUTH_COLUMN_NAME
         } = :auth AND ${
             UserInfo.REMEMBER_COLUMN_NAME
-        } = :rememberMe " +
+        } = :rememberMe) OR ${
+            UserInfo.COUNT_COLUMN_NAME
+        } = 0 " +
                 "LIMIT 1"
     )
     suspend fun getAuthUser(
         auth: Boolean = true,
         rememberMe: Boolean
     ): List<UserEntity>
+
+
+    //TODO:: FUNCTION FOR UPDATE USER AUTH COUNT
+    @Query(
+        "UPDATE ${
+            UserInfo.USER_TABLE_NAME
+        } SET ${
+            UserInfo.COUNT_COLUMN_NAME
+        } = 1"
+    )
+    suspend fun updateUsersAuthCount()
 
 }//end UserDao

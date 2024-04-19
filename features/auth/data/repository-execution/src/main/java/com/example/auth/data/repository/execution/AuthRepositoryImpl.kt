@@ -194,4 +194,11 @@ class AuthRepositoryImpl(
 
     }//end getAuthUser
 
+    //function for update user auth count in local
+    override suspend fun updateUsersAuthCount() {
+
+        localDatabase.userDao().updateUsersAuthCount()
+
+    }//end updateUsersAuthCount
+
 }//end AuthRepository

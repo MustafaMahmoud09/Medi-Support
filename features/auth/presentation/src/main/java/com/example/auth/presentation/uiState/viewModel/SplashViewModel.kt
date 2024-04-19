@@ -2,6 +2,7 @@ package com.example.auth.presentation.uiState.viewModel
 
 import androidx.lifecycle.viewModelScope
 import com.example.auth.domain.usecase.declarations.ICheckUserAuthUseCase
+import com.example.auth.domain.usecase.declarations.IUpdateUsersAuthCountUseCase
 import com.example.auth.presentation.uiState.state.SplashUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val checkUserAuthUseCase: ICheckUserAuthUseCase
+    private val checkUserAuthUseCase: ICheckUserAuthUseCase,
+    private val updateUsersAuthCountUseCase: IUpdateUsersAuthCountUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -25,14 +27,18 @@ class SplashViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        userAuthStateDefined()
+        onUserRegisterStateOrganized()
     }//end init
 
+
     //function for define app contain on user is auth or no
-    private fun userAuthStateDefined() {
+    private fun onUserRegisterStateOrganized() {
 
         //create coroutine builder contain on use cases
         viewModelScope.launch(Dispatchers.IO) {
+
+            //update count register for users here
+            updateUsersAuthCountUseCase()
 
             //check user is auth or no
             val userIsAuth = checkUserAuthUseCase()

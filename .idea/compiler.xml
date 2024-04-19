@@ -14,12 +14,42 @@
       <module name="MediSupport.domain.setting" target="17" />
       <module name="MediSupport.domain.setting.main" target="17" />
       <module name="MediSupport.domain.setting.test" target="17" />
+      <module name="MediSupport.features.article.data.data-source.local-data.data-access-object" target="17" />
+      <module name="MediSupport.features.article.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.article.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.article.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.article.data.repository" target="17" />
+      <module name="MediSupport.features.article.data.repository-execution" target="17" />
+      <module name="MediSupport.features.article.domain.domain-model" target="17" />
+      <module name="MediSupport.features.article.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.article.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.article.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.article.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.article.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.article.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.article.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.article.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.article.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.article.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.article.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.article.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.article.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.article.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.article.domain.use-case" target="17" />
       <module name="MediSupport.features.article.domain.use-case.main" target="17" />
       <module name="MediSupport.features.article.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.article.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.article.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.article.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.article.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.article.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.article.domain.usecase-execution.test" target="17" />
       <module name="MediSupport.features.article.domain.useCase.main" target="17" />
       <module name="MediSupport.features.article.domain.useCase.test" target="17" />
+      <module name="MediSupport.features.article.mapper-execution" target="17" />
+      <module name="MediSupport.features.article.mapper-execution.main" target="17" />
+      <module name="MediSupport.features.article.mapper-execution.test" target="17" />
+      <module name="MediSupport.features.article.pagination" target="17" />
       <module name="MediSupport.features.article.presentation" target="17" />
       <module name="MediSupport.features.auth.data.data-source.remote-data.dto-execution" target="17" />
       <module name="MediSupport.features.auth.data.data-source.remote-data.requests" target="17" />
@@ -28,7 +58,6 @@
       <module name="MediSupport.features.auth.domain.dto-declarations" target="17" />
       <module name="MediSupport.features.auth.domain.dto-declarations.main" target="17" />
       <module name="MediSupport.features.auth.domain.dto-declarations.test" target="17" />
-      <module name="MediSupport.features.auth.domain.mapper-declarations" target="17" />
       <module name="MediSupport.features.auth.domain.mapper-declarations.main" target="17" />
       <module name="MediSupport.features.auth.domain.mapper-declarations.test" target="17" />
       <module name="MediSupport.features.auth.domain.repository-declarations" target="17" />
@@ -47,7 +76,6 @@
       <module name="MediSupport.features.auth.domain.usecase-execution.test" target="17" />
       <module name="MediSupport.features.auth.domain.useCase.main" target="17" />
       <module name="MediSupport.features.auth.domain.useCase.test" target="17" />
-      <module name="MediSupport.features.auth.mapper-execution" target="17" />
       <module name="MediSupport.features.auth.mapper-execution.main" target="17" />
       <module name="MediSupport.features.auth.mapper-execution.test" target="17" />
       <module name="MediSupport.features.auth.presentation" target="17" />

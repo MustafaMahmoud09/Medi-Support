@@ -26,7 +26,7 @@ interface IAuthRepository {
     suspend fun verifyCode(
         email: String,
         code: String
-    ):Flow<Status<Response<Any>>>
+    ): Flow<Status<Response<Any>>>
 
 
     suspend fun resetPassword(
@@ -57,9 +57,10 @@ interface IAuthRepository {
         remember: Boolean,
     )
 
-
     suspend fun getAuthUser(
         rememberMe: Boolean
     ): List<IUserEntity>
+
+    suspend fun updateUsersAuthCount()
 
 }//end IAuthRepository

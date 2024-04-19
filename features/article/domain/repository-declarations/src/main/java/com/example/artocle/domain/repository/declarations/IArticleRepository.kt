@@ -1,4 +1,12 @@
 package com.example.artocle.domain.repository.declarations
 
-class MyClass {
-}
+import com.example.article.domain.entity.declarations.IArticleEntity
+
+interface IArticleRepository {
+
+    suspend fun getPageArticles(
+        page: Int,
+        pageSize: Int
+    ): List<IArticleEntity>
+
+}//end IArticleRepository

@@ -3,7 +3,7 @@ package com.example.libraries.core.remote.database.interceptors
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthorizationInterceptor : Interceptor {
+class AuthorizationInterceptor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 

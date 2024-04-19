@@ -1,8 +1,8 @@
 package com.example.article.domain.dto.declarations.article
 
-interface IArticleDto {
+interface IArticleResponseDto {
 
-    val `data`: List<IData?>?
+    val `data`: List<IArticleDataDto?>?
 
     val links: ILinks?
 

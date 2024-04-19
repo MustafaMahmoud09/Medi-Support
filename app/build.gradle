@@ -71,6 +71,13 @@ dependencies {
 
     //article
     implementation(project(':features:article:presentation'))
+    implementation(project(':features:article:domain:usecase-declarations'))
+    implementation(project(':features:article:domain:usecase-execution'))
+    implementation(project(':features:article:domain:repository-declarations'))
+    implementation(project(':features:article:data:repository-execution'))
+    implementation(project(':features:article:domain:mapper-declarations'))
+    implementation(project(':features:article:mapper-execution'))
+    implementation(project(':features:article:data:data-source:remote-data:requests'))
 
     //auth
     implementation(project(':features:auth:presentation'))

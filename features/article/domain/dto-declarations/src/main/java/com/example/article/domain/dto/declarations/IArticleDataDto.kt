@@ -1,4 +1,4 @@
-package com.example.article.domain.dto.declarations.article
+package com.example.article.domain.dto.declarations
 
 interface IArticleDataDto {
 

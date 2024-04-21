@@ -24,14 +24,16 @@ class ArticleDataSource(
             //get current page data here
             val data = getPageArticlesUseCase(
                 page = currentPageNumber,
-                pageSize = pageSize
+                pageSize = 10
             )
 
             //return current page here
             LoadResult.Page(
                 data = data.body ?: emptyList(),
                 prevKey = if (currentPageNumber == 1) null else currentPageNumber.minus(1),
-                nextKey = if (data.lastPageNumber == currentPageNumber) null else currentPageNumber.plus(1)
+                nextKey = if (data.lastPageNumber == currentPageNumber) null else currentPageNumber.plus(
+                    1
+                )
             )
 
         }//end try
@@ -48,8 +50,6 @@ class ArticleDataSource(
 
     override fun getRefreshKey(
         state: PagingState<Int, TitleArticleModel>
-    ): Int? {
-        return state.anchorPosition
-    }//end getRefreshKey
+    ): Int? = null
 
 }//end RemindersDataSource

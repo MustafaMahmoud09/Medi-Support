@@ -1,7 +1,7 @@
-package com.example.article.data.source.remote.dto.execution.article
+package com.example.article.data.source.remote.dto.execution.articles
 
 
-import com.example.article.domain.dto.declarations.article.ILinks
+import com.example.article.domain.dto.declarations.articles.ILinks
 import com.google.gson.annotations.SerializedName
 
 data class Links(

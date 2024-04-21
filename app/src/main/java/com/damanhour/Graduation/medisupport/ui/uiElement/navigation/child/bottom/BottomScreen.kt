@@ -54,6 +54,7 @@ import com.example.sharedui.uiState.state.BottomNavigationUiState
 import com.example.sharedui.uiState.viewModel.child.BottomNavigationViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import kotlin.reflect.KFunction0
+import kotlin.reflect.KFunction1
 
 @Composable
 internal fun BottomScreen(
@@ -126,7 +127,7 @@ private fun BottomContent(
     popAboutDestination: () -> Unit,
     popContactUsDestination: () -> Unit,
     popArticleNavGraph: () -> Unit,
-    navigateToSingleDestination: () -> Unit,
+    navigateToSingleDestination: KFunction1<Long, Unit>,
     popSingleArticleDestination: () -> Unit,
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,

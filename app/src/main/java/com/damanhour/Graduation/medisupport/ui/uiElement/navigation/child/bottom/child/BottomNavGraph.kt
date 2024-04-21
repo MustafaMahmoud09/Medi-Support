@@ -15,6 +15,7 @@ import com.example.profile.presentation.uiElement.screens.profile.profileDestina
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import kotlin.reflect.KFunction1
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -27,7 +28,7 @@ internal fun BottomNavGraph(
     popAboutDestination: () -> Unit,
     popContactUsDestination: () -> Unit,
     popArticleNavGraph: () -> Unit,
-    navigateToSingleDestination: () -> Unit,
+    navigateToSingleDestination: KFunction1<Long, Unit>,
     popSingleArticleDestination: () -> Unit,
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,

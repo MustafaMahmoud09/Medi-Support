@@ -9,15 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.article.domain.model.TitleArticleModel
 import com.example.article.presentation.uiElement.components.composable.EndIconButtonRadiusView
 import com.example.sharedui.R
-import com.example.sharedui.uiElement.components.composable.LoadImageView
+import com.example.sharedui.uiElement.components.composable.ServerLoadImageView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
@@ -31,9 +31,8 @@ internal fun ArticleSection(
     shape: Shape = RoundedCornerShape(
         size = dimen.dimen_1_25.dp
     ),
-    src: Painter,
-    title: String,
-    onClickOnButton: () -> Unit,
+    article: TitleArticleModel,
+    onClickOnButton: (Long) -> Unit,
     buttonWidth: Float = dimen.dimen_15,
     buttonHeight: Float = dimen.dimen_3,
     modifier: Modifier = Modifier
@@ -59,7 +58,7 @@ internal fun ArticleSection(
         TextNormalView(
             theme = theme,
             dimen = dimen,
-            text = title,
+            text = article.title,
             size = dimen.dimen_2,
             fontColor = theme.black,
             modifier = Modifier
@@ -75,7 +74,7 @@ internal fun ArticleSection(
                 }
         )
 
-        com.example.article.presentation.uiElement.components.composable.EndIconButtonRadiusView(
+        EndIconButtonRadiusView(
             dimen = dimen,
             theme = theme,
             icon = painterResource(
@@ -84,7 +83,7 @@ internal fun ArticleSection(
             title = stringResource(
                 R.string.read_now
             ),
-            onClick = onClickOnButton,
+            onClick = { onClickOnButton(article.id) },
             modifier = Modifier
                 .constrainAs(buttonId) {
                     start.linkTo(
@@ -106,8 +105,10 @@ internal fun ArticleSection(
                 )
         )
 
-        LoadImageView(
-            painter = src,
+        ServerLoadImageView(
+            dimen = dimen,
+            theme = theme,
+            imageUrl = article.image,
             modifier = Modifier
                 .constrainAs(imageId) {
                     start.linkTo(parent.start)

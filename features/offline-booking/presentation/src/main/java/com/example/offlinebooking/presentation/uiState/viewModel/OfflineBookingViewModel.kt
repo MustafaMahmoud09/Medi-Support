@@ -16,14 +16,14 @@ class OfflineBookingViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(com.example.offlinebooking.presentation.uiState.state.OfflineBookingUiState())
+    private val _state = MutableStateFlow(OfflineBookingUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
 
     //get booking arguments here
-    private val doctorId: com.example.offlinebooking.presentation.uiElement.screens.booking.OfflineBookingArgs =
-        com.example.offlinebooking.presentation.uiElement.screens.booking.OfflineBookingArgs(
+    private val doctorId: OfflineBookingArgs =
+        OfflineBookingArgs(
             savedStateHandle
         )
 

@@ -4,7 +4,9 @@ import com.example.article.domain.entity.declarations.IArticleEntity
 import com.example.article.domain.mapper.declarations.child.IArticleEntityToArticleTitleModelMapper
 import com.example.article.domain.model.TitleArticleModel
 
-class ArticleEntityToArticleTitleModelMapper : IArticleEntityToArticleTitleModelMapper {
+class ArticleEntityToArticleTitleModelMapper(
+    private val imageUrl: String
+) : IArticleEntityToArticleTitleModelMapper {
 
     //function for convert list of article entity to list of article model
     override fun listConvertor(list: List<IArticleEntity>): List<TitleArticleModel> {
@@ -21,7 +23,7 @@ class ArticleEntityToArticleTitleModelMapper : IArticleEntityToArticleTitleModel
         return TitleArticleModel(
             id = obj.id,
             title = obj.title.toString(),
-            image = obj.image.toString()
+            image = "${imageUrl}${obj.image.toString()}"
         )
 
     }//end objectConvertor

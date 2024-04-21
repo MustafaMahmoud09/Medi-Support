@@ -1,6 +1,8 @@
-package com.example.article.domain.dto.declarations.article
+package com.example.article.domain.dto.declarations.articles
 
-interface IArticleResponseDto {
+import com.example.article.domain.dto.declarations.IArticleDataDto
+
+interface IArticlesResponseDto {
 
     val `data`: List<IArticleDataDto?>?
 

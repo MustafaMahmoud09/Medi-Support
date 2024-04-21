@@ -1,11 +1,13 @@
 package com.example.article.mapper.execution
 
 import com.example.article.data.source.local.entity.execution.entities.article.ArticleEntity
-import com.example.article.domain.dto.declarations.article.IArticleDataDto
+import com.example.article.domain.dto.declarations.IArticleDataDto
 import com.example.article.domain.entity.declarations.IArticleEntity
 import com.example.article.domain.mapper.declarations.child.IArticleDtoToArticleEntityMapper
 
-class ArticleDtoToArticleEntityMapper : IArticleDtoToArticleEntityMapper {
+class ArticleDtoToArticleEntityMapper(
+
+) : IArticleDtoToArticleEntityMapper {
 
     //function for convert list of article dto to list of article entity
     override fun listConvertor(list: List<IArticleDataDto>): List<IArticleEntity> {

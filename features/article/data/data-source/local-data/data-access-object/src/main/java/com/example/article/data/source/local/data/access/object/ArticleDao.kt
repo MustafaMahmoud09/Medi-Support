@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.article.data.source.local.entity.execution.entities.article.ArticleEntity
 import com.example.article.data.source.local.entity.execution.entities.article.ArticleInfo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ArticleDao {
@@ -58,5 +59,27 @@ interface ArticleDao {
         }"
     )
     suspend fun selectArticleCount(): Long
+
+
+    //TODO:: FUNCTION FOR PROVIDE ARTICLE BY ID
+    @Query(
+        "SELECT * FROM ${
+            ArticleInfo.ARTICLE_TABLE_NAME
+        } WHERE ${
+            ArticleInfo.ID_COLUMN_NAME
+        } = :id"
+    )
+    fun selectArticleById(id: Long): Flow<List<ArticleEntity>>
+
+
+    //TODO:: FUNCTION FOR DELETE ARTICLE BY ID
+    @Query(
+        "DELETE FROM ${
+            ArticleInfo.ARTICLE_TABLE_NAME
+        } WHERE ${
+            ArticleInfo.ID_COLUMN_NAME
+        } = :id"
+    )
+    suspend fun deleteById(id: Long)
 
 }//end ArticleDao

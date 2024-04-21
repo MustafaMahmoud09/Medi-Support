@@ -28,14 +28,18 @@ object NetworkModule {
 
     }//end provideGsonConvertorFactory
 
+
+    @Provides
+    @Singleton
+    @Named("domain")
+    fun provideDomain(): String = "https://1f51-197-63-199-146.ngrok-free.app/"
+
     @Provides
     @Singleton
     @Named("base_url")
-    fun provideBaseUrl(): String {
-
-        return "https://2fab-197-63-228-175.ngrok-free.app/api/"
-
-    }//end provideBaseUrl
+    fun provideBaseUrl(
+        @Named("domain") domain: String
+    ): String = "${domain}api/"
 
 
     @Provides

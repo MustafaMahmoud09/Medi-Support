@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -26,19 +25,19 @@ import com.example.article.domain.model.TitleArticleModel
 import com.example.article.presentation.uiElement.components.items.ArticleSection
 import com.example.article.presentation.uiState.state.ArticlesUiState
 import com.example.article.presentation.uiState.viewModel.ArticlesViewModel
-import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import kotlin.reflect.KFunction1
 
 @Composable
 internal fun ArticlesScreen(
     viewModel: ArticlesViewModel = hiltViewModel(),
     popArticleNavGraph: () -> Unit,
-    navigateToSingleDestination: () -> Unit
+    navigateToSingleDestination: KFunction1<Long, Unit>
 ) {
     //collect screen state here
     val state = viewModel.state.collectAsState()
@@ -56,7 +55,7 @@ private fun ArticlesContent(
     theme: CustomTheme = MediSupportAppTheme(),
     dimen: CustomDimen = MediSupportAppDimen(),
     onClickBack: () -> Unit,
-    onClickReadNow: () -> Unit,
+    onClickReadNow: KFunction1<Long, Unit>,
     uiState: ArticlesUiState,
     articlesState: LazyPagingItems<TitleArticleModel>?
 ) {
@@ -153,10 +152,7 @@ private fun ArticlesContent(
                         ArticleSection(
                             dimen = dimen,
                             theme = theme,
-                            src = if (count % 2 == 0) painterResource(id = R.drawable.test_article_1) else painterResource(
-                                id = R.drawable.test_article_2
-                            ),
-                            title = articles[count]!!.title,
+                            article = articles[count]!!,
                             onClickOnButton = onClickReadNow,
                             modifier = Modifier
                                 .fillMaxWidth()

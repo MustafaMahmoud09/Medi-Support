@@ -1,4 +1,4 @@
-package com.example.article.data.source.remote.dto.execution.article
+package com.example.article.data.source.remote.dto.execution.articles
 
 
 import com.example.article.domain.dto.declarations.article.IArticleDataDto

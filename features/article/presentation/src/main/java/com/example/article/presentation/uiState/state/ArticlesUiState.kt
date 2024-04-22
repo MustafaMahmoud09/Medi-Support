@@ -6,4 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 data class ArticlesUiState(
     val articles: Flow<PagingData<TitleArticleModel>>? = null,
+    val placeHolderArticle: TitleArticleModel = TitleArticleModel(
+        id = 0,
+        title = "place holder title",
+        image = "ss"
+    ),
 )

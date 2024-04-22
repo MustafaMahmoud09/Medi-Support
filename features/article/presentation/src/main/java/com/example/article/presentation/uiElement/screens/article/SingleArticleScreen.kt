@@ -2,6 +2,7 @@ package com.example.article.presentation.uiElement.screens.article
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -154,10 +155,7 @@ private fun SingleArticleContent(
                             }//end constrainAs
                     )
 
-                    ServerLoadImageView(
-                        theme = theme,
-                        dimen = dimen,
-                        imageUrl = uiState.article.image,
+                    Box(
                         modifier = Modifier
                             .constrainAs(imageId) {
                                 start.linkTo(parent.start)
@@ -167,10 +165,21 @@ private fun SingleArticleContent(
                                     dimen.dimen_2_25.dp
                                 )
                                 width = Dimension.fillToConstraints
-                            }.aspectRatio(
+                            }
+                            .aspectRatio(
                                 ratio = 3f
                             )
-                    )
+                    ) {
+
+                        ServerLoadImageView(
+                            theme = theme,
+                            dimen = dimen,
+                            imageUrl = uiState.article.image,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+
+                    }
 
                     TextNormalView(
                         theme = theme,

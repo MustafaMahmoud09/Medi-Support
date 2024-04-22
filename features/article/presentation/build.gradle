@@ -72,6 +72,7 @@ dependencies {
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-placeholder:$accompanist_version"
 
     //material 3
     implementation "androidx.compose.material3:material3:$material3_versoin"

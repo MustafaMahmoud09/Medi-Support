@@ -21,6 +21,7 @@ import com.example.sharedui.uiElement.components.composable.ServerLoadImageView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 internal fun ArticleSection(
@@ -35,6 +36,8 @@ internal fun ArticleSection(
     onClickOnButton: (Long) -> Unit,
     buttonWidth: Float = dimen.dimen_15,
     buttonHeight: Float = dimen.dimen_3,
+    placeHolderState: Boolean = false,
+    placeHolderColor: Color = theme.grayLight,
     modifier: Modifier = Modifier
 ) {
 
@@ -42,6 +45,10 @@ internal fun ArticleSection(
         modifier = modifier
             .clip(
                 shape = shape
+            )
+            .placeholder(
+                visible = placeHolderState,
+                color = placeHolderColor
             )
             .border(
                 width = borderSize.dp,

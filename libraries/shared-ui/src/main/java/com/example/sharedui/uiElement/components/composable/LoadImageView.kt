@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -115,6 +116,27 @@ fun ServerLoadImageView(
         ),
         modifier = modifier
     ) {
+
+
+    }//end AnimatedVisibility
+
+
+    //if image is empty create empty message
+    AnimatedVisibility(
+        visible = imageLoadRequest.state is AsyncImagePainter.State.Empty,
+        enter = fadeIn(
+            animationSpec = tween(
+                durationMillis = 50
+            )
+        ),
+        exit = fadeOut(
+            animationSpec = tween(
+                durationMillis = 50
+            )
+        ),
+        modifier = modifier
+    ) {
+
 
     }//end AnimatedVisibility
 

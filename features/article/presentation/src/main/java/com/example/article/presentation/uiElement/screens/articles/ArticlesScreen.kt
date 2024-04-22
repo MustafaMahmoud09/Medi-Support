@@ -31,6 +31,7 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.google.accompanist.placeholder.placeholder
 import kotlin.reflect.KFunction1
 
 @Composable
@@ -103,6 +104,66 @@ private fun ArticlesContent(
                     )
                 }//end constrainAs
         )
+
+        //if request state is loading show placeholder
+        AnimatedVisibility(
+            visible = articlesState?.loadState?.refresh is LoadState.Loading,
+            enter = fadeIn(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
+            exit = fadeOut(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
+            modifier = Modifier
+                .constrainAs(articlesId) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(
+                        backButtonId.bottom,
+                        dimen.dimen_2.dp
+                    )
+                    bottom.linkTo(parent.bottom)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                }
+        ) {
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = dimen.dimen_2.dp,
+                    end = dimen.dimen_2.dp,
+                    top = dimen.dimen_1.dp,
+                    bottom = dimen.dimen_2.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(
+                    space = dimen.dimen_2_25.dp
+                )
+            ) {
+
+                items(
+                    count = 10
+                ) {
+
+                    ArticleSection(
+                        dimen = dimen,
+                        theme = theme,
+                        article = uiState.placeHolderArticle,
+                        placeHolderState = true,
+                        onClickOnButton = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+
+                }
+            }//end items
+
+        }//end LazyColumn
 
         AnimatedVisibility(
             visible = articlesState?.loadState?.refresh is LoadState.NotLoading,

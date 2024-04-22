@@ -1,5 +1,6 @@
 package com.example.article.presentation.uiState.viewModel
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.article.domain.usecase.declarations.IGetArticleByIdUseCase
@@ -20,7 +21,6 @@ class ArticleViewModel @Inject constructor(
     private val getArticleByIdUseCase: IGetArticleByIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
-
 
     //for manage screen state from view model
     private val _state = MutableStateFlow(ArticleUiState())
@@ -58,33 +58,40 @@ class ArticleViewModel @Inject constructor(
         //make coroutine builder scope here
         viewModelScope.launch(Dispatchers.IO) {
 
-            //get article by id here
-            //observe use case flow here for collect article
-            getArticleByIdUseCase(
-                id = state.value.articleId
-            ).collectLatest { article ->
+            try {
 
-                //if article is not empty
-                //update article content state
-                if (article.isNotEmpty()) {
-                    _state.update {
-                        it.copy(
-                            article = article[0]
-                        )
-                    }//end update
-                }//end if
+                //get article by id here
+                //observe use case flow here for collect article
+                getArticleByIdUseCase(
+                    id = state.value.articleId
+                ).collectLatest { article ->
 
-                //if articles is empty
-                //make article deleted state true
-                else {
-                    _state.update {
-                        it.copy(
-                            articleDeleted = true
-                        )
-                    }
-                }//end else
+                    //if article is not empty
+                    //update article content state
+                    if (article.isNotEmpty()) {
+                        _state.update {
+                            it.copy(
+                                article = article[0]
+                            )
+                        }//end update
+                    }//end if
 
-            }//end collectLatest
+                    //if articles is empty
+                    //make article deleted state true
+                    else {
+                        _state.update {
+                            it.copy(
+                                articleDeleted = true
+                            )
+                        }
+                    }//end else
+
+                }//end collectLatest
+
+            }
+            catch (ex: Exception) {
+                ex.message?.let { Log.d("ERROR", it) }
+            }
 
         }//end coroutine builder scope
 

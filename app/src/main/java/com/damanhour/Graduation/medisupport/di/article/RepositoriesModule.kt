@@ -1,5 +1,6 @@
 package com.damanhour.Graduation.medisupport.di.article
 
+import com.example.article.data.repository.execution.ArticleRepositoryHelper
 import com.example.article.data.repository.execution.ArticleRepositoryImpl
 import com.example.article.data.source.remote.requests.ArticleRequest
 import com.example.article.domain.mapper.declarations.child.IArticleDtoToArticleEntityMapper
@@ -22,16 +23,31 @@ object RepositoriesModule {
         articleRequest: ArticleRequest,
         wrapper: ResponseWrapper,
         localDatabase: MediSupportDatabase,
-        articleDtoToArticleEntityMapper: IArticleDtoToArticleEntityMapper
+        articleRepositoryHelper: ArticleRepositoryHelper
     ): IArticleRepository {
 
         return ArticleRepositoryImpl(
             articleRequest = articleRequest,
             wrapper = wrapper,
             localDatabase = localDatabase,
-            articleDtoToArticleEntityMapper = articleDtoToArticleEntityMapper
+            articleRepositoryHelper = articleRepositoryHelper
         )
 
     }//end provideArticleRepository
+
+
+    @Provides
+    @Singleton
+    fun provideArticleRepositoryHelper(
+        localDatabase: MediSupportDatabase,
+        articleDtoToArticleEntityMapper: IArticleDtoToArticleEntityMapper
+    ): ArticleRepositoryHelper {
+
+        return ArticleRepositoryHelper(
+            localDatabase = localDatabase,
+            articleDtoToArticleEntityMapper = articleDtoToArticleEntityMapper
+        )
+
+    }//end provideArticleRepositoryHelper
 
 }//end RepositoriesModule

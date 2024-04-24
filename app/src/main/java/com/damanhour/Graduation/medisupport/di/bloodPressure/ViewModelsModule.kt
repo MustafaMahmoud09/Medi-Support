@@ -1,0 +1,72 @@
+package com.damanhour.Graduation.medisupport.di.bloodPressure
+
+import com.example.blood.pressure.domain.usecase.declarations.IAddBloodPressureRecordUseCase
+import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekDiastolicRecordsUseCase
+import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekSystolicRecordsUseCase
+import com.example.blood.pressure.domain.usecase.declarations.IGetLatestBloodPressureMeasurementUserCase
+import com.example.bloodpressure.presentation.uiState.viewModel.BloodPressureActivityViewModel
+import com.example.bloodpressure.presentation.uiState.viewModel.RecordBloodPressureViewModel
+import com.example.bloodpressure.presentation.uiState.viewModel.StatisticsBloodPressureViewModel
+import com.example.libraries.shered.logic.usecase.declarations.IGetMonthDaysUseCase
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+
+@Module
+@InstallIn(SingletonComponent::class)
+object ViewModelsModule {
+
+    @Provides
+    fun provideRecordBloodPressureViewModel(
+        addBloodPressureRecordUseCase: IAddBloodPressureRecordUseCase,
+        getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
+        getMonthDaysUseCase: IGetMonthDaysUseCase
+    ): RecordBloodPressureViewModel {
+
+        return RecordBloodPressureViewModel(
+            addBloodPressureRecordUseCase = addBloodPressureRecordUseCase,
+            getMonthDaysUseCase = getMonthDaysUseCase,
+            getLatestBloodPressureMeasurementUserCase = getLatestBloodPressureMeasurementUserCase
+        )
+
+    }//end provideRecordBloodPressureViewModel
+
+
+    @Provides
+    fun provideStatisticsBloodPressureViewModel(
+        getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
+        getMonthDaysUseCase: IGetMonthDaysUseCase,
+        getLastWeekSystolicRecordsUseCase: IGetLastWeekSystolicRecordsUseCase,
+        getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase
+    ): StatisticsBloodPressureViewModel {
+
+        return StatisticsBloodPressureViewModel(
+            getMonthDaysUseCase = getMonthDaysUseCase,
+            getLatestBloodPressureMeasurementUserCase = getLatestBloodPressureMeasurementUserCase,
+            getLastWeekSystolicRecordsUseCase = getLastWeekSystolicRecordsUseCase,
+            getLastWeekDiastolicRecordsUseCase = getLastWeekDiastolicRecordsUseCase
+        )
+
+    }//end provideStatisticsBloodPressureViewModel
+
+
+    @Provides
+    fun provideBloodPressureActivityViewModel(
+        getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
+        getMonthDaysUseCase: IGetMonthDaysUseCase,
+        getLastWeekSystolicRecordsUseCase: IGetLastWeekSystolicRecordsUseCase,
+        getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase
+    ): BloodPressureActivityViewModel {
+
+        return BloodPressureActivityViewModel(
+            getMonthDaysUseCase = getMonthDaysUseCase,
+            getLatestBloodPressureMeasurementUserCase = getLatestBloodPressureMeasurementUserCase,
+            getLastWeekSystolicRecordsUseCase = getLastWeekSystolicRecordsUseCase,
+            getLastWeekDiastolicRecordsUseCase = getLastWeekDiastolicRecordsUseCase
+        )
+
+    }//end provideStatisticsBloodPressureViewModel
+
+
+}//end ViewModelsModule

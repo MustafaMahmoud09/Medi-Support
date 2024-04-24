@@ -1,9 +1,10 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.latestMeasurement
+package com.example.blood.pressure.domain.dto.declarations.latestMeasurement
 
 
-import com.google.gson.annotations.SerializedName
+interface ILatestBloodPressureResponseDto {
 
-data class LatestBloodPressureResponseDto(
-    @SerializedName("data")
-    val latestBloodPressureDto: LatestBloodPressureDto?
-)
+    val data: ILatestBloodPressureDto?
+
+    val message: String?
+
+}//end LatestBloodPressureResponseDto

@@ -1,6 +1,7 @@
 package com.example.article.presentation.uiElement.components.items
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,10 +47,10 @@ internal fun ArticleSection(
             .clip(
                 shape = shape
             )
-            .placeholder(
-                visible = placeHolderState,
-                color = placeHolderColor
-            )
+//            .placeholder(
+//                visible = placeHolderState,
+//                color = placeHolderColor
+//            )
             .border(
                 width = borderSize.dp,
                 color = borderColor,
@@ -68,6 +69,8 @@ internal fun ArticleSection(
             text = article.title,
             size = dimen.dimen_2,
             fontColor = theme.black,
+            textAlign = null,
+            maxLines = 1,
             modifier = Modifier
                 .constrainAs(titleId) {
                     start.linkTo(
@@ -78,7 +81,16 @@ internal fun ArticleSection(
                         parent.top,
                         dimen.dimen_1_5.dp
                     )
+                    end.linkTo(
+                        parent.end,
+                        dimen.dimen_1_25.dp
+                    )
+                    width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
         EndIconButtonRadiusView(
@@ -110,22 +122,49 @@ internal fun ArticleSection(
                     width = buttonWidth.dp,
                     height = buttonHeight.dp
                 )
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
-        ServerLoadImageView(
-            dimen = dimen,
-            theme = theme,
-            imageUrl = article.image,
-            modifier = Modifier
-                .constrainAs(imageId) {
-                    start.linkTo(parent.start)
-                    end.linkTo(guideLineStart45P)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    height = Dimension.fillToConstraints
-                    width = Dimension.fillToConstraints
-                }
-        )
+        if (placeHolderState) {
+
+            Spacer(
+                modifier = Modifier
+                    .constrainAs(imageId) {
+                        start.linkTo(parent.start)
+                        end.linkTo(guideLineStart45P)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        height = Dimension.fillToConstraints
+                        width = Dimension.fillToConstraints
+                    }
+                    .placeholder(
+                        visible = placeHolderState,
+                        color = placeHolderColor
+                    )
+            )
+
+        }//end if
+        else {
+
+            ServerLoadImageView(
+                dimen = dimen,
+                theme = theme,
+                imageUrl = article.image,
+                modifier = Modifier
+                    .constrainAs(imageId) {
+                        start.linkTo(parent.start)
+                        end.linkTo(guideLineStart45P)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        height = Dimension.fillToConstraints
+                        width = Dimension.fillToConstraints
+                    }
+            )
+
+        }//end else
 
     }//end ConstraintLayout
 

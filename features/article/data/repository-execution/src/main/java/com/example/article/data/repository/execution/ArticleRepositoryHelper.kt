@@ -79,6 +79,31 @@ class ArticleRepositoryHelper(
                 }//end if
 
             }//end if
+            else{
+
+                //if current page is first page
+                if (articles.meta?.currentPage == 1) {
+
+                    //execute delete here
+                    localDatabase.articleDao().deleteArticlesFromId(
+                        startId = 0
+                    )
+
+                }//end if
+                else{
+
+                    val prevArticles = localDatabase.articleDao().selectPageArticle(
+                        page = articles.meta?.currentPage!! - 1,
+                        pageSize = 10
+                    )
+
+                    localDatabase.articleDao().deleteArticlesFromId(
+                        startId = prevArticles[prevArticles.size - 1].id
+                    )
+
+                }//end else
+
+            }//end else
 
         }//end try
         catch (ex: Exception) {

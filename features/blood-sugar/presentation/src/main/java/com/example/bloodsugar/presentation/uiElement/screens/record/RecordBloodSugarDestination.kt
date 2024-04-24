@@ -5,6 +5,7 @@ package com.example.bloodsugar.presentation.uiElement.screens.record
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.bloodsugar.presentation.uiElement.screens.statistics.STATISTICS_BLOOD_SUGAR_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
@@ -15,7 +16,13 @@ fun NavHostController.navigateToRecordBloodSugarDestination() {
 
     navigate(
         route = RECORD_BLOOD_SUGAR_DESTINATION_ROUTE
-    )
+    ){
+        popUpTo(
+            route = STATISTICS_BLOOD_SUGAR_DESTINATION_ROUTE
+        ){
+            inclusive = true
+        }
+    }
 
 }//navigateToRecordBMIDestination
 

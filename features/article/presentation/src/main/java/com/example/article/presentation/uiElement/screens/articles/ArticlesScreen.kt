@@ -68,7 +68,7 @@ private fun ArticlesContent(
                 color = theme.background
             )
     ) {
-        val (backButtonId, titleId, articlesId) = createRefs()
+        val (backButtonId, titleId, articlesId, placeHolderArticlesId) = createRefs()
 
         IconButtonView(
             dimen = dimen,
@@ -119,7 +119,7 @@ private fun ArticlesContent(
                 )
             ),
             modifier = Modifier
-                .constrainAs(articlesId) {
+                .constrainAs(placeHolderArticlesId) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     top.linkTo(

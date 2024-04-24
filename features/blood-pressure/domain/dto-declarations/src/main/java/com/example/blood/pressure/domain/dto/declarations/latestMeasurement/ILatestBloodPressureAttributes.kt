@@ -1,23 +1,22 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.latestMeasurement
+package com.example.blood.pressure.domain.dto.declarations.latestMeasurement
 
 
-import com.google.gson.annotations.SerializedName
+interface ILatestBloodPressureAttributes {
 
-data class Attributes(
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("day-name")
-    val dayName: String?,
-    @SerializedName("diastolic")
-    val diastolic: Int?,
-    @SerializedName("pressure_advice_advice")
-    val pressureAdviceAdvice: String?,
-    @SerializedName("pressure_advice_id")
-    val pressureAdviceId: String?,
-    @SerializedName("pressure_advice_key")
-    val pressureAdviceKey: String?,
-    @SerializedName("systolic")
-    val systolic: Int?,
-    @SerializedName("user_id")
-    val userId: String?
-)
+    val createdAt: String?
+
+    val dayName: String?
+
+    val diastolic: Int?
+
+    val pressureAdviceAdvice: String?
+
+    val pressureAdviceId: String?
+
+    val pressureAdviceKey: String?
+
+    val systolic: Int?
+
+    val userId: Long?
+
+}//end ILatestBloodPressureAttributes

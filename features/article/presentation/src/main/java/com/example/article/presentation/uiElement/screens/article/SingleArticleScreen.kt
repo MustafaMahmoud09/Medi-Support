@@ -148,10 +148,13 @@ private fun SingleArticleContent(
                         text = uiState.article.title,
                         size = dimen.dimen_2,
                         color = theme.redDark,
+                        textAlign = null,
                         modifier = Modifier
                             .constrainAs(categoryId) {
                                 start.linkTo(parent.start)
                                 top.linkTo(parent.top)
+                                end.linkTo(parent.end)
+                                width = Dimension.fillToConstraints
                             }//end constrainAs
                     )
 
@@ -199,25 +202,6 @@ private fun SingleArticleContent(
                                 width = Dimension.fillToConstraints
                             }
                     )
-
-//                    TextNormalView(
-//                        theme = theme,
-//                        dimen = dimen,
-//                        text = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-//                        size = dimen.dimen_2,
-//                        fontColor = theme.grayDark,
-//                        textAlign = null,
-//                        modifier = Modifier
-//                            .constrainAs(bodyId) {
-//                                start.linkTo(parent.start)
-//                                end.linkTo(parent.end)
-//                                top.linkTo(
-//                                    titleArticleId.bottom,
-//                                    dimen.dimen_1.dp
-//                                )
-//                                width = Dimension.fillToConstraints
-//                            }
-//                    )
 
                 }//end ConstraintLayout
 

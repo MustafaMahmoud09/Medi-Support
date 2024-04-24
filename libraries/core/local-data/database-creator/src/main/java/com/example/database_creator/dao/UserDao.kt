@@ -89,4 +89,16 @@ interface UserDao {
     )
     suspend fun updateUsersAuthCount()
 
+
+    //TODO:: FUNCTION FOR PROVIDE THE USER HAVE NOW ACCESS TOKEN
+    @Query(
+        "SELECT * FROM ${
+            UserInfo.USER_TABLE_NAME
+        } WHERE ${
+            UserInfo.TOKEN_COLUMN_NAME
+        } = :token " +
+                "LIMIT 1"
+    )
+    suspend fun selectUserByAccessToken(token: String): UserEntity
+
 }//end UserDao

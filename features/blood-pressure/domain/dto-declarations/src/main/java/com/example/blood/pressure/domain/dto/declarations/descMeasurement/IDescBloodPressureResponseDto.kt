@@ -1,13 +1,12 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.descMeasurement
+package com.example.blood.pressure.domain.dto.declarations.descMeasurement
 
 
-import com.google.gson.annotations.SerializedName
+interface IDescBloodPressureResponseDto{
 
-data class DescBloodPressureResponseDto(
-    @SerializedName("data")
-    val `data`: Map<String, Long>?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val `data`: Map<String, Long>?
+
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end IDescBloodPressureResponseDto

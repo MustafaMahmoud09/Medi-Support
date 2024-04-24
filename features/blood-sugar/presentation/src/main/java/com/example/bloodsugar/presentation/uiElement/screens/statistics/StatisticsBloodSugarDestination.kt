@@ -28,7 +28,7 @@ fun NavHostController.navigateToStatisticsBloodSugarDestination() {
 
         //pop record bmi destination from back stack
         popUpTo(
-            route = com.example.bloodsugar.presentation.uiElement.screens.record.RECORD_BLOOD_SUGAR_DESTINATION_ROUTE
+            route = RECORD_BLOOD_SUGAR_DESTINATION_ROUTE
         ) {
             inclusive = true
         }//end popUpTo

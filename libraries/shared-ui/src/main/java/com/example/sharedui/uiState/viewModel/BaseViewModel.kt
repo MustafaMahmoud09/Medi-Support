@@ -1,6 +1,8 @@
 package com.example.sharedui.uiState.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.patrykandpatrick.vico.core.entry.ChartEntryModel
+import com.patrykandpatrick.vico.core.entry.entryModelOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -28,6 +30,38 @@ abstract class BaseViewModel : ViewModel() {
         return timeSelectedValue
 
     }//end formatLocalTime
+
+    fun setChartEntries(data: List<Long>): ChartEntryModel {
+
+        return when (data.size) {
+            7 -> {
+                entryModelOf(data[0], data[1], data[2], data[3], data[4], data[5], data[6])
+            }//end if
+            6 -> {
+                entryModelOf(data[0], data[1], data[2], data[3], data[4], data[5])
+            }
+            5 -> {
+                entryModelOf(data[0], data[1], data[2], data[3], data[4])
+            }
+            4 -> {
+                entryModelOf(data[0], data[1], data[2], data[3])
+            }
+            3 -> {
+                entryModelOf(data[0], data[1], data[2])
+            }
+            2 -> {
+                entryModelOf(data[0], data[1])
+            }
+            1 -> {
+                entryModelOf(data[0])
+            }
+            else -> {
+                return entryModelOf(0f)
+            }
+        }
+
+
+    }//end setChartEntries
 
     override fun onCleared() {
         super.onCleared()

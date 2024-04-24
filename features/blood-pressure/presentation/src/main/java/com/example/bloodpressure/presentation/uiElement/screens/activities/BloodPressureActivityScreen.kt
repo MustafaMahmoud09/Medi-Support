@@ -6,33 +6,45 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bloodpressure.presentation.uiElement.components.items.BloodPressureLineChartSection
+import com.example.bloodpressure.presentation.uiState.state.BloodPressureActivityUiState
+import com.example.bloodpressure.presentation.uiState.viewModel.BloodPressureActivityViewModel
 import com.example.sharedui.uiElement.components.items.SomeHistorySection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
-import com.patrykandpatrick.vico.core.entry.entryModelOf
+
 
 @Composable
 fun BloodPressureActivityScreen(
+    viewModel: BloodPressureActivityViewModel = hiltViewModel(),
     theme: CustomTheme,
     dimen: CustomDimen,
     navigateToHistoryDestination: () -> Unit
 ) {
+    //get screen state here
+    val state = viewModel.state.collectAsState()
 
     BloodPressureActivityContent(
         theme = theme,
         dimen = dimen,
-        onClickSeeAll = navigateToHistoryDestination
+        onClickSeeAll = navigateToHistoryDestination,
+        uiState = state.value,
+        daysColumnState = rememberLazyListState()
     )
 }//end BloodPressureScreen
 
@@ -40,7 +52,9 @@ fun BloodPressureActivityScreen(
 private fun BloodPressureActivityContent(
     dimen: CustomDimen,
     theme: CustomTheme,
-    onClickSeeAll: () -> Unit
+    onClickSeeAll: () -> Unit,
+    uiState: BloodPressureActivityUiState,
+    daysColumnState: LazyListState
 ) {
 
     //create screen container here
@@ -70,6 +84,7 @@ private fun BloodPressureActivityContent(
 
                 //create row contain on days here
                 LazyRow(
+                    state = daysColumnState,
                     contentPadding = PaddingValues(
                         horizontal = dimen.dimen_1_5.dp
                     ),
@@ -87,15 +102,16 @@ private fun BloodPressureActivityContent(
 
                     //create days here
                     items(
-                        count = 7
-                    ) {
+                        count = uiState.monthDays.size
+                    ) { count ->
 
                         //create single day here
                         DaySection(
                             dimen = dimen,
-                            dayName = "Wed",
-                            dayNumber = "17",
-                            theme = theme
+                            theme = theme,
+                            dayName = uiState.monthDays[count].name,
+                            dayNumber = "${uiState.monthDays[count].number}",
+                            toDay = uiState.monthDays[count].today
                         )
 
                     }//end items
@@ -103,14 +119,20 @@ private fun BloodPressureActivityContent(
                 }//end LazyRow
 
                 //create blood pressure chart here
-                com.example.bloodpressure.presentation.uiElement.components.items.BloodPressureLineChartSection(
+                BloodPressureLineChartSection(
                     theme = theme,
                     dimen = dimen,
-                    xAxisData = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
-                    firstData = entryModelOf(105f, 110f, 90f, 120f, 100f, 85f, 100f),
-                    maxValueForFirstData = 330f,
-                    secondData = entryModelOf(60f, 60f, 70f, 80f, 75f, 60f, 80f),
-                    maxValueForSecondData = 330f,
+                    xAxisData = if (uiState.systolicResult.xAxisData.isNotEmpty()) {
+                        uiState.systolicResult.xAxisData
+                    } else if (uiState.diastolicResult.xAxisData.isNotEmpty()) {
+                        uiState.diastolicResult.xAxisData
+                    } else {
+                        listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                    },
+                    firstData = uiState.systolicResult.dataResult,
+                    maxValueForFirstData = uiState.systolicResult.maxValue.toFloat(),
+                    secondData = uiState.diastolicResult.dataResult,
+                    maxValueForSecondData = uiState.diastolicResult.maxValue.toFloat(),
                     titleForFirstChart = stringResource(
                         R.string.upper_bound
                     ),
@@ -165,8 +187,12 @@ private fun BloodPressureActivityContent(
                 RecommendedSection(
                     dimen = dimen,
                     theme = theme,
-                    equationText = "How to loss Sugar?",
-                    responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    equationText = stringResource(R.string.how_to_control_blood_pressure),
+                    responseText = if (uiState.adviceBloodPressureModel != null) {
+                        uiState.adviceBloodPressureModel.advice
+                    } else {
+                        ""
+                    },
                     modifier = Modifier
                         .constrainAs(recommendedId) {
                             start.linkTo(
@@ -190,5 +216,11 @@ private fun BloodPressureActivityContent(
         }//end item
 
     }//end LazyColumn
+
+    LaunchedEffect(key1 = true) {
+
+        daysColumnState.scrollToItem(uiState.currentDayNumber - 1)
+
+    }//end LaunchedEffect
 
 }//end HeartRateScreen

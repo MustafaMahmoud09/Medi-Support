@@ -47,9 +47,24 @@
             <option value="$PROJECT_DIR$/features/auth/presentation" />
             <option value="$PROJECT_DIR$/features/blood-pressure" />
             <option value="$PROJECT_DIR$/features/blood-pressure/data" />
-            <option value="$PROJECT_DIR$/features/blood-pressure/data/repository" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/data-source" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/data-source/local-data" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/data-source/local-data/data-access-object" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/data-source/local-data/entity-execution" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/data-source/remote-data" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/data-source/remote-data/dto-execution" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/data-source/remote-data/requests" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/data/repository-execution" />
             <option value="$PROJECT_DIR$/features/blood-pressure/domain" />
-            <option value="$PROJECT_DIR$/features/blood-pressure/domain/use-case" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/domain/domain-model" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/domain/dto-declarations" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/domain/entity-declarations" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/domain/mapper-declarations" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/domain/repository-declarations" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/domain/usecase-declarations" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/domain/usecase-execution" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/mapper-execution" />
+            <option value="$PROJECT_DIR$/features/blood-pressure/pagination" />
             <option value="$PROJECT_DIR$/features/blood-pressure/presentation" />
             <option value="$PROJECT_DIR$/features/blood-sugar" />
             <option value="$PROJECT_DIR$/features/blood-sugar/data" />
@@ -168,6 +183,10 @@
             <option value="$PROJECT_DIR$/libraries/core/remote-database/response-wrapper" />
             <option value="$PROJECT_DIR$/libraries/open-cv" />
             <option value="$PROJECT_DIR$/libraries/shared-ui" />
+            <option value="$PROJECT_DIR$/libraries/shered-logic" />
+            <option value="$PROJECT_DIR$/libraries/shered-logic/domain-model" />
+            <option value="$PROJECT_DIR$/libraries/shered-logic/usecase-execution" />
+            <option value="$PROJECT_DIR$/libraries/shered-logic/usecases-declarations" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

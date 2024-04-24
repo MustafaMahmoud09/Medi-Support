@@ -20,11 +20,11 @@ class ResponseWrapper {
                 element = Status.Loading
             )
 
-            //make request
-            val response = request()
-
             //if the response is successful
             try {
+
+                //make request
+                val response = request()
 
                 //emit success status
                 send(

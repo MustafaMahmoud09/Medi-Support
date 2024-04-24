@@ -79,10 +79,36 @@
       <module name="MediSupport.features.auth.mapper-execution.main" target="17" />
       <module name="MediSupport.features.auth.mapper-execution.test" target="17" />
       <module name="MediSupport.features.auth.presentation" target="17" />
-      <module name="MediSupport.features.blood-pressure.data.repository" target="17" />
-      <module name="MediSupport.features.blood-pressure.domain.use-case" target="17" />
+      <module name="MediSupport.features.blood-pressure.data.data-source.local-data.data-access-object" target="17" />
+      <module name="MediSupport.features.blood-pressure.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.blood-pressure.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.blood-pressure.data.data-source.remote-data.requests" target="17" />
+      <module name="MediSupport.features.blood-pressure.data.repository-execution" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.domain-model" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.blood-pressure.domain.use-case.main" target="17" />
       <module name="MediSupport.features.blood-pressure.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.blood-pressure.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.blood-pressure.mapper-execution" target="17" />
+      <module name="MediSupport.features.blood-pressure.pagination" target="17" />
       <module name="MediSupport.features.blood-pressure.presentation" target="17" />
       <module name="MediSupport.features.blood-sugar.data.repository" target="17" />
       <module name="MediSupport.features.blood-sugar.domain.use-case" target="17" />
@@ -248,6 +274,15 @@
       <module name="MediSupport.libraries.shared-entities.entity-interfaces.main" target="17" />
       <module name="MediSupport.libraries.shared-entities.entity-interfaces.test" target="17" />
       <module name="MediSupport.libraries.shared-ui" target="17" />
+      <module name="MediSupport.libraries.shered-logic.domain-model" target="17" />
+      <module name="MediSupport.libraries.shered-logic.domain-model.main" target="17" />
+      <module name="MediSupport.libraries.shered-logic.domain-model.test" target="17" />
+      <module name="MediSupport.libraries.shered-logic.usecase-execution" target="17" />
+      <module name="MediSupport.libraries.shered-logic.usecase-execution.main" target="17" />
+      <module name="MediSupport.libraries.shered-logic.usecase-execution.test" target="17" />
+      <module name="MediSupport.libraries.shered-logic.usecases-declarations" target="17" />
+      <module name="MediSupport.libraries.shered-logic.usecases-declarations.main" target="17" />
+      <module name="MediSupport.libraries.shered-logic.usecases-declarations.test" target="17" />
       <module name="MediSupport.presentation.about" target="17" />
       <module name="MediSupport.presentation.activity" target="17" />
       <module name="MediSupport.presentation.article" target="17" />

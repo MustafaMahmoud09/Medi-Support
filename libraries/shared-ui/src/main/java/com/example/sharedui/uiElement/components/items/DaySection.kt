@@ -1,5 +1,6 @@
 package com.example.sharedui.uiElement.components.items
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,9 @@ fun DaySection(
     borderColor: Color = theme.redDarkTR50,
     textDayColor: Color = theme.black,
     textDaySize: Float = dimen.dimen_1_75,
+    toDayBackground: Color = theme.redDark,
+    todayTextColor: Color = theme.background,
+    toDay: Boolean = false,
     modifier: Modifier = Modifier
 ) {
 
@@ -65,7 +69,18 @@ fun DaySection(
                 .appBorder(
                     shape = shape,
                     borderWidth = borderWidth,
-                    borderColor = borderColor,
+                    borderColor = if (!toDay) {
+                        borderColor
+                    } else {
+                        toDayBackground
+                    },
+                )
+                .background(
+                    color = if (!toDay) {
+                        theme.background
+                    } else {
+                        toDayBackground
+                    }
                 ),
             contentAlignment = Alignment.Center
         ) {
@@ -76,7 +91,11 @@ fun DaySection(
                 dimen = dimen,
                 text = dayNumber,
                 size = textDaySize,
-                fontColor = textDayColor
+                fontColor = if (!toDay) {
+                    textDayColor
+                } else {
+                    todayTextColor
+                }
             )
 
         }//end Box

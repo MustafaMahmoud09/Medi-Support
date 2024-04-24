@@ -1,4 +1,9 @@
 package com.example.libraries.shered.logic.usecase.declarations
 
-class MyClass {
-}
+import com.example.libraries.shared.logic.domain.model.DayModel
+
+interface IGetMonthDaysUseCase {
+
+    operator fun invoke(): List<DayModel>
+
+}//end IGetMonthDaysUseCase

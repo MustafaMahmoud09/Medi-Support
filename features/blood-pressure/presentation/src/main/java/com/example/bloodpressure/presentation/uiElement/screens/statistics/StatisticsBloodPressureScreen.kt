@@ -7,21 +7,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bloodpressure.presentation.uiElement.components.items.BloodPressureLineChartSection
 import com.example.bloodpressure.presentation.uiElement.components.items.TypeStateSection
+import com.example.bloodpressure.presentation.uiState.state.StatisticsBloodPressureUiState
+import com.example.bloodpressure.presentation.uiState.viewModel.StatisticsBloodPressureViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.LineView
 import com.example.sharedui.uiElement.components.composable.MultiColorTextView
 import com.example.sharedui.uiElement.components.items.DaySection
-import com.example.bloodpressure.presentation.uiElement.components.items.BloodPressureLineChartSection
 import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.components.items.IconTextSection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
@@ -31,23 +38,30 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.google.accompanist.placeholder.placeholder
 import com.patrykandpatrick.vico.compose.axis.axisGuidelineComponent
 import com.patrykandpatrick.vico.compose.component.shape.dashedShape
 import com.patrykandpatrick.vico.core.component.shape.DashedShape
 import com.patrykandpatrick.vico.core.component.shape.Shapes
 import com.patrykandpatrick.vico.core.dimensions.emptyDimensions
-import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
 internal fun StatisticsBloodPressureScreen(
+    viewModel: StatisticsBloodPressureViewModel = hiltViewModel(),
     popStatisticsBloodPressureDestination: () -> Unit,
     navigateToRecordBloodPressureDestination: () -> Unit
 ) {
 
+    //get screen state here
+    val state = viewModel.state.collectAsState()
+
     StatisticsBloodPressureContent(
         onClickOnBackButton = popStatisticsBloodPressureDestination,
-        onClickOnAddRecordButton = navigateToRecordBloodPressureDestination
+        onClickOnAddRecordButton = navigateToRecordBloodPressureDestination,
+        uiState = state.value,
+        daysColumnState = rememberLazyListState()
     )
+
 }//end StatisticsBloodPressureScreen
 
 @Composable
@@ -56,6 +70,8 @@ private fun StatisticsBloodPressureContent(
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
     onClickOnAddRecordButton: () -> Unit,
+    uiState: StatisticsBloodPressureUiState,
+    daysColumnState: LazyListState,
 ) {
 
     //create base screen for define status bar color and navigation bar color
@@ -166,7 +182,9 @@ private fun StatisticsBloodPressureContent(
                         IconTextSection(
                             theme = theme,
                             dimen = dimen,
-                            text = "22-11-2023",
+                            text = if (uiState.adviceBloodPressureModel != null) {
+                                uiState.adviceBloodPressureModel.createdAt
+                            } else "15-03-2002",
                             fontFamily = robotoMedium,
                             fontSize = dimen.dimen_2,
                             fontColor = theme.hintIconBottom,
@@ -183,14 +201,26 @@ private fun StatisticsBloodPressureContent(
                                         dimen.dimen_2.dp
                                     )
                                     top.linkTo(parent.top)
-                                }//end constrainAs
+                                }
+                                .placeholder(
+                                    visible = uiState.adviceBloodPressureModel == null,
+                                    color = theme.background
+                                )
                         )
 
                         //create average section here
                         MultiColorTextView(
                             dimen = dimen,
                             theme = theme,
-                            parentText = "${stringResource(R.string.average)} 140/90 mmHG",
+                            parentText = "${stringResource(R.string.average)} ${
+                                if (uiState.adviceBloodPressureModel != null) {
+                                    uiState.adviceBloodPressureModel.systolic
+                                } else ""
+                            }/${
+                                if (uiState.adviceBloodPressureModel != null) {
+                                    uiState.adviceBloodPressureModel.diastolic
+                                } else ""
+                            } mmHG",
                             subTexts = arrayOf(
                                 stringResource(
                                     R.string.average
@@ -217,13 +247,20 @@ private fun StatisticsBloodPressureContent(
                                     )
                                     width = Dimension.fillToConstraints
                                 }
+                                .placeholder(
+                                    visible = uiState.adviceBloodPressureModel == null,
+                                    color = theme.background
+                                )
                         )
 
                         //create type state user section here
-                        com.example.bloodpressure.presentation.uiElement.components.items.TypeStateSection(
+                        TypeStateSection(
                             theme = theme,
                             dimen = dimen,
-                            type = "Normal",
+                            type = if (uiState.adviceBloodPressureModel != null) {
+                                uiState.adviceBloodPressureModel.type
+                            } else "",
+                            placeHolderState = uiState.adviceBloodPressureModel == null,
                             modifier = Modifier
                                 .constrainAs(typeStateId) {
                                     top.linkTo(
@@ -236,11 +273,12 @@ private fun StatisticsBloodPressureContent(
                                     )
                                     start.linkTo(guideFromEnd35P)
                                     width = Dimension.fillToConstraints
-                                }//end constrainAs
+                                }
                         )
 
                         //create row contain on days here
                         LazyRow(
+                            state = daysColumnState,
                             contentPadding = PaddingValues(
                                 horizontal = dimen.dimen_1_75.dp
                             ),
@@ -261,15 +299,16 @@ private fun StatisticsBloodPressureContent(
 
                             //create days here
                             items(
-                                count = 7
-                            ) {
+                                count = uiState.monthDays.size
+                            ) { count ->
 
                                 //create single day here
                                 DaySection(
                                     dimen = dimen,
-                                    dayName = "Wed",
-                                    dayNumber = "17",
-                                    theme = theme
+                                    theme = theme,
+                                    dayName = uiState.monthDays[count].name,
+                                    dayNumber = "${uiState.monthDays[count].number}",
+                                    toDay = uiState.monthDays[count].today
                                 )
 
                             }//end items
@@ -295,14 +334,18 @@ private fun StatisticsBloodPressureContent(
                         )
 
                         //create blood pressure chart here
-                        com.example.bloodpressure.presentation.uiElement.components.items.BloodPressureLineChartSection(
+                        BloodPressureLineChartSection(
                             theme = theme,
                             dimen = dimen,
-                            xAxisData = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
-                            firstData = entryModelOf(105f, 110f, 90f, 120f, 100f, 85f, 100f),
-                            maxValueForFirstData = 330f,
-                            secondData = entryModelOf(60f, 60f, 70f, 80f, 75f, 60f, 80f),
-                            maxValueForSecondData = 330f,
+                            xAxisData = if (uiState.systolicResult.xAxisData.size > uiState.diastolicResult.xAxisData.size) {
+                                uiState.systolicResult.xAxisData
+                            } else {
+                                uiState.diastolicResult.xAxisData
+                            },
+                            firstData = uiState.systolicResult.dataResult,
+                            maxValueForFirstData = uiState.systolicResult.maxValue.toFloat(),
+                            secondData = uiState.diastolicResult.dataResult,
+                            maxValueForSecondData = uiState.diastolicResult.maxValue.toFloat(),
                             titleForFirstChart = stringResource(
                                 R.string.upper_bound
                             ),
@@ -349,8 +392,12 @@ private fun StatisticsBloodPressureContent(
                         RecommendedSection(
                             dimen = dimen,
                             theme = theme,
-                            equationText = "How to loss Sugar?",
-                            responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                            equationText = stringResource(R.string.how_to_control_blood_pressure),
+                            responseText = if (uiState.adviceBloodPressureModel != null) {
+                                uiState.adviceBloodPressureModel.advice
+                            } else {
+                                ""
+                            },
                             modifier = Modifier
                                 .constrainAs(recommendedId) {
                                     start.linkTo(
@@ -378,5 +425,11 @@ private fun StatisticsBloodPressureContent(
         }//end ConstraintLayout
 
     }//end BaseScreen
+
+    LaunchedEffect(key1 = true) {
+
+        daysColumnState.scrollToItem(uiState.currentDayNumber - 1)
+
+    }//end LaunchedEffect
 
 }//end StatisticsBloodPressureContent

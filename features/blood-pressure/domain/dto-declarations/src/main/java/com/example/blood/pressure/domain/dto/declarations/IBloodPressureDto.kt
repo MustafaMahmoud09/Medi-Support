@@ -1,9 +1,9 @@
 package com.example.blood.pressure.domain.dto.declarations.latestMeasurement
 
 
-interface ILatestBloodPressureDto {
+interface IAdviceBloodPressureDto {
 
-    val attributes: ILatestBloodPressureAttributes?
+    val attributes: IAdviceBloodPressureAttributes?
 
     val id: Long?
 

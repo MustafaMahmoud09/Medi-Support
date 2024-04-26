@@ -1,7 +1,7 @@
 package com.example.blood.pressure.domain.dto.declarations.latestMeasurement
 
 
-interface ILatestBloodPressureAttributes {
+interface IAdviceBloodPressureAttributes {
 
     val createdAt: String?
 

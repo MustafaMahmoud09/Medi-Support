@@ -19,9 +19,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bloodpressure.presentation.uiElement.components.items.BloodPressureLineChartSection
+import com.example.bloodpressure.presentation.uiElement.components.items.SomeHistorySection
 import com.example.bloodpressure.presentation.uiState.state.BloodPressureActivityUiState
 import com.example.bloodpressure.presentation.uiState.viewModel.BloodPressureActivityViewModel
-import com.example.sharedui.uiElement.components.items.SomeHistorySection
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
@@ -164,6 +164,7 @@ private fun BloodPressureActivityContent(
                 SomeHistorySection(
                     dimen = dimen,
                     theme = theme,
+                    historyRecords = uiState.lastHistoryRecords,
                     onClickSeeAll = onClickSeeAll,
                     modifier = Modifier
                         .constrainAs(someHistoryId) {

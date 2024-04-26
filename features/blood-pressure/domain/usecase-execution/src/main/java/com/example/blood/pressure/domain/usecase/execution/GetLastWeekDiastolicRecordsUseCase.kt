@@ -25,7 +25,7 @@ class GetLastWeekDiastolicRecordsUseCase(
             //make request for get latest diastolic measurements
             //collect the data and collect this data in new flow
             bloodPressureRepository
-                .getLatestDiastolicMeasurement().collect { status ->
+                .getDiastolicMeasurements().collect { status ->
 
                     //make condition on status result
                     when (status) {

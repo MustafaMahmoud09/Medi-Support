@@ -1,11 +1,11 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.adviceMeasurement
+package com.example.blood.pressure.data.source.remote.data.dto.execution
 
-import com.example.blood.pressure.domain.dto.declarations.latestMeasurement.IAdviceBloodPressureDto
+import com.example.blood.pressure.domain.dto.declarations.IBloodPressureDto
 import com.google.gson.annotations.SerializedName
 
-data class AdviceBloodPressureDto(
+data class BloodPressureDto(
     @SerializedName("attributes")
-    override val attributes: AdviceBloodPressureAttributes?,
+    override val attributes: BloodPressureAttributes?,
     @SerializedName("id")
     override val id: Long?
-) : IAdviceBloodPressureDto
+) : IBloodPressureDto

@@ -1,13 +1,12 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.pageMeasurement
+package com.example.blood.pressure.domain.dto.declarations.pageMeasurement
 
 
-import com.google.gson.annotations.SerializedName
+interface ILink {
 
-data class Link(
-    @SerializedName("active")
-    val active: Boolean?,
-    @SerializedName("label")
-    val label: String?,
-    @SerializedName("url")
+    val active: Boolean?
+
+    val label: String?
+
     val url: String?
-)
+
+}//end ILink

@@ -2,6 +2,7 @@ package com.example.bloodpressure.presentation.uiState.viewModel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.example.blood.pressure.domain.usecase.declarations.IGetLastHistoryRecordsUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekDiastolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekSystolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLatestBloodPressureMeasurementUserCase
@@ -25,7 +26,8 @@ class BloodPressureActivityViewModel @Inject constructor(
     private val getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
     private val getMonthDaysUseCase: IGetMonthDaysUseCase,
     private val getLastWeekSystolicRecordsUseCase: IGetLastWeekSystolicRecordsUseCase,
-    private val getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase
+    private val getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase,
+    private val getLastHistoryRecordsUseCase: IGetLastHistoryRecordsUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -47,6 +49,9 @@ class BloodPressureActivityViewModel @Inject constructor(
 
         //get Diastolic Blood Pressure Result
         onGetDiastolicBloodPressureResult()
+
+        //get last history blood pressure records
+        onGetLastHistoryBloodPressureRecords()
 
     }//end init
 
@@ -313,6 +318,31 @@ class BloodPressureActivityViewModel @Inject constructor(
         }//end coroutine scope
 
     }//end onGetLatestBloodPressureRecord
+
+
+    //function for get last history blood pressure records
+    private fun onGetLastHistoryBloodPressureRecords() {
+
+        //create coroutine scope
+        viewModelScope.launch(Dispatchers.IO) {
+
+            //make get Last History Records use case
+            //observe use case flow
+            //collect simple model data
+            getLastHistoryRecordsUseCase().collectLatest { bloodPressureRecords ->
+
+                //update last history records state
+                _state.update {
+                    it.copy(
+                        lastHistoryRecords = bloodPressureRecords
+                    )
+                }//end update
+
+            }//end collectLatest
+
+        }//end coroutine scope
+
+    }//end onGetLastHistoryBloodPressureRecord
 
 
     //function for get month days

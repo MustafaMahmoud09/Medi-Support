@@ -1,14 +1,14 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.pageMeasurement
+package com.example.blood.pressure.domain.dto.declarations.pageMeasurement
 
 
-import com.example.blood.pressure.data.source.remote.data.dto.execution.BloodPressureDto
-import com.google.gson.annotations.SerializedName
+import com.example.blood.pressure.domain.dto.declarations.IBloodPressureDto
 
-data class PageBloodPressureResponseDto(
-    @SerializedName("data")
-    val `data`: List<BloodPressureDto?>?,
-    @SerializedName("links")
-    val links: Links?,
-    @SerializedName("meta")
-    val meta: Meta?
-)
+interface IPageBloodPressureResponseDto {
+
+    val `data`: List<IBloodPressureDto?>?
+
+    val links: ILinks?
+
+    val meta: IMeta?
+
+}//end IPageBloodPressureResponseDto

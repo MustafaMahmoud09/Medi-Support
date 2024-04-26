@@ -1,15 +1,14 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.pageMeasurement
+package com.example.blood.pressure.domain.dto.declarations.pageMeasurement
 
 
-import com.google.gson.annotations.SerializedName
+interface ILinks {
 
-data class Links(
-    @SerializedName("first")
-    val first: String?,
-    @SerializedName("last")
-    val last: String?,
-    @SerializedName("next")
-    val next: String?,
-    @SerializedName("prev")
+    val first: String?
+
+    val last: String?
+
+    val next: String?
+
     val prev: Any?
-)
+
+}//end ILinks

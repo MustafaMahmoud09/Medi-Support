@@ -2,16 +2,16 @@ package com.example.blood.pressure.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.article.domain.model.TitleArticleModel
-import com.example.article.domain.usecase.declarations.IGetPageArticlesUseCase
+import com.example.blood.pressure.domain.model.SimpleBloodPressureModel
+import com.example.blood.pressure.domain.usecase.declarations.IGetPageHistoryRecordUseCase
 
-class ArticleDataSource(
-    private val getPageArticlesUseCase: ,
-) : PagingSource<Int, TitleArticleModel>() {
+class BloodPressureDataSource(
+    private val getPageHistoryRecordUseCase: IGetPageHistoryRecordUseCase,
+) : PagingSource<Int, SimpleBloodPressureModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, TitleArticleModel> {
+    ): LoadResult<Int, SimpleBloodPressureModel> {
 
         return try {
 
@@ -22,7 +22,7 @@ class ArticleDataSource(
             val pageSize = params.loadSize
 
             //get current page data here
-            val data = getPageArticlesUseCase(
+            val data = getPageHistoryRecordUseCase(
                 page = currentPageNumber,
                 pageSize = 10
             )
@@ -49,7 +49,7 @@ class ArticleDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, TitleArticleModel>
+        state: PagingState<Int, SimpleBloodPressureModel>
     ): Int? = null
 
 }//end RemindersDataSource

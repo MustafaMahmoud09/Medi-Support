@@ -1,23 +1,22 @@
-package com.example.blood.pressure.data.source.remote.data.dto.execution.pageMeasurement
+package com.example.blood.pressure.domain.dto.declarations.pageMeasurement
 
 
-import com.google.gson.annotations.SerializedName
+interface IMeta {
 
-data class Meta(
-    @SerializedName("current_page")
-    val currentPage: Int?,
-    @SerializedName("from")
-    val from: Int?,
-    @SerializedName("last_page")
-    val lastPage: Int?,
-    @SerializedName("links")
-    val links: List<Link?>?,
-    @SerializedName("path")
-    val path: String?,
-    @SerializedName("per_page")
-    val perPage: Int?,
-    @SerializedName("to")
-    val to: Int?,
-    @SerializedName("total")
+    val currentPage: Int?
+
+    val from: Int?
+
+    val lastPage: Int?
+
+    val links: List<ILink?>?
+
+    val path: String?
+
+    val perPage: Int?
+
+    val to: Int?
+
     val total: Int?
-)
+
+}//end IMeta

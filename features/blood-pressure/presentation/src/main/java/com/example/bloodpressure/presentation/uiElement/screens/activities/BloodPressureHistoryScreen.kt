@@ -61,14 +61,21 @@ private fun BloodPressureHistoryContent(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
+            .padding(
+                top = dimen.dimen_0_75.dp,
+                bottom = dimen.dimen_1.dp,
+                start = dimen.dimen_1.dp,
+                end = dimen.dimen_1.dp
+            )
             .background(
                 color = theme.background
             )
-            .padding(
-                top = dimen.dimen_1_5.dp,
-                bottom = dimen.dimen_2.dp,
-                start = dimen.dimen_2.dp,
-                end = dimen.dimen_2.dp
+            .appBorder(
+                shape = RoundedCornerShape(
+                    size = dimen.dimen_0_75.dp
+                ),
+                borderWidth = dimen.dimen_0_125,
+                borderColor = theme.redDark
             ),
     ) {
         //create ids for components here
@@ -89,22 +96,14 @@ private fun BloodPressureHistoryContent(
                 )
             ),
             modifier = Modifier
-                .fillMaxSize()
                 .constrainAs(historiesPlaceHolder) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    height = Dimension.fillToConstraints
                     width = Dimension.fillToConstraints
-                }
-                .background(
-                    color = theme.background
-                )
-                .appBorder(
-                    shape = RoundedCornerShape(
-                        size = dimen.dimen_0_75.dp
-                    ),
-                    borderWidth = dimen.dimen_0_125,
-                    borderColor = theme.redDark
-                ),
+                },
         ) {
 
             //create column contain on all histories here
@@ -122,7 +121,7 @@ private fun BloodPressureHistoryContent(
 
                 //create history items here
                 items(
-                    count = 20
+                    count = 10
                 ) {
 
                     //create single history here
@@ -167,22 +166,14 @@ private fun BloodPressureHistoryContent(
                 )
             ),
             modifier = Modifier
-                .fillMaxSize()
                 .constrainAs(histories) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    height = Dimension.fillToConstraints
                     width = Dimension.fillToConstraints
-                }
-                .background(
-                    color = theme.background
-                )
-                .appBorder(
-                    shape = RoundedCornerShape(
-                        size = dimen.dimen_0_75.dp
-                    ),
-                    borderWidth = dimen.dimen_0_125,
-                    borderColor = theme.redDark
-                ),
+                },
         ) {
 
             //create column contain on all histories here
@@ -202,7 +193,7 @@ private fun BloodPressureHistoryContent(
                 bloodPressureRecords?.let {
                     items(
                         count = it.itemCount
-                    ) {count ->
+                    ) { count ->
 
                         //create single history here
                         Box(

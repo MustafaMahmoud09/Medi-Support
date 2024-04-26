@@ -29,7 +29,7 @@ class LatestBloodPressureDtoToBloodPressureEntityMapper
             diastolic = obj.attributes?.diastolic?.toLong() ?: 0,
             advice = obj.attributes?.pressureAdviceAdvice ?: "",
             type = obj.attributes?.pressureAdviceKey ?: "",
-            createdAt = obj.attributes?.createdAt ?: ""
+            createdAt = obj.attributes?.createdAt?.substring(0, 10) ?: ""
         )
 
     }//end objectConvertor

@@ -6,9 +6,12 @@ import com.example.blood.pressure.domain.repository.declarations.IBloodPressureR
 import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekSystolicRecordsUseCase
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class GetLastWeekSystolicRecordsUseCase(
     private val bloodPressureRepository: IBloodPressureRepository,
@@ -16,11 +19,12 @@ class GetLastWeekSystolicRecordsUseCase(
 ) : IGetLastWeekSystolicRecordsUseCase {
 
     //function for provide last week Diastolic records
+    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun invoke()
             : Flow<Status<EffectResponse<List<ChartBloodPressureModel>>>> {
 
         //return stream of data contain on chart blood pressure model
-        return flow {
+        return channelFlow<Status<EffectResponse<List<ChartBloodPressureModel>>>> {
 
             //make request for get latest diastolic measurements
             //collect the data and collect this data in new flow
@@ -60,7 +64,7 @@ class GetLastWeekSystolicRecordsUseCase(
                                     ).reversed()
 
                                 //emit data to flow
-                                emit(
+                                trySend(
                                     Status.Success(
                                         data = EffectResponse(
                                             statusCode = 200,
@@ -73,7 +77,7 @@ class GetLastWeekSystolicRecordsUseCase(
                             else {
 
                                 //emit data to flow
-                                emit(
+                                trySend(
                                     Status.Success(
                                         data = EffectResponse(
                                             statusCode = status.toData()?.statusCode!!,
@@ -88,19 +92,19 @@ class GetLastWeekSystolicRecordsUseCase(
 
                         //if is error
                         is Status.Error -> {
-                            emit(status)
+                            trySend(status)
                         }//end error case
 
                         //if is loading
                         is Status.Loading -> {
-                            emit(status)
+                            trySend(status)
                         }//end loading case
 
                     }//end when
 
                 }//end collect
 
-        }//end flow
+        }.flowOn(Dispatchers.IO)//end flow
 
     }//end invoke
 

@@ -2,8 +2,10 @@ package com.example.libraries.core.remote.data.response.wrapper
 
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flowOn
 import java.io.IOException
 
 
@@ -16,7 +18,7 @@ class ResponseWrapper {
         return channelFlow {
 
             //emit loading status
-            send(
+            trySend(
                 element = Status.Loading
             )
 
@@ -41,7 +43,7 @@ class ResponseWrapper {
             catch (ex: IOException) {
 
                 //emit error status
-                send(
+                trySend(
                     element = Status.Error(
                         status = 400
                     )
@@ -52,7 +54,7 @@ class ResponseWrapper {
             catch (ex: Exception){
 
                 //emit error status
-                send(
+                trySend(
                     element = Status.Error(
                         status = 500
                     )
@@ -60,7 +62,7 @@ class ResponseWrapper {
 
             }//end catch
 
-        }//end flow
+        }.flowOn(Dispatchers.IO)//end flow
 
     }//end wrapper
 

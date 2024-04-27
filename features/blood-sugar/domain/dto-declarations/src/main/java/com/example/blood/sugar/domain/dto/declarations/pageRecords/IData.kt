@@ -1,14 +1,13 @@
-package com.example.blood.sugar.data.source.remote.data.dto.execution.pageRecords
+package com.example.blood.sugar.domain.dto.declarations.pageRecords
 
+import com.example.blood.sugar.domain.dto.declarations.IBloodSugarDto
 
-import com.example.blood.sugar.data.source.remote.data.dto.execution.BloodSugarDto
-import com.google.gson.annotations.SerializedName
+interface IData {
 
-data class Data(
-    @SerializedName("current_page")
-    val currentPage: Int?,
-    @SerializedName("last_page")
-    val lastPage: Int?,
-    @SerializedName("Records")
-    val records: List<BloodSugarDto?>?
-)
+    val currentPage: Int?
+
+    val lastPage: Int?
+
+    val records: List<IBloodSugarDto?>?
+
+}//end IData

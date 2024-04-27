@@ -7,6 +7,8 @@ import com.example.article.data.source.local.data.access.`object`.ArticleDao
 import com.example.article.data.source.local.entity.execution.entities.article.ArticleEntity
 import com.example.blood.pressure.data.source.local.data.data.access.`object`.BloodPressureDao
 import com.example.blood.pressure.data.source.local.data.entity.execution.bloodPressure.BloodPressureEntity
+import com.example.blood.sugar.data.source.data.access.`object`.BloodSugarDao
+import com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar.BloodSugarEntity
 import com.example.database_creator.convertors.Convertors
 import com.example.database_creator.dao.UserDao
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
@@ -25,9 +27,10 @@ import com.example.reminder.data.source.entity.execution.entities.reminder_date.
         DayEntity::class,
         ReminderDateEntity::class,
         ArticleEntity::class,
-        BloodPressureEntity::class
+        BloodPressureEntity::class,
+        BloodSugarEntity::class
     ],
-    version = 1
+    version = 2
 )
 @TypeConverters(Convertors::class)
 abstract class MediSupportDatabase : RoomDatabase() {
@@ -78,5 +81,13 @@ abstract class MediSupportDatabase : RoomDatabase() {
      * @return BloodPressureDao
      **/
     abstract fun bloodPressureDao(): BloodPressureDao
+
+
+    /**
+     *abstract function for provide blood sugar dao
+     *
+     * @return BloodPressureDao
+     **/
+    abstract fun bloodSugarDao(): BloodSugarDao
 
 }//end MediSupportDatabase

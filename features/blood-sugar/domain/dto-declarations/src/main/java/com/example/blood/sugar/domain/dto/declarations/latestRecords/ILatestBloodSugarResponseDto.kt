@@ -1,14 +1,14 @@
-package com.example.blood.sugar.data.source.remote.data.dto.execution.lastRecords
+package com.example.blood.sugar.domain.dto.declarations.latestRecords
+
+import com.example.blood.sugar.domain.dto.declarations.IBloodSugarDto
 
 
-import com.example.blood.sugar.data.source.remote.data.dto.execution.BloodSugarDto
-import com.google.gson.annotations.SerializedName
+interface ILatestBloodSugarResponseDto {
 
-data class LatestBloodSugarResponseDto(
-    @SerializedName("data")
-    val `data`: List<BloodSugarDto?>?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val `data`: List<IBloodSugarDto?>?
+
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end ILatestBloodSugarResponseDto

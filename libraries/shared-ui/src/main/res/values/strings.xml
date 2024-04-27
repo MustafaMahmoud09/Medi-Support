@@ -177,4 +177,6 @@
     <string name="there_is_an_error_in_the_email_or_password">There is an error in the email or password</string>
     <string name="you_have_already_registered_with_this_email">You have already registered with this email</string>
     <string name="how_to_control_blood_pressure">How to control blood pressure?</string>
+    <string name="how_to_control_blood_sugar">How to control blood sugar?</string>
+    <string name="diabetes_status_is_not_selected">Diabetes status is not selected</string>
 </resources>

@@ -105,6 +105,13 @@ dependencies {
 
     //blood sugar
     implementation(project(':features:blood-sugar:presentation'))
+    implementation(project(':features:blood-sugar:domain:usecase-declarations'))
+    implementation(project(':features:blood-sugar:domain:usecase-execution'))
+    implementation(project(':features:blood-sugar:domain:repository-declarations'))
+    implementation(project(':features:blood-sugar:data:repository-execution'))
+    implementation(project(':features:blood-sugar:domain:mapper-declarations'))
+    implementation(project(':features:blood-sugar:mapper-execution'))
+    implementation(project(':features:blood-sugar:data:data-source:remote-data:requests'))
 
     //bmi
     implementation(project(':features:bmi:presentation'))

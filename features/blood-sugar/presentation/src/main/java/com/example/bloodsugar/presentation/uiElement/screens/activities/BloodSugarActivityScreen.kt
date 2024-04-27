@@ -1,7 +1,6 @@
 package com.example.bloodsugar.presentation.uiElement.screens.activities
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,41 +8,56 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.sharedui.uiElement.components.items.SomeHistorySection
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bloodsugar.presentation.uiElement.components.items.SomeHistorySection
+import com.example.bloodsugar.presentation.uiState.state.BloodSugarActivityUiState
+import com.example.bloodsugar.presentation.uiState.viewModel.BloodSugarActivityViewModel
+import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.ColumnChartView
 import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
-import com.patrykandpatrick.vico.core.entry.entryModelOf
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BloodSugarActivityScreen(
+    viewModel: BloodSugarActivityViewModel = hiltViewModel(),
     theme: CustomTheme,
     dimen: CustomDimen,
     navigateToHistoryDestination: () -> Unit
 ) {
 
+    //get screen state here
+    val state = viewModel.state.collectAsState()
+
     BloodSugarActivityContent(
         theme = theme,
         dimen = dimen,
-        onClickSeeAll = navigateToHistoryDestination
+        onClickSeeAll = navigateToHistoryDestination,
+        uiState = state.value,
+        daysColumnState = rememberLazyListState(),
     )
 }//end BloodSugarScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 private fun BloodSugarActivityContent(
     theme: CustomTheme,
     dimen: CustomDimen,
-    onClickSeeAll: () -> Unit
+    onClickSeeAll: () -> Unit,
+    uiState: BloodSugarActivityUiState,
+    daysColumnState: LazyListState
 ) {
 
     LazyColumn(
@@ -73,6 +87,7 @@ private fun BloodSugarActivityContent(
 
                 //create row contain on days here
                 LazyRow(
+                    state = daysColumnState,
                     contentPadding = PaddingValues(
                         horizontal = dimen.dimen_1_5.dp
                     ),
@@ -90,15 +105,16 @@ private fun BloodSugarActivityContent(
 
                     //create days here
                     items(
-                        count = 7
-                    ) {
+                        count = uiState.monthDays.size
+                    ) { count ->
 
                         //create single day here
                         DaySection(
                             dimen = dimen,
-                            dayName = "Wed",
-                            dayNumber = "17",
-                            theme = theme
+                            theme = theme,
+                            dayName = uiState.monthDays[count].name,
+                            dayNumber = "${uiState.monthDays[count].number}",
+                            toDay = uiState.monthDays[count].today
                         )
 
                     }//end items
@@ -109,8 +125,11 @@ private fun BloodSugarActivityContent(
                 ColumnChartView(
                     theme = theme,
                     dimen = dimen,
-                    data = entryModelOf(0f, 0f, 0f, 0f, 0f, 0f, 0f),
-                    maxValue = 0f,
+                    data = uiState.getBloodSugarChartStatus.dataResult,
+                    maxValue = uiState.getBloodSugarChartStatus.maxValue.toFloat(),
+                    xAxisData = uiState.getBloodSugarChartStatus.xAxisData.ifEmpty {
+                        listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                    },
                     modifier = Modifier
                         .constrainAs(chartId) {
                             start.linkTo(
@@ -135,6 +154,7 @@ private fun BloodSugarActivityContent(
                     dimen = dimen,
                     theme = theme,
                     onClickSeeAll = onClickSeeAll,
+                    historyRecords = uiState.lastHistoryBloodSugarRecords,
                     modifier = Modifier
                         .constrainAs(someHistoryId) {
                             top.linkTo(
@@ -157,8 +177,8 @@ private fun BloodSugarActivityContent(
                 RecommendedSection(
                     dimen = dimen,
                     theme = theme,
-                    equationText = "How to loss Sugar?",
-                    responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    equationText = stringResource(R.string.how_to_control_blood_sugar),
+                    responseText = uiState.adviceBloodSugarModel?.advice ?: "",
                     modifier = Modifier
                         .constrainAs(recommendedId) {
                             start.linkTo(
@@ -182,5 +202,12 @@ private fun BloodSugarActivityContent(
         }//end item
 
     }//end LazyColumn
+
+
+    LaunchedEffect(key1 = true) {
+
+        daysColumnState.scrollToItem(uiState.currentDayNumber - 1)
+
+    }//end LaunchedEffect
 
 }//end BloodSugarContent

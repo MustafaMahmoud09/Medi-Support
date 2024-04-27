@@ -1,20 +1,24 @@
 package com.example.bloodsugar.presentation.uiElement.components.items
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.blood.sugar.domain.model.StatusModel
 import com.example.bloodsugar.presentation.uiElement.components.composable.CheckBoxView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 internal fun StatusSection(
@@ -31,16 +35,28 @@ internal fun StatusSection(
     checkBoxColor: Color = theme.redDark,
     checkBoxBorderWidth: Float = dimen.dimen_0_125,
     checkBoxShape: Shape = CircleShape,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    placeHolderState: Boolean = false,
+    status: StatusModel,
+    numberItemSelected: Int,
+    onChanged: (Int) -> Unit,
+    placeHolderColor: Color = theme.grayLight,
 ) {
 
     //create container here
     ConstraintLayout(
         modifier = modifier
-            .appBorder(
-                shape = shape,
-                borderWidth = borderWidth,
-                borderColor = borderColor
+            .clip(
+                shape = shape
+            )
+            .placeholder(
+                visible = placeHolderState,
+                color = placeHolderColor
+            )
+            .border(
+                width = borderWidth.dp,
+                color = borderColor,
+                shape = shape
             )
             .padding(
                 vertical = dimen.dimen_1_75.dp,
@@ -54,8 +70,8 @@ internal fun StatusSection(
         CheckBoxView(
             dimen = dimen,
             theme = theme,
-            value = true,
-            onChanged = {},
+            value = numberItemSelected == status.id,
+            onChanged = {onChanged(status.id)},
             size = checkBoxSize,
             color = checkBoxColor,
             borderWidth = checkBoxBorderWidth,
@@ -72,7 +88,7 @@ internal fun StatusSection(
         TextNormalView(
             theme = theme,
             dimen = dimen,
-            text = "Default",
+            text = status.status,
             size = statusSize,
             fontColor = statusColor,
             textAlign = null,

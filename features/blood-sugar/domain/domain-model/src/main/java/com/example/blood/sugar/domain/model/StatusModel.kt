@@ -1,4 +1,6 @@
 package com.example.blood.sugar.domain.model
 
-class MyClass {
-}
+data class StatusModel(
+    val id: Int,
+    val status: String
+)

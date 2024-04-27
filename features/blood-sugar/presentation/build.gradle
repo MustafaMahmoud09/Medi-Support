@@ -43,8 +43,26 @@ dependencies {
     //project
     implementation(project(':libraries:shared-ui'))
 
+    //use case declarations
+    implementation(project(':features:blood-sugar:domain:usecase-declarations'))
+
+    //pagination
+    implementation(project(':features:blood-sugar:pagination'))
+
+    //domain model
+    implementation(project(':features:blood-sugar:domain:domain-model'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
+
+    //shared use case declarations
+    implementation(project(':libraries:shered-logic:usecases-declarations'))
+
+    //shred domain model
+    implementation(project(':libraries:shered-logic:domain-model'))
 
     //compose
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -65,18 +83,12 @@ dependencies {
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-placeholder:$accompanist_version"
 
     //vico chart library
-    // For Jetpack Compose.
     implementation("com.patrykandpatrick.vico:compose:$vico_version")
-
-    // For `compose`. Creates a `ChartStyle` based on an M2 Material Theme.
     implementation("com.patrykandpatrick.vico:compose-m2:$vico_version")
-
-    // For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
     implementation("com.patrykandpatrick.vico:compose-m3:$vico_version")
-
-    // Houses the core logic for charts and other elements. Included in all other modules.
     implementation("com.patrykandpatrick.vico:core:$vico_version")
 
     //hilt dependency injection
@@ -84,4 +96,12 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+
+    //pagination
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
+    // optional - Jetpack Compose integration
+    implementation "androidx.paging:paging-compose:$compose_paging_version"
+
 }

@@ -1,14 +1,12 @@
-package com.example.blood.pressure.domain.entity.declarations
+package com.example.blood.sugar.domain.entity.declarations
 
-interface IBloodPressureEntity {
+interface IBloodSugarEntity {
 
     val id: Long
 
     val userId: Long
 
-    val systolic: Long
-
-    val diastolic: Long
+    val level: Double
 
     val advice: String?
 
@@ -16,4 +14,4 @@ interface IBloodPressureEntity {
 
     val createdAt: String
 
-}//end IBloodPressureEntity
+}//end IBloodSugarEntity

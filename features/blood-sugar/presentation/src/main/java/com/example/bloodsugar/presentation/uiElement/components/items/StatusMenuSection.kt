@@ -76,6 +76,7 @@ internal fun StatusMenuSection(
             text = status,
             size = statusSize,
             fontColor = statusColor,
+            maxLines = 1,
             modifier = Modifier
                 .constrainAs(statusId) {
                     start.linkTo(

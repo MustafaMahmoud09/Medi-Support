@@ -121,7 +121,7 @@ private fun BloodPressureHistoryContent(
 
                 //create history items here
                 items(
-                    count = 10
+                    count = 15
                 ) {
 
                     //create single history here

@@ -1,19 +1,20 @@
-package com.example.blood.sugar.data.source.remote.data.dto.execution.lastRecords
+package com.example.blood.sugar.data.source.remote.data.dto.execution
 
 
+import com.example.blood.sugar.domain.dto.declarations.IBloodSugarDto
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class BloodSugarDto(
     @SerializedName("advice")
-    val advice: Advice?,
+    override val advice: Advice?,
     @SerializedName("created_at")
-    val createdAt: String?,
+    override val createdAt: String?,
     @SerializedName("day-name")
-    val dayName: String?,
+    override val dayName: String?,
     @SerializedName("id")
-    val id: Int?,
+    override val id: Long?,
     @SerializedName("level")
-    val level: String?,
+    override val level: Double?,
     @SerializedName("user_id")
-    val userId: Int?
-)
+    override val userId: Long?
+): IBloodSugarDto

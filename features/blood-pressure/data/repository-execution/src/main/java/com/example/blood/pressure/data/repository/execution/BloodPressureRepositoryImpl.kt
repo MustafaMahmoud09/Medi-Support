@@ -329,68 +329,9 @@ class BloodPressureRepositoryImpl(
 
         //make flow for emit result of request if internet exist
         //return flow with status function result contain on diastolic measurements
-        return channelFlow {
-
-            var dataEmitting: Status<EffectResponse<IDescBloodPressureResponseDto>> =
-                Status.Loading
-
-            trySend(dataEmitting)
-
-            val serverRequestsJop = CoroutineScope(Dispatchers.IO).launch {
-
-                while (true) {
-
-                    var breakCondition = false
-
-                    try {
-
-                        //make request on server here for get diastolic measurements
-                        wrapper.wrapper<IDescBloodPressureResponseDto, DescBloodPressureResponseDto> {
-                            bloodPressureRequest.getLatestSystolicMeasurement()
-                        }.collectLatest { status ->
-
-                            when (status) {
-
-                                is Status.Success -> {
-                                    breakCondition = true
-                                    dataEmitting = status
-                                    return@collectLatest
-                                }//end Success case
-
-                                is Status.Loading -> {
-                                    dataEmitting = status
-                                }//end Loading case
-
-                                is Status.Error -> {
-                                    dataEmitting = status
-                                    return@collectLatest
-                                }//end Error case
-
-                            }//end when
-
-                            //emit current status to flow
-                            dataEmitting = status
-                        }//end collectLatest
-
-                    }//end try
-                    catch (ex: IOException) {
-                        dataEmitting = Status.Error(status = 400)
-                    }//end catch
-
-                    if (breakCondition) {
-                        return@launch
-                    }//end if
-
-                    //delay 1/4 second between request and second request
-                    delay(250)
-                }//end while
-
-            }//end coroutine builder scope
-
-            serverRequestsJop.join()
-            trySend(dataEmitting)
-
-        }.flowOn(Dispatchers.IO)//end flow
+        return wrapper.infiniteWrapper {
+            bloodPressureRequest.getLatestSystolicMeasurement()
+        }//end infiniteWrapper
 
     }//end getLatestSystolicMeasurement
 
@@ -400,69 +341,9 @@ class BloodPressureRepositoryImpl(
             : Flow<Status<EffectResponse<IDescBloodPressureResponseDto>>> {
 
         //return flow with status function result contain on diastolic measurements
-        return channelFlow {
-
-            var dataEmitting: Status<EffectResponse<IDescBloodPressureResponseDto>> =
-                Status.Loading
-
-            trySend(dataEmitting)
-
-            val serverRequestsJop = CoroutineScope(Dispatchers.IO).launch {
-
-                while (true) {
-
-                    var breakCondition = false
-
-                    try {
-
-                        //make request on server here for get diastolic measurements
-                        wrapper.wrapper<IDescBloodPressureResponseDto, DescBloodPressureResponseDto> {
-                            bloodPressureRequest.getLatestDiastolicMeasurement()
-                        }.collectLatest { status ->
-
-                            when (status) {
-
-                                is Status.Success -> {
-                                    breakCondition = true
-                                    dataEmitting = status
-                                    Log.d("breakCondition", breakCondition.toString())
-                                    return@collectLatest
-                                }//end Success case
-
-                                is Status.Loading -> {
-                                    //emit current status to flow
-                                    dataEmitting = status
-                                }//end Loading case
-
-                                is Status.Error -> {
-                                    dataEmitting = status
-                                    return@collectLatest
-                                }//end Error case
-
-                            }//end when
-
-                        }//end collectLatest
-
-                    }//end try
-                    catch (ex: IOException) {
-                        dataEmitting = Status.Error(status = 400)
-                    }//end catch
-
-                    if (breakCondition) {
-                        return@launch
-                    }//end if
-
-                    //delay 1/4 second between request and second request
-                    delay(250)
-                }//end while
-
-            }//end coroutine builder scope
-
-            serverRequestsJop.join()
-            Log.d("breakCondition", "YES")
-            trySend(dataEmitting)
-
-        }.flowOn(Dispatchers.IO)//end flow
+        return wrapper.infiniteWrapper {
+            bloodPressureRequest.getLatestDiastolicMeasurement()
+        }//end infiniteWrapper
 
     }//end getLatestDiastolicMeasurement
 

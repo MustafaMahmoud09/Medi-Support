@@ -3,7 +3,6 @@ package com.example.blood.pressure.data.repository.execution
 import android.util.Log
 import com.example.blood.pressure.data.source.local.data.entity.execution.bloodPressure.BloodPressureEntity
 import com.example.blood.pressure.data.source.remote.data.dto.execution.BloodPressureDto
-import com.example.blood.pressure.domain.dto.declarations.IBloodPressureDto
 import com.example.blood.pressure.domain.dto.declarations.pageMeasurement.IPageBloodPressureResponseDto
 import com.example.blood.pressure.domain.mapper.declarations.child.ILatestBloodPressureDtoToBloodPressureEntityMapper
 import com.example.database_creator.MediSupportDatabase
@@ -32,6 +31,28 @@ class BloodPressureRepositoryHelper(
             list = latestBloodPressureDto
         ) as List<BloodPressureEntity>
 
+
+        for (count in 0 until bloodPressureEntities.size - 1) {
+
+            //execute delete here for extra data
+            localDatabase.bloodPressureDao().deleteBloodPressuresFromIdToId(
+                startId = bloodPressureEntities[count + 1].id,
+                endId = bloodPressureEntities[count].id,
+                userId = userId
+            )
+
+        }//for
+
+        if (bloodPressureEntities.isNotEmpty()) {
+
+            //execute delete here for extra data
+            localDatabase.bloodPressureDao().deleteBloodPressureRecordsFromId(
+                startId = bloodPressureEntities[0].id,
+                userId = userId
+            )
+
+        }//end if
+
         //cache data in local here
         localDatabase.bloodPressureDao().insertBloodPressureRecord(
             bloodPressureRecords = bloodPressureEntities
@@ -50,10 +71,19 @@ class BloodPressureRepositoryHelper(
 
             if (records?.data!!.isNotEmpty()) {
 
+                //update user id to user id in local database
+                val bloodPressureRecordsDto = (records.data as List<BloodPressureDto>).map { bloodPressureRecord ->
+                    bloodPressureRecord.copy(
+                        attributes = bloodPressureRecord.attributes?.copy(
+                            userId = userId
+                        )
+                    )
+                }//end map
+
                 //execute map data from dto to entity here
                 val bloodPressureEntities =
                     latestBloodPressureDtoToBloodPressureEntityMapper.listConvertor(
-                        list = records.data as List<IBloodPressureDto>
+                        list = bloodPressureRecordsDto
                     )
 
                 //store article entities in local database here

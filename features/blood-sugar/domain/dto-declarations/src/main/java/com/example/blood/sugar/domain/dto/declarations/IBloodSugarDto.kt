@@ -1,19 +1,18 @@
-package com.example.blood.sugar.data.source.remote.data.dto.execution
+package com.example.blood.sugar.domain.dto.declarations
 
 
-import com.google.gson.annotations.SerializedName
+interface IBloodSugarDto {
 
-data class BloodSugarDto(
-    @SerializedName("advice")
-    val advice: Advice?,
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("day-name")
-    val dayName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("level")
-    val level: String?,
-    @SerializedName("user_id")
-    val userId: Int?
-)
+    val advice: IAdvice?
+
+    val createdAt: String?
+
+    val dayName: String?
+
+    val id: Long?
+
+    val level: Double?
+
+    val userId: Long?
+
+}//end IBloodSugarDto

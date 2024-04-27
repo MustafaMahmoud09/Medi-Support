@@ -110,10 +110,41 @@
       <module name="MediSupport.features.blood-pressure.mapper-execution" target="17" />
       <module name="MediSupport.features.blood-pressure.pagination" target="17" />
       <module name="MediSupport.features.blood-pressure.presentation" target="17" />
+      <module name="MediSupport.features.blood-sugar.data.data-source.local-data.data-access-object" target="17" />
+      <module name="MediSupport.features.blood-sugar.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.blood-sugar.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.blood-sugar.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.blood-sugar.data.repository" target="17" />
+      <module name="MediSupport.features.blood-sugar.data.repository-execution" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.domain-model" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.repository-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.repository-execution" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.repository-execution.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.repository-execution.test" target="17" />
       <module name="MediSupport.features.blood-sugar.domain.use-case" target="17" />
       <module name="MediSupport.features.blood-sugar.domain.use-case.main" target="17" />
       <module name="MediSupport.features.blood-sugar.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.blood-sugar.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.blood-sugar.mapper-execution" target="17" />
+      <module name="MediSupport.features.blood-sugar.pagination" target="17" />
       <module name="MediSupport.features.blood-sugar.presentation" target="17" />
       <module name="MediSupport.features.blood_pressure.domain.use_case.main" target="17" />
       <module name="MediSupport.features.blood_pressure.domain.use_case.test" target="17" />

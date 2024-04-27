@@ -5,15 +5,22 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bloodsugar.presentation.uiElement.components.items.SugarLevelResultSection
+import com.example.bloodsugar.presentation.uiState.state.StatisticsBloodSugarUiState
+import com.example.bloodsugar.presentation.uiState.viewModel.StatisticsBloodSugarViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.ColumnChartView
@@ -28,17 +35,23 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.google.accompanist.placeholder.placeholder
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 @Composable
 internal fun StatisticsBloodSugarScreen(
+    viewModel: StatisticsBloodSugarViewModel = hiltViewModel(),
     popStatisticsBloodSugarDestination: () -> Unit,
     navigateToRecordBloodSugarDestination: () -> Unit
 ) {
+    //get screen state here
+    val state = viewModel.state.collectAsState()
 
     StatisticsBloodSugarContent(
         onClickOnBackButton = popStatisticsBloodSugarDestination,
-        onClickOnAddRecordButton = navigateToRecordBloodSugarDestination
+        onClickOnAddRecordButton = navigateToRecordBloodSugarDestination,
+        daysColumnState = rememberLazyListState(),
+        uiState = state.value
     )
 }//end StatisticsBloodSugarScreen
 
@@ -48,7 +61,9 @@ private fun StatisticsBloodSugarContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
-    onClickOnAddRecordButton: () -> Unit
+    onClickOnAddRecordButton: () -> Unit,
+    daysColumnState: LazyListState,
+    uiState: StatisticsBloodSugarUiState
 ) {
 
     //create base screen for define status and navigation bar color here
@@ -157,7 +172,7 @@ private fun StatisticsBloodSugarContent(
                         IconTextSection(
                             theme = theme,
                             dimen = dimen,
-                            text = "22-11-2023",
+                            text = uiState.adviceBloodSugarModel?.createdAt ?: "",
                             fontFamily = robotoMedium,
                             fontSize = dimen.dimen_2,
                             fontColor = theme.hintIconBottom,
@@ -179,11 +194,16 @@ private fun StatisticsBloodSugarContent(
                                     )
                                     top.linkTo(parent.top)
                                     width = Dimension.fillToConstraints
-                                }//end constrainAs
+                                }
+                                .placeholder(
+                                    visible = uiState.adviceBloodSugarModel == null,
+                                    color = theme.background
+                                )//end constrainAs
                         )
 
                         //create row contain on days here
                         LazyRow(
+                            state = daysColumnState,
                             contentPadding = PaddingValues(
                                 horizontal = dimen.dimen_1_75.dp
                             ),
@@ -204,15 +224,16 @@ private fun StatisticsBloodSugarContent(
 
                             //create days here
                             items(
-                                count = 7
-                            ) {
+                                count = uiState.monthDays.size
+                            ) { count ->
 
                                 //create single day here
                                 DaySection(
                                     dimen = dimen,
-                                    dayName = "Wed",
-                                    dayNumber = "17",
-                                    theme = theme
+                                    theme = theme,
+                                    dayName = uiState.monthDays[count].name,
+                                    dayNumber = "${uiState.monthDays[count].number}",
+                                    toDay = uiState.monthDays[count].today
                                 )
 
                             }//end items
@@ -223,8 +244,8 @@ private fun StatisticsBloodSugarContent(
                         SugarLevelResultSection(
                             dimen = dimen,
                             theme = theme,
-                            status = "Pre-diabetes:",
-                            level = "120 ",
+                            status = "${uiState.adviceBloodSugarModel?.type}:",
+                            level = ((uiState.adviceBloodSugarModel?.level ?: 0).toString()) + " ",
                             unit = stringResource(
                                 R.string.mg_gl
                             ),
@@ -239,14 +260,21 @@ private fun StatisticsBloodSugarContent(
                                         dimen.dimen_4_25.dp
                                     )
                                 }
+                                .placeholder(
+                                    visible = uiState.adviceBloodSugarModel == null,
+                                    color = theme.background
+                                )//end constrainAs
                         )
 
                         //create blood sugar chart here
                         ColumnChartView(
                             theme = theme,
                             dimen = dimen,
-                            data = entryModelOf(450f, 0f, 600f, 0f, 0f, 300f, 50f),
-                            maxValue = 600f,
+                            data = uiState.getBloodSugarChartStatus.dataResult,
+                            maxValue = uiState.getBloodSugarChartStatus.maxValue.toFloat(),
+                            xAxisData = uiState.getBloodSugarChartStatus.xAxisData.ifEmpty {
+                                listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                            },
                             modifier = Modifier
                                 .constrainAs(chartId) {
                                     start.linkTo(
@@ -270,8 +298,8 @@ private fun StatisticsBloodSugarContent(
                         RecommendedSection(
                             dimen = dimen,
                             theme = theme,
-                            equationText = "How to loss Sugar?",
-                            responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                            equationText = stringResource(R.string.how_to_control_blood_sugar),
+                            responseText = uiState.adviceBloodSugarModel?.advice ?: "",
                             modifier = Modifier
                                 .constrainAs(recommendedId) {
                                     start.linkTo(
@@ -299,5 +327,11 @@ private fun StatisticsBloodSugarContent(
         }//end ConstraintLayout
 
     }//end BaseScreen
+
+    LaunchedEffect(key1 = true) {
+
+        daysColumnState.scrollToItem(uiState.currentDayNumber - 1)
+
+    }//end LaunchedEffect
 
 }//end StatisticsBloodSugarContent

@@ -1,13 +1,11 @@
-package com.example.blood.sugar.data.source.remote.data.dto.execution.status
+package com.example.blood.sugar.domain.dto.declarations.status
 
+interface IBloodSugarStatusResponseDto {
 
-import com.google.gson.annotations.SerializedName
+    val `data`: List<IBloodSugarStatusDto?>?
 
-data class BloodSugarStatusResponseDto(
-    @SerializedName("data")
-    val `data`: List<BloodSugarStatusDto?>?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end BloodSugarStatusResponseDto

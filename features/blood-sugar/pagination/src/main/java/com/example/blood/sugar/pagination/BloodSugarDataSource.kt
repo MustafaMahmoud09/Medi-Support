@@ -1,17 +1,17 @@
-package com.example.blood.pressure.pagination
+package com.example.blood.sugar.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.blood.pressure.domain.model.SimpleBloodPressureModel
-import com.example.blood.pressure.domain.usecase.declarations.IGetPageHistoryRecordUseCase
+import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
+import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
 
-class BloodPressureDataSource(
-    private val getPageHistoryRecordUseCase: IGetPageHistoryRecordUseCase,
-) : PagingSource<Int, SimpleBloodPressureModel>() {
+class BloodSugarDataSource(
+    private val getPageHistoryRecordsUseCase: IGetPageHistoryRecordsUseCase,
+) : PagingSource<Int, SimpleBloodSugarModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, SimpleBloodPressureModel> {
+    ): LoadResult<Int, SimpleBloodSugarModel> {
 
         return try {
 
@@ -22,7 +22,7 @@ class BloodPressureDataSource(
             val pageSize = params.loadSize
 
             //get current page data here
-            val data = getPageHistoryRecordUseCase(
+            val data = getPageHistoryRecordsUseCase(
                 page = currentPageNumber,
                 pageSize = 10
             )
@@ -49,7 +49,7 @@ class BloodPressureDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, SimpleBloodPressureModel>
+        state: PagingState<Int, SimpleBloodSugarModel>
     ): Int? = null
 
 }//end RemindersDataSource

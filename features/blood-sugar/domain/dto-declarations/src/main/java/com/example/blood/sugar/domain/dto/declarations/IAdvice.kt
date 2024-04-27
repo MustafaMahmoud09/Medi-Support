@@ -1,13 +1,12 @@
-package com.example.blood.sugar.data.source.remote.data.dto.execution
+package com.example.blood.sugar.domain.dto.declarations
 
 
-import com.google.gson.annotations.SerializedName
+interface IAdvice {
 
-data class Advice(
-    @SerializedName("advice")
-    val advice: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("key")
+    val advice: String?
+
+    val id: Int?
+
     val key: String?
-)
+
+}//end IAdvice

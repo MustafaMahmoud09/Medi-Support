@@ -1,11 +1,9 @@
-package com.example.blood.sugar.data.source.remote.data.dto.execution.status
+package com.example.blood.sugar.domain.dto.declarations.status
 
+interface IBloodSugarStatusDto {
 
-import com.google.gson.annotations.SerializedName
+    val id: Int?
 
-data class BloodSugarStatusDto(
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("status-name")
     val statusName: String?
-)
+
+}//end BloodSugarStatusDto

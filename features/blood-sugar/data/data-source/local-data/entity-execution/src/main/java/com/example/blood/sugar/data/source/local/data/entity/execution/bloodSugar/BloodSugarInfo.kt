@@ -1,18 +1,16 @@
-package com.example.blood.pressure.data.source.local.data.entity.execution.bloodPressure
+package com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar
 
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserInfo
 
-object BloodPressureInfo {
+object BloodSugarInfo {
 
-    const val BLOOD_PRESSURE_TABLE_NAME = "blood_pressure"
+    const val BLOOD_SUGAR_TABLE_NAME = "blood_sugar"
 
-    const val ID_COLUMN_NAME = "blood_pressure_id"
+    const val ID_COLUMN_NAME = "blood_sugar_id"
 
     const val USER_ID_COLUMN_NAME = UserInfo.ID_COLUMN_NAME
 
-    const val SYSTOLIC_COLUMN_NAME = "systolic"
-
-    const val DIASTOLIC_COLUMN_NAME = "diastolic"
+    const val LEVEL_COLUMN_NAME = "level"
 
     const val TYPE_COLUMN_NAME = "type"
 
@@ -20,4 +18,4 @@ object BloodPressureInfo {
 
     const val CREATED_AT_COLUMN_NAME = "created_at"
 
-}//end BloodPressureInfo
+}//end BloodSugarInfo

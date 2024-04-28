@@ -1,13 +1,14 @@
-package com.example.heart.rate.data.source.dto.execution.pageRecords
+package com.example.heart.rate.data.source.dto.execution
 
 
+import com.example.heart.rate.domain.dto.declarations.IAdvice
 import com.google.gson.annotations.SerializedName
 
 data class Advice(
     @SerializedName("advice")
-    val advice: String?,
+    override val advice: String?,
     @SerializedName("id")
-    val id: Int?,
+    override val id: Int?,
     @SerializedName("key")
-    val key: String?
-)
+    override val key: String?
+): IAdvice

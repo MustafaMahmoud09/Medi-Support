@@ -1,17 +1,17 @@
-package com.example.blood.sugar.pagination
+package com.example.heart.rate.paginations
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
-import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.heart.rate.domain.domain.model.SimpleHeartRateModel
+import com.example.heart.rate.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
 
-class BloodSugarDataSource(
+class HeartRateDataSource(
     private val getPageHistoryRecordsUseCase: IGetPageHistoryRecordsUseCase,
-) : PagingSource<Int, SimpleBloodSugarModel>() {
+) : PagingSource<Int, SimpleHeartRateModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, SimpleBloodSugarModel> {
+    ): LoadResult<Int, SimpleHeartRateModel> {
 
         return try {
 
@@ -31,7 +31,7 @@ class BloodSugarDataSource(
             LoadResult.Page(
                 data = data.body ?: emptyList(),
                 prevKey = if (currentPageNumber == 1) null else currentPageNumber.minus(1),
-                nextKey = if (data.lastPageNumber == currentPageNumber) null else currentPageNumber.plus(
+                nextKey = if (data.lastPageNumber <= currentPageNumber) null else currentPageNumber.plus(
                     1
                 )
             )
@@ -49,7 +49,7 @@ class BloodSugarDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, SimpleBloodSugarModel>
+        state: PagingState<Int, SimpleHeartRateModel>
     ): Int? = null
 
 }//end RemindersDataSource

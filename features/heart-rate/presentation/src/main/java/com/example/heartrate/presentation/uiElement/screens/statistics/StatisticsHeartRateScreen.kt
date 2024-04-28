@@ -5,16 +5,23 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.heartrate.presentation.uiElement.components.items.HeartRateLineChartSection
 import com.example.heartrate.presentation.uiElement.components.items.StatusResultSection
+import com.example.heartrate.presentation.uiState.state.StatisticsHeartRateUiState
+import com.example.heartrate.presentation.uiState.viewModel.StatisticsHeartRateViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.MultiColorTextView
@@ -29,18 +36,24 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.google.accompanist.placeholder.placeholder
 import com.patrykandpatrick.vico.core.entry.entryModelOf
 
 
 @Composable
 internal fun StatisticsHeartRateScreen(
+    viewModel: StatisticsHeartRateViewModel = hiltViewModel(),
     popStatisticsHeartRateDestination: () -> Unit,
     navigateToMeasurementHeartRateDestination: () -> Unit
 ) {
+    //get screen state
+    val state = viewModel.state.collectAsState()
 
     StatisticsHeartRateContent(
         onClickOnBackButton = popStatisticsHeartRateDestination,
-        onClickOnAddRecordButton = navigateToMeasurementHeartRateDestination
+        onClickOnAddRecordButton = navigateToMeasurementHeartRateDestination,
+        uiState = state.value,
+        daysColumnState = rememberLazyListState(),
     )
 }//end StatisticsHeartRateScreen
 
@@ -50,6 +63,8 @@ private fun StatisticsHeartRateContent(
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
     onClickOnAddRecordButton: () -> Unit,
+    uiState: StatisticsHeartRateUiState,
+    daysColumnState: LazyListState,
 ) {
 
     //create base screen to set navigation and status bar color here
@@ -157,7 +172,7 @@ private fun StatisticsHeartRateContent(
                         IconTextSection(
                             theme = theme,
                             dimen = dimen,
-                            text = "22-11-2023",
+                            text = uiState.adviceHeartRateModel?.createdAt ?: "999",
                             fontFamily = robotoMedium,
                             fontSize = dimen.dimen_2,
                             fontColor = theme.hintIconBottom,
@@ -168,6 +183,10 @@ private fun StatisticsHeartRateContent(
                             iconTint = theme.black,
                             spaceBetweenComponents = dimen.dimen_1,
                             modifier = Modifier
+                                .placeholder(
+                                    visible = uiState.adviceHeartRateModel == null,
+                                    color = theme.background
+                                )
                                 .constrainAs(dateId) {
                                     start.linkTo(
                                         parent.start,
@@ -181,7 +200,9 @@ private fun StatisticsHeartRateContent(
                         MultiColorTextView(
                             dimen = dimen,
                             theme = theme,
-                            parentText = "${stringResource(R.string.average)} 90 BPM",
+                            parentText = "${stringResource(R.string.average)} ${
+                                uiState.adviceHeartRateModel?.rate
+                            } BPM",
                             subTexts = arrayOf(
                                 stringResource(
                                     R.string.average
@@ -193,6 +214,10 @@ private fun StatisticsHeartRateContent(
                             textSize = dimen.dimen_2_25,
                             textAlign = null,
                             modifier = Modifier
+                                .placeholder(
+                                    visible = uiState.adviceHeartRateModel == null,
+                                    color = theme.background
+                                )
                                 .constrainAs(averageId) {
                                     start.linkTo(
                                         parent.start,
@@ -212,6 +237,7 @@ private fun StatisticsHeartRateContent(
 
                         //create row contain on days here
                         LazyRow(
+                            state = daysColumnState,
                             contentPadding = PaddingValues(
                                 horizontal = dimen.dimen_1_75.dp
                             ),
@@ -232,15 +258,16 @@ private fun StatisticsHeartRateContent(
 
                             //create days here
                             items(
-                                count = 7
-                            ) {
+                                count = uiState.monthDays.size
+                            ) { count ->
 
                                 //create single day here
                                 DaySection(
                                     dimen = dimen,
-                                    dayName = "Wed",
-                                    dayNumber = "17",
-                                    theme = theme
+                                    theme = theme,
+                                    dayName = uiState.monthDays[count].name,
+                                    dayNumber = "${uiState.monthDays[count].number}",
+                                    toDay = uiState.monthDays[count].today
                                 )
 
                             }//end items
@@ -248,12 +275,15 @@ private fun StatisticsHeartRateContent(
                         }//end LazyRow
 
                         //create status result section here
-                        com.example.heartrate.presentation.uiElement.components.items.StatusResultSection(
+                        StatusResultSection(
                             dimen = dimen,
                             theme = theme,
-                            status = "NORMAL",
-                            result = "95",
-                            unit = "BPM",
+                            status = (uiState.adviceHeartRateModel?.type ?: "NORMAL").uppercase(),
+                            result = (uiState.adviceHeartRateModel?.rate ?: 9).toString(),
+                            unit = stringResource(
+                                id = R.string.bpm
+                            ),
+                            placeHolderState = uiState.adviceHeartRateModel == null,
                             modifier = Modifier
                                 .constrainAs(statusSectionId) {
                                     start.linkTo(
@@ -273,12 +303,14 @@ private fun StatisticsHeartRateContent(
                         )
 
                         //create heart rate chart here
-                        com.example.heartrate.presentation.uiElement.components.items.HeartRateLineChartSection(
+                        HeartRateLineChartSection(
                             theme = theme,
                             dimen = dimen,
-                            data = entryModelOf(60f, 60f, 90f, 120f, 100f, 50f, 100f),
-                            maxValue = 330f,
-                            xAxisData = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+                            data = uiState.getHeartRateChartStatus.dataResult,
+                            maxValue = uiState.getHeartRateChartStatus.maxValue.toFloat(),
+                            xAxisData = uiState.getHeartRateChartStatus.xAxisData.ifEmpty {
+                                listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                            },
                             bottomLabel = null,
                             modifier = Modifier
                                 .constrainAs(chartId) {
@@ -303,8 +335,8 @@ private fun StatisticsHeartRateContent(
                         RecommendedSection(
                             dimen = dimen,
                             theme = theme,
-                            equationText = "How to loss Sugar?",
-                            responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                            equationText = stringResource(R.string.how_to_control_heart_rate),
+                            responseText = uiState.adviceHeartRateModel?.advice ?: "",
                             modifier = Modifier
                                 .constrainAs(recommendedId) {
                                     top.linkTo(
@@ -333,5 +365,10 @@ private fun StatisticsHeartRateContent(
 
     }//end BaseScreen
 
+    LaunchedEffect(key1 = true) {
+
+        daysColumnState.scrollToItem(uiState.currentDayNumber - 1)
+
+    }//end LaunchedEffect
 
 }//end StatisticsHeartRateContent

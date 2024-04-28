@@ -39,7 +39,7 @@ class BloodSugarRepositoryImpl(
     ): Flow<Status<EffectResponse<Any>>> {
 
         return wrapper.wrapper<Any, Any> {
-            bloodSugarRequest.createBloodPressureRecord(
+            bloodSugarRequest.createBloodSugarRecord(
                 level = level,
                 statusId = statusId
             )

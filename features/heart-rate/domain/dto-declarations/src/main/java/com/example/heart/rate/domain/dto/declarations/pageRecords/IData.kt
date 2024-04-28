@@ -1,14 +1,13 @@
 package com.example.heart.rate.data.source.dto.execution.pageRecords
 
+import com.example.heart.rate.domain.dto.declarations.IHeartRateDto
 
-import com.example.heart.rate.data.source.dto.execution.HeartRateDto
-import com.google.gson.annotations.SerializedName
+interface IData {
 
-data class Data(
-    @SerializedName("current_page")
-    val currentPage: Int?,
-    @SerializedName("last_page")
-    val lastPage: Int?,
-    @SerializedName("Records")
-    val records: List<HeartRateDto?>?
-)
+    val currentPage: Int?
+
+    val lastPage: Int?
+
+    val records: List<IHeartRateDto?>?
+
+}//end IData

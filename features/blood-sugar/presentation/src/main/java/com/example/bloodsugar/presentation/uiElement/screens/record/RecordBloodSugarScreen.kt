@@ -166,7 +166,6 @@ private fun RecordBloodSugarContent(
             }//end snack bar Host
         ) {
 
-
             //create container here
             ConstraintLayout(
                 modifier = Modifier

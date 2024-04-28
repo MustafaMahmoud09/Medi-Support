@@ -4,11 +4,27 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import android.util.Log
+import com.example.database_creator.MediSupportDatabase
+import com.example.heart.rate.data.source.remote.data.requests.HeartRateRequest
+import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
 import com.example.heart.rate.domain.repository.declarations.IHeartRateRepository
+import com.example.heartrate.data.repository.cacheHelper.ServerHeartRateRepositoryHelper
+import com.example.libraries.core.remote.data.response.status.EffectResponse
+import com.example.libraries.core.remote.data.response.status.Status
+import com.example.libraries.core.remote.data.response.status.UnEffectResponse
+import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
+import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
+import kotlinx.coroutines.flow.Flow
 
-class HeartRateRepository(
-   private val context: Context
-): IHeartRateRepository {//end HeartRateRepository
+class HeartRateRepositoryImpl(
+    private val context: Context,
+    private val wrapper: ResponseWrapper,
+    private val heartRateRequest: HeartRateRequest,
+    private val serverHeartRateHelper: ServerHeartRateRepositoryHelper,
+    private val localDatabase: MediSupportDatabase,
+    private val sharedPreferencesAccessObject: SharedPreferencesAccessObject
+) : IHeartRateRepository {
 
     //function for check device contain on light sensor or no
     override fun isLightSensorExist(): Boolean {
@@ -37,4 +53,90 @@ class HeartRateRepository(
 
     }//end isFlashCameraExist
 
-}
+
+    //function for make request on server for create new heart rate record
+    override suspend fun createNewHeartRateRecord(
+        rate: Int
+    ): Flow<Status<EffectResponse<Any>>> {
+
+        return wrapper.wrapper<Any, Any> {
+            heartRateRequest.createHeartRateRecord(
+                rate = rate
+            )
+        }//end wrapper
+
+    }//end createNewHeartRateRecord
+
+
+    //function for make request for get latest seven records from server
+    //after that cache data in local database
+    override suspend fun getLastWeekMeasurement(): Flow<List<IHeartRateEntity>> {
+
+        //get user auth id
+        val userAuthId = localDatabase.userDao().selectUserByAccessToken(
+            token = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
+        ).id
+
+        //make request on server for get last seven measurement
+        //after that cache result in local data base
+        serverHeartRateHelper.getLastWeekHeartRateRecordsFromServer(
+            userAuthId = userAuthId
+        )
+
+        return localDatabase.heartRateDao().getLatestHeartRateRecord(
+            userId = userAuthId,
+            limit = 7
+        )
+
+    }//end getLastWeekMeasurement
+
+
+    //function for provide number of latest blood sugar record
+    override suspend fun getLatestMeasurements(
+        numberOfMeasurement: Long
+    ): Flow<List<IHeartRateEntity>> {
+
+        //get user auth id
+        val userAuthId = localDatabase.userDao().selectUserByAccessToken(
+            token = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
+        ).id
+
+        return localDatabase.heartRateDao().getLatestHeartRateRecord(
+            userId = userAuthId,
+            limit = numberOfMeasurement
+        )
+
+    }//end getLatestMeasurements
+
+
+    //function for make request on server for get page contain on records
+    override suspend fun getPageMeasurements(
+        page: Int,
+        pageSize: Int
+    ): UnEffectResponse<List<IHeartRateEntity>> {
+
+        //get user auth id
+        val userAuthId = localDatabase.userDao().selectUserByAccessToken(
+            token = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
+        ).id
+
+        //function for make request on server for get page contain on heart rate records
+        //after that cache data in local database
+        val lastPage = serverHeartRateHelper.getPageHeartRateRecordsFromSever(
+            userAuthId = userAuthId,
+            page = page,
+            pageSize = pageSize
+        )
+
+        return UnEffectResponse(
+            lastPageNumber = lastPage,
+            body = localDatabase.heartRateDao().selectPageHeartRate(
+                page = page,
+                pageSize = pageSize,
+                userId = userAuthId
+            )
+        )
+
+    }//end getPageMeasurements
+
+}//end HeartRateRepositoryImpl

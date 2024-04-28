@@ -1,18 +1,17 @@
-package com.example.heart.rate.data.source.dto.execution
+package com.example.heart.rate.domain.dto.declarations
 
-import com.google.gson.annotations.SerializedName
+interface IHeartRateDto {
 
-data class HeartRateDto(
-    @SerializedName("advice")
-    val advice: Advice?,
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("day-name")
-    val dayName: String?,
-    @SerializedName("heart_rate")
-    val heartRate: Int?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("user_id")
-    val userId: Int?
-)
+    val advice: IAdvice?
+
+    val createdAt: String?
+
+    val dayName: String?
+
+    val heartRate: Long?
+
+    val id: Long?
+
+    val userId: Long?
+
+}//end IHeartRateDto

@@ -1,19 +1,19 @@
-package com.example.heart.rate.data.source.dto.execution.pageRecords
+package com.example.heart.rate.data.source.dto.execution
 
-
+import com.example.heart.rate.domain.dto.declarations.IHeartRateDto
 import com.google.gson.annotations.SerializedName
 
-data class Record(
+data class HeartRateDto(
     @SerializedName("advice")
-    val advice: Advice?,
+    override val advice: Advice?,
     @SerializedName("created_at")
-    val createdAt: String?,
+    override val createdAt: String?,
     @SerializedName("day-name")
-    val dayName: String?,
+    override val dayName: String?,
     @SerializedName("heart_rate")
-    val heartRate: Int?,
+    override val heartRate: Long?,
     @SerializedName("id")
-    val id: Int?,
+    override val id: Long?,
     @SerializedName("user_id")
-    val userId: Int?
-)
+    override val userId: Long?
+): IHeartRateDto

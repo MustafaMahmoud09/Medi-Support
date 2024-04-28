@@ -7,3 +7,16 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    //dto declarations
+    implementation(project(':features:heart-rate:domain:dto-declarations'))
+
+    //entity declaration
+    implementation(project(':features:heart-rate:domain:entity-declarations'))
+
+    //domain model
+    implementation(project(':features:heart-rate:domain:domain-model'))
+
+}

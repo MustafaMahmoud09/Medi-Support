@@ -3,7 +3,6 @@
 package com.example.heartrate.presentation.uiState.viewModel.measurement
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.camera.core.Camera
@@ -12,11 +11,13 @@ import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.lifecycle.viewModelScope
+import com.example.heart.rate.domain.usecase.declarations.IAddNewHeartRateRecordUseCase
 import com.example.heart.rate.domain.usecase.declarations.ICheckPPGTechnologySupportedUseCase
 import com.example.heartrate.presentation.uiState.state.MeasurementHeartRateUiState
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IDetectHeartBeatHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IImageProcessingHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IReflectedLightSignalHelper
+import com.example.libraries.core.remote.data.response.status.Status
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,9 +28,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.opencv.android.OpenCVLoader
-import org.opencv.android.Utils
 import org.opencv.core.Mat
 import org.opencv.core.Scalar
+import java.io.IOException
 import java.util.LinkedList
 import javax.inject.Inject
 
@@ -39,7 +40,8 @@ class MeasurementHeartRateViewModel @Inject constructor(
     private val imageProcessingHelper: IImageProcessingHelper,
     private val reflectedLightSignalHelper: IReflectedLightSignalHelper,
     private val detectHeartBeatHelper: IDetectHeartBeatHelper,
-    private val checkPPGTechnologySupportedUseCase: ICheckPPGTechnologySupportedUseCase
+    private val checkPPGTechnologySupportedUseCase: ICheckPPGTechnologySupportedUseCase,
+    private val addNewHeartRateRecordUseCase: IAddNewHeartRateRecordUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -49,7 +51,14 @@ class MeasurementHeartRateViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-
+        viewModelScope.launch {
+            delay(250)
+            _state.update {
+                it.copy(
+                    startRunning = false
+                )
+            }//end update
+        }//end coroutine builder scope
         onPPGTechnologySupportedDefined()
         onProcessCameraProviderObjectDefined()
         onMeasurementTimeChanged()
@@ -70,6 +79,155 @@ class MeasurementHeartRateViewModel @Inject constructor(
     }//end onPPGSensorAvailabilityDefined
 
 
+    //function function for add measurement to user storage
+    private fun onHeartRateMeasurementAdded() {
+
+        //create coroutine builder scope here
+        viewModelScope.launch(Dispatchers.IO) {
+
+            try {
+
+                //make add blood pressure record use case here
+                //observe use case flow
+                //collect add blood pressure record status
+                addNewHeartRateRecordUseCase(
+                    rate = state.value.heartRateResultValue
+                ).collectLatest { status ->
+
+                    when (status) {
+
+                        is Status.Success -> {
+
+                            when (status.toData()?.statusCode) {
+
+                                200 -> {
+                                    _state.update {
+                                        it.copy(
+                                            addHeartRateRecordStatus = state.value
+                                                .addHeartRateRecordStatus.copy(
+                                                    success = true,
+                                                    loading = false
+                                                )
+                                        )
+                                    }//end update
+                                }//end success case
+
+                                404, 500 -> {
+                                    _state.update {
+                                        it.copy(
+                                            addHeartRateRecordStatus = state.value
+                                                .addHeartRateRecordStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.addHeartRateRecordStatus.serverError
+                                                )
+                                        )
+                                    }//end update
+
+                                    //restart measurement again
+                                    onHeartRateMeasurementRestart()
+                                }//end error server case
+
+                            }//end when
+
+                        }//end success case
+
+                        is Status.Loading -> {
+
+                            _state.update {
+                                it.copy(
+                                    addHeartRateRecordStatus = state.value
+                                        .addHeartRateRecordStatus.copy(
+                                            success = false,
+                                            loading = true
+                                        )
+                                )
+                            }//end update
+
+                        }//end loading case
+
+                        is Status.Error -> {
+
+                            when (status.status) {
+
+                                400 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            addHeartRateRecordStatus = state.value
+                                                .addHeartRateRecordStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    internetError = !state.value.addHeartRateRecordStatus.internetError
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end internet error case
+
+                                500 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            addHeartRateRecordStatus = state.value
+                                                .addHeartRateRecordStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.addHeartRateRecordStatus.serverError
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end server error case
+
+                            }//end when
+
+                            //restart measurement again
+                            onHeartRateMeasurementRestart()
+
+                        }//end error case
+
+                    }//end when
+
+                }//end collectLatest
+
+            }//end try
+            catch (ex: IOException) {
+
+                _state.update {
+                    it.copy(
+                        addHeartRateRecordStatus = state.value
+                            .addHeartRateRecordStatus.copy(
+                                success = false,
+                                loading = false,
+                                internetError = !state.value.addHeartRateRecordStatus.internetError
+                            )
+                    )
+                }//end update
+
+                //restart measurement again
+                onHeartRateMeasurementRestart()
+            }//end catch
+
+        }//end coroutine builder scope
+
+    }//end onHeartRateMeasurementAdded
+
+
+    //function for restart measurement after failed add record
+    private fun onHeartRateMeasurementRestart() {
+
+        //for restart measurement tools to default value
+        onHeartRateMeasurementStopped()
+        _state.update {
+            it.copy(
+                measurementIsFinished = false
+            )
+        }//end update
+
+    }//end onHeartRateMeasurementRestart
+
+
     //function for change measurement time state
     private fun onMeasurementTimeChanged() {
 
@@ -80,49 +238,57 @@ class MeasurementHeartRateViewModel @Inject constructor(
 
             while (true) {
 
-                state.value.camera?.cameraControl?.enableTorch(true)
+                if (!state.value.measurementIsFinished) {
 
-                //delay one second
-                delay(100)
+                    state.value.camera?.cameraControl?.enableTorch(true)
 
-                //if measurement stopped
-                if (!state.value.measurementState) {
+                    //delay one second
+                    delay(100)
 
-                    //if measurement stopped to one second
-                    //destroy heart rate measurement
-                    if (checkMeasurementStopped == 10) {
-                        onHeartRateMeasurementStopped()
+                    //if measurement stopped
+                    if (!state.value.measurementState) {
+
+                        //if measurement stopped to one second
+                        //destroy heart rate measurement
+                        if (checkMeasurementStopped == 10) {
+                            onHeartRateMeasurementStopped()
+                        }//end if
+
+                        checkMeasurementStopped += 1
+
                     }//end if
 
-                    checkMeasurementStopped += 1
+                    //
+                    else {
 
-                }//end if
+                        //change measurement time here
+                        _state.update {
+                            it.copy(
+                                measurementTime = state.value.measurementTime + 0.1f
+                            )
+                        }//end update
 
-                //
-                else {
+                        checkMeasurementStopped = 0
 
-                    //change measurement time here
-                    _state.update {
-                        it.copy(
-                            measurementTime = state.value.measurementTime + 0.1f
-                        )
-                    }//end update
+                    }//end else
 
-                    checkMeasurementStopped = 0
+                    //if heart rate measurement finished
+                    if (state.value.measurementTime.toInt() == 15) {
 
-                }//end else
+                        //change measurement is finish state
+                        _state.update {
+                            it.copy(
+                                measurementIsFinished = true
+                            )
+                        }//end update
 
-                //if heart rate measurement finished
-                if (state.value.measurementTime.toInt() == 15) {
+                        onHeartRateMeasurementAdded()
 
-                    //change measurement is finish state
-                    _state.update {
-                        it.copy(
-                            measurementIsFinished = true
-                        )
-                    }
+                        //for close camera after measurement
+                        state.value.camera?.cameraControl?.enableTorch(false)
 
-                    break
+                    }//end if
+
                 }//end if
 
             }//end while
@@ -130,6 +296,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
         }//end launch
 
     }//end onMeasurementTimeChanged
+
 
     //function for stopped measurement
     private fun onHeartRateMeasurementStopped() {
@@ -167,16 +334,16 @@ class MeasurementHeartRateViewModel @Inject constructor(
             //detect ppg region here
             val ppgRegionMask = matrixImage.onPPGRegionDetected()
 
-            val imageResult = matToBitmap(ppgRegionMask)
+//            val imageResult = matToBitmap(ppgRegionMask)
+//
+//
+//            _state.update {
+//                it.copy(
+//                    imageResult = imageResult
+//                )
+//            }
 
-
-            _state.update {
-                it.copy(
-                    imageResult = imageResult
-                )
-            }
-
-            //if ppg region percentage greater than or equal 95 ,calculate heart rate
+            //if ppg region percentage greater than or equal 98 ,calculate heart rate
             if (reflectedLightSignalHelper.calculateMaskPercentage(ppgRegionMask) >= 98f) {
 
                 //image after execute filters
@@ -306,7 +473,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
     }//onHeartBeatsCalculated
 
     //functions for control on camera
-    //function for define object from camera
+//function for define object from camera
     fun onCameraObjectDefined(camera: Camera): CameraControl {
 
         //change camera state here
@@ -351,15 +518,15 @@ class MeasurementHeartRateViewModel @Inject constructor(
     }//end onCleared
 
 
-    // تحويل مصفوفة الصورة (Mat) إلى Bitmap
-    private fun matToBitmap(mat: Mat): Bitmap {
-        // إنشاء Bitmap فارغة لتخزين الصورة
-        val bitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888)
-
-        // تحويل مصفوفة الصورة (Mat) إلى Bitmap
-        Utils.matToBitmap(mat, bitmap)
-
-        return bitmap
-    }
+//    // تحويل مصفوفة الصورة (Mat) إلى Bitmap
+//    private fun matToBitmap(mat: Mat): Bitmap {
+//        // إنشاء Bitmap فارغة لتخزين الصورة
+//        val bitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888)
+//
+//        // تحويل مصفوفة الصورة (Mat) إلى Bitmap
+//        Utils.matToBitmap(mat, bitmap)
+//
+//        return bitmap
+//    }
 
 }//end MeasurementHeartRateViewModel

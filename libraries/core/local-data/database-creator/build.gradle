@@ -53,6 +53,11 @@ dependencies {
     implementation(project(':features:blood-sugar:data:data-source:local-data:data-access-object'))
     implementation(project(':features:blood-sugar:domain:entity-declarations'))
 
+    //heart rate
+    implementation(project(':features:heart-rate:data:data-source:local-data:entity-execution'))
+    implementation(project(':features:heart-rate:data:data-source:local-data:data-access-object'))
+    implementation(project(':features:heart-rate:domain:entity-declarations'))
+
     //shared-entity
     implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
 

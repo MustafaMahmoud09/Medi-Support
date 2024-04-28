@@ -113,7 +113,7 @@
             <option value="$PROJECT_DIR$/features/heart-rate/data/data-source/local-data/entity-execution" />
             <option value="$PROJECT_DIR$/features/heart-rate/data/data-source/remote-data" />
             <option value="$PROJECT_DIR$/features/heart-rate/data/data-source/remote-data/dto-execution" />
-            <option value="$PROJECT_DIR$/features/heart-rate/data/data-source/shared-preferences" />
+            <option value="$PROJECT_DIR$/features/heart-rate/data/data-source/remote-data/requests" />
             <option value="$PROJECT_DIR$/features/heart-rate/data/repository-execution" />
             <option value="$PROJECT_DIR$/features/heart-rate/domain" />
             <option value="$PROJECT_DIR$/features/heart-rate/domain/domain-model" />

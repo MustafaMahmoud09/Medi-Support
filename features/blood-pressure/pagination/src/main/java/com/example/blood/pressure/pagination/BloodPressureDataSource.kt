@@ -31,7 +31,7 @@ class BloodPressureDataSource(
             LoadResult.Page(
                 data = data.body ?: emptyList(),
                 prevKey = if (currentPageNumber == 1) null else currentPageNumber.minus(1),
-                nextKey = if (data.lastPageNumber == currentPageNumber) null else currentPageNumber.plus(
+                nextKey = if (data.lastPageNumber <= currentPageNumber) null else currentPageNumber.plus(
                     1
                 )
             )

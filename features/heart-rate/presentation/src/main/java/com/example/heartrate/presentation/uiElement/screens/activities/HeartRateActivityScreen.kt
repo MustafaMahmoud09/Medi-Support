@@ -1,7 +1,5 @@
 package com.example.heartrate.presentation.uiElement.screens.activities
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,41 +7,54 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.sharedui.uiElement.components.items.SomeHistorySection
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.heartrate.presentation.uiElement.components.items.HeartRateLineChartSection
+import com.example.heartrate.presentation.uiElement.components.items.SomeHistorySection
+import com.example.heartrate.presentation.uiState.state.BloodSugarActivityUiState
+import com.example.heartrate.presentation.uiState.viewModel.HeartRateActivityViewModel
+import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
-import com.patrykandpatrick.vico.core.entry.entryModelOf
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HeartRateActivityScreen(
+    viewModel: HeartRateActivityViewModel = hiltViewModel(),
     theme: CustomTheme,
     dimen: CustomDimen,
     navigateToHistoryDestination: () -> Unit
 ) {
+    //get screen state
+    val state = viewModel.state.collectAsState()
 
     HeartRateActivityContent(
         theme = theme,
         dimen = dimen,
-        onClickSeeAll = navigateToHistoryDestination
+        onClickSeeAll = navigateToHistoryDestination,
+        uiState = state.value,
+        daysColumnState = rememberLazyListState(),
     )
 }//end HeartRateScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun HeartRateActivityContent(
     dimen: CustomDimen,
     theme: CustomTheme,
-    onClickSeeAll: () -> Unit
+    onClickSeeAll: () -> Unit,
+    uiState: BloodSugarActivityUiState,
+    daysColumnState: LazyListState
 ) {
 
     LazyColumn(
@@ -72,6 +83,7 @@ private fun HeartRateActivityContent(
 
                 //create row contain on days here
                 LazyRow(
+                    state = daysColumnState,
                     modifier = Modifier
                         .constrainAs(daysId) {
                             start.linkTo(parent.start)
@@ -87,17 +99,18 @@ private fun HeartRateActivityContent(
                     )
                 ) {
 
-                    //create days item here
+                    //create days here
                     items(
-                        count = 7
-                    ) {
+                        count = uiState.monthDays.size
+                    ) { count ->
 
                         //create single day here
                         DaySection(
                             dimen = dimen,
-                            dayName = "Wed",
-                            dayNumber = "17",
-                            theme = theme
+                            theme = theme,
+                            dayName = uiState.monthDays[count].name,
+                            dayNumber = "${uiState.monthDays[count].number}",
+                            toDay = uiState.monthDays[count].today
                         )
 
                     }//end items
@@ -105,12 +118,14 @@ private fun HeartRateActivityContent(
                 }//end LazyRow
 
                 //create heart rate chart here
-                com.example.heartrate.presentation.uiElement.components.items.HeartRateLineChartSection(
+                HeartRateLineChartSection(
                     theme = theme,
                     dimen = dimen,
-                    data = entryModelOf(60f, 60f, 90f, 120f, 100f, 50f, 100f),
-                    maxValue = 330f,
-                    xAxisData = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+                    data = uiState.getHeartRateChartStatus.dataResult,
+                    maxValue = uiState.getHeartRateChartStatus.maxValue.toFloat(),
+                    xAxisData = uiState.getHeartRateChartStatus.xAxisData.ifEmpty {
+                        listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+                    },
                     modifier = Modifier
                         .constrainAs(chartId) {
                             start.linkTo(
@@ -135,6 +150,7 @@ private fun HeartRateActivityContent(
                     dimen = dimen,
                     theme = theme,
                     onClickSeeAll = onClickSeeAll,
+                    historyRecords = uiState.lastHistoryHeartRateRecords,
                     modifier = Modifier
                         .constrainAs(someHistoryId) {
                             start.linkTo(
@@ -157,8 +173,8 @@ private fun HeartRateActivityContent(
                 RecommendedSection(
                     dimen = dimen,
                     theme = theme,
-                    equationText = "How to loss Sugar?",
-                    responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                    equationText = stringResource(R.string.how_to_control_heart_rate),
+                    responseText = uiState.adviceHeartRateModel?.advice ?: "",
                     modifier = Modifier
                         .constrainAs(recommendedId) {
                             top.linkTo(
@@ -182,5 +198,11 @@ private fun HeartRateActivityContent(
         }//end item
 
     }//end LazyColumn
+
+    LaunchedEffect(key1 = true) {
+
+        daysColumnState.scrollToItem(uiState.currentDayNumber - 1)
+
+    }//end LaunchedEffect
 
 }//end HeartRateScreen

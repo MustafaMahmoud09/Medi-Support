@@ -1,12 +1,12 @@
-package com.example.blood.sugar.domain.entity.declarations
+package com.example.heart.rate.domain.entity.declarations
 
-interface IBloodSugarEntity {
+interface IHeartRateEntity {
 
     val id: Long
 
     val userId: Long
 
-    val level: Double
+    val rate: Long
 
     val advice: String?
 
@@ -14,4 +14,4 @@ interface IBloodSugarEntity {
 
     val createdAt: String
 
-}//end IBloodSugarEntity
+}//end IHeartRateEntity

@@ -1,8 +1,8 @@
-package com.example.blood.sugar.domain.model
+package com.example.heart.rate.domain.domain.model
 
-data class SimpleBloodSugarModel(
+data class SimpleHeartRateModel(
     val id: Long,
-    val level: Double,
+    val rate: Long,
     val type: String,
     val createdAt: String,
     val dayName: String

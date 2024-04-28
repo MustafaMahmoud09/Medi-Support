@@ -1,12 +1,19 @@
 package com.example.heartrate.presentation.uiElement.components.items
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +42,9 @@ internal fun CalculateHeartRateSection(
     rate: String,
     rateSize: Float = dimen.dimen_3,
     rateColor: Color = theme.background,
+    load: Boolean = false,
+    strokeWidth: Float = dimen.dimen_0_125,
+    progressLoadSize: Float = dimen.dimen_4,
     modifier: Modifier = Modifier
 ) {
 
@@ -43,17 +53,29 @@ internal fun CalculateHeartRateSection(
         modifier = modifier
             .clip(
                 shape = shape
-            ).height(
+            )
+            .height(
                 height = buttonHeight.dp
-            ).background(
+            )
+            .background(
                 color = buttonColor
             )
     ) {
         //create ids for components here
-        val (rateId) = createRefs()
+        val (rateId, progressBarLoadId) = createRefs()
 
-        //create rate row here
-        Row(
+        AnimatedVisibility (
+           visible = !load,
+           enter = fadeIn(
+               animationSpec = tween(
+                   durationMillis = 50
+               )
+           ),
+            exit = fadeOut(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
             modifier = Modifier
                 .constrainAs(rateId) {
                     start.linkTo(
@@ -69,37 +91,78 @@ internal fun CalculateHeartRateSection(
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
                 },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
         ) {
 
-            //create rate text here
-            TextSemiBoldView(
-                theme = theme,
-                dimen = dimen,
-                text = rate,
-                size = rateSize,
-                fontColor = rateColor
-            )
-
-            //create padding here
-            Spacer(
+            //create rate row here
+            Row(
                 modifier = Modifier
-                    .width(
-                        width = dimen.dimen_1_25.dp
+                    .fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+
+                //create rate text here
+                TextSemiBoldView(
+                    theme = theme,
+                    dimen = dimen,
+                    text = rate,
+                    size = rateSize,
+                    fontColor = rateColor
+                )
+
+                //create padding here
+                Spacer(
+                    modifier = Modifier
+                        .width(
+                            width = dimen.dimen_1_25.dp
+                        )
+                )
+
+                //create unit text here
+                TextSemiBoldView(
+                    theme = theme,
+                    dimen = dimen,
+                    text = unit,
+                    size = unitSize,
+                    fontColor = unitColor
+                )
+
+            }//end Row
+
+        }//end AnimatedVisibility
+
+        AnimatedVisibility (
+            visible = load,
+            enter = fadeIn(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
+            exit = fadeOut(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
+            modifier = Modifier
+                .constrainAs(progressBarLoadId) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                },
+        ) {
+
+            CircularProgressIndicator(
+                color = theme.background,
+                trackColor = buttonColor,
+                strokeWidth = strokeWidth.dp,
+                modifier = Modifier
+                    .size(
+                        size = progressLoadSize.dp
                     )
             )
 
-            //create unit text here
-            TextSemiBoldView(
-                theme = theme,
-                dimen = dimen,
-                text = unit,
-                size = unitSize,
-                fontColor = unitColor
-            )
-
-        }//end Row
+        }//end AnimatedVisibility
 
     }//end ConstraintLayout
 

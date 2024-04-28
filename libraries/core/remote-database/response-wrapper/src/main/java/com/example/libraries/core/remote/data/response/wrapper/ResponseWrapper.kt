@@ -1,5 +1,6 @@
 package com.example.libraries.core.remote.data.response.wrapper
 
+import android.util.Log
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import kotlinx.coroutines.CoroutineScope
@@ -46,6 +47,7 @@ class ResponseWrapper {
             //if exist exception in internet
             catch (ex: IOException) {
 
+                ex.message?.let { Log.d("TAG", it) }
                 //emit error status
                 trySend(
                     element = Status.Error(
@@ -57,6 +59,7 @@ class ResponseWrapper {
             //if exist exception in server
             catch (ex: Exception){
 
+                ex.message?.let { Log.d("TAG", it) }
                 //emit error status
                 trySend(
                     element = Status.Error(

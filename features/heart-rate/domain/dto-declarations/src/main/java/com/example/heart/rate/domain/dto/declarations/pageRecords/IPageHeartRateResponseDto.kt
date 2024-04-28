@@ -1,13 +1,11 @@
 package com.example.heart.rate.data.source.dto.execution.pageRecords
 
+interface IPageHeartRateResponseDto {
 
-import com.google.gson.annotations.SerializedName
+    val `data`: IData?
 
-data class PageHeartRateResponseDto(
-    @SerializedName("data")
-    val `data`: Data?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end IPageHeartRateResponseDto

@@ -8,6 +8,26 @@ import org.opencv.imgproc.Imgproc
 
 class DetectHeartBeatHelper : IDetectHeartBeatHelper {
 
+//    fun calculateHeartRate(lightIntensity: List<Double>): Double {
+//        // تحديد حجم البيانات (15 ثانية)
+//        val fs = 15 // معدل العينة (عدد القراءات في 15 ثانية)
+//        val sampleSize = lightIntensity.size
+//
+//        // إنشاء كائن FFT
+//        val fft = DoubleFFT_1D(sampleSize.toLong())
+//
+//        // تحويل الإشارة باستخدام FFT
+//        val signal = lightIntensity.toDoubleArray()
+//        fft.realForward(signal)
+//
+//        // حساب التردد الرئيسي للنبضات (القمة الأعلى في المجال الترددي)
+//        val maxFrequencyIndex = signal.indices.maxByOrNull { signal[it] } ?: 0
+//        val heartRate = maxFrequencyIndex * fs / sampleSize.toDouble()
+//
+//        return heartRate
+//
+//    }
+
     //function for calculate number of peeks
     override fun calculatePeeks(list: List<Scalar>): Int {
 

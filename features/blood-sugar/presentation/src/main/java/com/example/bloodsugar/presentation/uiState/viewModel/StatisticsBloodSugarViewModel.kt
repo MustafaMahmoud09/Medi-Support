@@ -39,7 +39,6 @@ class StatisticsBloodSugarViewModel @Inject constructor(
 
     }//end init
 
-
     private fun onGetLastWeekBloodSugarRecords() {
 
         //create coroutine builder scope

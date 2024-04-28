@@ -129,8 +129,11 @@ dependencies {
     implementation(project(':features:heart-rate:presentation'))
     implementation(project(':features:heart-rate:domain:usecase-declarations'))
     implementation(project(':features:heart-rate:domain:usecase-execution'))
-    implementation(project(':features:heart-rate:data:repository-execution'))
     implementation(project(':features:heart-rate:domain:repository-declarations'))
+    implementation(project(':features:heart-rate:data:repository-execution'))
+    implementation(project(':features:heart-rate:domain:mapper-declarations'))
+    implementation(project(':features:heart-rate:mapper-execution'))
+    implementation(project(':features:heart-rate:data:data-source:remote-data:requests'))
 
     //offline booking
     implementation implementation(project(':features:offline-booking:presentation',))

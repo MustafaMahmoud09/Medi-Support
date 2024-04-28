@@ -1,13 +1,11 @@
-package com.example.heart.rate.data.source.dto.execution
+package com.example.heart.rate.domain.dto.declarations
 
+interface IAdvice {
 
-import com.google.gson.annotations.SerializedName
+    val advice: String?
 
-data class Advice(
-    @SerializedName("advice")
-    val advice: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("key")
+    val id: Int?
+
     val key: String?
-)
+
+}//end IAdvice

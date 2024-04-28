@@ -10,7 +10,7 @@ import com.example.database_creator.MediSupportDatabase
 class BloodSugarRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEntityMapper
-) {//end BloodSugarRepositoryHelper
+) {
 
     //function for cache latest blood sugar records in local database
     suspend fun cacheLatestBloodSugarRecords(

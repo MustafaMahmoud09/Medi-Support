@@ -173,6 +173,7 @@
       <module name="MediSupport.features.heart-rate.data.data-source.local-data.entity-execution" target="17" />
       <module name="MediSupport.features.heart-rate.data.data-source.paginations" target="17" />
       <module name="MediSupport.features.heart-rate.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.heart-rate.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.heart-rate.data.data-source.shared-preferences" target="17" />
       <module name="MediSupport.features.heart-rate.data.repository-execution" target="17" />
       <module name="MediSupport.features.heart-rate.domain.domain-model" target="17" />

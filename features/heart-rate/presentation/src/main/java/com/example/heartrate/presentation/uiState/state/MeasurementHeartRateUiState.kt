@@ -18,5 +18,14 @@ data class MeasurementHeartRateUiState(
     val meanIntensitiesForPPGRegion: MutableStateFlow<List<Scalar>> = MutableStateFlow(emptyList()),
     val measurementIsFinished: Boolean = false,
     var camera: Camera? = null,
-    val processCameraProvider: ListenableFuture<ProcessCameraProvider>? = null
+    val processCameraProvider: ListenableFuture<ProcessCameraProvider>? = null,
+    val addHeartRateRecordStatus: AddHeartRateRecordStatus = AddHeartRateRecordStatus(),
+    val startRunning: Boolean = true,
+)
+
+data class AddHeartRateRecordStatus(
+    val success: Boolean = false,
+    val loading: Boolean = false,
+    val internetError: Boolean = false,
+    val serverError: Boolean = false,
 )

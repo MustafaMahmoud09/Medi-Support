@@ -1,61 +1,76 @@
-package com.example.heartrate.data.repository
+package com.example.heartrate.data.repository.cacheHelper
 
 import android.util.Log
+import com.example.blood.sugar.domain.mapper.declarations.child.IHeartRateDtoToHeartRateEntityMapper
 import com.example.database_creator.MediSupportDatabase
 import com.example.heart.rate.data.source.dto.execution.HeartRateDto
 import com.example.heart.rate.data.source.dto.execution.pageRecords.IPageHeartRateResponseDto
+import com.example.heart.rate.data.source.entity.execution.heartRate.HeartRateEntity
 
-class HeartRateRepositoryHelper(
+class CacheHeartRateRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
-private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEntityMapper
+    private val heartRateDtoToHeartRateEntityMapper: IHeartRateDtoToHeartRateEntityMapper
 ) {
 
-    //function for cache latest blood sugar records in local database
-    suspend fun cacheLatestBloodSugarRecords(
-        bloodSugarRecords: List<HeartRateDto>,
+    //function for cache latest heart rate records in local database
+    suspend fun cacheLatestHeartRateRecords(
+        heartRateRecords: List<HeartRateDto>,
         userId: Long
     ) {
 
-        //update user id to user id in local database
-        val latestBloodSugarDto = bloodSugarRecords.map { bloodSugarRecord ->
-            bloodSugarRecord.copy(
-                userId = userId
-            )
-        }
+        if (heartRateRecords.isNotEmpty()) {
 
-        //convert latest blood pressure dto to blood pressure entity
-        val bloodSugarEntities = bloodSugarDtoToBloodSugarEntityMapper.listConvertor(
-            list = latestBloodSugarDto
-        ) as List<BloodSugarEntity>
+            //update user id to user id in local database
+            val latestHeartRateDto = heartRateRecords.map { bloodSugarRecord ->
+                bloodSugarRecord.copy(
+                    userId = userId
+                )
+            }//end map
+
+            //convert latest blood pressure dto to blood pressure entity
+            val heartRateEntities = heartRateDtoToHeartRateEntityMapper.listConvertor(
+                list = latestHeartRateDto
+            ) as List<HeartRateEntity>
 
 
-        for (count in 0 until bloodSugarEntities.size - 1) {
+            for (count in 0 until heartRateEntities.size - 1) {
 
-            //execute delete here for extra data
-            localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
-                startId = bloodSugarEntities[count + 1].id,
-                endId = bloodSugarEntities[count].id,
-                userId = userId
-            )
+                //execute delete here for extra data
+                localDatabase.heartRateDao().deleteHeartRateFromIdToId(
+                    startId = heartRateEntities[count + 1].id,
+                    endId = heartRateEntities[count].id,
+                    userId = userId
+                )
 
-        }//for loop
+            }//for loop
 
-        if (bloodSugarEntities.isNotEmpty()) {
+            if (heartRateEntities.isNotEmpty()) {
 
-            //execute delete here for extra data
-            localDatabase.bloodSugarDao().deleteBloodSugarRecordsFromId(
-                startId = bloodSugarEntities[0].id,
-                userId = userId
+                //execute delete here for extra data
+                localDatabase.heartRateDao().deleteHeartRateRecordsFromId(
+                    startId = heartRateEntities[0].id,
+                    userId = userId
+                )
+
+            }//end if
+
+            //cache data in local here
+            localDatabase.heartRateDao().insertHeartRateRecord(
+                bloodPressureRecords = heartRateEntities
             )
 
         }//end if
+        else {
 
-        //cache data in local here
-        localDatabase.bloodSugarDao().insertBloodSugarRecord(
-            bloodPressureRecords = bloodSugarEntities
-        )
+            //execute delete all caching data here
+            localDatabase.heartRateDao()
+                .deleteHeartRateRecordsFromId(
+                    userId = userId,
+                    startId = 0
+                )
+        }//end else
 
-    }//end cacheLatestBloodSugarRecords
+    }//end cacheLatestHeartRateRecords
 
 
     //function for cache page contain on blood sugar records in local database
@@ -69,22 +84,22 @@ private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEnt
             if (records?.data!!.records!!.isNotEmpty()) {
 
                 //update user id to user id in local database
-                val bloodSugarRecordsDto =
-                    ((records.data?.records!!) as List<BloodSugarDto>).map { bloodPressureRecord ->
+                val heartRateRecordsDto =
+                    ((records.data?.records!!) as List<HeartRateDto>).map { bloodPressureRecord ->
                         bloodPressureRecord.copy(
                             userId = userId
                         )
                     }//end map
 
                 //execute map data from dto to entity here
-                val bloodSugarEntities =
-                    bloodSugarDtoToBloodSugarEntityMapper.listConvertor(
-                        list = bloodSugarRecordsDto
+                val heartRateEntities =
+                    heartRateDtoToHeartRateEntityMapper.listConvertor(
+                        list = heartRateRecordsDto
                     )
 
                 //store article entities in local database here
-                localDatabase.bloodSugarDao().insertBloodSugarRecord(
-                    bloodPressureRecords = bloodSugarEntities as List<BloodSugarEntity>
+                localDatabase.heartRateDao().insertHeartRateRecord(
+                    bloodPressureRecords = heartRateEntities as List<HeartRateEntity>
                 )
 
                 //if current page is first page
@@ -92,23 +107,23 @@ private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEnt
                 if (records.data?.currentPage == 1) {
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarRecordsFromId(
-                        startId = bloodSugarEntities[0].id,
+                    localDatabase.heartRateDao().deleteHeartRateRecordsFromId(
+                        startId = heartRateEntities[0].id,
                         userId = userId
                     )
 
                 }//end if
                 else {
 
-                    val prevBloodSugar = localDatabase.bloodSugarDao().selectPageBloodSugar(
+                    val prevBloodSugar = localDatabase.heartRateDao().selectPageHeartRate(
                         page = records.data?.currentPage!! - 1,
                         pageSize = 10,
                         userId = userId
                     )
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
-                        startId = bloodSugarEntities[0].id,
+                    localDatabase.heartRateDao().deleteHeartRateFromIdToId(
+                        startId = heartRateEntities[0].id,
                         endId = prevBloodSugar[prevBloodSugar.size - 1].id,
                         userId = userId
                     )
@@ -116,12 +131,12 @@ private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEnt
                 }//end else
 
                 //execute delete between items here
-                for (count in 0 until bloodSugarEntities.size - 1) {
+                for (count in 0 until heartRateEntities.size - 1) {
 
                     //execute delete here for extra data
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
-                        startId = bloodSugarEntities[count + 1].id,
-                        endId = bloodSugarEntities[count].id,
+                    localDatabase.heartRateDao().deleteHeartRateFromIdToId(
+                        startId = heartRateEntities[count + 1].id,
+                        endId = heartRateEntities[count].id,
                         userId = userId
                     )
 
@@ -132,9 +147,9 @@ private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEnt
                 if (records.data?.currentPage == records.data?.lastPage) {
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
+                    localDatabase.heartRateDao().deleteHeartRateFromIdToId(
                         startId = 0,
-                        endId = bloodSugarEntities[bloodSugarEntities.size - 1].id,
+                        endId = heartRateEntities[heartRateEntities.size - 1].id,
                         userId = userId
                     )
 
@@ -147,7 +162,7 @@ private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEnt
                 if (records.data?.currentPage == 1) {
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarRecordsFromId(
+                    localDatabase.heartRateDao().deleteHeartRateRecordsFromId(
                         startId = 0,
                         userId = userId
                     )
@@ -155,13 +170,13 @@ private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEnt
                 }//end if
                 else {
 
-                    val prevBloodSugars = localDatabase.bloodSugarDao().selectPageBloodSugar(
+                    val prevBloodSugars = localDatabase.heartRateDao().selectPageHeartRate(
                         page = records.data?.currentPage!! - 1,
                         pageSize = 10,
                         userId = userId
                     )
 
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
+                    localDatabase.heartRateDao().deleteHeartRateFromIdToId(
                         startId = 0,
                         endId = prevBloodSugars[prevBloodSugars.size - 1].id,
                         userId = userId
@@ -179,5 +194,22 @@ private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEnt
         return records?.data?.lastPage ?: 0
 
     }//end cachePageBloodSugarRecords
+
+
+    suspend fun getLocalPageCount(
+        pageSize: Int
+    ): Int {
+
+        //get article size
+        val heartRateRecordsSize = localDatabase.heartRateDao().selectHeartRateCount()
+
+        return if ((heartRateRecordsSize.toFloat() / pageSize.toFloat()) - (heartRateRecordsSize / pageSize) != 0f) {
+            (heartRateRecordsSize / pageSize) + 1
+        }//end if
+        else {
+            (heartRateRecordsSize / pageSize)
+        }.toInt()//end else
+
+    }//end getLocalPageCount
 
 }//end HeartRateRepositoryHelper

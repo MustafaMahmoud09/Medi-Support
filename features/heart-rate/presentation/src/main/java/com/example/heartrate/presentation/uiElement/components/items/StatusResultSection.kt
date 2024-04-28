@@ -1,8 +1,10 @@
 package com.example.heartrate.presentation.uiElement.components.items
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
@@ -12,6 +14,7 @@ import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 internal fun StatusResultSection(
@@ -30,15 +33,24 @@ internal fun StatusResultSection(
     unitSize: Float = dimen.dimen_4_5,
     unitColor: Color = theme.black,
     resultColor: Color = theme.redDark,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    placeHolderState: Boolean = false,
+    placeHolderColor: Color = theme.grayLight,
 ) {
 
     //create container here
     ConstraintLayout(
         modifier = modifier
-            .appBorder(
-                borderWidth = borderSize,
-                borderColor = borderColor,
+            .clip(
+                shape = shape
+            )
+//            .placeholder(
+//                visible = placeHolderState,
+//                color = placeHolderColor
+//            )
+            .border(
+                width = borderSize.dp,
+                color = borderColor,
                 shape = shape
             )
     ) {
@@ -51,6 +63,8 @@ internal fun StatusResultSection(
             theme = theme,
             status = status,
             width = statusWidth,
+            placeHolderState = placeHolderState,
+            placeHolderColor = placeHolderColor,
             modifier = Modifier
                 .constrainAs(statusId) {
                     end.linkTo(
@@ -86,7 +100,10 @@ internal fun StatusResultSection(
                         parent.bottom,
                         dimen.dimen_3_5.dp
                     )
-                }
+                }.placeholder(
+                    visible = placeHolderState,
+                    color = theme.background
+                )
         )
 
         //create unit here
@@ -103,7 +120,10 @@ internal fun StatusResultSection(
                         resultId.end,
                         dimen.dimen_1_5.dp
                     )
-                }
+                }.placeholder(
+                    visible = placeHolderState,
+                    color = theme.background
+                )
         )
 
     }//end ConstraintLayout

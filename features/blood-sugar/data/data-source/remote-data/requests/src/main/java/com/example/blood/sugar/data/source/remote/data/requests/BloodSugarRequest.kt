@@ -17,7 +17,7 @@ interface BloodSugarRequest {
      **/
     @FormUrlEncoded
     @POST("user/blood-sugar/store")
-    suspend fun createBloodPressureRecord(
+    suspend fun createBloodSugarRecord(
         @Field("level") level: Float,
         @Field("blood_sugar_statuses_id") statusId: Int
     ): Response<Any>

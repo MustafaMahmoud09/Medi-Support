@@ -10,11 +10,28 @@ java {
 
 dependencies {
 
-    //project
-    //heart rate use case declarations
+    //dto declarations
+    implementation(project(':features:heart-rate:domain:dto-declarations'))
+
+    //entity declaration
+    implementation(project(':features:heart-rate:domain:entity-declarations'))
+
+    //domain model
+    implementation(project(':features:heart-rate:domain:domain-model'))
+
+    //mapper declaration
+    implementation(project(':features:heart-rate:domain:mapper-declarations'))
+
+    //use case declarations
     implementation(project(':features:heart-rate:domain:usecase-declarations'))
 
-    //heart rate repository declarations
+    //repository declarations
     implementation(project(':features:heart-rate:domain:repository-declarations'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
 
 }

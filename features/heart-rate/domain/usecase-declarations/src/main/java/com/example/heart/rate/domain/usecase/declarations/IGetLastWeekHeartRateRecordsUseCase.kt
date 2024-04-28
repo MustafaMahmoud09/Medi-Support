@@ -1,10 +1,10 @@
-package com.example.blood.sugar.domain.usecase.declarations
+package com.example.heart.rate.domain.usecase.declarations
 
-import com.example.blood.sugar.domain.model.ChartBloodSugarModel
+import com.example.heart.rate.domain.domain.model.ChartHeartRateModel
 import kotlinx.coroutines.flow.Flow
 
-interface IGetLastWeekBloodSugarRecordsUseCase {
+interface IGetLastWeekHeartRateRecordsUseCase {
 
-    suspend operator fun invoke(): Flow<List<ChartBloodSugarModel>>
+    suspend operator fun invoke(): Flow<List<ChartHeartRateModel>>
 
-}//end IGetLastWeekBloodSugarRecordsUseCase
+}//end IGetLastWeekHeartRateRecordsUseCase

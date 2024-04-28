@@ -7,3 +7,18 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    //dto declarations
+    implementation(project(':features:heart-rate:domain:dto-declarations'))
+
+    //entity declaration
+    implementation(project(':features:heart-rate:domain:entity-declarations'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
+}

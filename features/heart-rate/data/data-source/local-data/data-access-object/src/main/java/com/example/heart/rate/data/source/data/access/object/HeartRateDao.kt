@@ -1,97 +1,97 @@
-package com.example.blood.sugar.data.source.data.access.`object`
+package com.example.heart.rate.data.source.data.access.`object`
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar.BloodSugarEntity
-import com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar.BloodSugarInfo
+import com.example.heart.rate.data.source.entity.execution.heartRate.HeartRateInfo
+import com.example.heart.rate.data.source.entity.execution.heartRate.HeartRateEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface BloodSugarDao {
+interface HeartRateDao {
 
-    //TODO:: FUNCTION FOR INSERT BLOOD SUGAR RECORDS IN DATABASE
+    //TODO:: FUNCTION FOR INSERT HEART RATE RECORDS IN DATABASE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBloodSugarRecord(
-        bloodPressureRecords: List<BloodSugarEntity>
+    suspend fun insertHeartRateRecord(
+        bloodPressureRecords: List<HeartRateEntity>
     )
 
 
-    //TODO:: FUNCTION FOR GET LATEST BLOOD SUGAR RECORDS FROM DATABASE
+    //TODO:: FUNCTION FOR GET LATEST HEART RATE RECORDS FROM DATABASE
     @Query(
         "SELECT * FROM ${
-            BloodSugarInfo.BLOOD_SUGAR_TABLE_NAME
+            HeartRateInfo.HEART_RATE_TABLE_NAME
         } WHERE ${
-            BloodSugarInfo.USER_ID_COLUMN_NAME
+            HeartRateInfo.USER_ID_COLUMN_NAME
         } = :userId ORDER BY ${
-            BloodSugarInfo.ID_COLUMN_NAME
+            HeartRateInfo.ID_COLUMN_NAME
         } DESC " +
                 "LIMIT :limit"
     )
-    fun getLatestBloodSugarRecord(
+    fun getLatestHeartRateRecord(
         userId: Long,
         limit: Long,
-    ): Flow<List<BloodSugarEntity>>
+    ): Flow<List<HeartRateEntity>>
 
 
-    //TODO:: FUNCTION FOR DELETE BLOOD SUGAR RECORDS FROM DATABASE FROM START ID
+    //TODO:: FUNCTION FOR DELETE HEART RATE RECORDS FROM DATABASE FROM START ID
     @Query(
         "DELETE FROM ${
-            BloodSugarInfo.BLOOD_SUGAR_TABLE_NAME
+            HeartRateInfo.HEART_RATE_TABLE_NAME
         } WHERE ${
-            BloodSugarInfo.USER_ID_COLUMN_NAME
+            HeartRateInfo.USER_ID_COLUMN_NAME
         } = :userId AND ${
-            BloodSugarInfo.ID_COLUMN_NAME
+            HeartRateInfo.ID_COLUMN_NAME
         } > :startId"
     )
-    suspend fun deleteBloodSugarRecordsFromId(
+    suspend fun deleteHeartRateRecordsFromId(
         startId: Long,
         userId: Long
     )
 
 
-    //TODO:: FUNCTION FOR SELECT PAGE FROM BLOOD SUGAR TABLE
+    //TODO:: FUNCTION FOR SELECT PAGE FROM HEART RATE TABLE
     @Transaction
     @Query(
         "SELECT * FROM ${
-            BloodSugarInfo.BLOOD_SUGAR_TABLE_NAME
+            HeartRateInfo.HEART_RATE_TABLE_NAME
         } WHERE ${
-            BloodSugarInfo.USER_ID_COLUMN_NAME
+            HeartRateInfo.USER_ID_COLUMN_NAME
         } == :userId ORDER BY ${
-            BloodSugarInfo.ID_COLUMN_NAME
+            HeartRateInfo.ID_COLUMN_NAME
         } DESC LIMIT :pageSize" +
                 " OFFSET ((:page - 1) * :pageSize)"
     )
-    suspend fun selectPageBloodSugar(
+    suspend fun selectPageHeartRate(
         pageSize: Int,
         page: Int,
         userId: Long
-    ): List<BloodSugarEntity>
+    ): List<HeartRateEntity>
 
 
-    //TODO:: FUNCTION FOR PROVIDE BLOOD SUGAR RECORD COUNT
+    //TODO:: FUNCTION FOR PROVIDE RECORD COUNT
     @Query(
         "SELECT COUNT(*) FROM ${
-            BloodSugarInfo.BLOOD_SUGAR_TABLE_NAME
+            HeartRateInfo.HEART_RATE_TABLE_NAME
         }"
     )
-    suspend fun selectBloodSugarCount(): Long
+    suspend fun selectHeartRateCount(): Long
 
 
-    //TODO:: FUNCTION FROM DELETE ARTICLES FROM START ID TO END ID
+    //TODO:: FUNCTION FROM DELETE HEART RATE FROM START ID TO END ID
     @Query(
         "DELETE FROM ${
-            BloodSugarInfo.BLOOD_SUGAR_TABLE_NAME
+            HeartRateInfo.HEART_RATE_TABLE_NAME
         } WHERE( ${
-            BloodSugarInfo.ID_COLUMN_NAME
+            HeartRateInfo.ID_COLUMN_NAME
         } > :startId AND ${
-            BloodSugarInfo.ID_COLUMN_NAME
+            HeartRateInfo.ID_COLUMN_NAME
         } < :endId) AND ${
-            BloodSugarInfo.USER_ID_COLUMN_NAME
+            HeartRateInfo.USER_ID_COLUMN_NAME
         } == :userId"
     )
-    suspend fun deleteBloodSugarsFromIdToId(startId: Long, endId: Long, userId: Long)
+    suspend fun deleteHeartRateFromIdToId(startId: Long, endId: Long, userId: Long)
 
-}//end BloodSugarDao
+}//end HeartRateDao

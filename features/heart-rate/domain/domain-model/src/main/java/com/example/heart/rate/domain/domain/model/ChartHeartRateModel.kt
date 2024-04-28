@@ -1,6 +1,6 @@
-package com.example.blood.sugar.domain.model
+package com.example.heart.rate.domain.domain.model
 
-data class ChartBloodSugarModel(
-    val level: Double,
+data class ChartHeartRateModel(
+    val rate: Long,
     val dayName: String
 )

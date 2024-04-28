@@ -1,24 +1,22 @@
-package com.example.blood.sugar.domain.usecase.execution
+package com.example.heartrate.domain.usecase
 
-import com.example.blood.sugar.domain.repository.declarations.IBloodSugarRepository
-import com.example.blood.sugar.domain.usecase.declarations.IAddNewBloodSugarRecordUseCase
+import com.example.heart.rate.domain.repository.declarations.IHeartRateRepository
+import com.example.heart.rate.domain.usecase.declarations.IAddNewHeartRateRecordUseCase
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import kotlinx.coroutines.flow.Flow
 
-class AddNewBloodSugarRecordUseCase(
-    private val bloodSugarRepository: IBloodSugarRepository
-) : IAddNewBloodSugarRecordUseCase {
+class AddNewHeartRateRecordUseCase(
+    private val heartRateRepository: IHeartRateRepository
+) : IAddNewHeartRateRecordUseCase {
 
     //function for create new blood sugar record
     override suspend fun invoke(
-        level: Float,
-        statusId: Int
+        rate: Int
     ): Flow<Status<EffectResponse<Any>>> {
 
-        return bloodSugarRepository.createNewBloodSugarRecord(
-            level = level,
-            statusId = statusId
+        return heartRateRepository.createNewHeartRateRecord(
+            rate = rate
         )
 
     }//end invoke

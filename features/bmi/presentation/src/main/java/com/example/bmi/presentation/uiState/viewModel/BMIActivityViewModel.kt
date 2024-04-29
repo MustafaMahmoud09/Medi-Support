@@ -1,10 +1,10 @@
-package com.example.bloodsugar.presentation.uiState.viewModel
+package com.example.bmi.presentation.uiState.viewModel
 
 import androidx.lifecycle.viewModelScope
-import com.example.blood.sugar.domain.usecase.declarations.IGetLastHistoryRecordsUseCase
-import com.example.blood.sugar.domain.usecase.declarations.IGetLastWeekBloodSugarRecordsUseCase
-import com.example.blood.sugar.domain.usecase.declarations.IGetLatestBloodSugarMeasurementUseCase
-import com.example.bloodsugar.presentation.uiState.state.BloodSugarActivityUiState
+import com.example.bmi.domain.usecase.declarations.IGetLastHistoryRecordsUseCase
+import com.example.bmi.domain.usecase.declarations.IGetLastWeekBMIRecordsUseCase
+import com.example.bmi.domain.usecase.declarations.IGetLatestBMIMeasurementUseCase
+import com.example.bmi.presentation.uiState.state.BMIActivityUiState
 import com.example.libraries.shered.logic.usecase.declarations.IGetMonthDaysUseCase
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,15 +18,15 @@ import java.util.LinkedList
 import javax.inject.Inject
 
 @HiltViewModel
-class BloodSugarActivityViewModel @Inject constructor(
+class BMIActivityViewModel @Inject constructor(
     private val getMonthDaysUseCase: IGetMonthDaysUseCase,
-    private val getLatestBloodSugarMeasurementUseCase: IGetLatestBloodSugarMeasurementUseCase,
-    private val getLastWeekBloodSugarRecordsUseCase: IGetLastWeekBloodSugarRecordsUseCase,
+    private val getLatestBMIMeasurementUseCase: IGetLatestBMIMeasurementUseCase,
+    private val getLastWeekBMIRecordsUseCase: IGetLastWeekBMIRecordsUseCase,
     private val getLastHistoryRecordsUseCase: IGetLastHistoryRecordsUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(BloodSugarActivityUiState())
+    private val _state = MutableStateFlow(BMIActivityUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
@@ -35,36 +35,36 @@ class BloodSugarActivityViewModel @Inject constructor(
 
         onGetMonthDays()
 
-        onGetLastWeekBloodSugarRecords()
+        onGetLastWeekBMIRecords()
 
-        onGetLatestBloodSugarRecord()
+        onGetLatestBMIRecord()
 
-        onGetLastHistoryBloodSugarRecords()
+        onGetLastHistoryBMIRecords()
 
     }//end init
 
 
-    private fun onGetLastWeekBloodSugarRecords() {
+    private fun onGetLastWeekBMIRecords() {
 
         //create coroutine builder scope
         viewModelScope.launch(Dispatchers.IO) {
 
             //make request on use case for get last week measurements
-            getLastWeekBloodSugarRecordsUseCase().collectLatest { chartBloodSugarModels ->
+            getLastWeekBMIRecordsUseCase().collectLatest { chartBMIModels ->
 
                 //make default value
                 val measurementDays: LinkedList<String> = LinkedList()
                 val measurementResult: LinkedList<Long> = LinkedList()
                 var maxValue = 0L
 
-                chartBloodSugarModels.forEach { model ->
+                chartBMIModels.forEach { model ->
                     //add new day to list contain on measurement days
                     measurementDays.add(model.dayName)
                     //set new entry model represent user measurement
-                    measurementResult.add(model.level.toLong())
+                    measurementResult.add(model.result.toLong())
                     //get max measurement value for complete app logic
-                    if (model.level > maxValue) {
-                        maxValue = model.level.toLong()
+                    if (model.result > maxValue) {
+                        maxValue = model.result.toLong()
                     }//end if
 
                 }//end for
@@ -72,7 +72,7 @@ class BloodSugarActivityViewModel @Inject constructor(
                 //update blood sugar chart status here
                 _state.update {
                     it.copy(
-                        getBloodSugarChartStatus = state.value.getBloodSugarChartStatus.copy(
+                        getBMIChartStatus = state.value.getBMIChartStatus.copy(
                             load = false,
                             xAxisData = measurementDays,
                             dataResult = setChartEntries(
@@ -87,11 +87,11 @@ class BloodSugarActivityViewModel @Inject constructor(
 
         }//end coroutine builder scope
 
-    }//end onGetLastWeekBloodSugarRecords
+    }//end onGetLastWeekBMIRecords
 
 
     //function for get latest blood pressure measurement
-    private fun onGetLatestBloodSugarRecord() {
+    private fun onGetLatestBMIRecord() {
 
         //create coroutine scope
         viewModelScope.launch(Dispatchers.IO) {
@@ -99,14 +99,14 @@ class BloodSugarActivityViewModel @Inject constructor(
             //make get latest blood pressure use case
             //observe use case flow
             //collect advice model data
-            getLatestBloodSugarMeasurementUseCase().collectLatest { bloodPressureRecords ->
+            getLatestBMIMeasurementUseCase().collectLatest { bloodPressureRecords ->
 
                 if (bloodPressureRecords.isNotEmpty()) {
 
                     //update advice blood pressure model state
                     _state.update {
                         it.copy(
-                            adviceBloodSugarModel = bloodPressureRecords[0]
+                            adviceBMIModel = bloodPressureRecords[0]
                         )
                     }//end update
 
@@ -116,7 +116,7 @@ class BloodSugarActivityViewModel @Inject constructor(
                     //update advice blood pressure model state
                     _state.update {
                         it.copy(
-                            adviceBloodSugarModel = null
+                            adviceBMIModel = null
                         )
                     }//end update
 
@@ -126,11 +126,11 @@ class BloodSugarActivityViewModel @Inject constructor(
 
         }//end coroutine scope
 
-    }//end onGetLatestBloodPressureRecord
+    }//end onGetLatestBMIRecord
 
 
     //function for get latest history blood sugar measurement
-    private fun onGetLastHistoryBloodSugarRecords() {
+    private fun onGetLastHistoryBMIRecords() {
 
         //create coroutine scope
         viewModelScope.launch(Dispatchers.IO) {
@@ -144,7 +144,7 @@ class BloodSugarActivityViewModel @Inject constructor(
                 //update advice blood pressure model state
                 _state.update {
                     it.copy(
-                        lastHistoryBloodSugarRecords = bloodPressureRecords
+                        lastHistoryBMIRecords = bloodPressureRecords
                     )
                 }//end update
 
@@ -152,7 +152,7 @@ class BloodSugarActivityViewModel @Inject constructor(
 
         }//end coroutine scope
 
-    }//end onGetLastHistoryBloodSugarRecords
+    }//end onGetLastHistoryBMIRecords
 
 
     //function for get month days

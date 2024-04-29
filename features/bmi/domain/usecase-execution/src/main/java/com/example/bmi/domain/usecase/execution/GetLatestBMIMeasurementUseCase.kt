@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 
-class GetLatestHeartRateMeasurementUseCase(
+class GetLatestBMIMeasurementUseCase(
     private val bmiRepository: IBMIRepository,
     private val bmiEntityToAdviceBMIModelMapper: IBMIEntityToAdviceBMIModelMapper
 ) : IGetLatestBMIMeasurementUseCase {

@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
 import kotlinx.coroutines.flow.Flow
 
-data class BloodSugarHistoryUiState(
+data class BMIHistoryUiState(
     val bloodSugarRecords: Flow<PagingData<SimpleBloodSugarModel>>? = null,
     val placeHolderBloodSugar: SimpleBloodSugarModel = SimpleBloodSugarModel(
         id = 0,

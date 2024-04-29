@@ -14,6 +14,7 @@ import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import kotlin.reflect.KFunction1
 
 @Composable
 internal fun GenderSection(
@@ -25,10 +26,10 @@ internal fun GenderSection(
     shape: Shape = RoundedCornerShape(
         size = dimen.dimen_1_25.dp
     ),
-    firstTypeNumber: Boolean = true,
-    secondTypeNumber: Boolean = false,
-    typeSelected: Boolean,
-    onClickOnType: (Boolean) -> Unit,
+    firstTypeNumber: Int = 0,
+    secondTypeNumber: Int = 1,
+    typeSelected: Int,
+    onClickOnType: KFunction1<Int, Unit>,
     firstType: String,
     secondType: String,
     borderWidth: Float = dimen.dimen_0_125,
@@ -81,7 +82,7 @@ internal fun GenderSection(
         ) {
 
             //create first gender here
-            com.example.bmi.presentation.uiElement.components.composable.GenderView(
+            GenderView(
                 dimen = dimen,
                 theme = theme,
                 type = firstType,
@@ -91,7 +92,7 @@ internal fun GenderSection(
             )
 
             //create second gender here
-            com.example.bmi.presentation.uiElement.components.composable.GenderView(
+            GenderView(
                 dimen = dimen,
                 theme = theme,
                 type = secondType,

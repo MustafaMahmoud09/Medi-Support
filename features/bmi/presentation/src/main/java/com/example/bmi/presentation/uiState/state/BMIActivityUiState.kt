@@ -1,14 +1,14 @@
-package com.example.bloodsugar.presentation.uiState.state
+package com.example.bmi.presentation.uiState.state
 
-import com.example.blood.sugar.domain.model.AdviceBloodSugarModel
-import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
+import com.example.bmi.domain.model.AdviceBMIModel
+import com.example.bmi.domain.model.SimpleBMIModel
 import com.example.libraries.shared.logic.domain.model.DayModel
 import java.time.LocalDate
 
-data class BloodSugarActivityUiState(
-    val adviceBloodSugarModel: AdviceBloodSugarModel? = null,
-    val getBloodSugarChartStatus: GetChartDataStatus = GetChartDataStatus(),
-    val lastHistoryBloodSugarRecords: List<SimpleBloodSugarModel> = emptyList(),
+data class BMIActivityUiState(
+    val adviceBMIModel: AdviceBMIModel? = null,
+    val getBMIChartStatus: GetChartDataStatus = GetChartDataStatus(),
+    val lastHistoryBMIRecords: List<SimpleBMIModel> = emptyList(),
     val monthDays: List<DayModel> = emptyList(),
     val currentDayNumber: Int = LocalDate.now().dayOfMonth
 )

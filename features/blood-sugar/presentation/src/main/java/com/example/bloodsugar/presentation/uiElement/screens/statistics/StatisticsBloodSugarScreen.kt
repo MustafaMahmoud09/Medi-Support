@@ -316,6 +316,10 @@ private fun StatisticsBloodSugarContent(
                                     )
                                     width = Dimension.fillToConstraints
                                 }
+//                                    .placeholder(
+//                                    visible = uiState.adviceBloodSugarModel == null,
+//                                    color = theme.background
+//                                )
                         )
 
                     }//end ConstraintLayout

@@ -1,6 +1,5 @@
 package com.example.bmi.presentation.uiElement.components.items
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import com.example.bmi.presentation.uiElement.components.composable.SliderView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -73,7 +70,7 @@ internal fun BMISliderSection(
             TextSemiBoldView(
                 theme = theme,
                 dimen = dimen,
-                text = "${value.toInt()}",
+                text = String.format("%.2f", value),
                 size = valueSize,
                 fontColor = valueColor,
             )
@@ -92,7 +89,7 @@ internal fun BMISliderSection(
         ) {
 
             //create slider here
-            com.example.bmi.presentation.uiElement.components.composable.SliderView(
+            SliderView(
                 dimen = dimen,
                 theme = theme,
                 value = value,

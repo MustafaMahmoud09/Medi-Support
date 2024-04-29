@@ -1,21 +1,19 @@
-package com.example.bmi.data.source.remote.data.dto.execution.pageRecords
+package com.example.bmi.domain.dto.declarations.pageRecords
 
+interface ILinks {
 
-import com.google.gson.annotations.SerializedName
+    val currentPage: Int?
 
-data class Links(
-    @SerializedName("current_page")
-    val currentPage: Int?,
-    @SerializedName("first_page_url")
-    val firstPageUrl: String?,
-    @SerializedName("last_page")
-    val lastPage: Int?,
-    @SerializedName("last_page_url")
-    val lastPageUrl: String?,
-    @SerializedName("next_page_url")
-    val nextPageUrl: String?,
-    @SerializedName("prev_page_url")
-    val prevPageUrl: Any?,
-    @SerializedName("total")
+    val firstPageUrl: String?
+
+    val lastPage: Int?
+
+    val lastPageUrl: String?
+
+    val nextPageUrl: String?
+
+    val prevPageUrl: Any?
+
     val total: Int?
-)
+
+}//end ILinks

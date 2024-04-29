@@ -1,6 +1,6 @@
-package com.example.heart.rate.domain.domain.model
+package com.example.bmi.domain.model
 
-data class ChartHeartRateModel(
-    val rate: Long,
+data class ChartBMIModel(
+    val result: Double,
     val dayName: String
 )

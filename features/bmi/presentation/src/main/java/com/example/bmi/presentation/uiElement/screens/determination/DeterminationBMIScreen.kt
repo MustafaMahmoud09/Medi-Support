@@ -8,13 +8,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bmi.presentation.uiElement.components.items.BMIResultSection
+import com.example.bmi.presentation.uiState.state.DeterminationBMIUiState
+import com.example.bmi.presentation.uiState.viewModel.DeterminationBMIViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
@@ -28,17 +32,22 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
+import com.google.accompanist.placeholder.placeholder
 
 
 @Composable
 internal fun DeterminationBMIScreen(
+    viewModel: DeterminationBMIViewModel = hiltViewModel(),
     popDeterminationBMIDestination: () -> Unit,
     navigateToRecordBMIDestination: () -> Unit
 ) {
+    //get screen state here
+    val state = viewModel.state.collectAsState()
 
     DeterminationBMIContent(
         onClickOnBackButton = popDeterminationBMIDestination,
-        onClickOnAddRecordButton = navigateToRecordBMIDestination
+        onClickOnAddRecordButton = navigateToRecordBMIDestination,
+        uiState = state.value
     )
 }//end DeterminationBMIDestination
 
@@ -47,7 +56,8 @@ private fun DeterminationBMIContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
     onClickOnBackButton: () -> Unit,
-    onClickOnAddRecordButton: () -> Unit
+    onClickOnAddRecordButton: () -> Unit,
+    uiState: DeterminationBMIUiState
 ) {
 
     //create base screen here to set status bar color and navigation bar color
@@ -192,11 +202,12 @@ private fun DeterminationBMIContent(
                         )
 
                         //create result section here
-                        com.example.bmi.presentation.uiElement.components.items.BMIResultSection(
+                        BMIResultSection(
                             dimen = dimen,
                             theme = theme,
-                            result = 22.4f,
-                            typeStateUser = "Normal",
+                            result = uiState.adviceBMIModel?.result ?: "",
+                            typeStateUser = uiState.adviceBMIModel?.type ?: "",
+                            placeHolderState = uiState.adviceBMIModel == null,
                             modifier = Modifier
                                 .constrainAs(resultSectionId) {
                                     start.linkTo(guideFromStart25P)
@@ -231,8 +242,8 @@ private fun DeterminationBMIContent(
                         RecommendedSection(
                             dimen = dimen,
                             theme = theme,
-                            equationText = "How to loss Sugar?",
-                            responseText = "printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.  Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                            equationText = stringResource(R.string.how_to_control_bmi),
+                            responseText = uiState.adviceBMIModel?.advice ?: "",
                             modifier = Modifier
                                 .constrainAs(recommendedId) {
                                     start.linkTo(
@@ -249,6 +260,10 @@ private fun DeterminationBMIContent(
                                     )
                                     width = Dimension.fillToConstraints
                                 }
+//                                    .placeholder(
+//                                    visible = uiState.adviceBMIModel == null,
+//                                    color = theme.background
+//                                )
                         )
 
                     }//end ConstraintLayout

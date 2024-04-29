@@ -58,6 +58,11 @@ dependencies {
     implementation(project(':features:heart-rate:data:data-source:local-data:data-access-object'))
     implementation(project(':features:heart-rate:domain:entity-declarations'))
 
+    //bmi
+    implementation(project(':features:bmi:data:data-source:local-data:entity-execution'))
+    implementation(project(':features:bmi:data:data-source:local-data:data-access-object'))
+    implementation(project(':features:bmi:domain:entity-declarations'))
+
     //shared-entity
     implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
 

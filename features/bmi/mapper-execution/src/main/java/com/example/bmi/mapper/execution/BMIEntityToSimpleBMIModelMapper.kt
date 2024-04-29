@@ -1,15 +1,15 @@
-package com.example.heart.rate.mapper.execution
+package com.example.bmi.mapper.execution
 
-import com.example.blood.sugar.domain.mapper.declarations.child.IHeartRateEntityToSimpleHeartRateModelMapper
-import com.example.heart.rate.domain.domain.model.SimpleHeartRateModel
-import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
+import com.example.blood.sugar.domain.mapper.declarations.child.IBMIEntityToSimpleBMIModelMapper
+import com.example.bmi.domain.entity.declarations.IBMIEntity
+import com.example.bmi.domain.model.SimpleBMIModel
 
-class HeartRateEntityToSimpleHeartRateModelMapper :
-    IHeartRateEntityToSimpleHeartRateModelMapper {
+class BMIEntityToSimpleBMIModelMapper :
+    IBMIEntityToSimpleBMIModelMapper {
 
     override fun listConvertor(
-        list: List<IHeartRateEntity>
-    ): List<SimpleHeartRateModel> {
+        list: List<IBMIEntity>
+    ): List<SimpleBMIModel> {
 
         return list.map { bloodSugarEntity ->
             objectConvertor(
@@ -20,12 +20,12 @@ class HeartRateEntityToSimpleHeartRateModelMapper :
     }//end listConvertor
 
     override fun objectConvertor(
-        obj: IHeartRateEntity
-    ): SimpleHeartRateModel {
+        obj: IBMIEntity
+    ): SimpleBMIModel {
 
-        return SimpleHeartRateModel(
+        return SimpleBMIModel(
             id = obj.id,
-            rate = obj.rate,
+            result = String.format("%.2f",obj.result),
             createdAt = obj.createdAt.substring(0, 10),
             dayName = convertDateToDayOfWeek(
                 dateInput = obj.createdAt

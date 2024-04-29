@@ -28,6 +28,7 @@ import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 fun HeartRateActivityScreen(
@@ -191,6 +192,10 @@ private fun HeartRateActivityContent(
                             )
                             width = Dimension.fillToConstraints
                         }
+//                            .placeholder(
+//                            visible = uiState.adviceHeartRateModel == null,
+//                            color = theme.background
+//                        )
                 )
 
             }//end ConstraintLayout

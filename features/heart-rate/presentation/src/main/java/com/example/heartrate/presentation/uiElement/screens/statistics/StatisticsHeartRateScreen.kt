@@ -353,6 +353,10 @@ private fun StatisticsHeartRateContent(
                                     )
                                     width = Dimension.fillToConstraints
                                 }
+//                                    .placeholder(
+//                                    visible = uiState.adviceHeartRateModel == null,
+//                                    color = theme.background
+//                                )
                         )
 
                     }//end ConstraintLayout

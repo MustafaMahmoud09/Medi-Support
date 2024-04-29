@@ -1,12 +1,12 @@
-package com.example.blood.sugar.domain.entity.declarations
+package com.example.bmi.domain.entity.declarations
 
-interface IBloodSugarEntity {
+interface IBMIEntity {
 
     val id: Long
 
     val userId: Long
 
-    val level: Double
+    val result: Double
 
     val advice: String?
 
@@ -14,4 +14,4 @@ interface IBloodSugarEntity {
 
     val createdAt: String
 
-}//end IBloodSugarEntity
+}//end IBMIEntity

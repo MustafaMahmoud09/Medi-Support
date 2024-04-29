@@ -1,8 +1,8 @@
-package com.example.heart.rate.domain.domain.model
+package com.example.bmi.domain.model
 
-data class SimpleHeartRateModel(
+data class SimpleBMIModel(
     val id: Long,
-    val rate: Long,
+    val result: String,
     val type: String,
     val createdAt: String,
     val dayName: String

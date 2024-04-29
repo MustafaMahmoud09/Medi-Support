@@ -9,6 +9,8 @@ import com.example.blood.pressure.data.source.local.data.data.access.`object`.Bl
 import com.example.blood.pressure.data.source.local.data.entity.execution.bloodPressure.BloodPressureEntity
 import com.example.blood.sugar.data.source.data.access.`object`.BloodSugarDao
 import com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar.BloodSugarEntity
+import com.example.bmi.data.source.local.data.data.access.`object`.BMIDao
+import com.example.bmi.data.source.local.data.entity.execution.bmi.BMIEntity
 import com.example.database_creator.convertors.Convertors
 import com.example.database_creator.dao.UserDao
 import com.example.heart.rate.data.source.data.access.`object`.HeartRateDao
@@ -31,7 +33,8 @@ import com.example.reminder.data.source.entity.execution.entities.reminder_date.
         ArticleEntity::class,
         BloodPressureEntity::class,
         BloodSugarEntity::class,
-        HeartRateEntity::class
+        HeartRateEntity::class,
+        BMIEntity::class
     ],
     version = 3
 )
@@ -100,5 +103,13 @@ abstract class MediSupportDatabase : RoomDatabase() {
      * @return HeartRateDao
      **/
     abstract fun heartRateDao(): HeartRateDao
+
+
+    /**
+     *abstract function for provide bmi dao
+     *
+     * @return BMIDao
+     **/
+    abstract fun bmiDao(): BMIDao
 
 }//end MediSupportDatabase

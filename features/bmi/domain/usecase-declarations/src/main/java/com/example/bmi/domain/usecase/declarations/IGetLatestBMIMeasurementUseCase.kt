@@ -1,10 +1,10 @@
-package com.example.heart.rate.domain.usecase.declarations
+package com.example.bmi.domain.usecase.declarations
 
-import com.example.heart.rate.domain.domain.model.AdviceHeartRateModel
+import com.example.bmi.domain.model.AdviceBMIModel
 import kotlinx.coroutines.flow.Flow
 
-interface IGetLatestHeartRateMeasurementUseCase {
+interface IGetLatestBMIMeasurementUseCase {
 
-    suspend operator fun invoke(): Flow<List<AdviceHeartRateModel>>
+    suspend operator fun invoke(): Flow<List<AdviceBMIModel>>
 
-}//end IGetLatestHeartRateMeasurementUseCase
+}//end IGetLatestBMIMeasurementUseCase

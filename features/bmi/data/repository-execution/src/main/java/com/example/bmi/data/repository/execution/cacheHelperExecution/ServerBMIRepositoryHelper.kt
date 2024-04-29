@@ -1,12 +1,14 @@
-package com.example.heartrate.data.repository.cacheHelper
+package com.example.bmi.data.repository.execution.cacheHelperExecution
 
 import android.util.Log
+import com.example.bmi.data.repository.execution.cacheHelperDeclarations.ICacheBMIRepositoryHelper
 import com.example.bmi.data.source.remote.data.dto.execution.BMIDto
 import com.example.bmi.data.source.remote.data.dto.execution.lastRecords.LastBMIResponseDto
 import com.example.bmi.data.source.remote.data.dto.execution.pageRecords.PageBMIResponseDto
 import com.example.bmi.data.source.remote.data.requests.BMIRequest
 import com.example.bmi.domain.dto.declarations.lastReocrds.ILastBMIResponseDto
 import com.example.bmi.domain.dto.declarations.pageRecords.IPageBMIResponseDto
+import com.example.bmi.data.repository.execution.cacheHelperDeclarations.IServerBMIRepositoryHelper
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import kotlinx.coroutines.CoroutineScope
@@ -18,12 +20,12 @@ import kotlinx.coroutines.launch
 class ServerBMIRepositoryHelper(
     private val bmiRequest: BMIRequest,
     private val wrapper: ResponseWrapper,
-    private val cacheHeartRateRepositoryHelper: CacheBMIRepositoryHelper,
-) {
+    private val cacheBMIRepositoryHelper: ICacheBMIRepositoryHelper,
+): IServerBMIRepositoryHelper {
 
     //function for make request on server for get last heart rate records
     //after that cache data in local data base
-    suspend fun getLastWeekHeartRateRecordsFromServer(
+    override suspend fun getLastWeekBMIRecordsFromServer(
         userAuthId: Long
     ) {
 
@@ -52,7 +54,7 @@ class ServerBMIRepositoryHelper(
                                 //cache data if status code equal 200
                                 if (status.toData()?.statusCode == 200) {
 
-                                    cacheHeartRateRepositoryHelper.cacheLatestBMIRecords(
+                                    cacheBMIRepositoryHelper.cacheLatestBMIRecords(
                                         bmiRecords = status.toData()?.body?.data!! as List<BMIDto>,
                                         userId = userAuthId
                                     )
@@ -98,7 +100,7 @@ class ServerBMIRepositoryHelper(
 
     //function for get page contain on heart rate records from server
     //after that cache data in local database
-    suspend fun getPageBMIRecordsFromSever(
+    override suspend fun getPageBMIRecordsFromSever(
         userAuthId: Long,
         page: Int,
         pageSize: Int
@@ -123,7 +125,7 @@ class ServerBMIRepositoryHelper(
                         //process is success
                         if (status.toData()?.statusCode == 200) {
                             //make cache article in local database here
-                            lastPage = cacheHeartRateRepositoryHelper.cachePageBMIRecords(
+                            lastPage = cacheBMIRepositoryHelper.cachePageBMIRecords(
                                 records = status.toData()!!.body,
                                 userId = userAuthId,
                                 pageSize = pageSize
@@ -153,7 +155,7 @@ class ServerBMIRepositoryHelper(
         //if last page equal 0 get last page number in local database
         if (lastPage == 0) {
 
-            lastPage = cacheHeartRateRepositoryHelper.getLocalPageCount(
+            lastPage = cacheBMIRepositoryHelper.getLocalPageCount(
                 pageSize = pageSize
             )
 

@@ -180,4 +180,6 @@
     <string name="how_to_control_blood_sugar">How to control blood sugar?</string>
     <string name="diabetes_status_is_not_selected">Diabetes status is not selected</string>
     <string name="how_to_control_heart_rate">How to control heart rate?</string>
+    <string name="how_to_control_bmi">How to control bmi?</string>
+    <string name="there_are_no_items_to_display">There are no items to display</string>
 </resources>

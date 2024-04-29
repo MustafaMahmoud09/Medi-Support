@@ -1,12 +1,11 @@
-package com.example.bmi.data.source.remote.data.dto.execution.pageRecords
+package com.example.bmi.domain.dto.declarations.pageRecords
 
+import com.example.bmi.domain.dto.declarations.IBMIDto
 
-import com.example.bmi.data.source.remote.data.dto.execution.BMIDto
-import com.google.gson.annotations.SerializedName
+interface IData {
 
-data class Data(
-    @SerializedName("data")
-    val `data`: List<BMIDto>?,
-    @SerializedName("links")
-    val links: Links?
-)
+    val `data`: List<IBMIDto>?
+
+    val links: ILinks?
+
+}//end IData

@@ -1,14 +1,15 @@
-package com.example.heart.rate.mapper.execution
+package com.example.bmi.mapper.execution
 
-import com.example.blood.sugar.domain.mapper.declarations.child.IHeartRateEntityToChartHeartRateModelMapper
-import com.example.heart.rate.domain.domain.model.ChartHeartRateModel
-import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
+import com.example.blood.sugar.domain.mapper.declarations.child.IBMIEntityToChartBMIModelMapper
+import com.example.bmi.domain.entity.declarations.IBMIEntity
+import com.example.bmi.domain.model.ChartBMIModel
 
-class HeartRateEntityToChartHeartRateModelMapper : IHeartRateEntityToChartHeartRateModelMapper {
+class BMIEntityToChartBMIModelMapper
+    : IBMIEntityToChartBMIModelMapper {
 
     override fun listConvertor(
-        list: List<IHeartRateEntity>
-    ): List<ChartHeartRateModel> {
+        list: List<IBMIEntity>
+    ): List<ChartBMIModel> {
 
         return list.map { bloodSugarEntity ->
             objectConvertor(
@@ -19,11 +20,11 @@ class HeartRateEntityToChartHeartRateModelMapper : IHeartRateEntityToChartHeartR
     }//end listConvertor
 
     override fun objectConvertor(
-        obj: IHeartRateEntity
-    ): ChartHeartRateModel {
+        obj: IBMIEntity
+    ): ChartBMIModel {
 
-        return ChartHeartRateModel(
-            rate = obj.rate,
+        return ChartBMIModel(
+            result = obj.result,
             dayName = convertDateToDayOfWeek(
                 obj.createdAt
             )

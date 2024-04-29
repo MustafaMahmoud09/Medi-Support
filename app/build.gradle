@@ -115,6 +115,13 @@ dependencies {
 
     //bmi
     implementation(project(':features:bmi:presentation'))
+    implementation(project(':features:bmi:domain:usecase-declarations'))
+    implementation(project(':features:bmi:domain:usecase-execution'))
+    implementation(project(':features:bmi:domain:repository-declarations'))
+    implementation(project(':features:bmi:data:repository-execution'))
+    implementation(project(':features:bmi:domain:mapper-declarations'))
+    implementation(project(':features:bmi:mapper-execution'))
+    implementation(project(':features:bmi:data:data-source:remote-data:requests'))
 
     //chat
     implementation(project(':features:chat:presentation'))

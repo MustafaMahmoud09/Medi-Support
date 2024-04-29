@@ -39,12 +39,12 @@ internal fun GenderView(
     selectedBackground: Color = theme.background,
     unselectedBackground: Color = theme.transparent,
     borderWidth: Float = dimen.dimen_0_125,
-    typeItem: Boolean,
-    typeSelected: Boolean,
+    typeItem: Int,
+    typeSelected: Int,
     iconSize: Float = dimen.dimen_3,
     iconColor: Color = theme.redDark,
     modifier: Modifier = Modifier,
-    onClickOnItem: (Boolean) -> Unit
+    onClickOnItem: (Int) -> Unit
 ) {
 
     //create animated border color here

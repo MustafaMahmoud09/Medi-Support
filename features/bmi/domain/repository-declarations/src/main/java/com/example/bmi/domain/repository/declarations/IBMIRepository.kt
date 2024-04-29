@@ -1,36 +1,33 @@
-package com.example.heart.rate.domain.repository.declarations
+package com.example.bmi.domain.repository.declarations
 
-import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
+import com.example.bmi.domain.entity.declarations.IBMIEntity
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
 import kotlinx.coroutines.flow.Flow
 
-interface IHeartRateRepository {
+interface IBMIRepository {
 
-    fun isLightSensorExist(): Boolean
-
-
-    fun isFlashCameraExist(): Boolean
-
-
-    suspend fun createNewHeartRateRecord(
-        rate: Int
+    suspend fun createNewBMIRecord(
+        gender: Int,
+        age: Int,
+        height: Float,
+        weight: Float
     ): Flow<Status<EffectResponse<Any>>>
 
 
-    suspend fun getLastWeekMeasurement()
-            : Flow<List<IHeartRateEntity>>
+    suspend fun getLastMeasurement()
+            : Flow<List<IBMIEntity>>
 
 
     suspend fun getLatestMeasurements(
         numberOfMeasurement: Long
-    ): Flow<List<IHeartRateEntity>>
+    ): Flow<List<IBMIEntity>>
 
 
     suspend fun getPageMeasurements(
         page: Int,
         pageSize: Int
-    ): UnEffectResponse<List<IHeartRateEntity>>
+    ): UnEffectResponse<List<IBMIEntity>>
 
-}//end IHeartRateRepository
+}//end IBMIRepository

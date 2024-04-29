@@ -44,8 +44,26 @@ dependencies {
     //project
     implementation(project(':libraries:shared-ui'))
 
+    //use case declarations
+    implementation(project(':features:bmi:domain:usecase-declarations'))
+
+    //pagination
+    implementation(project(':features:bmi:pagination'))
+
+    //domain model
+    implementation(project(':features:bmi:domain:domain-model'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
+
+    //shared use case declarations
+    implementation(project(':libraries:shered-logic:usecases-declarations'))
+
+    //shred domain model
+    implementation(project(':libraries:shered-logic:domain-model'))
 
     //compose
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -66,6 +84,7 @@ dependencies {
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-placeholder:$accompanist_version"
 
     //vico chart library
     implementation("com.patrykandpatrick.vico:compose:$vico_version")
@@ -78,4 +97,11 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+
+    //pagination
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
+    // optional - Jetpack Compose integration
+    implementation "androidx.paging:paging-compose:$compose_paging_version"
 }

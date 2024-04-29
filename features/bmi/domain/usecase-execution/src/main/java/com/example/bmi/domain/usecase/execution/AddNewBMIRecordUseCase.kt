@@ -1,24 +1,30 @@
-package com.example.heartrate.domain.usecase
+package com.example.bmi.domain.usecase.execution
 
-import com.example.heart.rate.domain.repository.declarations.IHeartRateRepository
-import com.example.heart.rate.domain.usecase.declarations.IAddNewHeartRateRecordUseCase
+import com.example.bmi.domain.repository.declarations.IBMIRepository
+import com.example.bmi.domain.usecase.declarations.IAddNewBMIRecordUseCase
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import kotlinx.coroutines.flow.Flow
 
-class AddNewHeartRateRecordUseCase(
-    private val heartRateRepository: IHeartRateRepository
-) : IAddNewHeartRateRecordUseCase {
+class AddNewBMIRecordUseCase(
+    private val bmiRepository: IBMIRepository
+) : IAddNewBMIRecordUseCase {
 
-    //function for create new blood sugar record
+    //function for create new bmi record
     override suspend fun invoke(
-        rate: Int
+        gender: Int,
+        age: Int,
+        height: Float,
+        weight: Float
     ): Flow<Status<EffectResponse<Any>>> {
 
-        return heartRateRepository.createNewHeartRateRecord(
-            rate = rate
+        return bmiRepository.createNewBMIRecord(
+            gender = gender,
+            age = age,
+            height = height,
+            weight = weight
         )
 
     }//end invoke
 
-}//end AddNewBloodSugarRecordUseCase
+}//end AddNewBMIRecordUseCase

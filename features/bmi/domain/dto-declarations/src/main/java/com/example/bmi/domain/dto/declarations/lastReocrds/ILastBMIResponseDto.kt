@@ -1,4 +1,13 @@
-package com.example.bmi.domain.dto.declarations
+package com.example.bmi.domain.dto.declarations.lastReocrds
 
-class MyClass {
-}
+import com.example.bmi.domain.dto.declarations.IBMIDto
+
+interface ILastBMIResponseDto {
+
+    val `data`: List<IBMIDto?>?
+
+    val error: Boolean?
+
+    val message: String?
+
+}//end ILastBMIResponseDto

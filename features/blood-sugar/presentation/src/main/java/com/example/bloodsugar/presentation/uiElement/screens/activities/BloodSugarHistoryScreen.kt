@@ -26,7 +26,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
 import com.example.bloodsugar.presentation.uiElement.components.items.SingleHistorySection
-import com.example.bloodsugar.presentation.uiState.state.BloodSugarHistoryUiState
+import com.example.bloodsugar.presentation.uiState.state.BMIHistoryUiState
 import com.example.bloodsugar.presentation.uiState.viewModel.BloodSugarHistoryViewModel
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -53,7 +53,7 @@ fun BloodSugarHistoryScreen(
 private fun BloodSugarHistoryContent(
     theme: CustomTheme,
     dimen: CustomDimen,
-    uiState: BloodSugarHistoryUiState,
+    uiState: BMIHistoryUiState,
     bloodSugarRecords: LazyPagingItems<SimpleBloodSugarModel>?,
 ) {
 

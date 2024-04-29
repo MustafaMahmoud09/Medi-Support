@@ -1,0 +1,22 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+
+    //dto declarations
+    implementation(project(':features:bmi:domain:dto-declarations'))
+
+    //entity declaration
+    implementation(project(':features:bmi:domain:entity-declarations'))
+
+    //domain model
+    implementation(project(':features:bmi:domain:domain-model'))
+
+}

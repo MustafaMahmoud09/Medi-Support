@@ -17,6 +17,7 @@ import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 internal fun BMIResultSection(
@@ -25,13 +26,15 @@ internal fun BMIResultSection(
     border: Painter = painterResource(
         id = R.drawable.progress_bmi
     ),
-    result: Float,
+    result: String,
     resultSize: Float = dimen.dimen_4,
     resultColor: Color = theme.black333333,
     typeStateUser: String,
     typeStateUserColor: Color = theme.redDark,
     typeStateUserSize: Float = dimen.dimen_3_25,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    placeHolderState: Boolean = false,
+    placeHolderColor: Color = theme.background,
 ) {
 
     //create container here
@@ -68,9 +71,14 @@ internal fun BMIResultSection(
             TextSemiBoldView(
                 theme = theme,
                 dimen = dimen,
-                text = "$result",
+                text = result,
                 size = resultSize,
-                fontColor = resultColor
+                fontColor = resultColor,
+                modifier = Modifier
+                    .placeholder(
+                        visible = placeHolderState,
+                        color = placeHolderColor
+                    )
             )
 
         }//end Box
@@ -91,6 +99,10 @@ internal fun BMIResultSection(
                         dimen.dimen_3_5.dp
                     )
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
     }//end ConstraintLayout

@@ -27,6 +27,7 @@ import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 
 @Composable
@@ -210,6 +211,10 @@ private fun BloodPressureActivityContent(
                             )
                             width = Dimension.fillToConstraints
                         }
+//                            .placeholder(
+//                            visible = uiState.adviceBloodPressureModel == null,
+//                            color = theme.background
+//                        )
                 )
 
             }//end ConstraintLayout

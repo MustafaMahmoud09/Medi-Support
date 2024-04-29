@@ -1,23 +1,24 @@
-package com.example.bmi.data.source.remote.data.dto.execution.lastRecords
+package com.example.bmi.data.source.remote.data.dto.execution
 
 
+import com.example.bmi.domain.dto.declarations.IBMIDto
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class BMIDto(
     @SerializedName("advice")
-    val advice: String?,
+    override val advice: String?,
     @SerializedName("advice_id")
-    val adviceId: Int?,
+    override val adviceId: Int?,
     @SerializedName("created_at")
-    val createdAt: String?,
+    override val createdAt: String?,
     @SerializedName("day-name")
-    val dayName: String?,
+    override val dayName: String?,
     @SerializedName("id")
-    val id: Int?,
+    override val id: Long?,
     @SerializedName("key")
-    val key: String?,
+    override val key: String?,
     @SerializedName("result")
-    val result: Double?,
+    override val result: Double?,
     @SerializedName("user_id")
-    val userId: Int?
-)
+    override val userId: Long?
+): IBMIDto

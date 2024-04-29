@@ -1,8 +1,8 @@
 package com.example.blood.sugar.domain.mapper.declarations.child
 
-import com.example.heart.rate.domain.domain.model.ChartHeartRateModel
-import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
-import com.example.heart.rate.domain.mapper.declarations.IListMapper
+import com.example.bmi.domain.entity.declarations.IBMIEntity
+import com.example.bmi.domain.mapper.declarations.IListMapper
+import com.example.bmi.domain.model.ChartBMIModel
 
-interface IHeartRateEntityToChartHeartRateModelMapper
-    : IListMapper<IHeartRateEntity, ChartHeartRateModel>
+interface IBMIEntityToChartBMIModelMapper
+    : IListMapper<IBMIEntity, ChartBMIModel>

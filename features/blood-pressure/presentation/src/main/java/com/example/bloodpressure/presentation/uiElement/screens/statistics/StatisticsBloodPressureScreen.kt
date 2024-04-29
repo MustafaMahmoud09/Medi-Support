@@ -414,6 +414,10 @@ private fun StatisticsBloodPressureContent(
                                     )
                                     width = Dimension.fillToConstraints
                                 }
+//                                    .placeholder(
+//                                    visible = uiState.adviceBloodPressureModel == null,
+//                                    color = theme.background
+//                                )
                         )
 
                     }//end ConstraintLayout

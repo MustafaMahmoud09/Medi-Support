@@ -1,4 +1,17 @@
-package com.example.bmi.domain.repository.declarations
+package com.example.bmi.data.repository.execution.cacheHelperDeclarations
 
-class IServerBMIRepositoryHelper {
-}
+interface IServerBMIRepositoryHelper {
+
+    suspend fun getLastWeekBMIRecordsFromServer(
+        userAuthId: Long
+    )
+
+
+    suspend fun getPageBMIRecordsFromSever(
+        userAuthId: Long,
+        page: Int,
+        pageSize: Int
+    ): Int
+
+
+}//end IServerBMIRepositoryHelper

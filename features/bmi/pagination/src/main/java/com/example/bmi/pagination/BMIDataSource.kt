@@ -1,17 +1,17 @@
-package com.example.blood.sugar.pagination
+package com.example.bmi.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
-import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.bmi.domain.model.SimpleBMIModel
+import com.example.bmi.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
 
-class BloodSugarDataSource(
+class BMIDataSource(
     private val getPageHistoryRecordsUseCase: IGetPageHistoryRecordsUseCase,
-) : PagingSource<Int, SimpleBloodSugarModel>() {
+) : PagingSource<Int, SimpleBMIModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, SimpleBloodSugarModel> {
+    ): LoadResult<Int, SimpleBMIModel> {
 
         return try {
 
@@ -49,7 +49,7 @@ class BloodSugarDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, SimpleBloodSugarModel>
+        state: PagingState<Int, SimpleBMIModel>
     ): Int? = null
 
 }//end RemindersDataSource

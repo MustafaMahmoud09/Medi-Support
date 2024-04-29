@@ -1,16 +1,16 @@
-package com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar
+package com.example.bmi.data.source.local.data.entity.execution.bmi
 
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserInfo
 
-object BloodSugarInfo {
+object BMIInfo {
 
-    const val BLOOD_SUGAR_TABLE_NAME = "blood_sugar"
+    const val BMI_TABLE_NAME = "bmi"
 
-    const val ID_COLUMN_NAME = "blood_sugar_id"
+    const val ID_COLUMN_NAME = "bmi_id"
 
     const val USER_ID_COLUMN_NAME = UserInfo.ID_COLUMN_NAME
 
-    const val LEVEL_COLUMN_NAME = "level"
+    const val RESULT_COLUMN_NAME = "result"
 
     const val TYPE_COLUMN_NAME = "type"
 
@@ -18,4 +18,4 @@ object BloodSugarInfo {
 
     const val CREATED_AT_COLUMN_NAME = "created_at"
 
-}//end BloodSugarInfo
+}//end BMIInfo

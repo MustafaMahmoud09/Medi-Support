@@ -154,10 +154,38 @@
       <module name="MediSupport.features.bloodpressure.lib" target="17" />
       <module name="MediSupport.features.bloodpressure.lib.main" target="17" />
       <module name="MediSupport.features.bloodpressure.lib.test" target="17" />
+      <module name="MediSupport.features.bmi.data.data-source.local-data.data-access-object" target="17" />
+      <module name="MediSupport.features.bmi.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.bmi.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.bmi.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.bmi.data.repository" target="17" />
+      <module name="MediSupport.features.bmi.data.repository-execution" target="17" />
+      <module name="MediSupport.features.bmi.domain.domain-model" target="17" />
+      <module name="MediSupport.features.bmi.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.bmi.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.bmi.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.bmi.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.bmi.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.bmi.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.bmi.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.bmi.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.bmi.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.bmi.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.bmi.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.bmi.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.bmi.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.bmi.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.bmi.domain.use-case" target="17" />
       <module name="MediSupport.features.bmi.domain.use-case.main" target="17" />
       <module name="MediSupport.features.bmi.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.bmi.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.bmi.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.bmi.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.bmi.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.bmi.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.bmi.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.bmi.mapper-execution" target="17" />
+      <module name="MediSupport.features.bmi.pagination" target="17" />
       <module name="MediSupport.features.bmi.presentation" target="17" />
       <module name="MediSupport.features.chat.data.repository" target="17" />
       <module name="MediSupport.features.chat.domain.use-case" target="17" />

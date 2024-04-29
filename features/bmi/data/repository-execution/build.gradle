@@ -1,0 +1,94 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.bmi.data.repository.execution'
+    compileSdk compile_sdk
+
+    defaultConfig {
+        minSdk min_sdk
+        targetSdk max_sdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+
+    //project
+
+    //project
+    //repository declarations
+    implementation(project(":features:bmi:domain:repository-declarations"))
+
+    //requests
+    implementation(project(":features:bmi:data:data-source:remote-data:requests"))
+
+    //dto execution
+    implementation(project(":features:bmi:data:data-source:remote-data:dto-execution"))
+
+    //dto declarations
+    implementation(project(':features:bmi:domain:dto-declarations'))
+
+    //entity declaration
+    implementation(project(':features:bmi:domain:entity-declarations'))
+
+    //entity execution
+    implementation(project(':features:bmi:data:data-source:local-data:entity-execution'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
+    //response wrapper
+    implementation(project(":libraries:core:remote-database:response-wrapper"))
+
+    //data access object
+    implementation(project(":features:bmi:data:data-source:local-data:data-access-object"))
+
+    //database creator
+    implementation(project(':libraries:core:local-data:database-creator'))
+
+    //mapper declaration
+    implementation(project(':features:bmi:domain:mapper-declarations'))
+
+    //shared preferences access object
+    implementation(project(":libraries:core:local-data:shared-preferences-access-object"))
+
+    //shared keys preferences
+    implementation(project(":libraries:core:local-data:shared-keys-preferences"))
+
+    //shared entity execution
+    implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //room database
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

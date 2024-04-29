@@ -1,5 +1,9 @@
 package com.example.bloodsugar.presentation.uiElement.components.items
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,7 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
+import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.TextNormalView
+import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -57,7 +63,7 @@ fun SomeHistorySection(
                 bottom = dimen.dimen_2.dp
             )
     ) {
-        val (historyTextId, seeAllTextId, historiesId) = createRefs()
+        val (historyTextId, seeAllTextId, historiesId, historiesEmptyId) = createRefs()
 
         TextNormalView(
             theme = theme,
@@ -109,7 +115,79 @@ fun SomeHistorySection(
                 },
         )
 
-        Column(
+
+        AnimatedVisibility(
+            visible = historyRecords.isEmpty(),
+            enter = fadeIn(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
+            exit = fadeOut(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
+            modifier = Modifier
+                .constrainAs(historiesEmptyId) {
+                    start.linkTo(
+                        parent.start,
+                        dimen.dimen_1.dp
+                    )
+                    end.linkTo(
+                        parent.end,
+                        dimen.dimen_1.dp
+                    )
+                    top.linkTo(
+                        seeAllTextId.bottom,
+                        dimen.dimen_2_5.dp
+                    )
+                    width = Dimension.fillToConstraints
+                }
+        ) {
+
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = dimen.dimen_1_5.dp,
+                    )
+                    .padding(
+                        top = dimen.dimen_2.dp,
+                        bottom = dimen.dimen_2_5.dp
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+
+
+                TextSemiBoldView(
+                    theme = theme,
+                    dimen = dimen,
+                    text = stringResource(
+                        R.string.there_are_no_items_to_display
+                    ),
+                    size = dimen.dimen_1_75,
+                    fontColor = theme.grayLight,
+                )
+
+            }//end Box
+
+        }//end AnimatedVisibility
+
+
+        AnimatedVisibility(
+            visible = historyRecords.isNotEmpty(),
+            enter = fadeIn(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
+            exit = fadeOut(
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            ),
             modifier = Modifier
                 .constrainAs(historiesId) {
                     start.linkTo(
@@ -126,33 +204,42 @@ fun SomeHistorySection(
                     )
                     width = Dimension.fillToConstraints
                 },
-            verticalArrangement = Arrangement.spacedBy(
-                dimen.dimen_2.dp
-            )
         ) {
 
-            for (element in historyRecords) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = dimen.dimen_1_5.dp
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(
+                    dimen.dimen_2.dp
+                )
+            ) {
 
-                    SingleHistorySection(
-                        dimen = dimen,
-                        theme = theme,
+
+                for (element in historyRecords) {
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        record = element,
-                    )
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = dimen.dimen_1_5.dp
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
 
-                }//end Box
-            }//end for
+                        SingleHistorySection(
+                            dimen = dimen,
+                            theme = theme,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            record = element,
+                        )
 
-        }//end Column
+                    }//end Box
+
+                }//end if
+
+            }//end Column
+
+        }//end AnimatedVisibility
 
     }//end ConstraintLayout
 

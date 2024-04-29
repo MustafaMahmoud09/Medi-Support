@@ -1,13 +1,11 @@
-package com.example.bmi.data.source.remote.data.dto.execution.pageRecords
+package com.example.bmi.domain.dto.declarations.pageRecords
 
+interface IPageBMIResponseDto {
 
-import com.google.gson.annotations.SerializedName
+    val `data`: IData?
 
-data class PageBMIResponseDto(
-    @SerializedName("data")
-    val `data`: Data?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end IPageBMIResponseDto

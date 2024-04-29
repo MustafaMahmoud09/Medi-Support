@@ -1,7 +1,8 @@
-package com.example.heartrate.data.repository.cacheHelper
+package com.example.bmi.data.repository.execution.cacheHelperExecution
 
 import android.util.Log
 import com.example.blood.sugar.domain.mapper.declarations.child.IBMIDtoToBMIEntityMapper
+import com.example.bmi.data.repository.execution.cacheHelperDeclarations.ICacheBMIRepositoryHelper
 import com.example.bmi.data.source.local.data.entity.execution.bmi.BMIEntity
 import com.example.bmi.data.source.remote.data.dto.execution.BMIDto
 import com.example.bmi.domain.dto.declarations.pageRecords.IPageBMIResponseDto
@@ -10,10 +11,10 @@ import com.example.database_creator.MediSupportDatabase
 class CacheBMIRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val bmiDtoToBMIEntityMapper: IBMIDtoToBMIEntityMapper
-) {
+): ICacheBMIRepositoryHelper {
 
     //function for cache latest bmi records in local database
-    suspend fun cacheLatestBMIRecords(
+    override suspend fun cacheLatestBMIRecords(
         bmiRecords: List<BMIDto>,
         userId: Long
     ) {
@@ -74,7 +75,7 @@ class CacheBMIRepositoryHelper(
 
 
     //function for cache page contain on blood sugar records in local database
-    suspend fun cachePageBMIRecords(
+    override suspend fun cachePageBMIRecords(
         records: IPageBMIResponseDto?,
         pageSize: Int,
         userId: Long
@@ -196,18 +197,18 @@ class CacheBMIRepositoryHelper(
     }//end cachePageBloodSugarRecords
 
 
-    suspend fun getLocalPageCount(
+    override suspend fun getLocalPageCount(
         pageSize: Int
     ): Int {
 
         //get article size
-        val heartRateRecordsSize = localDatabase.heartRateDao().selectHeartRateCount()
+        val bmiRecordsSize = localDatabase.bmiDao().selectBMICount()
 
-        return if ((heartRateRecordsSize.toFloat() / pageSize.toFloat()) - (heartRateRecordsSize / pageSize) != 0f) {
-            (heartRateRecordsSize / pageSize) + 1
+        return if ((bmiRecordsSize.toFloat() / pageSize.toFloat()) - (bmiRecordsSize / pageSize) != 0f) {
+            (bmiRecordsSize / pageSize) + 1
         }//end if
         else {
-            (heartRateRecordsSize / pageSize)
+            (bmiRecordsSize / pageSize)
         }.toInt()//end else
 
     }//end getLocalPageCount

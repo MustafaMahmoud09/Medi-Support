@@ -1,23 +1,21 @@
-package com.example.bmi.data.source.remote.data.dto.execution
+package com.example.bmi.domain.dto.declarations
 
+interface IBMIDto {
 
-import com.google.gson.annotations.SerializedName
+    val advice: String?
 
-data class BMIDto(
-    @SerializedName("advice")
-    val advice: String?,
-    @SerializedName("advice_id")
-    val adviceId: Int?,
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("day-name")
-    val dayName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("key")
-    val key: String?,
-    @SerializedName("result")
-    val result: Double?,
-    @SerializedName("user_id")
-    val userId: Int?
-)
+    val adviceId: Int?
+
+    val createdAt: String?
+
+    val dayName: String?
+
+    val id: Long?
+
+    val key: String?
+
+    val result: Double?
+
+    val userId: Long?
+
+}//end IBMIDto

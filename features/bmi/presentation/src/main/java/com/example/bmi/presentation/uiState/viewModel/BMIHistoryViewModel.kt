@@ -1,10 +1,10 @@
-package com.example.bloodsugar.presentation.uiState.viewModel
+package com.example.bmi.presentation.uiState.viewModel
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
-import com.example.blood.sugar.pagination.BloodSugarDataSource
-import com.example.bloodsugar.presentation.uiState.state.BloodSugarHistoryUiState
+import com.example.bmi.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.bmi.pagination.BMIDataSource
+import com.example.bmi.presentation.uiState.state.BloodSugarHistoryUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class BloodSugarHistoryViewModel @Inject constructor(
+class BMIHistoryViewModel @Inject constructor(
     private val getPageHistoryRecordsUseCase: IGetPageHistoryRecordsUseCase,
 ) : BaseViewModel() {
 
@@ -24,19 +24,19 @@ class BloodSugarHistoryViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        onGetBloodSugarRecords()
+        onGetBMIRecords()
     }//end init
 
     //function get articles
-    private fun onGetBloodSugarRecords() {
+    private fun onGetBMIRecords() {
 
         //get current page reminders here
-        val bloodSugarPaginationFlow = Pager(
+        val bmiPaginationFlow = Pager(
             config = PagingConfig(
                 pageSize = 10
             )
         ) {
-            BloodSugarDataSource(
+            BMIDataSource(
                 getPageHistoryRecordsUseCase = getPageHistoryRecordsUseCase
             )
         }.flow
@@ -44,9 +44,9 @@ class BloodSugarHistoryViewModel @Inject constructor(
         //change reminders state here
         _state.update {
             it.copy(
-                bloodSugarRecords = bloodSugarPaginationFlow
+                bmiRecords = bmiPaginationFlow
             )
-        }
+        }//end update
 
     }//end onGetArticles
 

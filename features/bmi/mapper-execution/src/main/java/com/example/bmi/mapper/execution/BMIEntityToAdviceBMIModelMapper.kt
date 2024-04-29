@@ -1,16 +1,16 @@
-package com.example.heart.rate.mapper.execution
+package com.example.bmi.mapper.execution
 
-import com.example.blood.sugar.domain.mapper.declarations.child.IHeartRateEntityToAdviceHeartRateModelMapper
-import com.example.heart.rate.domain.domain.model.AdviceHeartRateModel
-import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
+import com.example.blood.sugar.domain.mapper.declarations.child.IBMIEntityToAdviceBMIModelMapper
+import com.example.bmi.domain.entity.declarations.IBMIEntity
+import com.example.bmi.domain.model.AdviceBMIModel
 
 
-class HeartRateEntityToAdviceHeartRateModelMapper :
-    IHeartRateEntityToAdviceHeartRateModelMapper {
+class BMIEntityToAdviceBMIModelMapper :
+    IBMIEntityToAdviceBMIModelMapper {
 
     override fun listConvertor(
-        list: List<IHeartRateEntity>
-    ): List<AdviceHeartRateModel> {
+        list: List<IBMIEntity>
+    ): List<AdviceBMIModel> {
 
         return list.map { bloodSugarEntity ->
             objectConvertor(bloodSugarEntity)
@@ -19,12 +19,12 @@ class HeartRateEntityToAdviceHeartRateModelMapper :
     }//end listConvertor
 
     override fun objectConvertor(
-        obj: IHeartRateEntity
-    ): AdviceHeartRateModel {
+        obj: IBMIEntity
+    ): AdviceBMIModel {
 
-        return AdviceHeartRateModel(
+        return AdviceBMIModel(
             id = obj.id,
-            rate = obj.rate,
+            result = String.format("%.2f",obj.result),
             type = obj.type,
             advice = obj.advice ?: "",
             createdAt = obj.createdAt

@@ -21,7 +21,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bloodsugar.presentation.uiElement.components.items.SomeHistorySection
-import com.example.bloodsugar.presentation.uiState.state.BloodSugarActivityUiState
+import com.example.bloodsugar.presentation.uiState.state.BMIActivityUiState
 import com.example.bloodsugar.presentation.uiState.viewModel.BloodSugarActivityViewModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.ColumnChartView
@@ -29,6 +29,7 @@ import com.example.sharedui.uiElement.components.items.DaySection
 import com.example.sharedui.uiElement.components.items.RecommendedSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 fun BloodSugarActivityScreen(
@@ -56,7 +57,7 @@ private fun BloodSugarActivityContent(
     theme: CustomTheme,
     dimen: CustomDimen,
     onClickSeeAll: () -> Unit,
-    uiState: BloodSugarActivityUiState,
+    uiState: BMIActivityUiState,
     daysColumnState: LazyListState
 ) {
 
@@ -195,6 +196,10 @@ private fun BloodSugarActivityContent(
                             )
                             width = Dimension.fillToConstraints
                         }
+//                            .placeholder(
+//                            visible = uiState.adviceBloodSugarModel == null,
+//                            color = theme.background
+//                        )
                 )
 
             }//end ConstraintLayout

@@ -1,13 +1,13 @@
-package com.example.heart.rate.mapper.execution
+package com.example.bmi.mapper.execution
 
-import com.example.blood.sugar.domain.mapper.declarations.child.IHeartRateDtoToHeartRateEntityMapper
-import com.example.heart.rate.data.source.entity.execution.heartRate.HeartRateEntity
-import com.example.heart.rate.domain.dto.declarations.IHeartRateDto
-import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
+import com.example.blood.sugar.domain.mapper.declarations.child.IBMIDtoToBMIEntityMapper
+import com.example.bmi.data.source.local.data.entity.execution.bmi.BMIEntity
+import com.example.bmi.domain.dto.declarations.IBMIDto
+import com.example.bmi.domain.entity.declarations.IBMIEntity
 
-class HeartRateDtoToHeartRateEntityMapper : IHeartRateDtoToHeartRateEntityMapper {
+class BMIDtoToBMIEntityMapper : IBMIDtoToBMIEntityMapper {
 
-    override fun listConvertor(list: List<IHeartRateDto>): List<IHeartRateEntity> {
+    override fun listConvertor(list: List<IBMIDto>): List<IBMIEntity> {
 
         return list.map { bloodSugarDto ->
             objectConvertor(
@@ -17,17 +17,17 @@ class HeartRateDtoToHeartRateEntityMapper : IHeartRateDtoToHeartRateEntityMapper
 
     }//end listConvertor
 
-    override fun objectConvertor(obj: IHeartRateDto): IHeartRateEntity {
+    override fun objectConvertor(obj: IBMIDto): IBMIEntity {
 
-        return HeartRateEntity(
+        return BMIEntity(
             id = obj.id ?: 0,
-            rate = obj.heartRate ?: 0,
+            result = (obj.result ?: 0).toDouble(),
             createdAt = obj.createdAt ?: "",
-            type = obj.advice?.key ?: "",
-            advice = obj.advice?.advice ?: "",
+            type = obj.key ?: "",
+            advice = obj.advice ?: "",
             userId = obj.userId ?: 0
         )
 
     }//end objectConvertor
 
-}//end HeartRateDtoToHeartRateEntityMapper
+}//end BMIDtoToBMIEntityMapper

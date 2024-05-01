@@ -1,6 +1,6 @@
-package com.example.article.data.repository.execution
+package com.example.article.data.repository.execution.cacheHelperExecution
 
-import android.util.Log
+import com.example.article.data.repository.execution.cacheHelperDeclarations.ICacheArticleRepositoryHelper
 import com.example.article.data.source.local.entity.execution.entities.article.ArticleEntity
 import com.example.article.domain.dto.declarations.IArticleDataDto
 import com.example.article.domain.dto.declarations.articleById.IArticleResponseDto
@@ -8,13 +8,13 @@ import com.example.article.domain.dto.declarations.articles.IArticlesResponseDto
 import com.example.article.domain.mapper.declarations.child.IArticleDtoToArticleEntityMapper
 import com.example.database_creator.MediSupportDatabase
 
-class ArticleRepositoryHelper(
+class CacheArticleRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val articleDtoToArticleEntityMapper: IArticleDtoToArticleEntityMapper
-) {
+): ICacheArticleRepositoryHelper {
 
     //function for cache articles in local database
-    suspend fun cachePageArticles(
+    override suspend fun cachePageArticles(
         articles: IArticlesResponseDto?,
         pageSize: Int
     ): Int {
@@ -118,7 +118,7 @@ class ArticleRepositoryHelper(
 
 
     //function for cache single article in local database
-    suspend fun cacheSingleArticle(article: IArticleResponseDto) {
+    override suspend fun cacheSingleArticle(article: IArticleResponseDto) {
 
         //map article from dto to entity here
         val articleEntity = articleDtoToArticleEntityMapper.objectConvertor(
@@ -133,7 +133,7 @@ class ArticleRepositoryHelper(
     }//end cacheSingleArticle
 
 
-    suspend fun getLocalPageCount(
+    override suspend fun getLocalPageCount(
         pageSize: Int
     ): Int {
 

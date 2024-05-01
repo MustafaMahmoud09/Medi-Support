@@ -11,7 +11,7 @@ import com.example.database_creator.MediSupportDatabase
 class CacheBMIRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val bmiDtoToBMIEntityMapper: IBMIDtoToBMIEntityMapper
-): ICacheBMIRepositoryHelper {
+) : ICacheBMIRepositoryHelper {
 
     //function for cache latest bmi records in local database
     override suspend fun cacheLatestBMIRecords(
@@ -45,15 +45,11 @@ class CacheBMIRepositoryHelper(
 
             }//for loop
 
-            if (heartRateEntities.isNotEmpty()) {
-
-                //execute delete here for extra data
-                localDatabase.bmiDao().deleteBMIRecordsFromId(
-                    startId = heartRateEntities[0].id,
-                    userId = userId
-                )
-
-            }//end if
+            //execute delete here for extra data
+            localDatabase.bmiDao().deleteBMIRecordsFromId(
+                startId = heartRateEntities[0].id,
+                userId = userId
+            )
 
             //cache data in local here
             localDatabase.bmiDao().insertBMIRecord(

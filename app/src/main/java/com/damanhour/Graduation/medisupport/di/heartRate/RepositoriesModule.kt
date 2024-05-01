@@ -6,8 +6,10 @@ import com.example.database_creator.MediSupportDatabase
 import com.example.heart.rate.data.source.remote.data.requests.HeartRateRequest
 import com.example.heart.rate.domain.repository.declarations.IHeartRateRepository
 import com.example.heartrate.data.repository.HeartRateRepositoryImpl
-import com.example.heartrate.data.repository.cacheHelper.CacheHeartRateRepositoryHelper
-import com.example.heartrate.data.repository.cacheHelper.ServerHeartRateRepositoryHelper
+import com.example.heartrate.data.repository.cacheHelperDeclarations.ICacheHeartRateRepositoryHelper
+import com.example.heartrate.data.repository.cacheHelperDeclarations.IServerHeartRateRepositoryHelper
+import com.example.heartrate.data.repository.cacheHelperExecution.CacheHeartRateRepositoryHelper
+import com.example.heartrate.data.repository.cacheHelperExecution.ServerHeartRateRepositoryHelper
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
 import dagger.Module
@@ -28,7 +30,7 @@ object RepositoriesModule {
         @ApplicationContext context: Context,
         wrapper: ResponseWrapper,
         heartRateRequest: HeartRateRequest,
-        serverHeartRateHelper: ServerHeartRateRepositoryHelper,
+        serverHeartRateHelper: IServerHeartRateRepositoryHelper,
         localDatabase: MediSupportDatabase,
         sharedPreferencesAccessObject: SharedPreferencesAccessObject
     ): IHeartRateRepository {
@@ -50,8 +52,8 @@ object RepositoriesModule {
     fun provideServerHeartRateHelper(
         heartRateRequest: HeartRateRequest,
         wrapper: ResponseWrapper,
-        cacheHeartRateRepositoryHelper: CacheHeartRateRepositoryHelper
-    ): ServerHeartRateRepositoryHelper {
+        cacheHeartRateRepositoryHelper: ICacheHeartRateRepositoryHelper
+    ): IServerHeartRateRepositoryHelper {
 
         return ServerHeartRateRepositoryHelper(
             heartRateRequest = heartRateRequest,
@@ -67,7 +69,7 @@ object RepositoriesModule {
     fun provideCacheHeartRateRepositoryHelper(
         localDatabase: MediSupportDatabase,
         heartRateDtoToHeartRateEntityMapper: IHeartRateDtoToHeartRateEntityMapper
-    ): CacheHeartRateRepositoryHelper {
+    ): ICacheHeartRateRepositoryHelper {
 
         return CacheHeartRateRepositoryHelper(
             localDatabase = localDatabase,

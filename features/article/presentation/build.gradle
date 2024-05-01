@@ -52,7 +52,6 @@ dependencies {
     //domain model
     implementation(project(':features:article:domain:domain-model'))
 
-
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 

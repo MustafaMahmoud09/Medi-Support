@@ -2,8 +2,6 @@
 
 package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -11,13 +9,12 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.articleNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.home.homeNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.moreNavGraph
-import com.example.profile.presentation.uiElement.screens.profile.profileDestination
+import com.example.setting.presentation.uiElement.screens.profile.profileDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlin.reflect.KFunction1
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun BottomNavGraph(
     navHostController: NavHostController,

@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorManager
-import android.util.Log
 import com.example.database_creator.MediSupportDatabase
 import com.example.heart.rate.data.source.remote.data.requests.HeartRateRequest
 import com.example.heart.rate.domain.entity.declarations.IHeartRateEntity
 import com.example.heart.rate.domain.repository.declarations.IHeartRateRepository
-import com.example.heartrate.data.repository.cacheHelper.ServerHeartRateRepositoryHelper
+import com.example.heartrate.data.repository.cacheHelperDeclarations.IServerHeartRateRepositoryHelper
+import com.example.heartrate.data.repository.cacheHelperExecution.ServerHeartRateRepositoryHelper
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
@@ -21,7 +21,7 @@ class HeartRateRepositoryImpl(
     private val context: Context,
     private val wrapper: ResponseWrapper,
     private val heartRateRequest: HeartRateRequest,
-    private val serverHeartRateHelper: ServerHeartRateRepositoryHelper,
+    private val serverHeartRateHelper: IServerHeartRateRepositoryHelper,
     private val localDatabase: MediSupportDatabase,
     private val sharedPreferencesAccessObject: SharedPreferencesAccessObject
 ) : IHeartRateRepository {

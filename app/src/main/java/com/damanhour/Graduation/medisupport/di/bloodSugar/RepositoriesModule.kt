@@ -1,9 +1,10 @@
 package com.damanhour.Graduation.medisupport.di.bloodSugar
 
-import com.example.blood.pressure.data.repository.execution.BloodPressureRepositoryHelper
-import com.example.blood.pressure.domain.mapper.declarations.child.ILatestBloodPressureDtoToBloodPressureEntityMapper
-import com.example.blood.sugar.data.repository.execution.BloodSugarRepositoryHelper
+import com.example.blood.sugar.data.repository.execution.cacheHelperExecution.CacheBloodSugarRepositoryHelper
 import com.example.blood.sugar.data.repository.execution.BloodSugarRepositoryImpl
+import com.example.blood.sugar.data.repository.execution.cacheHelperDeclarations.ICacheBloodSugarRepositoryHelper
+import com.example.blood.sugar.data.repository.execution.cacheHelperDeclarations.IServerBloodSugarRepositoryHelper
+import com.example.blood.sugar.data.repository.execution.cacheHelperExecution.ServerBloodSugarRepositoryHelper
 import com.example.blood.sugar.data.source.remote.data.requests.BloodSugarRequest
 import com.example.blood.sugar.domain.mapper.declarations.child.IBloodSugarDtoToBloodSugarEntityMapper
 import com.example.blood.sugar.domain.repository.declarations.IBloodSugarRepository
@@ -25,7 +26,7 @@ object RepositoriesModule {
     fun provideBloodSugarRepository(
         bloodSugarRequest: BloodSugarRequest,
         wrapper: ResponseWrapper,
-        bloodSugarRepositoryHelper: BloodSugarRepositoryHelper,
+        serverBloodSugarRepositoryHelper: IServerBloodSugarRepositoryHelper,
         sharedPreferencesAccessObject: SharedPreferencesAccessObject,
         localDatabase: MediSupportDatabase,
     ): IBloodSugarRepository {
@@ -34,7 +35,7 @@ object RepositoriesModule {
             bloodSugarRequest = bloodSugarRequest,
             wrapper = wrapper,
             localDatabase = localDatabase,
-            bloodSugarRepositoryHelper = bloodSugarRepositoryHelper,
+            serverBloodSugarRepositoryHelper = serverBloodSugarRepositoryHelper,
             sharedPreferencesAccessObject = sharedPreferencesAccessObject
         )
 
@@ -43,12 +44,31 @@ object RepositoriesModule {
 
     @Provides
     @Singleton
+    fun provideServerBloodSugarRepositoryHelper(
+        localDatabase: MediSupportDatabase,
+        wrapper: ResponseWrapper,
+        bloodSugarRequest: BloodSugarRequest,
+        cacheBloodSugarRepositoryHelper: ICacheBloodSugarRepositoryHelper,
+    ): IServerBloodSugarRepositoryHelper{
+
+        return ServerBloodSugarRepositoryHelper(
+            localDatabase = localDatabase,
+            wrapper = wrapper,
+            bloodSugarRequest = bloodSugarRequest,
+            cacheBloodSugarRepositoryHelper = cacheBloodSugarRepositoryHelper
+        )
+
+    }//end provideServerBloodSugarRepositoryHelper
+
+
+    @Provides
+    @Singleton
     fun provideBloodSugarRepositoryHelper(
         localDatabase: MediSupportDatabase,
         bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEntityMapper
-    ): BloodSugarRepositoryHelper {
+    ): ICacheBloodSugarRepositoryHelper {
 
-        return BloodSugarRepositoryHelper(
+        return CacheBloodSugarRepositoryHelper(
             localDatabase = localDatabase,
             bloodSugarDtoToBloodSugarEntityMapper = bloodSugarDtoToBloodSugarEntityMapper
         )

@@ -1,4 +1,4 @@
-package com.example.heartrate.data.repository.cacheHelper
+package com.example.heartrate.data.repository.cacheHelperExecution
 
 import android.util.Log
 import com.example.heart.rate.data.source.dto.execution.HeartRateDto
@@ -7,6 +7,8 @@ import com.example.heart.rate.data.source.dto.execution.lastRecords.LastHeartRat
 import com.example.heart.rate.data.source.dto.execution.pageRecords.IPageHeartRateResponseDto
 import com.example.heart.rate.data.source.dto.execution.pageRecords.PageHeartRateResponseDto
 import com.example.heart.rate.data.source.remote.data.requests.HeartRateRequest
+import com.example.heartrate.data.repository.cacheHelperDeclarations.ICacheHeartRateRepositoryHelper
+import com.example.heartrate.data.repository.cacheHelperDeclarations.IServerHeartRateRepositoryHelper
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import kotlinx.coroutines.CoroutineScope
@@ -18,12 +20,12 @@ import kotlinx.coroutines.launch
 class ServerHeartRateRepositoryHelper(
     private val heartRateRequest: HeartRateRequest,
     private val wrapper: ResponseWrapper,
-    private val cacheHeartRateRepositoryHelper: CacheHeartRateRepositoryHelper,
-) {
+    private val cacheHeartRateRepositoryHelper: ICacheHeartRateRepositoryHelper,
+): IServerHeartRateRepositoryHelper{
 
     //function for make request on server for get last heart rate records
     //after that cache data in local data base
-    suspend fun getLastWeekHeartRateRecordsFromServer(
+    override suspend fun getLastWeekHeartRateRecordsFromServer(
         userAuthId: Long
     ) {
 
@@ -98,7 +100,7 @@ class ServerHeartRateRepositoryHelper(
 
     //function for get page contain on heart rate records from server
     //after that cache data in local database
-    suspend fun getPageHeartRateRecordsFromSever(
+    override suspend fun getPageHeartRateRecordsFromSever(
         userAuthId: Long,
         page: Int,
         pageSize: Int
@@ -123,9 +125,10 @@ class ServerHeartRateRepositoryHelper(
                         //process is success
                         if (status.toData()?.statusCode == 200) {
                             //make cache article in local database here
-                            lastPage = cacheHeartRateRepositoryHelper.cachePageBloodSugarRecords(
+                            lastPage = cacheHeartRateRepositoryHelper.cachePageHeartRateRecords(
                                 records = status.toData()!!.body,
-                                userId = userAuthId
+                                userId = userAuthId,
+                                pageSize = pageSize
                             )
                         }//end if
                         return@collectLatest
@@ -147,7 +150,6 @@ class ServerHeartRateRepositoryHelper(
         catch (ex: Exception) {
             ex.message?.let { Log.d("ERROR", it) }
         }
-
 
         //if last page equal 0 get last page number in local database
         if (lastPage == 0) {

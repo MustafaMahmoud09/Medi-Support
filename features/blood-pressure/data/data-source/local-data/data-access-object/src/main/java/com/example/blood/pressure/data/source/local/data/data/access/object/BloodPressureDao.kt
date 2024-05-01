@@ -61,7 +61,7 @@ interface BloodPressureDao {
             BloodPressureInfo.USER_ID_COLUMN_NAME
         } == :userId ORDER BY ${
             BloodPressureInfo.ID_COLUMN_NAME
-        } LIMIT :pageSize" +
+        } ASC LIMIT :pageSize" +
                 " OFFSET ((:page - 1) * :pageSize)"
     )
     suspend fun selectPageBloodPressure(

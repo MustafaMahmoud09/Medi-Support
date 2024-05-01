@@ -24,7 +24,7 @@ class BloodPressureDataSource(
             //get current page data here
             val data = getPageHistoryRecordUseCase(
                 page = currentPageNumber,
-                pageSize = 5
+                pageSize = 10
             )
 
             //return current page here

@@ -39,8 +39,15 @@ android {
 }
 
 dependencies {
+
     //project
     implementation(project(':libraries:shared-ui'))
+
+    //use case declarations
+    implementation(project(':features:account-setting:domain:usecase-declarations'))
+
+    //domain model
+    implementation(project(':features:account-setting:domain:domain-model'))
 
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
@@ -70,4 +77,8 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //view model scope
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.7.0"
+
 }

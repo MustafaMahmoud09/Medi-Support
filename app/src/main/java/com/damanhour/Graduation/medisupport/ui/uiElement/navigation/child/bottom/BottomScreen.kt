@@ -35,8 +35,8 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.child.child.popMoreNavGraph
 import com.example.article.presentation.uiElement.screens.article.navigateToSingleDestination
 import com.example.article.presentation.uiElement.screens.article.popSingleArticleDestination
-import com.example.profile.presentation.uiElement.screens.profile.PROFILE_DESTINATION_DATA
-import com.example.profile.presentation.uiElement.screens.profile.popProfileDestination
+import com.example.setting.presentation.uiElement.screens.profile.PROFILE_DESTINATION_DATA
+import com.example.setting.presentation.uiElement.screens.profile.popProfileDestination
 import com.example.reminder.presentation.uiElement.screens.records.navigateToReminderRecordsDestination
 import com.example.reminder.presentation.uiElement.screens.records.popReminderRecordsDestination
 import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.BottomNavigationSection

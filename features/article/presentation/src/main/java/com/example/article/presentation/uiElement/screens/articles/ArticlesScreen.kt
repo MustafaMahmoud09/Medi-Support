@@ -31,7 +31,6 @@ import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
-import com.google.accompanist.placeholder.placeholder
 import kotlin.reflect.KFunction1
 
 @Composable

@@ -151,9 +151,6 @@ dependencies {
     //payment
     implementation(project(':features:payment:presentation'))
 
-    //profile
-    implementation(project(':features:profile:presentation'))
-
     //reminder
     implementation(project(':features:reminder:presentation'))
     implementation(project(':features:reminder:domain:usecase-declarations'))
@@ -167,7 +164,7 @@ dependencies {
     implementation(project(':features:room:presentation'))
 
     //setting
-    implementation(project(':features:setting:presentation'))
+    implementation(project(':features:account-setting:presentation'))
 
     //response wrapper
     implementation(project(":libraries:core:remote-database:response-wrapper"))

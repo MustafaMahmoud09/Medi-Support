@@ -1,6 +1,8 @@
-package com.example.article.data.repository.execution
+package com.example.article.data.repository.execution.cacheHelperExecution
 
 import android.util.Log
+import com.example.article.data.repository.execution.cacheHelperDeclarations.ICacheArticleRepositoryHelper
+import com.example.article.data.repository.execution.cacheHelperDeclarations.IServerArticleRepositoryHelper
 import com.example.article.data.source.remote.dto.execution.articleById.ArticleResponseDto
 import com.example.article.data.source.remote.dto.execution.articles.ArticlesResponseDto
 import com.example.article.data.source.remote.requests.ArticleRequest
@@ -17,12 +19,12 @@ import kotlinx.coroutines.launch
 class ServerArticleRepositoryHelper(
     private val articleRequest: ArticleRequest,
     private val wrapper: ResponseWrapper,
-    private val articleRepositoryHelper: ArticleRepositoryHelper,
+    private val articleRepositoryHelper: ICacheArticleRepositoryHelper,
     private val localDatabase: MediSupportDatabase,
-) {
+): IServerArticleRepositoryHelper {
 
     //function for get article by id from server
-    suspend fun getArticleByIdFromServer(
+    override suspend fun getArticleByIdFromServer(
         articleId: Long
     ) {
 
@@ -96,7 +98,7 @@ class ServerArticleRepositoryHelper(
 
     //fun for get page contain on article from server
     //after that cache data in local database
-    suspend fun getPageArticlesFromServer(
+    override suspend fun getPageArticlesFromServer(
         page: Int,
         pageSize: Int
     ): Int {

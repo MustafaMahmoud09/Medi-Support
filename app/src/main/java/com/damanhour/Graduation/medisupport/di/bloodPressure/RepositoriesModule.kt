@@ -1,7 +1,10 @@
 package com.damanhour.Graduation.medisupport.di.bloodPressure
 
-import com.example.blood.pressure.data.repository.execution.BloodPressureRepositoryHelper
+import com.example.blood.pressure.data.repository.execution.cacheHelperExecution.CacheBloodPressureRepositoryHelper
 import com.example.blood.pressure.data.repository.execution.BloodPressureRepositoryImpl
+import com.example.blood.pressure.data.repository.execution.cacheHelperDeclarations.ICacheBloodPressureRepositoryHelper
+import com.example.blood.pressure.data.repository.execution.cacheHelperDeclarations.IServerBloodPressureRepositoryHelper
+import com.example.blood.pressure.data.repository.execution.cacheHelperExecution.ServerBloodPressureRepositoryHelper
 import com.example.blood.pressure.data.source.remote.data.requests.BloodPressureRequest
 import com.example.blood.pressure.domain.mapper.declarations.child.ILatestBloodPressureDtoToBloodPressureEntityMapper
 import com.example.blood.pressure.domain.repository.declarations.IBloodPressureRepository
@@ -23,16 +26,16 @@ object RepositoriesModule {
     fun provideBloodPressureRepository(
         bloodPressureRequest: BloodPressureRequest,
         wrapper: ResponseWrapper,
-        bloodPressureRepositoryHelper: BloodPressureRepositoryHelper,
-        sharedPreferencesAccessObject: SharedPreferencesAccessObject,
         localDatabase: MediSupportDatabase,
+        sharedPreferencesAccessObject: SharedPreferencesAccessObject,
+        serverBloodPressureRepositoryHelper: IServerBloodPressureRepositoryHelper
     ): IBloodPressureRepository {
 
         return BloodPressureRepositoryImpl(
             bloodPressureRequest = bloodPressureRequest,
             wrapper = wrapper,
             localDatabase = localDatabase,
-            bloodPressureRepositoryHelper = bloodPressureRepositoryHelper,
+            serverBloodPressureRepositoryHelper = serverBloodPressureRepositoryHelper,
             sharedPreferencesAccessObject = sharedPreferencesAccessObject
         )
 
@@ -41,12 +44,29 @@ object RepositoriesModule {
 
     @Provides
     @Singleton
+    fun provideServerBloodPressureRepositoryHelper(
+        bloodPressureRequest: BloodPressureRequest,
+        wrapper: ResponseWrapper,
+        cacheBloodPressureRepositoryHelper: ICacheBloodPressureRepositoryHelper,
+    ): IServerBloodPressureRepositoryHelper{
+
+        return ServerBloodPressureRepositoryHelper(
+            bloodPressureRequest = bloodPressureRequest,
+            wrapper = wrapper,
+            cacheBloodPressureRepositoryHelper = cacheBloodPressureRepositoryHelper
+        )
+
+    }//end provideServerBloodPressureRepositoryHelper
+
+
+    @Provides
+    @Singleton
     fun provideBloodPressureRepositoryHelper(
         localDatabase: MediSupportDatabase,
         latestBloodPressureDtoToBloodPressureEntityMapper: ILatestBloodPressureDtoToBloodPressureEntityMapper
-    ): BloodPressureRepositoryHelper {
+    ): ICacheBloodPressureRepositoryHelper {
 
-        return BloodPressureRepositoryHelper(
+        return CacheBloodPressureRepositoryHelper(
             localDatabase = localDatabase,
             latestBloodPressureDtoToBloodPressureEntityMapper = latestBloodPressureDtoToBloodPressureEntityMapper
         )

@@ -5,6 +5,7 @@ package com.example.bmi.presentation.uiElement.screens.record
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.example.bmi.presentation.uiElement.screens.determination.DETERMINATION_BMI_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
@@ -16,11 +17,17 @@ fun NavHostController.navigateToRecordBMIDestination() {
 
     navigate(
         route = RECORD_BMI_DESTINATION
-    )
+    ) {
+        popUpTo(
+            route = DETERMINATION_BMI_DESTINATION_ROUTE
+        ) {
+            inclusive = true
+        }//end popUpTo
+    }//end navigate
 
 }//navigateToRecordBMIDestination
 
-fun NavHostController.popRecordBMIDestination(){
+fun NavHostController.popRecordBMIDestination() {
 
     popBackStack(
         route = RECORD_BMI_DESTINATION,

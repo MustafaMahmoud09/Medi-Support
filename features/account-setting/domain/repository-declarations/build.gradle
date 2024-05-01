@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+
+    //project
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
+    //dto declarations
+    implementation(project(':features:account-setting:domain:dto-declarations'))
+
+    //shared entity declarations
+    implementation(project(':libraries:core:local-data:shared-entities:entity-declarations'))
+
+    //domain model
+    implementation(project(':features:account-setting:domain:domain-model'))
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
+
+}

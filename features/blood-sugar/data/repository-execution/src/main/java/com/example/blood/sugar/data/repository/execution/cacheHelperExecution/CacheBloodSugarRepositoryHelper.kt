@@ -1,19 +1,20 @@
-package com.example.blood.sugar.data.repository.execution
+package com.example.blood.sugar.data.repository.execution.cacheHelperExecution
 
 import android.util.Log
+import com.example.blood.sugar.data.repository.execution.cacheHelperDeclarations.ICacheBloodSugarRepositoryHelper
 import com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar.BloodSugarEntity
 import com.example.blood.sugar.data.source.remote.data.dto.execution.BloodSugarDto
 import com.example.blood.sugar.domain.dto.declarations.pageRecords.IPageBloodSugarResponseDto
 import com.example.blood.sugar.domain.mapper.declarations.child.IBloodSugarDtoToBloodSugarEntityMapper
 import com.example.database_creator.MediSupportDatabase
 
-class BloodSugarRepositoryHelper(
+class CacheBloodSugarRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEntityMapper
-) {
+): ICacheBloodSugarRepositoryHelper {
 
     //function for cache latest blood sugar records in local database
-    suspend fun cacheLatestBloodSugarRecords(
+    override suspend fun cacheLatestBloodSugarRecords(
         bloodSugarRecords: List<BloodSugarDto>,
         userId: Long
     ) {
@@ -61,8 +62,9 @@ class BloodSugarRepositoryHelper(
 
 
     //function for cache page contain on blood sugar records in local database
-    suspend fun cachePageBloodSugarRecords(
+    override suspend fun cachePageBloodSugarRecords(
         records: IPageBloodSugarResponseDto?,
+        pageSize: Int,
         userId: Long
     ): Int {
 
@@ -104,7 +106,7 @@ class BloodSugarRepositoryHelper(
 
                     val prevBloodSugar = localDatabase.bloodSugarDao().selectPageBloodSugar(
                         page = records.data?.currentPage!! - 1,
-                        pageSize = 10,
+                        pageSize = pageSize,
                         userId = userId
                     )
 
@@ -159,7 +161,7 @@ class BloodSugarRepositoryHelper(
 
                     val prevBloodSugars = localDatabase.bloodSugarDao().selectPageBloodSugar(
                         page = records.data?.currentPage!! - 1,
-                        pageSize = 10,
+                        pageSize = pageSize,
                         userId = userId
                     )
 
@@ -181,6 +183,23 @@ class BloodSugarRepositoryHelper(
         return records?.data?.lastPage ?: 0
 
     }//end cachePageBloodSugarRecords
+
+
+    override suspend fun getLocalPageCount(
+        pageSize: Int
+    ): Int {
+
+        //get article size
+        val bloodSugars = localDatabase.bloodSugarDao().selectBloodSugarCount()
+
+        return if ((bloodSugars.toFloat() / pageSize.toFloat()) - (bloodSugars / pageSize) != 0f) {
+            (bloodSugars / pageSize) + 1
+        }//end if
+        else {
+            (bloodSugars / pageSize)
+        }.toInt()//end else
+
+    }//end getLocalPageCount
 
 }//end BloodSugarRepositoryHelper
 

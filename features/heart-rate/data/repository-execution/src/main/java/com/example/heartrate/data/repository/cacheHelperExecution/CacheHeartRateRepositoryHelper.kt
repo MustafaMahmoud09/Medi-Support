@@ -1,4 +1,4 @@
-package com.example.heartrate.data.repository.cacheHelper
+package com.example.heartrate.data.repository.cacheHelperExecution
 
 import android.util.Log
 import com.example.blood.sugar.domain.mapper.declarations.child.IHeartRateDtoToHeartRateEntityMapper
@@ -6,14 +6,15 @@ import com.example.database_creator.MediSupportDatabase
 import com.example.heart.rate.data.source.dto.execution.HeartRateDto
 import com.example.heart.rate.data.source.dto.execution.pageRecords.IPageHeartRateResponseDto
 import com.example.heart.rate.data.source.entity.execution.heartRate.HeartRateEntity
+import com.example.heartrate.data.repository.cacheHelperDeclarations.ICacheHeartRateRepositoryHelper
 
 class CacheHeartRateRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val heartRateDtoToHeartRateEntityMapper: IHeartRateDtoToHeartRateEntityMapper
-) {
+): ICacheHeartRateRepositoryHelper {
 
     //function for cache latest heart rate records in local database
-    suspend fun cacheLatestHeartRateRecords(
+    override suspend fun cacheLatestHeartRateRecords(
         heartRateRecords: List<HeartRateDto>,
         userId: Long
     ) {
@@ -74,8 +75,9 @@ class CacheHeartRateRepositoryHelper(
 
 
     //function for cache page contain on blood sugar records in local database
-    suspend fun cachePageBloodSugarRecords(
+    override suspend fun cachePageHeartRateRecords(
         records: IPageHeartRateResponseDto?,
+        pageSize: Int,
         userId: Long
     ): Int {
 
@@ -117,7 +119,7 @@ class CacheHeartRateRepositoryHelper(
 
                     val prevBloodSugar = localDatabase.heartRateDao().selectPageHeartRate(
                         page = records.data?.currentPage!! - 1,
-                        pageSize = 10,
+                        pageSize = pageSize,
                         userId = userId
                     )
 
@@ -172,7 +174,7 @@ class CacheHeartRateRepositoryHelper(
 
                     val prevBloodSugars = localDatabase.heartRateDao().selectPageHeartRate(
                         page = records.data?.currentPage!! - 1,
-                        pageSize = 10,
+                        pageSize = pageSize,
                         userId = userId
                     )
 
@@ -196,7 +198,7 @@ class CacheHeartRateRepositoryHelper(
     }//end cachePageBloodSugarRecords
 
 
-    suspend fun getLocalPageCount(
+    override suspend fun getLocalPageCount(
         pageSize: Int
     ): Int {
 

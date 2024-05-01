@@ -1,14 +1,18 @@
 package com.example.bloodsugar.presentation.uiState.viewModel
 
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
 import com.example.blood.sugar.pagination.BloodSugarDataSource
 import com.example.bloodsugar.presentation.uiState.state.BMIHistoryUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -40,6 +44,8 @@ class BloodSugarHistoryViewModel @Inject constructor(
                 getPageHistoryRecordsUseCase = getPageHistoryRecordsUseCase
             )
         }.flow
+            .cachedIn(viewModelScope)
+            .flowOn(Dispatchers.IO)
 
         //change reminders state here
         _state.update {

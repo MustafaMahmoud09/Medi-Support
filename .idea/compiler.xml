@@ -14,6 +14,34 @@
       <module name="MediSupport.domain.setting" target="17" />
       <module name="MediSupport.domain.setting.main" target="17" />
       <module name="MediSupport.domain.setting.test" target="17" />
+      <module name="MediSupport.features.account-setting.data.data-source.dto-execution" target="17" />
+      <module name="MediSupport.features.account-setting.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.account-setting.data.data-source.remote-data.requests" target="17" />
+      <module name="MediSupport.features.account-setting.data.repository" target="17" />
+      <module name="MediSupport.features.account-setting.data.repository-execution" target="17" />
+      <module name="MediSupport.features.account-setting.domain.domain-model" target="17" />
+      <module name="MediSupport.features.account-setting.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.account-setting.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.account-setting.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.account-setting.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.account-setting.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.account-setting.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.account-setting.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.account-setting.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.account-setting.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.account-setting.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.account-setting.domain.repository-declarations.test" target="17" />
+      <module name="MediSupport.features.account-setting.domain.use-case" target="17" />
+      <module name="MediSupport.features.account-setting.domain.use-case.main" target="17" />
+      <module name="MediSupport.features.account-setting.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.account-setting.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.account-setting.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.account-setting.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.account-setting.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.account-setting.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.account-setting.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.account-setting.mapper-execution" target="17" />
+      <module name="MediSupport.features.account-setting.presentation" target="17" />
       <module name="MediSupport.features.article.data.data-source.local-data.data-access-object" target="17" />
       <module name="MediSupport.features.article.data.data-source.local-data.entity-execution" target="17" />
       <module name="MediSupport.features.article.data.data-source.remote-data.dto-execution" target="17" />
@@ -304,11 +332,8 @@
       <module name="MediSupport.features.room.domain.use-case.main" target="17" />
       <module name="MediSupport.features.room.domain.use-case.test" target="17" />
       <module name="MediSupport.features.room.presentation" target="17" />
-      <module name="MediSupport.features.setting.data.repository" target="17" />
-      <module name="MediSupport.features.setting.domain.use-case" target="17" />
       <module name="MediSupport.features.setting.domain.use-case.main" target="17" />
       <module name="MediSupport.features.setting.domain.use-case.test" target="17" />
-      <module name="MediSupport.features.setting.presentation" target="17" />
       <module name="MediSupport.libraries.core.local-data.database-creator" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations" target="17" />
       <module name="MediSupport.libraries.core.local-data.shared-entities.entity-declarations.main" target="17" />

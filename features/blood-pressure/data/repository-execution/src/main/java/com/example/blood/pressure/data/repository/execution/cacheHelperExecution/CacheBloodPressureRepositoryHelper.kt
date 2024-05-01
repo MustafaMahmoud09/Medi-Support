@@ -1,49 +1,52 @@
-package com.example.blood.pressure.data.repository.execution
+package com.example.blood.pressure.data.repository.execution.cacheHelperExecution
 
 import android.util.Log
+import com.example.blood.pressure.data.repository.execution.cacheHelperDeclarations.ICacheBloodPressureRepositoryHelper
 import com.example.blood.pressure.data.source.local.data.entity.execution.bloodPressure.BloodPressureEntity
 import com.example.blood.pressure.data.source.remote.data.dto.execution.BloodPressureDto
 import com.example.blood.pressure.domain.dto.declarations.pageMeasurement.IPageBloodPressureResponseDto
 import com.example.blood.pressure.domain.mapper.declarations.child.ILatestBloodPressureDtoToBloodPressureEntityMapper
 import com.example.database_creator.MediSupportDatabase
 
-class BloodPressureRepositoryHelper(
+class CacheBloodPressureRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val latestBloodPressureDtoToBloodPressureEntityMapper: ILatestBloodPressureDtoToBloodPressureEntityMapper
-) {
+) : ICacheBloodPressureRepositoryHelper {
 
     //function for cache latest blood pressure record in local database
-    suspend fun cacheLatestBloodPressureRecords(
+    override suspend fun cacheLatestBloodPressureRecords(
         bloodPressureRecords: List<BloodPressureDto>,
         userId: Long
     ) {
-        //update user id to user id in local database
-        val latestBloodPressureDto = bloodPressureRecords.map { bloodPressureRecord ->
-            bloodPressureRecord.copy(
-                attributes = bloodPressureRecord.attributes?.copy(
+
+        if (bloodPressureRecords.isNotEmpty()) {
+
+            //update user id to user id in local database
+            val latestBloodPressureDto = bloodPressureRecords.map { bloodPressureRecord ->
+                bloodPressureRecord.copy(
+                    attributes = bloodPressureRecord.attributes?.copy(
+                        userId = userId
+                    )
+                )
+            }
+
+            //convert latest blood pressure dto to blood pressure entity
+            val bloodPressureEntities =
+                latestBloodPressureDtoToBloodPressureEntityMapper.listConvertor(
+                    list = latestBloodPressureDto
+                ) as List<BloodPressureEntity>
+
+
+            for (count in 0 until bloodPressureEntities.size - 1) {
+
+                //execute delete here for extra data
+                localDatabase.bloodPressureDao().deleteBloodPressuresFromIdToId(
+                    startId = bloodPressureEntities[count + 1].id,
+                    endId = bloodPressureEntities[count].id,
                     userId = userId
                 )
-            )
-        }
 
-        //convert latest blood pressure dto to blood pressure entity
-        val bloodPressureEntities = latestBloodPressureDtoToBloodPressureEntityMapper.listConvertor(
-            list = latestBloodPressureDto
-        ) as List<BloodPressureEntity>
-
-
-        for (count in 0 until bloodPressureEntities.size - 1) {
-
-            //execute delete here for extra data
-            localDatabase.bloodPressureDao().deleteBloodPressuresFromIdToId(
-                startId = bloodPressureEntities[count + 1].id,
-                endId = bloodPressureEntities[count].id,
-                userId = userId
-            )
-
-        }//for
-
-        if (bloodPressureEntities.isNotEmpty()) {
+            }//for
 
             //execute delete here for extra data
             localDatabase.bloodPressureDao().deleteBloodPressureRecordsFromId(
@@ -51,20 +54,31 @@ class BloodPressureRepositoryHelper(
                 userId = userId
             )
 
-        }//end if
+            //cache data in local here
+            localDatabase.bloodPressureDao().insertBloodPressureRecord(
+                bloodPressureRecords = bloodPressureEntities
+            )
 
-        //cache data in local here
-        localDatabase.bloodPressureDao().insertBloodPressureRecord(
-            bloodPressureRecords = bloodPressureEntities
-        )
+        }//end if
+        else {
+
+            //execute delete all caching data here
+            localDatabase.bloodPressureDao()
+                .deleteBloodPressureRecordsFromId(
+                    userId = userId,
+                    startId = 0
+                )
+
+        }//end else
 
     }//end cacheLatestBloodPressureRecord
 
 
     //function for cache articles in local database
-    suspend fun cacheBloodPressureRecords(
+    override suspend fun cacheBloodPressureRecords(
         records: IPageBloodPressureResponseDto?,
-        userId: Long
+        userId: Long,
+        pageSize: Int
     ): Int {
 
         try {
@@ -72,13 +86,14 @@ class BloodPressureRepositoryHelper(
             if (records?.data!!.isNotEmpty()) {
 
                 //update user id to user id in local database
-                val bloodPressureRecordsDto = (records.data as List<BloodPressureDto>).map { bloodPressureRecord ->
-                    bloodPressureRecord.copy(
-                        attributes = bloodPressureRecord.attributes?.copy(
-                            userId = userId
+                val bloodPressureRecordsDto =
+                    (records.data as List<BloodPressureDto>).map { bloodPressureRecord ->
+                        bloodPressureRecord.copy(
+                            attributes = bloodPressureRecord.attributes?.copy(
+                                userId = userId
+                            )
                         )
-                    )
-                }//end map
+                    }//end map
 
                 //execute map data from dto to entity here
                 val bloodPressureEntities =
@@ -107,7 +122,7 @@ class BloodPressureRepositoryHelper(
 
                     val prevArticles = localDatabase.bloodPressureDao().selectPageBloodPressure(
                         page = records.meta?.currentPage!! - 1,
-                        pageSize = 10,
+                        pageSize = pageSize,
                         userId = userId
                     )
 
@@ -161,7 +176,7 @@ class BloodPressureRepositoryHelper(
 
                     val prevArticles = localDatabase.bloodPressureDao().selectPageBloodPressure(
                         page = records.meta?.currentPage!! - 1,
-                        pageSize = 10,
+                        pageSize = pageSize,
                         userId = userId
                     )
 
@@ -182,5 +197,22 @@ class BloodPressureRepositoryHelper(
         return records?.meta?.lastPage!!
 
     }//end cacheArticles
+
+
+    override suspend fun getLocalPageCount(
+        pageSize: Int
+    ): Int {
+
+        //get article size
+        val bloodPressureRecordsSize = localDatabase.bloodPressureDao().selectBloodPressureCount()
+
+        return if ((bloodPressureRecordsSize.toFloat() / pageSize.toFloat()) - (bloodPressureRecordsSize / pageSize) != 0f) {
+            (bloodPressureRecordsSize / pageSize) + 1
+        }//end if
+        else {
+            (bloodPressureRecordsSize / pageSize)
+        }.toInt()//end else
+
+    }//end getLocalPageCount
 
 }//end BloodPressureRepositoryHelper

@@ -1,16 +1,8 @@
 package com.example.blood.pressure.data.repository.execution
 
-import android.util.Log
-import com.example.blood.pressure.data.source.remote.data.dto.execution.descMeasurement.DescBloodPressureResponseDto
-import com.example.blood.pressure.data.source.remote.data.dto.execution.BloodPressureDto
-import com.example.blood.pressure.data.source.remote.data.dto.execution.adviceMeasurement.AdviceBloodPressureResponseDto
-import com.example.blood.pressure.data.source.remote.data.dto.execution.latestMeasurement.LatestBloodPressureResponseDto
-import com.example.blood.pressure.data.source.remote.data.dto.execution.pageMeasurement.PageBloodPressureResponseDto
+import com.example.blood.pressure.data.repository.execution.cacheHelperDeclarations.IServerBloodPressureRepositoryHelper
 import com.example.blood.pressure.data.source.remote.data.requests.BloodPressureRequest
 import com.example.blood.pressure.domain.dto.declarations.descMeasurement.IDescBloodPressureResponseDto
-import com.example.blood.pressure.domain.dto.declarations.adviceMeasurement.IAdviceBloodPressureResponseDto
-import com.example.blood.pressure.domain.dto.declarations.latestMeasurement.ILatestBloodPressureResponseDto
-import com.example.blood.pressure.domain.dto.declarations.pageMeasurement.IPageBloodPressureResponseDto
 import com.example.blood.pressure.domain.entity.declarations.IBloodPressureEntity
 import com.example.blood.pressure.domain.repository.declarations.IBloodPressureRepository
 import com.example.database_creator.MediSupportDatabase
@@ -19,22 +11,14 @@ import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
 import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
-import java.io.IOException
 
 class BloodPressureRepositoryImpl(
     private val bloodPressureRequest: BloodPressureRequest,
     private val wrapper: ResponseWrapper,
-    private val bloodPressureRepositoryHelper: BloodPressureRepositoryHelper,
     private val localDatabase: MediSupportDatabase,
-    private val sharedPreferencesAccessObject: SharedPreferencesAccessObject
+    private val sharedPreferencesAccessObject: SharedPreferencesAccessObject,
+    private val serverBloodPressureRepositoryHelper: IServerBloodPressureRepositoryHelper
 ) : IBloodPressureRepository {
 
     //function for create new blood pressure record in global database
@@ -64,63 +48,12 @@ class BloodPressureRepositoryImpl(
             token = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
         ).id
 
-        var lastPage = 0
-
-        try {
-            //make request on server here
-            //collect and handle response here
-            wrapper.wrapper<IPageBloodPressureResponseDto, PageBloodPressureResponseDto> {
-                bloodPressureRequest.getPageHistoryMeasurements(
-                    page = page
-                )
-            }.collectLatest { status ->
-
-                when (status) {
-
-                    is Status.Success -> {
-
-                        //if status code equal 200
-                        //process is success
-                        if (status.toData()?.statusCode == 200) {
-                            //make cache article in local database here
-                            lastPage = bloodPressureRepositoryHelper.cacheBloodPressureRecords(
-                                records = status.toData()!!.body,
-                                userId = userAuthId
-                            )
-                        }//end if
-                        return@collectLatest
-                    }//end Success
-
-                    is Status.Loading -> {
-
-                    }//end Load
-
-                    is Status.Error -> {
-                        return@collectLatest
-                    }//end Error
-                }//end when
-
-            }//end collectLatest
-
-        }//end try
-        catch (ex: Exception) {
-            ex.message?.let { Log.d("ERROR", it) }
-        }
-
-
-        //if last page equal 0 get last page number in local database
-        if (lastPage == 0) {
-            //get article size
-            val articleSize = localDatabase.bloodPressureDao().selectBloodPressureCount()
-
-            lastPage =
-                if ((articleSize.toFloat() / pageSize.toFloat()) - (articleSize / pageSize) != 0f) {
-                    (articleSize / pageSize) + 1
-                }//end if
-                else {
-                    (articleSize / pageSize)
-                }.toInt()//end else
-        }//end if
+        //get page contain on blood pressure records
+        val lastPage = serverBloodPressureRepositoryHelper.getPageBloodPressureRecordsFromSever(
+            userAuthId = userAuthId,
+            page = page,
+            pageSize = pageSize
+        )
 
         return UnEffectResponse(
             lastPageNumber = lastPage,
@@ -145,79 +78,10 @@ class BloodPressureRepositoryImpl(
             token = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
         ).id
 
-        //create coroutine builder scope here
-        CoroutineScope(Dispatchers.IO).launch {
-
-            while (true) {
-
-                var breakCondition = false
-
-                try {
-
-                    //make request on server for get latest blood pressure record here
-                    wrapper.wrapper<IAdviceBloodPressureResponseDto, AdviceBloodPressureResponseDto> {
-                        bloodPressureRequest.getLatestBloodPressureRecord()
-                    }.collectLatest { status ->
-
-                        when (status) {
-
-                            is Status.Success -> {
-
-                                if (status.toData()?.statusCode == 200) {
-
-                                    //execute cache data in local data base here
-                                    bloodPressureRepositoryHelper.cacheLatestBloodPressureRecords(
-                                        bloodPressureRecords = listOf(status.toData()?.body?.data as BloodPressureDto),
-                                        userId = userAuthId
-                                    )
-
-                                }//end if
-
-                                //if this condition is true
-                                //delete all caching data
-                                else if (
-                                    status.toData()?.statusCode == 500 &&
-                                    status.toData()?.body?.message.toString() == "Attempt to read property \\\"id\\\" on null"
-                                ) {
-
-                                    //execute delete all caching data here
-                                    localDatabase.bloodPressureDao()
-                                        .deleteBloodPressureRecordsFromId(
-                                            userId = userAuthId,
-                                            startId = 0
-                                        )
-
-                                }//end else if
-                                breakCondition = true
-                                return@collectLatest
-                            }//end Success case
-
-                            is Status.Loading -> {
-
-                            }//end Loading case
-
-                            is Status.Error -> {
-                                return@collectLatest
-                            }//end Error case
-
-                        }//end when
-
-                    }//end collectLatest
-
-                }//end try
-                catch (ex: Exception) {
-                    ex.message?.let { Log.d("ERROR", it) }
-                }//end catch
-
-                if (breakCondition) {
-                    break
-                }//end if
-
-                //delay 1/4 second between request and second request
-                delay(250)
-            }//end while
-
-        }//end coroutine builder scope
+        //make request on server for get last blood pressure records
+        serverBloodPressureRepositoryHelper.getLastBloodPressureRecordsFromServer(
+            userAuthId = userAuthId
+        )
 
         return localDatabase.bloodPressureDao().getLatestBloodPressureRecord(
             userId = userAuthId,
@@ -230,90 +94,10 @@ class BloodPressureRepositoryImpl(
     //function for get latest history record and cache this data in local data base
     override suspend fun getLatestHistoryBloodPressureRecords(): Flow<List<IBloodPressureEntity>> {
 
-
         //get user auth id
         val userAuthId = localDatabase.userDao().selectUserByAccessToken(
             token = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
         ).id
-
-        //create coroutine builder for apply parallel processing
-        CoroutineScope(Dispatchers.IO).launch {
-
-            while (true) {
-
-                var breakCondition = false
-
-                try {
-
-                    //make request on api for get latest history data
-                    //collect result for check status of request
-                    //if status is success finish process and cache data
-                    wrapper.wrapper<ILatestBloodPressureResponseDto, LatestBloodPressureResponseDto> {
-                        bloodPressureRequest.getLatestHistoryMeasurements()
-                    }.collectLatest { status ->
-
-                        when (status) {
-
-                            //if status is success
-                            //cache data in local database
-                            is Status.Success -> {
-
-                                //cache data if status code equal 200
-                                if (status.toData()?.statusCode == 200) {
-
-                                    if (
-                                        status.toData()?.body?.data != null &&
-                                        status.toData()?.body?.data!!.isNotEmpty()
-                                    ) {
-                                        bloodPressureRepositoryHelper.cacheLatestBloodPressureRecords(
-                                            bloodPressureRecords = status.toData()?.body?.data!! as List<BloodPressureDto>,
-                                            userId = userAuthId
-                                        )
-                                    }//end if
-                                    else {
-
-                                        //execute delete all caching data here
-                                        localDatabase.bloodPressureDao()
-                                            .deleteBloodPressureRecordsFromId(
-                                                userId = userAuthId,
-                                                startId = 0
-                                            )
-                                    }//end else
-                                    breakCondition = true
-                                    return@collectLatest
-                                }//end if
-
-                            }//end success case
-
-                            is Status.Loading -> {
-
-                            }//end loading case
-
-                            is Status.Error -> {
-                                return@collectLatest
-                            }//end error case
-
-                        }//end when
-
-                    }//end collectLatest
-
-                }//end try
-                catch (ex: Exception) {
-                    ex.message?.let { Log.d("ERROR", it) }
-                }
-
-                //if data is cached and request is success
-                //make break
-                if (breakCondition) {
-                    break
-                }//end if
-
-                //delay 1/4 second between request and second request
-                delay(250)
-
-            }//end while
-
-        }//end coroutine builder scope
 
         return localDatabase.bloodPressureDao().getLatestBloodPressureRecord(
             userId = userAuthId,

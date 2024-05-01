@@ -1,14 +1,19 @@
 package com.example.heartrate.presentation.uiState.viewModel
 
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.example.heart.rate.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
 import com.example.heart.rate.paginations.HeartRateDataSource
 import com.example.heartrate.presentation.uiState.state.HeartRateHistoryUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -40,6 +45,8 @@ class HeartRateHistoryViewModel @Inject constructor(
                 getPageHistoryRecordsUseCase = getPageHistoryRecordsUseCase
             )
         }.flow
+            .cachedIn(viewModelScope)
+            .flowOn(Dispatchers.IO)
 
         //change reminders state here
         _state.update {

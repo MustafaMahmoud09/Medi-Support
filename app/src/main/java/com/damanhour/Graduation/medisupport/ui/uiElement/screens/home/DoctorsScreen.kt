@@ -25,9 +25,9 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.components.items.Search
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.child.TopDoctorsScreen
 import com.example.offlinebooking.presentation.uiElement.screens.SearchScreen
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.home.child.TotalDoctorsScreen
-import com.damanhour.Graduation.medisupport.ui.uiState.state.HomeUiState
-import com.damanhour.Graduation.medisupport.ui.uiState.viewModel.HomeViewModel
 import com.example.notification.presentation.uiElement.screens.NotificationScreen
+import com.example.offlinebooking.presentation.uiState.state.SearchUiState
+import com.example.offlinebooking.presentation.uiState.viewModel.SearchViewModel
 import com.example.sharedui.uiElement.components.composable.IconButtonView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
@@ -40,7 +40,7 @@ import com.example.sharedui.uiElement.navigation.transitions.scrollToPage
 //function for collect state and execute action from view model
 @Composable
 internal fun DoctorsScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: SearchViewModel = hiltViewModel(),
     navigateToHeartPredictionNavGraph: () -> Unit,
     navigateToAddReminderDestination: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
@@ -87,6 +87,7 @@ internal fun DoctorsScreen(
         navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
         onSearchKeyChanged = viewModel::onSearchKeyChanged,
         navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
+        searchKey = uiState.searchKey.collectAsState().value,
         onClickOnNotificationButton = {
 
             //change current page and prev page
@@ -153,11 +154,12 @@ private fun DoctorsContent(
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
-    uiState: HomeUiState,
+    uiState: SearchUiState,
     onSearchKeyChanged: (String) -> Unit,
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     onClickOnNotificationButton: () -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
+    searchKey: String,
 ) {
 
     //create container here
@@ -228,7 +230,7 @@ private fun DoctorsContent(
         SearchSection(
             dimen = dimen,
             theme = theme,
-            key = uiState.searchKey,
+            key = searchKey,
             hint = stringResource(
                 R.string.search
             ),

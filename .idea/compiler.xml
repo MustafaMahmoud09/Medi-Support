@@ -261,15 +261,73 @@
       <module name="MediSupport.features.heart-rate.paginations" target="17" />
       <module name="MediSupport.features.heart-rate.presentation" target="17" />
       <module name="MediSupport.features.notification.presentation" target="17" />
+      <module name="MediSupport.features.offline-booking.data.data-source.local-data.data-access-object" target="17" />
+      <module name="MediSupport.features.offline-booking.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.offline-booking.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.offline-booking.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.offline-booking.data.repository" target="17" />
+      <module name="MediSupport.features.offline-booking.data.repository-execution" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.domain-model" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.offline-booking.domain.use-case" target="17" />
       <module name="MediSupport.features.offline-booking.domain.use-case.main" target="17" />
       <module name="MediSupport.features.offline-booking.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.offline-booking.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.offline-booking.mapper-execution" target="17" />
+      <module name="MediSupport.features.offline-booking.pagination" target="17" />
       <module name="MediSupport.features.offline-booking.presentation" target="17" />
+      <module name="MediSupport.features.online-booking.data.data-source.local-data.data-access-object" target="17" />
+      <module name="MediSupport.features.online-booking.data.data-source.local-data.data-access-object.main" target="17" />
+      <module name="MediSupport.features.online-booking.data.data-source.local-data.data-access-object.test" target="17" />
+      <module name="MediSupport.features.online-booking.data.data-source.local-data.entity-execution" target="17" />
+      <module name="MediSupport.features.online-booking.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.online-booking.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.online-booking.data.repository" target="17" />
+      <module name="MediSupport.features.online-booking.data.repository-execution" target="17" />
+      <module name="MediSupport.features.online-booking.domain.domain-model" target="17" />
+      <module name="MediSupport.features.online-booking.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.online-booking.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.online-booking.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.online-booking.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.online-booking.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.online-booking.domain.entity-declarations" target="17" />
+      <module name="MediSupport.features.online-booking.domain.entity-declarations.main" target="17" />
+      <module name="MediSupport.features.online-booking.domain.entity-declarations.test" target="17" />
+      <module name="MediSupport.features.online-booking.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.online-booking.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.online-booking.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.online-booking.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.online-booking.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.online-booking.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.online-booking.domain.use-case" target="17" />
       <module name="MediSupport.features.online-booking.domain.use-case.main" target="17" />
       <module name="MediSupport.features.online-booking.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.online-booking.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.online-booking.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.online-booking.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.online-booking.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.online-booking.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.online-booking.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.online-booking.mapper-execution" target="17" />
+      <module name="MediSupport.features.online-booking.pagination" target="17" />
       <module name="MediSupport.features.online-booking.presentation" target="17" />
       <module name="MediSupport.features.payment.data.repository" target="17" />
       <module name="MediSupport.features.payment.domain.use-case" target="17" />

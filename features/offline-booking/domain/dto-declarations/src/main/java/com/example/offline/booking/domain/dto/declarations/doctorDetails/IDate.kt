@@ -1,11 +1,9 @@
-package com.example.offline.booking.data.source.remote.data.dto.execution.doctorDetails
+package com.example.offline.booking.domain.dto.declarations.doctorDetails
 
+interface IDate {
 
-import com.google.gson.annotations.SerializedName
+    val date: String?
 
-data class Date(
-    @SerializedName("date")
-    val date: String?,
-    @SerializedName("id")
-    val id: Int?
-)
+    val id: Long?
+
+}//end IDate

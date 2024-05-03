@@ -182,4 +182,7 @@
     <string name="how_to_control_heart_rate">How to control heart rate?</string>
     <string name="how_to_control_bmi">How to control bmi?</string>
     <string name="there_are_no_items_to_display">There are no items to display</string>
+    <string name="egp">EGP</string>
+    <string name="this_appointment_is_not_available_and_has_already_been_booked">This appointment is not available and has already been booked</string>
+    <string name="you_must_chose_a_booking_date">You must chose a booking date</string>
 </resources>

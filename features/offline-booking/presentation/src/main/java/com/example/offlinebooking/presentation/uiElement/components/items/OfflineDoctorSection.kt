@@ -31,7 +31,7 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.google.accompanist.placeholder.placeholder
 
 @Composable
-fun DoctorPrimaryInformationSection(
+fun OfflineDoctorSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     borderSize: Float = dimen.dimen_0_125,
@@ -97,7 +97,7 @@ fun DoctorPrimaryInformationSection(
                     )
                     end.linkTo(
                         parent.end,
-                        dimen.dimen_3.dp
+                        dimen.dimen_1_5.dp
                     )
                     width = Dimension.fillToConstraints
                 }.placeholder(
@@ -232,7 +232,7 @@ fun DoctorPrimaryInformationSection(
             theme = theme,
             text = textButton,
             fontSize = dimen.dimen_1_25,
-            onClick = { onClickOnButton(1) },
+            onClick = { onClickOnButton(offlineDoctor.id.toInt()) },
             modifier = Modifier
                 .constrainAs(buttonId) {
                     start.linkTo(ratingId.start)

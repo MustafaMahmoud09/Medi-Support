@@ -41,6 +41,7 @@ fun BookedDoctorInformationSection(
     currencyColor: Color = theme.brownLight,
     currencySize: Float = dimen.dimen_1_5,
     address: String,
+    rating: Float = 0f,
     addressIcon: Painter = painterResource(
         id = R.drawable.location_icon
     ),
@@ -159,7 +160,7 @@ fun BookedDoctorInformationSection(
         RatingBarSection(
             dimen = dimen,
             theme = theme,
-            rating = 3f,
+            rating = rating,
             modifier = Modifier
                 .constrainAs(doctorRateId) {
                     start.linkTo(parent.start)

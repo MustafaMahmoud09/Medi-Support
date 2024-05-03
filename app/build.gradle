@@ -143,7 +143,14 @@ dependencies {
     implementation(project(':features:heart-rate:data:data-source:remote-data:requests'))
 
     //offline booking
-    implementation implementation(project(':features:offline-booking:presentation',))
+    implementation(project(':features:offline-booking:presentation'))
+    implementation(project(':features:offline-booking:domain:usecase-declarations'))
+    implementation(project(':features:offline-booking:domain:usecase-execution'))
+    implementation(project(':features:offline-booking:domain:repository-declarations'))
+    implementation(project(':features:offline-booking:data:repository-execution'))
+    implementation(project(':features:offline-booking:domain:mapper-declarations'))
+    implementation(project(':features:offline-booking:mapper-execution'))
+    implementation(project(':features:offline-booking:data:data-source:remote-data:requests'))
 
     //online booking
     implementation(project(':features:online-booking:presentation'))

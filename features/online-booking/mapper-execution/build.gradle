@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.online.booking.mapper.execution'
+    compileSdk compile_sdk
+
+    defaultConfig {
+        minSdk min_sdk
+        targetSdk max_sdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+
+    //project
+    //dto declarations
+    implementation(project(':features:online-booking:domain:dto-declarations'))
+
+    //dto execution
+    implementation(project(':features:online-booking:data:data-source:remote-data:dto-execution'))
+
+    //entity declaration
+    implementation(project(':features:online-booking:domain:entity-declarations'))
+
+    //entity execution
+    implementation(project(':features:online-booking:data:data-source:local-data:entity-execution'))
+
+    //domain model
+    implementation(project(':features:online-booking:domain:domain-model'))
+
+    //mapper declaration
+    implementation(project(':features:online-booking:domain:mapper-declarations'))
+}

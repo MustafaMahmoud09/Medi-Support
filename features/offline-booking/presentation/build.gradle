@@ -43,6 +43,18 @@ dependencies {
     //project
     implementation(project(':libraries:shared-ui'))
 
+    //use case declarations
+    implementation(project(':features:offline-booking:domain:usecase-declarations'))
+
+    //pagination
+    implementation(project(':features:offline-booking:pagination'))
+
+    //domain model
+    implementation(project(':features:offline-booking:domain:domain-model'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
@@ -65,10 +77,19 @@ dependencies {
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-placeholder:$accompanist_version"
 
     //hilt dependency injection
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+
+    //pagination
+    implementation "androidx.paging:paging-runtime:$paging_version"
+
+    // optional - Jetpack Compose integration
+    implementation "androidx.paging:paging-compose:$compose_paging_version"
+
 }

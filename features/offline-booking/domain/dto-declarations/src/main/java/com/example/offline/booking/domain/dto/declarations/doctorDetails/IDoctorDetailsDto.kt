@@ -1,31 +1,29 @@
-package com.example.offline.booking.data.source.remote.data.dto.execution.doctorDetails
+package com.example.offline.booking.domain.dto.declarations.doctorDetails
 
+interface IDoctorDetailsDto {
 
-import com.google.gson.annotations.SerializedName
+    val avatar: String?
 
-data class DoctorDetailsDto(
-    @SerializedName("Avatar")
-    val avatar: String?,
-    @SerializedName("avg_rating")
-    val avgRating: String?,
-    @SerializedName("bio")
-    val bio: String?,
-    @SerializedName("clinic_location")
-    val clinicLocation: String?,
-    @SerializedName("dates")
-    val dates: List<Date?>?,
-    @SerializedName("first_name")
-    val firstName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("last_name")
-    val lastName: String?,
-    @SerializedName("photo")
-    val photo: Any?,
-    @SerializedName("price")
-    val price: Int?,
-    @SerializedName("specialization")
-    val specialization: String?,
-    @SerializedName("user_rating")
-    val userRating: Any?
-)
+    val avgRating: Float?
+
+    val bio: String?
+
+    val clinicLocation: String?
+
+    val dates: List<IDate?>?
+
+    val firstName: String?
+
+    val id: Long?
+
+    val photo: Any?
+
+    val lastName: String?
+
+    val price: Int?
+
+    val specialization: String?
+
+    val userRating: Float?
+
+}//end IDoctorDetailsDto

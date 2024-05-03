@@ -1,17 +1,17 @@
-package com.example.bmi.pagination
+package com.example.offline.booking.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.bmi.domain.model.SimpleBMIModel
-import com.example.bmi.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.offline.booking.domain.model.OfflineDoctorModel
+import com.example.offline.booking.domain.usecase.declarations.IGetTotalOfflineDoctorsUseCase
 
-class BMIDataSource(
-    private val getPageHistoryRecordsUseCase: IGetPageHistoryRecordsUseCase,
-) : PagingSource<Int, SimpleBMIModel>() {
+class TotalOfflineDoctorDataSource(
+    private val getTotalOfflineDoctorsUseCase: IGetTotalOfflineDoctorsUseCase,
+) : PagingSource<Int, OfflineDoctorModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, SimpleBMIModel> {
+    ): LoadResult<Int, OfflineDoctorModel> {
 
         return try {
 
@@ -22,18 +22,15 @@ class BMIDataSource(
             val pageSize = params.loadSize
 
             //get current page data here
-            val data = getPageHistoryRecordsUseCase(
-                page = currentPageNumber,
-                pageSize = 10
+            val data = getTotalOfflineDoctorsUseCase(
+                page = currentPageNumber
             )
 
             //return current page here
             LoadResult.Page(
                 data = data.body ?: emptyList(),
                 prevKey = if (currentPageNumber == 1) null else currentPageNumber.minus(1),
-                nextKey = if (data.lastPageNumber <= currentPageNumber) null else currentPageNumber.plus(
-                    1
-                )
+                nextKey = if (data.lastPageNumber <= currentPageNumber) null else currentPageNumber.plus(1)
             )
 
         }//end try
@@ -49,7 +46,7 @@ class BMIDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, SimpleBMIModel>
+        state: PagingState<Int, OfflineDoctorModel>
     ): Int? = null
 
 }//end RemindersDataSource

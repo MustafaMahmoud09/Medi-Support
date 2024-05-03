@@ -1,13 +1,15 @@
 package com.example.offline.booking.data.source.remote.data.dto.execution.topOfflineDoctors
 
 
+import com.example.offline.booking.data.source.remote.data.dto.execution.OfflineDoctorDto
+import com.example.offline.booking.domain.dto.declarations.topOfflineDoctors.ITopOfflineDoctorsResponseDto
 import com.google.gson.annotations.SerializedName
 
-data class TopOfflineDoctorsResponsDto(
+data class TopOfflineDoctorsResponseDto(
     @SerializedName("data")
-    val `data`: List<Data?>?,
+    override val `data`: List<OfflineDoctorDto?>?,
     @SerializedName("error")
-    val error: Boolean?,
+    override val error: Boolean?,
     @SerializedName("message")
-    val message: String?
-)
+    override val message: String?
+): ITopOfflineDoctorsResponseDto

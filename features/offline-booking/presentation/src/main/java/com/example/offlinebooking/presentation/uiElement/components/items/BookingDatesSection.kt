@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.offline.booking.domain.model.DateModel
 import com.example.offlinebooking.presentation.uiElement.components.composable.BookingDateView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -23,7 +24,10 @@ internal fun BookingDatesSection(
     titleSize: Float = dimen.dimen_2,
     horizontalPadding: Float = dimen.dimen_2,
     spacingBetweenComponents: Float = dimen.dimen_2,
-    modifier: Modifier = Modifier
+    dates: List<DateModel> = emptyList(),
+    dateSelected: Long,
+    modifier: Modifier = Modifier,
+    onClickOnDate: (Long) -> Unit
 ) {
 
     //create container here
@@ -72,13 +76,16 @@ internal fun BookingDatesSection(
 
             //create day items
             items(
-                count = 10
-            ) {
+                count = dates.size
+            ) {count ->
 
                 //create day here
-                com.example.offlinebooking.presentation.uiElement.components.composable.BookingDateView(
+                BookingDateView(
                     dimen = dimen,
-                    theme = theme
+                    theme = theme,
+                    dateModel = dates[count],
+                    dateSelected = dateSelected,
+                    onClick = onClickOnDate
                 )
 
             }//end items

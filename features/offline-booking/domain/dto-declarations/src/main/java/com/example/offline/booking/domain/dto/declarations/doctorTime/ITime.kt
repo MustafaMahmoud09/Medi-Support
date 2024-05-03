@@ -1,11 +1,10 @@
-package com.example.offline.booking.data.source.remote.data.dto.execution.doctorTime
+package com.example.offline.booking.domain.dto.declarations.doctorTime
 
 
-import com.google.gson.annotations.SerializedName
+interface ITime {
 
-data class Time(
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("time")
+    val id: Long?
+
     val time: String?
-)
+
+}//end ITime

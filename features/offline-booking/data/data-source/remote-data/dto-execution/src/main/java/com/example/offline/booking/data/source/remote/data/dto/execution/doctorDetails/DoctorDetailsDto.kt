@@ -1,31 +1,31 @@
 package com.example.offline.booking.data.source.remote.data.dto.execution.doctorDetails
 
-
+import com.example.offline.booking.domain.dto.declarations.doctorDetails.IDoctorDetailsDto
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class DoctorDetailsDto(
     @SerializedName("Avatar")
-    val avatar: String?,
+    override val avatar: String?,
     @SerializedName("avg_rating")
-    val avgRating: String?,
+    override val avgRating: Float?,
     @SerializedName("bio")
-    val bio: String?,
+    override val bio: String?,
     @SerializedName("clinic_location")
-    val clinicLocation: String?,
+    override val clinicLocation: String?,
     @SerializedName("dates")
-    val dates: List<Date?>?,
+    override val dates: List<Date?>?,
     @SerializedName("first_name")
-    val firstName: String?,
+    override val firstName: String?,
     @SerializedName("id")
-    val id: Int?,
+    override val id: Long?,
     @SerializedName("last_name")
-    val lastName: String?,
+    override val lastName: String?,
     @SerializedName("photo")
-    val photo: Any?,
+    override val photo: Any?,
     @SerializedName("price")
-    val price: Int?,
+    override val price: Int?,
     @SerializedName("specialization")
-    val specialization: String?,
+    override val specialization: String?,
     @SerializedName("user_rating")
-    val userRating: Any?
-)
+    override val userRating: Float?
+): IDoctorDetailsDto

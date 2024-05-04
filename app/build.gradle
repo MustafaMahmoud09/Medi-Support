@@ -154,6 +154,13 @@ dependencies {
 
     //online booking
     implementation(project(':features:online-booking:presentation'))
+    implementation(project(':features:online-booking:domain:usecase-declarations'))
+    implementation(project(':features:online-booking:domain:usecase-execution'))
+    implementation(project(':features:online-booking:domain:repository-declarations'))
+    implementation(project(':features:online-booking:data:repository-execution'))
+    implementation(project(':features:online-booking:domain:mapper-declarations'))
+    implementation(project(':features:online-booking:mapper-execution'))
+    implementation(project(':features:online-booking:data:data-source:remote-data:requests'))
 
     //payment
     implementation(project(':features:payment:presentation'))

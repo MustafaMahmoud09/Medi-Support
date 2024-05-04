@@ -1,35 +1,34 @@
-package com.example.online.booking.data.source.remote.data.dto.execution
+package com.example.online.booking.domain.dto.declarations
 
 
-import com.google.gson.annotations.SerializedName
+interface IOnlineDoctorDto {
 
-data class OnlineDoctorDto(
-    @SerializedName("active_status")
-    val activeStatus: Int?,
-    @SerializedName("admin_id")
-    val adminId: Int?,
-    @SerializedName("avatar")
-    val avatar: String?,
-    @SerializedName("average_rating")
-    val averageRating: Int?,
-    @SerializedName("bio")
-    val bio: String?,
-    @SerializedName("clinic_location")
-    val clinicLocation: String?,
-    @SerializedName("email")
-    val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("last_name")
-    val lastName: String?,
-    @SerializedName("phone")
-    val phone: String?,
-    @SerializedName("price")
-    val price: Int?,
-    @SerializedName("specialization")
-    val specialization: String?,
-    @SerializedName("working_hours")
-    val workingHours: String?
-)
+    val activeStatus: Int?
+
+    val adminId: Long?
+
+    val avatar: String?
+
+    val averageRating: Float?
+
+    val bio: String?
+
+    val clinicLocation: String?
+
+    val email: String?
+
+    val firstName: String?
+
+    val id: Long?
+
+    val lastName: String?
+
+    val phone: String?
+
+    val price: Int?
+
+    val specialization: String?
+
+    val workingHours: Int?
+
+}//end IOnlineDoctorDto

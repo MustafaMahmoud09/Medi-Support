@@ -1,7 +1,6 @@
 package com.damanhour.Graduation.medisupport.di.offlineBooking
 
 import com.example.blood.sugar.domain.mapper.declarations.child.IOfflineDoctorDtoToOfflineDoctorModelMapper
-import com.example.bmi.domain.repository.declarations.IBMIRepository
 import com.example.offline.booking.domain.mapper.declarations.child.IDateTimeDtoToTimeModelMapper
 import com.example.offline.booking.domain.mapper.declarations.child.IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
 import com.example.offline.booking.domain.repository.declarations.IOfflineBookingRepository
@@ -10,12 +9,14 @@ import com.example.offline.booking.domain.usecase.declarations.IGetBookingTimeUs
 import com.example.offline.booking.domain.usecase.declarations.IGetOfflineDoctorDetailsByIdUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetTopOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetTotalOfflineDoctorsUseCase
+import com.example.offline.booking.domain.usecase.declarations.IRateOfflineDoctorUseCase
 import com.example.offline.booking.domain.usecase.declarations.ISearchOnOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.execution.BookOfflineAppointmentUseCase
 import com.example.offline.booking.domain.usecase.execution.GetBookingTimeUseCase
 import com.example.offline.booking.domain.usecase.execution.GetOfflineDoctorDetailsByIdUseCase
 import com.example.offline.booking.domain.usecase.execution.GetTopOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.execution.GetTotalOfflineDoctorsUseCase
+import com.example.offline.booking.domain.usecase.execution.RateOfflineDoctorUseCase
 import com.example.offline.booking.domain.usecase.execution.SearchOnOfflineDoctorsUseCase
 import dagger.Module
 import dagger.Provides
@@ -116,5 +117,18 @@ object UseCasesModule {
         )
 
     }//end provideBookOfflineAppointmentUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideRateOfflineDoctorUseCase(
+        offlineBookingRepository: IOfflineBookingRepository,
+    ): IRateOfflineDoctorUseCase {
+
+        return RateOfflineDoctorUseCase(
+            offlineBookingRepository = offlineBookingRepository
+        )
+
+    }//end provideRateOfflineDoctorUseCase
 
 }//end UseCasesModule

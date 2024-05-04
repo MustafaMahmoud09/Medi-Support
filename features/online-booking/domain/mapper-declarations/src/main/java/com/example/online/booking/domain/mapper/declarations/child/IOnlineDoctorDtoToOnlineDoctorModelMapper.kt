@@ -1,8 +1,9 @@
-package com.example.blood.sugar.domain.mapper.declarations.child
+package com.example.online.booking.domain.mapper.declarations.child
 
-import com.example.offline.booking.domain.dto.declarations.IOfflineDoctorDto
-import com.example.offline.booking.domain.mapper.declarations.IListMapper
-import com.example.offline.booking.domain.model.OfflineDoctorModel
+import com.example.online.booking.domain.dto.declarations.IOnlineDoctorDto
+import com.example.online.booking.domain.mapper.declarations.IListMapper
+import com.example.online.booking.domain.model.OnlineDoctorModel
 
-interface IOfflineDoctorDtoToOfflineDoctorModelMapper
-    : IListMapper<IOfflineDoctorDto, OfflineDoctorModel>
+
+interface IOnlineDoctorDtoToOnlineDoctorModelMapper
+    : IListMapper<IOnlineDoctorDto, OnlineDoctorModel>

@@ -1,17 +1,17 @@
-package com.example.offline.booking.pagination
+package com.example.online.booking.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.offline.booking.domain.model.OfflineDoctorModel
-import com.example.offline.booking.domain.usecase.declarations.IGetTotalOfflineDoctorsUseCase
+import com.example.online.booking.domain.model.OnlineDoctorModel
+import com.example.online.booking.domain.usecase.declarations.IGetTotalOnlineDoctorsUseCase
 
-class TotalOfflineDoctorDataSource(
-    private val getTotalOfflineDoctorsUseCase: IGetTotalOfflineDoctorsUseCase,
-) : PagingSource<Int, OfflineDoctorModel>() {
+class TotalOnlineDoctorDataSource(
+    private val getTotalOnlineDoctorsUseCase: IGetTotalOnlineDoctorsUseCase,
+) : PagingSource<Int, OnlineDoctorModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, OfflineDoctorModel> {
+    ): LoadResult<Int, OnlineDoctorModel> {
 
         return try {
 
@@ -22,7 +22,7 @@ class TotalOfflineDoctorDataSource(
             val pageSize = params.loadSize
 
             //get current page data here
-            val data = getTotalOfflineDoctorsUseCase(
+            val data = getTotalOnlineDoctorsUseCase(
                 page = currentPageNumber
             )
 
@@ -46,7 +46,7 @@ class TotalOfflineDoctorDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, OfflineDoctorModel>
+        state: PagingState<Int, OnlineDoctorModel>
     ): Int? = state.anchorPosition
 
 }//end RemindersDataSource

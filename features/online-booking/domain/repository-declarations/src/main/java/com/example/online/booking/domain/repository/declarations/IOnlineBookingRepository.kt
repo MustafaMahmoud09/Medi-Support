@@ -1,43 +1,31 @@
-package com.example.offline.booking.domain.repository.declarations
+package com.example.online.booking.domain.repository.declarations
 
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
-import com.example.offline.booking.domain.dto.declarations.doctorDetails.IDoctorDetailsResponseDto
-import com.example.offline.booking.domain.dto.declarations.doctorTime.IDoctorTimeResponseDto
-import com.example.offline.booking.domain.dto.declarations.pageOfflineDoctors.IPageOfflineDoctorsResponseDto
-import com.example.offline.booking.domain.dto.declarations.topOfflineDoctors.ITopOfflineDoctorsResponseDto
+import com.example.online.booking.domain.dto.declarations.doctorDetails.IOnlineDoctorDetailsResponseDto
+import com.example.online.booking.domain.dto.declarations.pageOnlineDoctor.IPageOnlineDoctorResponseDto
+import com.example.online.booking.domain.dto.declarations.topOnlineDoctors.ITopOnlineDoctorResponseDto
 import kotlinx.coroutines.flow.Flow
 
-interface IOfflineBookingRepository {
+interface IOnlineBookingRepository {
 
-    suspend fun getTopOfflineDoctors()
-            : Flow<Status<EffectResponse<ITopOfflineDoctorsResponseDto>>>
+    suspend fun getTopOnlineDoctors()
+            : Flow<Status<EffectResponse<ITopOnlineDoctorResponseDto>>>
 
 
-    suspend fun getPageOfflineDoctor(
+    suspend fun getPageOnlineDoctor(
         page: Int
-    ): Flow<Status<EffectResponse<IPageOfflineDoctorsResponseDto>>>
+    ): Flow<Status<EffectResponse<IPageOnlineDoctorResponseDto>>>
 
-
-    suspend fun searchOnOfflineDoctors(
-        searchKey: String,
-        page: Int
-    ): Flow<Status<EffectResponse<IPageOfflineDoctorsResponseDto>>>
 
 
     suspend fun getDoctorDetails(
         doctorId: Long
-    ): Flow<Status<EffectResponse<IDoctorDetailsResponseDto>>>
+    ): Flow<Status<EffectResponse<IOnlineDoctorDetailsResponseDto>>>
 
 
-    suspend fun getDateTimes(
-        dateId: Long
-    ): Flow<Status<EffectResponse<IDoctorTimeResponseDto>>>
 
-
-    suspend fun bookOfflineAppointment(
-        dateId: Long,
-        timeId: Long,
+    suspend fun bookOnlineAppointment(
         doctorId: Long
     ): Flow<Status<EffectResponse<Any>>>
 

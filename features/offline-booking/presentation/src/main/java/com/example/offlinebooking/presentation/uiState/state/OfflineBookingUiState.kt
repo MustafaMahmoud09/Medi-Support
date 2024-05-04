@@ -6,9 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 data class OfflineBookingUiState(
     val doctorId: Long = 0,
-    val offlineDoctorDetailsStatus: InfiniteGetterStatus<OfflineDoctorDetailsModel> = InfiniteGetterStatus(
-        loading = true
-    ),
+    val offlineDoctorDetailsStatus: GetDoctorDetailsStatus = GetDoctorDetailsStatus(),
     val dateTimeStatus: InfiniteGetterStatus<List<TimeModel>> = InfiniteGetterStatus(
         data = emptyList()
     ),
@@ -25,4 +23,11 @@ data class BookOfflineAppointmentStatus(
     val serverError: Boolean = false,
     val appointmentNotValid: Boolean = false,
     val appointNotSelected: Boolean = false
+)
+
+
+data class GetDoctorDetailsStatus(
+    val data: OfflineDoctorDetailsModel? = null,
+    val loading: Boolean = true,
+    val doctorDeleted: Boolean = false,
 )

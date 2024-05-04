@@ -1,17 +1,18 @@
-package com.example.offlinebooking.presentation.uiState.state
+package com.example.onlinebooking.presentation.uiState.state
 
-import com.example.offline.booking.domain.model.OfflineDoctorModel
+import com.example.online.booking.domain.model.OnlineDoctorModel
 
-data class TopOfflineDoctorsUiState(
-    val getTopOfflineDoctorsStatus: InfiniteGetterStatus<List<OfflineDoctorModel>> = InfiniteGetterStatus(
+data class TopOnlineDoctorsUiState(
+    val getTopOnlineDoctorsStatus: InfiniteGetterStatus<List<OnlineDoctorModel>> = InfiniteGetterStatus(
         data = emptyList()
     ),
-    val doctorPlaceHolder: OfflineDoctorModel = OfflineDoctorModel(
+    val doctorPlaceHolder: OnlineDoctorModel = OnlineDoctorModel(
         id = 0,
         name = "js",
         image = "js",
         clinicLocation = "js",
         rate = 0f,
-        workingHours = 1
+        workingHours = 1,
+        active = true
     )
 )

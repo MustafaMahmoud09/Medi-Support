@@ -1,12 +1,12 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.pageOnlineDoctor
+package com.example.online.booking.domain.dto.declarations.pageOnlineDoctor
+
+import com.example.online.booking.domain.dto.declarations.IOnlineDoctorDto
 
 
-import com.example.online.booking.data.source.remote.data.dto.execution.OnlineDoctorDto
-import com.google.gson.annotations.SerializedName
+interface IData {
 
-data class Data(
-    @SerializedName("data")
-    val `data`: List<OnlineDoctorDto>?,
-    @SerializedName("pagination")
-    val pagination: Pagination?
-)
+    val `data`: List<IOnlineDoctorDto>?
+
+    val pagination: IPagination?
+
+}//end IData

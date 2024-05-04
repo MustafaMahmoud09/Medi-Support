@@ -109,4 +109,20 @@ class OfflineBookingRepositoryImpl(
     }//end bookOfflineAppointment
 
 
+    //function for make request on server for rate doctor
+    override suspend fun rateDoctor(
+        doctorId: Long,
+        rate: Int
+    ): Flow<Status<EffectResponse<Any>>> {
+
+        return wrapper.wrapper<Any, Any> {
+            offlineDoctorsRequest.rateDoctor(
+                doctorId = doctorId,
+                rate = rate
+            )
+        }//end wrapper
+
+    }//end rateDoctor
+
+
 }//end OfflineBookingRepositoryImpl

@@ -1,14 +1,14 @@
-package com.example.offline.booking.domain.usecase.execution
+package com.example.online.booking.domain.usecase.execution
 
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
-import com.example.offline.booking.domain.repository.declarations.IOfflineBookingRepository
-import com.example.offline.booking.domain.usecase.declarations.IRateOfflineDoctorUseCase
+import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
+import com.example.online.booking.domain.usecase.declarations.IRateOnlineDoctorUseCase
 import kotlinx.coroutines.flow.Flow
 
-class RateOfflineDoctorUseCase(
-    private val offlineBookingRepository: IOfflineBookingRepository,
-): IRateOfflineDoctorUseCase {
+class RateOnlineDoctorUseCase(
+    private val onlineBookingRepository: IOnlineBookingRepository,
+): IRateOnlineDoctorUseCase {
 
     //function for make request on repository for rate offline doctor
     override suspend fun invoke(
@@ -16,7 +16,7 @@ class RateOfflineDoctorUseCase(
         rate: Int
     ): Flow<Status<EffectResponse<Any>>> {
 
-        return offlineBookingRepository.rateDoctor(
+        return onlineBookingRepository.rateDoctor(
             doctorId = doctorId,
             rate = rate
         )

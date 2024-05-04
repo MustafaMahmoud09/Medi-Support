@@ -8,6 +8,7 @@ import com.example.offline.booking.domain.model.TimeModel
 import com.example.offline.booking.domain.usecase.declarations.IBookOfflineAppointmentUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetBookingTimeUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetOfflineDoctorDetailsByIdUseCase
+import com.example.offline.booking.domain.usecase.declarations.IRateOfflineDoctorUseCase
 import com.example.offlinebooking.presentation.uiElement.screens.booking.OfflineBookingArgs
 import com.example.offlinebooking.presentation.uiState.state.OfflineBookingUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
@@ -28,7 +29,8 @@ class OfflineBookingViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getOfflineDoctorDetailsByIdUseCase: IGetOfflineDoctorDetailsByIdUseCase,
     private val getBookingTimeUseCase: IGetBookingTimeUseCase,
-    private val bookOfflineAppointmentUseCase: IBookOfflineAppointmentUseCase
+    private val bookOfflineAppointmentUseCase: IBookOfflineAppointmentUseCase,
+    private val rateOfflineDoctorUseCase: IRateOfflineDoctorUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -292,6 +294,20 @@ class OfflineBookingViewModel @Inject constructor(
 
                             }//end if
 
+                            else if (status.toData()?.statusCode == 404) {
+
+                                //update top offline doctors status to success
+                                _state.update {
+                                    it.copy(
+                                        offlineDoctorDetailsStatus = state.value
+                                            .offlineDoctorDetailsStatus.copy(
+                                                doctorDeleted = true
+                                            )
+                                    )
+                                }//end update
+
+                            }//end else
+
                         }//end success case
 
                         is Status.Error -> {
@@ -456,5 +472,39 @@ class OfflineBookingViewModel @Inject constructor(
         }//end update
 
     }//end onChangeTimeId
+
+
+    //function for rate doctor
+    fun onRateOfflineDoctor(rate: Int) {
+
+
+//        if (rate.toFloat() != state.value.offlineDoctorDetailsStatus.data?.userRating) {
+        if (state.value.offlineDoctorDetailsStatus.data?.userRating == 0f) {
+
+            //update user rate here first
+            _state.update {
+                it.copy(
+                    offlineDoctorDetailsStatus = state.value.offlineDoctorDetailsStatus.copy(
+                        data = state.value.offlineDoctorDetailsStatus.data?.copy(
+                            userRating = rate.toFloat()
+                        )
+                    )
+                )
+            }//end update
+
+            //create coroutine builder here
+            viewModelScope.launch(Dispatchers.IO){
+
+                //make rating to offline doctor here
+                rateOfflineDoctorUseCase(
+                    rate = rate,
+                    doctorId = state.value.doctorId
+                ).collectLatest { status -> }
+
+            }//end launch
+
+        }//end if
+
+    }//end onRateOfflineDoctor
 
 }//end OfflineBookingViewModel

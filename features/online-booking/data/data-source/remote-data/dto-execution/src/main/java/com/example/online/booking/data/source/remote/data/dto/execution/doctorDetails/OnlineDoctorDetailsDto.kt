@@ -1,35 +1,35 @@
 package com.example.online.booking.data.source.remote.data.dto.execution.doctorDetails
 
-
+import com.example.online.booking.domain.dto.declarations.doctorDetails.IOnlineDoctorDetailsDto
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class OnlineDoctorDetailsDto(
     @SerializedName("active_status")
-    val activeStatus: Int?,
+    override val activeStatus: Int?,
     @SerializedName("admin_id")
-    val adminId: Int?,
+    override val adminId: Long?,
     @SerializedName("avatar")
-    val avatar: String?,
+    override val avatar: String?,
     @SerializedName("average_rating")
-    val averageRating: Int?,
+    override val averageRating: Float?,
     @SerializedName("bio")
-    val bio: String?,
+    override val bio: String?,
     @SerializedName("clinic_location")
-    val clinicLocation: String?,
+    override val clinicLocation: String?,
     @SerializedName("email")
-    val email: String?,
+    override val email: String?,
     @SerializedName("first_name")
-    val firstName: String?,
+    override val firstName: String?,
     @SerializedName("id")
-    val id: Int?,
+    override val id: Long?,
     @SerializedName("last_name")
-    val lastName: String?,
+    override val lastName: String?,
     @SerializedName("phone")
-    val phone: String?,
+    override val phone: String?,
     @SerializedName("price")
-    val price: Int?,
+    override val price: Int?,
     @SerializedName("specialization")
-    val specialization: String?,
+    override val specialization: String?,
     @SerializedName("working_hours")
-    val workingHours: String?
-)
+    override val workingHours: String?
+): IOnlineDoctorDetailsDto

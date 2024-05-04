@@ -23,6 +23,7 @@ class OfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper(
             price = (obj.price ?: 0).toString(),
             bio = obj.bio ?: "",
             clinicLocation = obj.clinicLocation ?: "",
+            phone = obj.phone ?: "",
             dates = (obj.dates ?: emptyList()).map { date ->
                 DateModel(
                     id = date?.id ?: 0,

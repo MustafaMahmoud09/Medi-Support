@@ -81,7 +81,8 @@ fun OfflineBookingScreen(
         onClickOnDate = viewModel::onChangeDateId,
         onClickOnTime = viewModel::onChangeTimeId,
         snackbarHostState = snackbarHostState,
-        onClickOnBookingButton = viewModel::onBookOfflineAppointment
+        onClickOnBookingButton = viewModel::onBookOfflineAppointment,
+        onRateDoctor = viewModel::onRateOfflineDoctor
     )
 
     LaunchedEffect(
@@ -136,6 +137,16 @@ fun OfflineBookingScreen(
 
     }//end LaunchedEffect
 
+    LaunchedEffect(
+        key1 = state.value.offlineDoctorDetailsStatus.doctorDeleted
+    ) {
+
+        if (state.value.offlineDoctorDetailsStatus.doctorDeleted) {
+            popBookingNavGraph()
+        }//end if
+
+    }//end LaunchedEffect
+
 }//end OnlineBookingScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -150,7 +161,8 @@ private fun OfflineBookingContent(
     dateIdSelectedState: State<Long>,
     onClickOnDate: KFunction1<Long, Unit>,
     onClickOnTime: KFunction1<Long, Unit>,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    onRateDoctor: KFunction1<Int, Unit>
 ) {
 
 
@@ -382,13 +394,14 @@ private fun OfflineBookingContent(
                                         ?: "",
                                     interactionRatingValue = (uiState.offlineDoctorDetailsStatus.data?.userRating
                                         ?: 0).toInt(),
-                                    interactionRatingOnChanged = {},
+                                    interactionRatingOnChanged = onRateDoctor,
                                     rating = uiState.offlineDoctorDetailsStatus.data?.rating ?: 0f,
                                     interactionRatingTitle = stringResource(
                                         id = R.string.rate
                                     ),
                                     doctorIsOnline = false,
-                                    phoneNumber = "01001156618",
+                                    phoneNumber = uiState.offlineDoctorDetailsStatus.data?.phone
+                                        ?: "",
                                     aboutContent = uiState.offlineDoctorDetailsStatus.data?.bio
                                         ?: "",
                                     modifier = Modifier

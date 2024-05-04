@@ -10,6 +10,7 @@ data class OfflineDoctorDetailsModel(
     val userRating: Float,
     val price: String,
     val specialization: String,
-    val dates: List<DateModel>
+    val dates: List<DateModel>,
+    val phone: String
 )
 

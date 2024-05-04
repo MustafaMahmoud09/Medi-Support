@@ -47,6 +47,6 @@ class TotalOfflineDoctorDataSource(
 
     override fun getRefreshKey(
         state: PagingState<Int, OfflineDoctorModel>
-    ): Int? = null
+    ): Int? = state.anchorPosition
 
 }//end RemindersDataSource

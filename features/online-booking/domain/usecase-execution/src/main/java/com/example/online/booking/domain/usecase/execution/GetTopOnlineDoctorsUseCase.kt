@@ -1,12 +1,12 @@
-package com.example.offline.booking.domain.usecase.execution
+package com.example.online.booking.domain.usecase.execution
 
-import com.example.blood.sugar.domain.mapper.declarations.child.IOfflineDoctorDtoToOfflineDoctorModelMapper
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
-import com.example.offline.booking.domain.dto.declarations.IOfflineDoctorDto
-import com.example.offline.booking.domain.model.OfflineDoctorModel
-import com.example.offline.booking.domain.repository.declarations.IOfflineBookingRepository
-import com.example.offline.booking.domain.usecase.declarations.IGetTopOfflineDoctorsUseCase
+import com.example.online.booking.domain.dto.declarations.IOnlineDoctorDto
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDtoToOnlineDoctorModelMapper
+import com.example.online.booking.domain.model.OnlineDoctorModel
+import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
+import com.example.online.booking.domain.usecase.declarations.IGetTopOnlineDoctorsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -14,21 +14,21 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 
-class GetTopOfflineDoctorsUseCase(
-    private val offlineBookingRepository: IOfflineBookingRepository,
-    private val offlineDoctorDtoToOfflineDoctorModelMapper: IOfflineDoctorDtoToOfflineDoctorModelMapper
-) : IGetTopOfflineDoctorsUseCase {
+class GetTopOnlineDoctorsUseCase(
+    private val onlineBookingRepository: IOnlineBookingRepository,
+    private val onlineDoctorDtoToOnlineDoctorModelMapper: IOnlineDoctorDtoToOnlineDoctorModelMapper
+) : IGetTopOnlineDoctorsUseCase {
 
     //function for provide top offline doctors
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun invoke()
-            : Flow<Status<EffectResponse<List<OfflineDoctorModel>>>> {
+            : Flow<Status<EffectResponse<List<OnlineDoctorModel>>>> {
 
         //return flow contain on response status
-        return channelFlow<Status<EffectResponse<List<OfflineDoctorModel>>>> {
+        return channelFlow<Status<EffectResponse<List<OnlineDoctorModel>>>> {
 
             //make request on repository for get top doctors
-            offlineBookingRepository.getTopOfflineDoctors().collect { status ->
+            onlineBookingRepository.getTopOnlineDoctors().collect { status ->
 
                 when (status) {
 
@@ -42,9 +42,9 @@ class GetTopOfflineDoctorsUseCase(
 
                             //map data from dto to model here
                             val topDoctorModels =
-                                offlineDoctorDtoToOfflineDoctorModelMapper.listConvertor(
+                                onlineDoctorDtoToOnlineDoctorModelMapper.listConvertor(
                                     list = (topDoctorsDto
-                                        ?: emptyList()) as List<IOfflineDoctorDto>
+                                        ?: emptyList()) as List<IOnlineDoctorDto>
                                 )
 
                             //send top doctor models here

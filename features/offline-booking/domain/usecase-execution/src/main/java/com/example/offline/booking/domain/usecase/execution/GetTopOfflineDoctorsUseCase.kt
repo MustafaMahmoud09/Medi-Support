@@ -43,7 +43,8 @@ class GetTopOfflineDoctorsUseCase(
                             //map data from dto to model here
                             val topDoctorModels =
                                 offlineDoctorDtoToOfflineDoctorModelMapper.listConvertor(
-                                    list = (topDoctorsDto ?: emptyList()) as List<IOfflineDoctorDto>
+                                    list = (topDoctorsDto
+                                        ?: emptyList()) as List<IOfflineDoctorDto>
                                 )
 
                             //send top doctor models here

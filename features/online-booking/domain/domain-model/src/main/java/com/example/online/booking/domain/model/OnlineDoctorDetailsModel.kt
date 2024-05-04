@@ -1,6 +1,6 @@
-package com.example.offline.booking.domain.model
+package com.example.online.booking.domain.model
 
-data class OfflineDoctorDetailsModel(
+data class OnlineDoctorDetailsModel(
     val id: Long,
     val image: String,
     val rating: Float,
@@ -10,7 +10,7 @@ data class OfflineDoctorDetailsModel(
     val userRating: Float,
     val price: String,
     val specialization: String,
-    val dates: List<DateModel>,
-    val phone: String
+    val phone: String,
+    val active: Boolean
 )
 

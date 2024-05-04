@@ -1,25 +1,25 @@
-package com.example.offline.booking.domain.usecase.execution
+package com.example.online.booking.domain.usecase.execution
 
-import com.example.blood.sugar.domain.mapper.declarations.child.IOfflineDoctorDtoToOfflineDoctorModelMapper
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
-import com.example.offline.booking.domain.model.OfflineDoctorModel
-import com.example.offline.booking.domain.repository.declarations.IOfflineBookingRepository
-import com.example.offline.booking.domain.usecase.declarations.IGetTotalOfflineDoctorsUseCase
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDtoToOnlineDoctorModelMapper
+import com.example.online.booking.domain.model.OnlineDoctorModel
+import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
+import com.example.online.booking.domain.usecase.declarations.IGetTotalOnlineDoctorsUseCase
 import kotlinx.coroutines.flow.collect
 import java.util.LinkedList
 
-class GetTotalOfflineDoctorsUseCase(
-    private val offlineBookingRepository: IOfflineBookingRepository,
-    private val offlineDoctorDtoToOfflineDoctorModelMapper: IOfflineDoctorDtoToOfflineDoctorModelMapper
-) : IGetTotalOfflineDoctorsUseCase {
+class GetTotalOnlineDoctorsUseCase(
+    private val onlineBookingRepository: IOnlineBookingRepository,
+    private val onlineDoctorDtoToOnlineDoctorModelMapper: IOnlineDoctorDtoToOnlineDoctorModelMapper
+) : IGetTotalOnlineDoctorsUseCase {
 
     //function for make request on repository for get page contain on 10 doctors
     override suspend fun invoke(
         page: Int
-    ): UnEffectResponse<List<OfflineDoctorModel>> {
+    ): UnEffectResponse<List<OnlineDoctorModel>> {
 
-        val offlineDoctorResult = LinkedList<OfflineDoctorModel>()
+        val onlineDoctorResult = LinkedList<OnlineDoctorModel>()
         var lastPage = 0
 
         while (true) {
@@ -29,7 +29,7 @@ class GetTotalOfflineDoctorsUseCase(
             //make request on repository for get data
             //collect result flow
             //in success status map data to model and kill collect
-            offlineBookingRepository.getPageOfflineDoctor(
+            onlineBookingRepository.getPageOnlineDoctor(
                 page = page
             ).collect { status ->
 
@@ -40,17 +40,17 @@ class GetTotalOfflineDoctorsUseCase(
                         if (status.toData()?.statusCode == 200) {
 
                             //get offline doctors
-                            val offlineDoctorsDto = status.toData()?.body?.data?.data
+                            val onlineDoctorsDto = status.toData()?.body?.data?.data
 
                             //map offline doctors form dto to model
-                            val offlineDoctorModels =
-                                offlineDoctorDtoToOfflineDoctorModelMapper.listConvertor(
-                                    list = offlineDoctorsDto ?: emptyList()
+                            val onlineDoctorModels =
+                                onlineDoctorDtoToOnlineDoctorModelMapper.listConvertor(
+                                    list = onlineDoctorsDto ?: emptyList()
                                 )
 
                             //add offline doctors model list to result list
-                            offlineDoctorResult.addAll(offlineDoctorModels)
-                            lastPage = status.toData()?.body?.data?.lastPage ?: 0
+                            onlineDoctorResult.addAll(onlineDoctorModels)
+                            lastPage = status.toData()?.body?.data?.pagination?.lastPage ?: 0
                             breakCondition = true
                         }//end if
 
@@ -79,7 +79,7 @@ class GetTotalOfflineDoctorsUseCase(
         //return result here
         return UnEffectResponse(
             lastPageNumber = lastPage,
-            body = offlineDoctorResult
+            body = onlineDoctorResult
         )
 
     }//end invoke

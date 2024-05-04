@@ -1,10 +1,10 @@
-package com.example.offlinebooking.presentation.uiState.viewModel
+package com.example.onlinebooking.presentation.uiState.viewModel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.libraries.core.remote.data.response.status.Status
-import com.example.offline.booking.domain.usecase.declarations.IGetTopOfflineDoctorsUseCase
-import com.example.offlinebooking.presentation.uiState.state.TopOfflineDoctorsUiState
+import com.example.online.booking.domain.usecase.declarations.IGetTopOnlineDoctorsUseCase
+import com.example.onlinebooking.presentation.uiState.state.TopOnlineDoctorsUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,22 +16,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TopOfflineDoctorsViewModel @Inject constructor(
-    private val getTopOfflineDoctorsUseCase: IGetTopOfflineDoctorsUseCase
+class TopOnlineDoctorsViewModel @Inject constructor(
+    private val getTopOnlineDoctorsUseCase: IGetTopOnlineDoctorsUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(TopOfflineDoctorsUiState())
+    private val _state = MutableStateFlow(TopOnlineDoctorsUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
 
     init {
-        onGetTopOfflineDoctors()
+        onGetTopOnlineDoctors()
     }//end init
 
     //function for make request on use case for get top offline doctors
-    private fun onGetTopOfflineDoctors() {
+    private fun onGetTopOnlineDoctors() {
 
         //create coroutine builder for call suspend functions in it
         viewModelScope.launch(Dispatchers.IO) {
@@ -40,7 +40,7 @@ class TopOfflineDoctorsViewModel @Inject constructor(
 
                 //make request on use case here
                 //collect top offline doctors status here
-                getTopOfflineDoctorsUseCase().collectLatest { status ->
+                getTopOnlineDoctorsUseCase().collectLatest { status ->
 
                     when (status) {
 
@@ -51,8 +51,8 @@ class TopOfflineDoctorsViewModel @Inject constructor(
                                 //update top offline doctors status to success
                                 _state.update {
                                     it.copy(
-                                        getTopOfflineDoctorsStatus = state.value
-                                            .getTopOfflineDoctorsStatus.copy(
+                                        getTopOnlineDoctorsStatus = state.value
+                                            .getTopOnlineDoctorsStatus.copy(
                                                 loading = false,
                                                 data = status.toData()?.body ?: emptyList()
                                             )
@@ -72,8 +72,8 @@ class TopOfflineDoctorsViewModel @Inject constructor(
                             //update top offline doctors status to loading
                             _state.update {
                                 it.copy(
-                                    getTopOfflineDoctorsStatus = state.value
-                                        .getTopOfflineDoctorsStatus.copy(
+                                    getTopOnlineDoctorsStatus = state.value
+                                        .getTopOnlineDoctorsStatus.copy(
                                             loading = true
                                         )
                                 )

@@ -32,7 +32,9 @@ class SearchOnOfflineDoctorDataSource(
             LoadResult.Page(
                 data = data.body ?: emptyList(),
                 prevKey = if (currentPageNumber == 1) null else currentPageNumber.minus(1),
-                nextKey = if (data.lastPageNumber <= currentPageNumber) null else currentPageNumber.plus(1)
+                nextKey = if (data.lastPageNumber <= currentPageNumber) null else currentPageNumber.plus(
+                    1
+                )
             )
 
         }//end try
@@ -49,6 +51,6 @@ class SearchOnOfflineDoctorDataSource(
 
     override fun getRefreshKey(
         state: PagingState<Int, OfflineDoctorModel>
-    ): Int? = null
+    ): Int? = state.anchorPosition
 
 }//end RemindersDataSource

@@ -1,12 +1,12 @@
-package com.example.offlinebooking.presentation.uiState.viewModel
+package com.example.onlinebooking.presentation.uiState.viewModel
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.example.offline.booking.domain.usecase.declarations.IGetTotalOfflineDoctorsUseCase
-import com.example.offline.booking.pagination.TotalOfflineDoctorDataSource
-import com.example.offlinebooking.presentation.uiState.state.TotalOfflineDoctorsUiState
+import com.example.online.booking.domain.usecase.declarations.IGetTotalOnlineDoctorsUseCase
+import com.example.online.booking.pagination.TotalOnlineDoctorDataSource
+import com.example.onlinebooking.presentation.uiState.state.TotalOnlineDoctorsUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,31 +17,31 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class TotalOfflineDoctorsViewModel @Inject constructor(
-    private val getTotalOfflineDoctorsUseCase: IGetTotalOfflineDoctorsUseCase
+class TotalOnlineDoctorsViewModel @Inject constructor(
+    private val getTotalOnlineDoctorsUseCase: IGetTotalOnlineDoctorsUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(TotalOfflineDoctorsUiState())
+    private val _state = MutableStateFlow(TotalOnlineDoctorsUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
 
     init {
-        onGetTotalOfflineDoctors()
+        onGetTotalOnlineDoctors()
     }//end init
 
     //function for get total offline doctors
-    private fun onGetTotalOfflineDoctors() {
+    private fun onGetTotalOnlineDoctors() {
 
         //get total offline doctors flow here
-        val totalOfflineDoctorFlow = Pager(
+        val totalOnlineDoctorFlow = Pager(
             config = PagingConfig(
                 pageSize = 10
             )
         ) {
-            TotalOfflineDoctorDataSource(
-                getTotalOfflineDoctorsUseCase = getTotalOfflineDoctorsUseCase
+            TotalOnlineDoctorDataSource(
+                getTotalOnlineDoctorsUseCase = getTotalOnlineDoctorsUseCase
             )
         }.flow
             .cachedIn(viewModelScope)
@@ -50,10 +50,10 @@ class TotalOfflineDoctorsViewModel @Inject constructor(
         //change total offline doctor state here
         _state.update {
             it.copy(
-                totalOfflineDoctorsStatus = totalOfflineDoctorFlow
+                totalOnlineDoctorsStatus = totalOnlineDoctorFlow
             )
         }//end update
 
-    }//end onGetTotalOfflineDoctors
+    }//end onGetTotalOnlineDoctors
 
 }//end TotalOfflineDoctorsViewModel

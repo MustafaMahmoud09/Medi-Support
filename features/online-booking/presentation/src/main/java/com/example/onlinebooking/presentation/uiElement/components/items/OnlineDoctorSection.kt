@@ -1,4 +1,4 @@
-package com.example.offlinebooking.presentation.uiElement.components.items
+package com.example.onlinebooking.presentation.uiElement.components.items
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.offline.booking.domain.model.OfflineDoctorModel
+import com.example.online.booking.domain.model.OnlineDoctorModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.BasicButtonView
 import com.example.sharedui.uiElement.components.composable.ServerLoadImageView
@@ -31,7 +31,7 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.google.accompanist.placeholder.placeholder
 
 @Composable
-fun OfflineDoctorSection(
+fun OnlineDoctorSection(
     dimen: CustomDimen,
     theme: CustomTheme,
     borderSize: Float = dimen.dimen_0_125,
@@ -46,14 +46,13 @@ fun OfflineDoctorSection(
     buttonWidth: Float = dimen.dimen_15,
     buttonHeight: Float = dimen.dimen_3,
     textButton: String,
-    doctorIsOnline: Boolean = false,
     onlineIconSize: Float = dimen.dimen_1,
     onlineIconShape: Shape = CircleShape,
     onlineIconColor: Color = theme.green75F94C,
     onClickOnButton: (Int) -> Unit,
     placeHolderState: Boolean = false,
     placeHolderColor: Color = theme.grayLight,
-    offlineDoctor: OfflineDoctorModel,
+    onlineDoctor: OnlineDoctorModel,
     modifier: Modifier = Modifier,
 ) {
 
@@ -70,23 +69,14 @@ fun OfflineDoctorSection(
             )
     ) {
         //create ids to components
-        val (nameId, locationId, timeId, ratingId,
-            buttonId, paddingBottomId, imageId, onlineIconId) = createRefs()
+        val (nameSectionId, locationId, timeId, ratingId,
+            buttonId, paddingBottomId, imageId) = createRefs()
         //create guides
         val guideFromStart42P = createGuidelineFromStart(0.42f)
 
-        //create name text here
-        TextSemiBoldView(
-            theme = theme,
-            dimen = dimen,
-            text = offlineDoctor.name,
-            size = dimen.dimen_1_75,
-            fontColor = nameColor,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-            textAlign = null,
+        ConstraintLayout(
             modifier = Modifier
-                .constrainAs(nameId) {
+                .constrainAs(nameSectionId) {
                     start.linkTo(
                         guideFromStart42P,
                         dimen.dimen_1_5.dp
@@ -100,44 +90,71 @@ fun OfflineDoctorSection(
                         dimen.dimen_1_5.dp
                     )
                     width = Dimension.fillToConstraints
-                }.placeholder(
+                }
+                .placeholder(
                     visible = placeHolderState,
                     color = placeHolderColor
                 )
-        )
+        ){
+            val (nameId,onlineIconId) = createRefs()
 
-        //if doctor is online create online icon
-        if (doctorIsOnline) {
-
-            //create online icon here
-            Spacer(
+            //create name text here
+            TextSemiBoldView(
+                theme = theme,
+                dimen = dimen,
+                text = onlineDoctor.name,
+                size = dimen.dimen_1_75,
+                fontColor = nameColor,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                textAlign = null,
                 modifier = Modifier
-                    .constrainAs(onlineIconId) {
-                        top.linkTo(nameId.top)
-                        bottom.linkTo(nameId.bottom)
-                        start.linkTo(
-                            nameId.end,
-                            dimen.dimen_0_5.dp
+                    .constrainAs(nameId) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                        end.linkTo(
+                            parent.end,
+                            dimen.dimen_1_5.dp
                         )
+                        width = Dimension.fillToConstraints
                     }
-                    .size(
-                        size = onlineIconSize.dp
-                    )
-                    .clip(
-                        shape = onlineIconShape
-                    )
-                    .background(
-                        color = onlineIconColor
-                    )
             )
 
-        }//end if
+
+            //if doctor is online create online icon
+            if (onlineDoctor.active) {
+
+                //create online icon here
+                Spacer(
+                    modifier = Modifier
+                        .constrainAs(onlineIconId) {
+                            top.linkTo(nameId.top)
+                            bottom.linkTo(nameId.bottom)
+                            start.linkTo(
+                                nameId.end,
+                                dimen.dimen_0_5.dp
+                            )
+                        }
+                        .size(
+                            size = onlineIconSize.dp
+                        )
+                        .clip(
+                            shape = onlineIconShape
+                        )
+                        .background(
+                            color = onlineIconColor
+                        )
+                )
+
+            }//end if
+
+        }//end ConstraintLayout
 
         //create location box here
         IconTextSection(
             theme = theme,
             dimen = dimen,
-            text = offlineDoctor.clinicLocation,
+            text = onlineDoctor.clinicLocation,
             fontFamily = robotoMedium,
             fontSize = dimen.dimen_1_75,
             fontColor = secondaryTextColor,
@@ -151,18 +168,19 @@ fun OfflineDoctorSection(
             modifier = Modifier
                 .constrainAs(locationId) {
                     start.linkTo(
-                        nameId.start
+                        nameSectionId.start
                     )
                     end.linkTo(
                         parent.end,
                         dimen.dimen_1_5.dp
                     )
                     top.linkTo(
-                        nameId.bottom,
+                        nameSectionId.bottom,
                         dimen.dimen_2.dp
                     )
                     width = Dimension.fillToConstraints
-                }.placeholder(
+                }
+                .placeholder(
                     visible = placeHolderState,
                     color = placeHolderColor
                 )
@@ -172,7 +190,7 @@ fun OfflineDoctorSection(
         IconTextSection(
             theme = theme,
             dimen = dimen,
-            text = "${offlineDoctor.workingHours}",
+            text = "${onlineDoctor.workingHours}",
             fontFamily = robotoMedium,
             fontSize = dimen.dimen_1_75,
             fontColor = secondaryTextColor,
@@ -196,7 +214,8 @@ fun OfflineDoctorSection(
                         dimen.dimen_2.dp
                     )
                     width = Dimension.fillToConstraints
-                }.placeholder(
+                }
+                .placeholder(
                     visible = placeHolderState,
                     color = placeHolderColor
                 )
@@ -206,7 +225,7 @@ fun OfflineDoctorSection(
         RatingBarSection(
             dimen = dimen,
             theme = theme,
-            rating = offlineDoctor.rate,
+            rating = onlineDoctor.rate,
             modifier = Modifier
                 .constrainAs(ratingId) {
                     start.linkTo(
@@ -220,7 +239,8 @@ fun OfflineDoctorSection(
                         dimen.dimen_2.dp
                     )
                     width = Dimension.fillToConstraints
-                }.placeholder(
+                }
+                .placeholder(
                     visible = placeHolderState,
                     color = placeHolderColor
                 )
@@ -232,7 +252,7 @@ fun OfflineDoctorSection(
             theme = theme,
             text = textButton,
             fontSize = dimen.dimen_1_25,
-            onClick = { onClickOnButton(offlineDoctor.id.toInt()) },
+            onClick = { onClickOnButton(onlineDoctor.id.toInt()) },
             modifier = Modifier
                 .constrainAs(buttonId) {
                     start.linkTo(ratingId.start)
@@ -289,7 +309,7 @@ fun OfflineDoctorSection(
             ServerLoadImageView(
                 theme = theme,
                 dimen = dimen,
-                imageUrl = offlineDoctor.image,
+                imageUrl = onlineDoctor.image,
                 modifier = Modifier
                     .constrainAs(imageId) {
                         start.linkTo(parent.start)

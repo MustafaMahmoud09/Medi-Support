@@ -1,12 +1,12 @@
-package com.example.offline.booking.domain.usecase.declarations
+package com.example.online.booking.domain.usecase.declarations
 
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
-import com.example.offline.booking.domain.model.OfflineDoctorModel
+import com.example.online.booking.domain.model.OnlineDoctorModel
 import kotlinx.coroutines.flow.Flow
 
-interface IGetTopOfflineDoctorsUseCase {
+interface IGetTopOnlineDoctorsUseCase {
 
-    suspend operator fun invoke(): Flow<Status<EffectResponse<List<OfflineDoctorModel>>>>
+    suspend operator fun invoke(): Flow<Status<EffectResponse<List<OnlineDoctorModel>>>>
 
-}//end GetTopOfflineDoctorsUseCase
+}//end IGetTopOnlineDoctorsUseCase

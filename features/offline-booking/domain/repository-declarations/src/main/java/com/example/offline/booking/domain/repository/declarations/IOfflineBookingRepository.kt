@@ -41,4 +41,10 @@ interface IOfflineBookingRepository {
         doctorId: Long
     ): Flow<Status<EffectResponse<Any>>>
 
+
+    suspend fun rateDoctor(
+        doctorId: Long,
+        rate: Int
+    ): Flow<Status<EffectResponse<Any>>>
+
 }//end IOfflineBookingRepository

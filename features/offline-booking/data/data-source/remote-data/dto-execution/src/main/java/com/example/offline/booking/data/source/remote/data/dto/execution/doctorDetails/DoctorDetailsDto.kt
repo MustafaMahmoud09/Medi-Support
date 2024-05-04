@@ -27,5 +27,7 @@ data class DoctorDetailsDto(
     @SerializedName("specialization")
     override val specialization: String?,
     @SerializedName("user_rating")
-    override val userRating: Float?
+    override val userRating: Float?,
+    @SerializedName("phone")
+    override val phone: String?
 ): IDoctorDetailsDto

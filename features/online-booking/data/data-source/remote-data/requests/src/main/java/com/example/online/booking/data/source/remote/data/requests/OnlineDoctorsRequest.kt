@@ -1,7 +1,5 @@
 package com.example.online.booking.data.source.remote.data.requests
 
-import com.example.offline.booking.data.source.remote.data.dto.execution.pageOfflineDoctors.PageOfflineDoctorsResponseDto
-import com.example.offline.booking.data.source.remote.data.dto.execution.topOfflineDoctors.TopOfflineDoctorsResponseDto
 import com.example.online.booking.data.source.remote.data.dto.execution.pageOnlineDoctor.PageOnlineDoctorResponseDto
 import com.example.online.booking.data.source.remote.data.dto.execution.topOnlineDoctors.TopOnlineDoctorResponseDto
 import retrofit2.Response
@@ -11,12 +9,12 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface OfflineDoctorsRequest {
+interface OnlineDoctorsRequest {
 
     /**
      * function for make get top online doctors request
      **/
-    @GET("auth/user/get-top-doctors")
+    @GET("auth/user/ten-online-doctors")
     suspend fun getTopOnlineDoctors()
             : Response<TopOnlineDoctorResponseDto>
 

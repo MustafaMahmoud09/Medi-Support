@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.onlinebooking.presentation.uiElement.components.items.OnlineBookingSection
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 
@@ -56,7 +57,7 @@ private fun OnlineDetailsContent(
         ){
 
             //create online booking here
-            com.example.onlinebooking.presentation.uiElement.components.items.OnlineBookingSection(
+            OnlineBookingSection(
                 dimen = dimen,
                 theme = theme,
                 onClickOnVideoCallButton = onClickOnVideoCallButton,

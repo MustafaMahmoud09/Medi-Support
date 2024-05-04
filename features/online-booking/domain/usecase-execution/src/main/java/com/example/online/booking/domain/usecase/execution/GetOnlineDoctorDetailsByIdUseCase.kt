@@ -1,12 +1,12 @@
-package com.example.offline.booking.domain.usecase.execution
+package com.example.online.booking.domain.usecase.execution
 
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
-import com.example.offline.booking.domain.dto.declarations.doctorDetails.IDoctorDetailsDto
-import com.example.offline.booking.domain.mapper.declarations.child.IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
-import com.example.offline.booking.domain.model.OfflineDoctorDetailsModel
-import com.example.offline.booking.domain.repository.declarations.IOfflineBookingRepository
-import com.example.offline.booking.domain.usecase.declarations.IGetOfflineDoctorDetailsByIdUseCase
+import com.example.online.booking.domain.dto.declarations.doctorDetails.IOnlineDoctorDetailsDto
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
+import com.example.online.booking.domain.model.OnlineDoctorDetailsModel
+import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
+import com.example.online.booking.domain.usecase.declarations.IGetOnlineDoctorDetailsByIdUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -14,22 +14,22 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 
-class GetOfflineDoctorDetailsByIdUseCase(
-    private val offlineBookingRepository: IOfflineBookingRepository,
-    private val offlineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper: IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
-) : IGetOfflineDoctorDetailsByIdUseCase {
+class GetOnlineDoctorDetailsByIdUseCase(
+    private val onlineBookingRepository: IOnlineBookingRepository,
+    private val onlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper: IOnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
+) : IGetOnlineDoctorDetailsByIdUseCase {
 
     //function for make request on repository for get doctor details
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun invoke(
         doctorId: Long
-    ): Flow<Status<EffectResponse<OfflineDoctorDetailsModel>>> {
+    ): Flow<Status<EffectResponse<OnlineDoctorDetailsModel>>> {
 
         //return flow contain on response status
-        return channelFlow<Status<EffectResponse<OfflineDoctorDetailsModel>>> {
+        return channelFlow<Status<EffectResponse<OnlineDoctorDetailsModel>>> {
 
             //make request on repository for get top doctors
-            offlineBookingRepository.getDoctorDetails(
+            onlineBookingRepository.getDoctorDetails(
                 doctorId = doctorId
             ).collect { status ->
 
@@ -41,12 +41,12 @@ class GetOfflineDoctorDetailsByIdUseCase(
                         if (status.toData()?.statusCode == 200) {
 
                             //get top doctors dto
-                            val doctorDetails = status.toData()?.body?.doctorDetailsDto
+                            val doctorDetails = status.toData()?.body?.data
 
                             //map data from dto to model here
-                            val topDoctorModels =
-                                offlineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper.objectConvertor(
-                                    obj = doctorDetails as IDoctorDetailsDto
+                            val doctorModel =
+                                onlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper.objectConvertor(
+                                    obj = doctorDetails as IOnlineDoctorDetailsDto
                                 )
 
                             //send top doctor models here
@@ -54,7 +54,7 @@ class GetOfflineDoctorDetailsByIdUseCase(
                                 element = Status.Success(
                                     data = EffectResponse(
                                         statusCode = status.toData()?.statusCode!!,
-                                        body = topDoctorModels
+                                        body = doctorModel
                                     )
                                 )
                             )

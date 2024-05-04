@@ -26,4 +26,6 @@ interface IDoctorDetailsDto {
 
     val userRating: Float?
 
+    val phone: String?
+
 }//end IDoctorDetailsDto

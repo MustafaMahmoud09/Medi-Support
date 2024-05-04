@@ -1,41 +1,31 @@
 package com.example.online.booking.data.source.remote.data.requests
 
+import com.example.online.booking.data.source.remote.data.dto.execution.doctorDetails.OnlineDoctorDetailsResponseDto
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.Path
 
-interface OfflineBookingRequest {
+interface OnlineBookingRequest {
 
-//    /**
-//     * function for make request for get doctor details with booking dates
-//     ***/
-//    @GET("user/booking/get-doctor-details")
-//    suspend fun getDoctorDetails(
-//        @Query("id") id: Long
-//    ): Response<DoctorDetailsResponseDto>
-//
-//
-//    /**
-//     * function for make request for get booking date times
-//     ***/
-//    @GET("user/booking/get-times")
-//    suspend fun getDateTimes(
-//        @Query("id") id: Long
-//    ): Response<DoctorTimeResponseDto>
+    /**
+     * function for make request for get online doctor details
+     ***/
+    @GET("auth/user/online-doctor/{id}")
+    suspend fun getDoctorDetails(
+        @Path("id") id: Long
+    ): Response<OnlineDoctorDetailsResponseDto>
 
 
     /**
-     * function for make request on server for book offline appointment
+     * function for make request on server for book online appointment
      **/
     @FormUrlEncoded
-    @POST("user/booking/appointment")
-    suspend fun bookOfflineAppointment(
-        @Field("date_id") dateId: Long,
-        @Field("doctor_id") doctorId: Long,
-        @Field("time_id") timeId: Long
+    @POST("auth/user/online-bookings")
+    suspend fun bookOnlineAppointment(
+        @Field("doctor_id") doctorId: Long
     ): Response<Any>
 
-}//end OfflineBookingRequest
+}//end OnlineBookingRequest

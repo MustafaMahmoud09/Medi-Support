@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -418,10 +419,7 @@ private fun TopDoctorsContent(
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(
-                        min = dimen.dimen_0.dp,
-                        max = screenHeight.dp
-                    )
+                    .height((screenHeight - dimen.dimen_23).dp)
             ) { page ->
 
                 //if page is 0 create doctors online page else create doctor offline page

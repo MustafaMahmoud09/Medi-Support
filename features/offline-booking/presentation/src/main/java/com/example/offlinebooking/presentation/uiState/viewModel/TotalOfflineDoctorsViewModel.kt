@@ -31,8 +31,16 @@ class TotalOfflineDoctorsViewModel @Inject constructor(
         onGetTotalOfflineDoctors()
     }//end init
 
+
     //function for get total offline doctors
     private fun onGetTotalOfflineDoctors() {
+
+        //change total offline doctor state here
+        _state.update {
+            it.copy(
+                totalOfflineDoctorsStatus = null
+            )
+        }//end update
 
         //get total offline doctors flow here
         val totalOfflineDoctorFlow = Pager(
@@ -55,5 +63,29 @@ class TotalOfflineDoctorsViewModel @Inject constructor(
         }//end update
 
     }//end onGetTotalOfflineDoctors
+
+
+    //function for refresh total offline doctors
+    fun onRefreshTotalOfflineDoctors() {
+
+        //update backup doctors state and refresh state here
+        _state.update {
+            it.copy(
+                totalOfflineDoctorsBackupStatus = state.value.totalOfflineDoctorsStatus,
+                refreshDoctorsState = true
+            )
+        }//end update
+
+        //get total offline doctors again
+        onGetTotalOfflineDoctors()
+
+        //update backup doctors state and refresh state here
+//        _state.update {
+//            it.copy(
+//                refreshDoctorsState = false
+//            )
+//        }//end update
+
+    }//end onRefreshTotalOfflineDoctors
 
 }//end TotalOfflineDoctorsViewModel

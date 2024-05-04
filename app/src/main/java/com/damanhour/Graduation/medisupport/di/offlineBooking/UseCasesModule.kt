@@ -2,11 +2,13 @@ package com.damanhour.Graduation.medisupport.di.offlineBooking
 
 import com.example.blood.sugar.domain.mapper.declarations.child.IOfflineDoctorDtoToOfflineDoctorModelMapper
 import com.example.offline.booking.domain.mapper.declarations.child.IDateTimeDtoToTimeModelMapper
+import com.example.offline.booking.domain.mapper.declarations.child.IOfflineBookingEntityToOfflineBookingModelMapper
 import com.example.offline.booking.domain.mapper.declarations.child.IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
 import com.example.offline.booking.domain.repository.declarations.IOfflineBookingRepository
 import com.example.offline.booking.domain.usecase.declarations.IBookOfflineAppointmentUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetBookingTimeUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetOfflineDoctorDetailsByIdUseCase
+import com.example.offline.booking.domain.usecase.declarations.IGetPageOfflineBookingsUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetTopOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetTotalOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.declarations.IRateOfflineDoctorUseCase
@@ -14,6 +16,7 @@ import com.example.offline.booking.domain.usecase.declarations.ISearchOnOfflineD
 import com.example.offline.booking.domain.usecase.execution.BookOfflineAppointmentUseCase
 import com.example.offline.booking.domain.usecase.execution.GetBookingTimeUseCase
 import com.example.offline.booking.domain.usecase.execution.GetOfflineDoctorDetailsByIdUseCase
+import com.example.offline.booking.domain.usecase.execution.GetPageOfflineBookingsUseCase
 import com.example.offline.booking.domain.usecase.execution.GetTopOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.execution.GetTotalOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.execution.RateOfflineDoctorUseCase
@@ -130,5 +133,20 @@ object UseCasesModule {
         )
 
     }//end provideRateOfflineDoctorUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideGetPageOfflineBookingsUseCase(
+        offlineBookingRepository: IOfflineBookingRepository,
+        offlineBookingEntityToOfflineBookingModelMapper: IOfflineBookingEntityToOfflineBookingModelMapper
+    ): IGetPageOfflineBookingsUseCase {
+
+        return GetPageOfflineBookingsUseCase(
+            offlineBookingRepository = offlineBookingRepository,
+            offlineBookingEntityToOfflineBookingModelMapper = offlineBookingEntityToOfflineBookingModelMapper
+        )
+
+    }//end provideGetPageOfflineBookingsUseCase
 
 }//end UseCasesModule

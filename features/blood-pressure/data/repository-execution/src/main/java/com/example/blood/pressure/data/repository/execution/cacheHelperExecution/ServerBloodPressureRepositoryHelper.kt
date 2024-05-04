@@ -21,7 +21,7 @@ class ServerBloodPressureRepositoryHelper(
     private val bloodPressureRequest: BloodPressureRequest,
     private val wrapper: ResponseWrapper,
     private val cacheBloodPressureRepositoryHelper: ICacheBloodPressureRepositoryHelper,
-): IServerBloodPressureRepositoryHelper{
+) : IServerBloodPressureRepositoryHelper {
 
     //make function for get last blood pressure records from server
     override suspend fun getLastBloodPressureRecordsFromServer(
@@ -156,7 +156,8 @@ class ServerBloodPressureRepositoryHelper(
 
             //get last page number in local here
             lastPage = cacheBloodPressureRepositoryHelper.getLocalPageCount(
-                pageSize = pageSize
+                pageSize = pageSize,
+                userId = userAuthId
             )
 
         }//end if

@@ -8,9 +8,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.online.booking.domain.model.OnlineBookingModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.WorkerView
 import com.example.sharedui.uiElement.components.composable.IconButtonView
@@ -18,6 +20,7 @@ import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 internal fun OnlineBookingSection(
@@ -41,6 +44,9 @@ internal fun OnlineBookingSection(
     videoCallSize: Float = dimen.dimen_2_5,
     videoCallTint: Color = theme.greenLight,
     onClickOnVideoCallButton: () -> Unit,
+    onlineBooking: OnlineBookingModel,
+    placeHolderState: Boolean = false,
+    placeHolderColor: Color = theme.grayLight,
     modifier: Modifier = Modifier,
 ) {
 
@@ -67,14 +73,14 @@ internal fun OnlineBookingSection(
         WorkerView(
             dimen = dimen,
             theme = theme,
-            workerName = "Dr: Ahmed Mohamed",
+            workerName = onlineBooking.doctorName,
             workerNameSize = doctorNameSize,
             workerNameColor = doctorNameColor,
-            work = "Dentist",
+            work = onlineBooking.specialization,
             workSize = jopSize,
             workColor = jopColor,
-            doctorIsOnline = true,
-            spacingBetweenContent= dimen.dimen_0_5,
+            doctorIsOnline = onlineBooking.activeStatus,
+            spacingBetweenContent = dimen.dimen_0_5,
             modifier = Modifier
                 .constrainAs(doctorNameId) {
                     start.linkTo(
@@ -91,6 +97,10 @@ internal fun OnlineBookingSection(
                     )
                     width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
         //create message here
@@ -101,7 +111,7 @@ internal fun OnlineBookingSection(
             size = messageSize,
             fontColor = messageColor,
             modifier = Modifier
-                .constrainAs(messageId){
+                .constrainAs(messageId) {
                     start.linkTo(doctorNameId.start)
                     end.linkTo(guideFromStart67P)
                     top.linkTo(
@@ -110,17 +120,57 @@ internal fun OnlineBookingSection(
                     )
                     width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
         //create status section here
         BookingStatusSection(
             dimen = dimen,
             theme = theme,
-            status = "Accept",
-            statusColor = theme.green33A351,
-            background = theme.green8CFFAB,
+            status = when (onlineBooking.bookingStatus) {
+                0 -> {
+                    stringResource(R.string.waiting)
+                }
+
+                2 -> {
+                    stringResource(R.string.reject)
+                }
+
+                else -> {
+                    stringResource(R.string.accept)
+                }
+            },
+            statusColor = when (onlineBooking.bookingStatus) {
+                0 -> {
+                    theme.blue1DA1F2
+                }
+
+                2 -> {
+                    theme.redDark
+                }
+
+                else -> {
+                    theme.green33A351
+                }
+            },
+            background = when (onlineBooking.bookingStatus) {
+                0 -> {
+                    theme.blue94C2FF
+                }
+
+                2 -> {
+                    theme.redFF9696
+                }
+
+                else -> {
+                    theme.green33A351
+                }
+            },
             modifier = Modifier
-                .constrainAs(statusId){
+                .constrainAs(statusId) {
                     start.linkTo(messageId.start)
                     end.linkTo(guideFromStart60P)
                     top.linkTo(
@@ -129,26 +179,38 @@ internal fun OnlineBookingSection(
                     )
                     width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
-        //create video call button here
-        IconButtonView(
-            dimen = dimen,
-            theme = theme,
-            onClick = onClickOnVideoCallButton,
-            size = videoCallSize,
-            icon = videoCallIcon,
-            tint = videoCallTint,
-            modifier = Modifier
-                .constrainAs(videoCallId){
-                    start.linkTo(
-                        statusId.end,
-                        dimen.dimen_1_25.dp
+        if (onlineBooking.bookingStatus == 1) {
+
+            //create video call button here
+            IconButtonView(
+                dimen = dimen,
+                theme = theme,
+                onClick = onClickOnVideoCallButton,
+                size = videoCallSize,
+                icon = videoCallIcon,
+                tint = videoCallTint,
+                modifier = Modifier
+                    .constrainAs(videoCallId) {
+                        start.linkTo(
+                            statusId.end,
+                            dimen.dimen_1_25.dp
+                        )
+                        top.linkTo(statusId.top)
+                        bottom.linkTo(statusId.bottom)
+                    }
+                    .placeholder(
+                        visible = placeHolderState,
+                        color = placeHolderColor
                     )
-                    top.linkTo(statusId.top)
-                    bottom.linkTo(statusId.bottom)
-                }
-        )
+            )
+
+        }//end if
 
 
     }//end ConstraintLayout

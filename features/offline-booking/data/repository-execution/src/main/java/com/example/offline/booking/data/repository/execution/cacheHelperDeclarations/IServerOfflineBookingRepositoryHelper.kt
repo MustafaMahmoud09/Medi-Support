@@ -1,11 +1,11 @@
-package com.example.online.booking.data.repository.execution.cacheHelperDeclarations
+package com.example.offline.booking.data.repository.execution.cacheHelperDeclarations
 
-interface IServerOnlineBookingRepositoryHelper {
+interface IServerOfflineBookingRepositoryHelper {
 
-    suspend fun getPageOnlineBookingRecordsFromSever(
+    suspend fun getPageOfflineBookingRecordsFromSever(
         userAuthId: Long,
         page: Int,
         pageSize: Int
     ): Int
 
-}//end IServerBloodSugarRepositoryHelper
+}//end IServerOfflineBookingRepositoryHelper

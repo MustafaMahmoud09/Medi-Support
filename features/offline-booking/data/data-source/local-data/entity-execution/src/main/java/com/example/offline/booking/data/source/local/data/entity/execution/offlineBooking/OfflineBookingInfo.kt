@@ -1,12 +1,12 @@
-package com.example.online.booking.data.source.local.data.entity.execution.onlineBooking
+package com.example.offline.booking.data.source.local.data.entity.execution.offlineBooking
 
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserInfo
 
-object OnlineBookingInfo {
+object OfflineBookingInfo {
 
-    const val ONLINE_BOOKING_TABLE_NAME = "offline_bookings"
+    const val OFFLINE_BOOKING_TABLE_NAME = "offline_bookings"
 
-    const val ID_COLUMN_NAME = "online_booking_id"
+    const val ID_COLUMN_NAME = "offline_booking_id"
 
     const val USER_ID_COLUMN_NAME = UserInfo.ID_COLUMN_NAME
 
@@ -14,7 +14,11 @@ object OnlineBookingInfo {
 
     const val SPECIALIZATION_COLUMN_NAME = "specialization"
 
-    co
+    const val TIME_COLUMN_NAME = "time"
+
+    const val DATE_COLUMN_NAME = "date"
+
+    const val CLINIC_LOCATION_COLUMN_NAME = "clinic_location"
 
     const val CREATED_AT_COLUMN_NAME = "created_at"
 

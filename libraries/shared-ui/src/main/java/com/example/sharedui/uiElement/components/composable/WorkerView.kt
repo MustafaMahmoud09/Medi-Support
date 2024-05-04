@@ -47,7 +47,8 @@ fun WorkerView(
             dimen = dimen,
             text = workerName,
             size = workerNameSize,
-            fontColor = workerNameColor
+            fontColor = workerNameColor,
+            maxLines = 1
         )
 
         //create padding here
@@ -64,7 +65,8 @@ fun WorkerView(
             dimen = dimen,
             text = "($work)",
             size = workSize,
-            fontColor = workColor
+            fontColor = workColor,
+            maxLines = 1
         )
 
         //create padding here

@@ -19,7 +19,8 @@ interface ICacheBloodPressureRepositoryHelper {
 
 
     suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int
 
 }//end ICacheBloodPressureRepositoryHelper

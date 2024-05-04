@@ -75,9 +75,13 @@ interface BloodPressureDao {
     @Query(
         "SELECT COUNT(*) FROM ${
             BloodPressureInfo.BLOOD_PRESSURE_TABLE_NAME
-        }"
+        } WHERE ${
+            BloodPressureInfo.USER_ID_COLUMN_NAME
+        } = :userId"
     )
-    suspend fun selectBloodPressureCount(): Long
+    suspend fun selectBloodPressureCount(
+        userId: Long
+    ): Long
 
 
     //TODO:: FUNCTION FROM DELETE ARTICLES FROM START ID TO END ID

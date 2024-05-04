@@ -124,7 +124,7 @@ class OfflineBookingViewModel @Inject constructor(
                                         }//end update
                                     }//end error server case
 
-                                    400 -> {
+                                    405 -> {
 
                                         _state.update {
                                             it.copy(
@@ -138,6 +138,21 @@ class OfflineBookingViewModel @Inject constructor(
                                         }//end update
 
                                         onTimeIdSelectedDestroy()
+
+                                    }//end appointment not valid case
+
+                                    420 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                bookOfflineAppointmentStatus = state.value
+                                                    .bookOfflineAppointmentStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        alreadyHaveBooking = !state.value.bookOfflineAppointmentStatus.alreadyHaveBooking
+                                                    )
+                                            )
+                                        }//end update
 
                                     }//end appointment not valid case
 
@@ -493,7 +508,7 @@ class OfflineBookingViewModel @Inject constructor(
             }//end update
 
             //create coroutine builder here
-            viewModelScope.launch(Dispatchers.IO){
+            viewModelScope.launch(Dispatchers.IO) {
 
                 //make rating to offline doctor here
                 rateOfflineDoctorUseCase(

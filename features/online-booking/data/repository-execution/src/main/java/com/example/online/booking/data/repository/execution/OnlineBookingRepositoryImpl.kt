@@ -1,8 +1,11 @@
 package com.example.online.booking.data.repository.execution
 
+import com.example.database_creator.MediSupportDatabase
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
+import com.example.libraries.core.remote.data.response.status.UnEffectResponse
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
+import com.example.online.booking.data.repository.execution.cacheHelperDeclarations.IServerOnlineBookingRepositoryHelper
 import com.example.online.booking.data.source.remote.data.dto.execution.doctorDetails.OnlineDoctorDetailsResponseDto
 import com.example.online.booking.data.source.remote.data.dto.execution.pageOnlineDoctor.PageOnlineDoctorResponseDto
 import com.example.online.booking.data.source.remote.data.dto.execution.topOnlineDoctors.TopOnlineDoctorResponseDto
@@ -11,13 +14,18 @@ import com.example.online.booking.data.source.remote.data.requests.OnlineDoctors
 import com.example.online.booking.domain.dto.declarations.doctorDetails.IOnlineDoctorDetailsResponseDto
 import com.example.online.booking.domain.dto.declarations.pageOnlineDoctor.IPageOnlineDoctorResponseDto
 import com.example.online.booking.domain.dto.declarations.topOnlineDoctors.ITopOnlineDoctorResponseDto
+import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
 import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
+import com.example.shared.preferences.access.`object`.SharedPreferencesAccessObject
 import kotlinx.coroutines.flow.Flow
 
 class OnlineBookingRepositoryImpl(
+    private val localDatabase: MediSupportDatabase,
     private val onlineDoctorsRequest: OnlineDoctorsRequest,
     private val onlineBookingRequest: OnlineBookingRequest,
     private val wrapper: ResponseWrapper,
+    private val sharedPreferencesAccessObject: SharedPreferencesAccessObject,
+    private val serverOnlineBookingRepositoryHelper: IServerOnlineBookingRepositoryHelper
 ) : IOnlineBookingRepository {
 
     //function for make request for get top offline doctors from server
@@ -88,5 +96,34 @@ class OnlineBookingRepositoryImpl(
 
     }//end rateDoctor
 
+
+    //function for get page contain on online bookings
+    override suspend fun getPageOnlineBookings(
+        page: Int,
+        pageSize: Int
+    ): UnEffectResponse<List<IOnlineBookingEntity>> {
+
+        //get user auth id
+        val userAuthId = localDatabase.userDao().selectUserByAccessToken(
+            token = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
+        ).id
+
+        //get records from server and store this records in local
+        val lastPage = serverOnlineBookingRepositoryHelper.getPageOnlineBookingRecordsFromSever(
+            userAuthId = userAuthId,
+            page = page,
+            pageSize = pageSize
+        )
+
+        return UnEffectResponse(
+            lastPageNumber = lastPage,
+            body = localDatabase.onlineBookingDao().selectPageOnlineBooking(
+                page = page,
+                pageSize = pageSize,
+                userId = userAuthId
+            )
+        )
+
+    }//end getPageOnlineBookings
 
 }//end OfflineBookingRepositoryImpl

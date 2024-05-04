@@ -16,6 +16,10 @@ import com.example.database_creator.dao.UserDao
 import com.example.heart.rate.data.source.data.access.`object`.HeartRateDao
 import com.example.heart.rate.data.source.entity.execution.heartRate.HeartRateEntity
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
+import com.example.offline.bookin.data.source.local.data.data.access.`object`.OfflineBookingDao
+import com.example.offline.booking.data.source.local.data.entity.execution.offlineBooking.OfflineBookingEntity
+import com.example.online.booking.data.source.local.data.data.access.`object`.OnlineBookingDao
+import com.example.online.booking.data.source.local.data.entity.execution.onlineBooking.OnlineBookingEntity
 import com.example.reminder.data.local.data.data.access.`object`.DayDao
 import com.example.reminder.data.local.data.data.access.`object`.ReminderDao
 import com.example.reminder.data.local.data.data.access.`object`.ReminderDateDao
@@ -34,9 +38,11 @@ import com.example.reminder.data.source.entity.execution.entities.reminder_date.
         BloodPressureEntity::class,
         BloodSugarEntity::class,
         HeartRateEntity::class,
-        BMIEntity::class
+        BMIEntity::class,
+        OfflineBookingEntity::class,
+        OnlineBookingEntity::class
     ],
-    version = 3
+    version = 1
 )
 @TypeConverters(Convertors::class)
 abstract class MediSupportDatabase : RoomDatabase() {
@@ -111,5 +117,21 @@ abstract class MediSupportDatabase : RoomDatabase() {
      * @return BMIDao
      **/
     abstract fun bmiDao(): BMIDao
+
+
+    /**
+     *abstract function for provide online booking dao
+     *
+     * @return OnlineBookingDao
+     **/
+    abstract fun onlineBookingDao(): OnlineBookingDao
+
+
+    /**
+     *abstract function for provide offline booking dao
+     *
+     * @return OfflineBookingDao
+     **/
+    abstract fun offlineBookingDao(): OfflineBookingDao
 
 }//end MediSupportDatabase

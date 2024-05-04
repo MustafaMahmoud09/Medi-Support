@@ -12,6 +12,8 @@ data class OnlineDoctorDetailsDto(
     override val avatar: String?,
     @SerializedName("average_rating")
     override val averageRating: Float?,
+    @SerializedName("user_rating")
+    override val userRating: Float?,
     @SerializedName("bio")
     override val bio: String?,
     @SerializedName("clinic_location")

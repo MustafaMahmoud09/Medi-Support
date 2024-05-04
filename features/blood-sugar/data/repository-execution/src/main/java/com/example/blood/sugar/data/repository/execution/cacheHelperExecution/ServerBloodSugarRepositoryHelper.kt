@@ -167,7 +167,8 @@ class ServerBloodSugarRepositoryHelper(
 
             //get last page number in local
             lastPage = cacheBloodSugarRepositoryHelper.getLocalPageCount(
-                pageSize = pageSize
+                pageSize = pageSize,
+                userId = userAuthId
             )
 
         }//end if

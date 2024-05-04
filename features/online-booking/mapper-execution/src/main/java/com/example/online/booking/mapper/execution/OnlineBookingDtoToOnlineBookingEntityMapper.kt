@@ -1,13 +1,13 @@
-package com.example.blood.sugar.mapper.execution
+package com.example.online.booking.mapper.execution
 
-import com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar.BloodSugarEntity
-import com.example.blood.sugar.domain.dto.declarations.IBloodSugarDto
-import com.example.blood.sugar.domain.entity.declarations.IBloodSugarEntity
-import com.example.blood.sugar.domain.mapper.declarations.child.IBloodSugarDtoToBloodSugarEntityMapper
+import com.example.online.booking.data.source.local.data.entity.execution.onlineBooking.OnlineBookingEntity
+import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailDto
+import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingDtoToOnlineBookingEntityMapper
 
-class BloodSugarDtoToBloodSugarEntityMapper : IBloodSugarDtoToBloodSugarEntityMapper {
+class OnlineBookingDtoToOnlineBookingEntityMapper : IOnlineBookingDtoToOnlineBookingEntityMapper {
 
-    override fun listConvertor(list: List<IBloodSugarDto>): List<IBloodSugarEntity> {
+    override fun listConvertor(list: List<IBookingDetailDto>): List<IOnlineBookingEntity> {
 
         return list.map { bloodSugarDto ->
             objectConvertor(
@@ -17,17 +17,18 @@ class BloodSugarDtoToBloodSugarEntityMapper : IBloodSugarDtoToBloodSugarEntityMa
 
     }//end listConvertor
 
-    override fun objectConvertor(obj: IBloodSugarDto): IBloodSugarEntity {
+    override fun objectConvertor(obj: IBookingDetailDto): IOnlineBookingEntity {
 
-        return BloodSugarEntity(
+        return OnlineBookingEntity(
             id = obj.id ?: 0,
-            level = (obj.level ?: 0).toDouble(),
             createdAt = obj.createdAt ?: "",
-            type = obj.advice?.key ?: "",
-            advice = obj.advice?.advice ?: "",
-            userId = obj.userId ?: 0
+            userId = obj.userId ?: 0,
+            doctorName = obj.doctorName ?: "",
+            specialization = obj.specialization ?: "",
+            bookingStatus = obj.status ?: 0,
+            doctorActiveStatus = obj.activeStatus ?: 0,
         )
 
     }//end objectConvertor
 
-}//end BloodSugarDtoToBloodSugarEntityMapper
+}//end OnlineBookingDtoToOnlineBookingEntityMapper

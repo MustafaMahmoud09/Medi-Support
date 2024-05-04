@@ -2,8 +2,12 @@ package com.damanhour.Graduation.medisupport.di.offlineBooking
 
 import com.example.blood.sugar.domain.mapper.declarations.child.IOfflineDoctorDtoToOfflineDoctorModelMapper
 import com.example.offline.booking.domain.mapper.declarations.child.IDateTimeDtoToTimeModelMapper
+import com.example.offline.booking.domain.mapper.declarations.child.IOfflineBookingDtoToOfflineBookingEntityMapper
+import com.example.offline.booking.domain.mapper.declarations.child.IOfflineBookingEntityToOfflineBookingModelMapper
 import com.example.offline.booking.domain.mapper.declarations.child.IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
 import com.example.offline.booking.mapper.execution.DateTimeDtoToTimeModelMapper
+import com.example.offline.booking.mapper.execution.OfflineBookingDtoToOfflineBookingEntityMapper
+import com.example.offline.booking.mapper.execution.OfflineBookingEntityToOfflineBookingModelMapper
 import com.example.offline.booking.mapper.execution.OfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
 import com.example.offline.booking.mapper.execution.OfflineDoctorDtoToOfflineDoctorModelMapper
 import dagger.Module
@@ -40,12 +44,26 @@ object MappersModule {
     @Singleton
     fun provideOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper(
         @Named("domain") imageUrl: String
-    ): IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper{
+    ): IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper {
 
         return OfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper(
             baseImageUrl = imageUrl
         )
 
     }//end provideOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
+
+
+    @Provides
+    @Singleton
+    fun provideOfflineBookingEntityToOfflineBookingModelMapper()
+            : IOfflineBookingEntityToOfflineBookingModelMapper =
+        OfflineBookingEntityToOfflineBookingModelMapper()
+
+
+    @Provides
+    @Singleton
+    fun provideOfflineBookingDtoToOfflineBookingEntityMapper()
+            : IOfflineBookingDtoToOfflineBookingEntityMapper =
+        OfflineBookingDtoToOfflineBookingEntityMapper()
 
 }//end MappersModule

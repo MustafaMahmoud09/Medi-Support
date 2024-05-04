@@ -10,7 +10,7 @@ import com.example.online.booking.data.source.remote.data.requests.OnlineBooking
 import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailsResponseDto
 import kotlinx.coroutines.flow.collectLatest
 
-class ServerBloodSugarRepositoryHelper(
+class ServerOnlineBookingRepositoryHelper(
     private val wrapper: ResponseWrapper,
     private val onlineBookingRequest: OnlineBookingRequest,
     private val cacheOnlineBookingRepositoryHelper: ICacheOnlineBookingRepositoryHelper,

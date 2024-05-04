@@ -2,130 +2,83 @@ package com.example.blood.sugar.data.repository.execution.cacheHelperExecution
 
 import android.util.Log
 import com.example.online.booking.data.repository.execution.cacheHelperDeclarations.ICacheOnlineBookingRepositoryHelper
-import com.example.blood.sugar.data.source.local.data.entity.execution.bloodSugar.BloodSugarEntity
-import com.example.blood.sugar.data.source.remote.data.dto.execution.BloodSugarDto
-import com.example.blood.sugar.domain.dto.declarations.pageRecords.IPageBloodSugarResponseDto
-import com.example.blood.sugar.domain.mapper.declarations.child.IBloodSugarDtoToBloodSugarEntityMapper
 import com.example.database_creator.MediSupportDatabase
+import com.example.online.booking.data.source.local.data.entity.execution.onlineBooking.OnlineBookingEntity
+import com.example.online.booking.data.source.remote.data.dto.execution.bookingDetails.BookingDetailDto
+import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailsResponseDto
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingDtoToOnlineBookingEntityMapper
 
-class CacheBloodSugarRepositoryHelper(
+class CacheOnlineBookingRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
-    private val bloodSugarDtoToBloodSugarEntityMapper: IBloodSugarDtoToBloodSugarEntityMapper
-): ICacheOnlineBookingRepositoryHelper {
-
-    //function for cache latest blood sugar records in local database
-    override suspend fun cacheLatestBloodSugarRecords(
-        bloodSugarRecords: List<BloodSugarDto>,
-        userId: Long
-    ) {
-
-        //update user id to user id in local database
-        val latestBloodSugarDto = bloodSugarRecords.map { bloodSugarRecord ->
-            bloodSugarRecord.copy(
-                userId = userId
-            )
-        }
-
-        //convert latest blood pressure dto to blood pressure entity
-        val bloodSugarEntities = bloodSugarDtoToBloodSugarEntityMapper.listConvertor(
-            list = latestBloodSugarDto
-        ) as List<BloodSugarEntity>
-
-
-        for (count in 0 until bloodSugarEntities.size - 1) {
-
-            //execute delete here for extra data
-            localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
-                startId = bloodSugarEntities[count + 1].id,
-                endId = bloodSugarEntities[count].id,
-                userId = userId
-            )
-
-        }//for loop
-
-        if (bloodSugarEntities.isNotEmpty()) {
-
-            //execute delete here for extra data
-            localDatabase.bloodSugarDao().deleteBloodSugarRecordsFromId(
-                startId = bloodSugarEntities[0].id,
-                userId = userId
-            )
-
-        }//end if
-
-        //cache data in local here
-        localDatabase.bloodSugarDao().insertBloodSugarRecord(
-            bloodPressureRecords = bloodSugarEntities
-        )
-
-    }//end cacheLatestBloodSugarRecords
+    private val onlineBookingDtoToOnlineBookingEntityMapper: IOnlineBookingDtoToOnlineBookingEntityMapper
+) : ICacheOnlineBookingRepositoryHelper {
 
 
     //function for cache page contain on blood sugar records in local database
-    override suspend fun cachePageBloodSugarRecords(
-        records: IPageBloodSugarResponseDto?,
+    override suspend fun cachePageOnlineBookingRecords(
+        records: IBookingDetailsResponseDto,
         pageSize: Int,
         userId: Long
-    ): Int {
+    ): Int{
 
         try {
 
-            if (records?.data!!.records!!.isNotEmpty()) {
+            if (records.data?.data!!.isNotEmpty()) {
 
                 //update user id to user id in local database
-                val bloodSugarRecordsDto =
-                    ((records.data?.records!!) as List<BloodSugarDto>).map { bloodPressureRecord ->
+                val onlineBookingRecordsDto =
+                    ((records.data?.data!!) as List<BookingDetailDto>).map { bloodPressureRecord ->
                         bloodPressureRecord.copy(
                             userId = userId
                         )
                     }//end map
 
                 //execute map data from dto to entity here
-                val bloodSugarEntities =
-                    bloodSugarDtoToBloodSugarEntityMapper.listConvertor(
-                        list = bloodSugarRecordsDto
+                val onlineBookingEntities =
+                    onlineBookingDtoToOnlineBookingEntityMapper.listConvertor(
+                        list = onlineBookingRecordsDto
                     )
 
                 //store article entities in local database here
-                localDatabase.bloodSugarDao().insertBloodSugarRecord(
-                    bloodPressureRecords = bloodSugarEntities as List<BloodSugarEntity>
+                localDatabase.onlineBookingDao().insertOnlineBookingRecord(
+                    bloodPressureRecords = onlineBookingEntities as List<OnlineBookingEntity>
                 )
 
                 //if current page is first page
                 //delete first items if caching from 0 to first item exist in server now
-                if (records.data?.currentPage == 1) {
+                if (records.data?.pagination?.currentPage == 1) {
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarRecordsFromId(
-                        startId = bloodSugarEntities[0].id,
+                    localDatabase.onlineBookingDao().deleteOnlineBookingRecordsFromId(
+                        startId = onlineBookingEntities[0].id,
                         userId = userId
                     )
 
                 }//end if
                 else {
 
-                    val prevBloodSugar = localDatabase.bloodSugarDao().selectPageBloodSugar(
-                        page = records.data?.currentPage!! - 1,
+                    val prevOnlineBookings = localDatabase.onlineBookingDao().selectPageOnlineBooking(
+                        page = records.data?.pagination?.currentPage!! - 1,
                         pageSize = pageSize,
                         userId = userId
                     )
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
-                        startId = bloodSugarEntities[0].id,
-                        endId = prevBloodSugar[prevBloodSugar.size - 1].id,
+                    localDatabase.onlineBookingDao().deleteOnlineBookingFromIdToId(
+                        startId = onlineBookingEntities[0].id,
+                        endId = prevOnlineBookings[prevOnlineBookings.size - 1].id,
                         userId = userId
                     )
 
                 }//end else
 
                 //execute delete between items here
-                for (count in 0 until bloodSugarEntities.size - 1) {
+                for (count in 0 until onlineBookingEntities.size - 1) {
 
                     //execute delete here for extra data
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
-                        startId = bloodSugarEntities[count + 1].id,
-                        endId = bloodSugarEntities[count].id,
+                    localDatabase.onlineBookingDao().deleteOnlineBookingFromIdToId(
+                        startId = onlineBookingEntities[count + 1].id,
+                        endId = onlineBookingEntities[count].id,
                         userId = userId
                     )
 
@@ -133,12 +86,12 @@ class CacheBloodSugarRepositoryHelper(
 
                 //if current page is last page
                 //delete items from last item in server to last item exist in local if exist
-                if (records.data?.currentPage == records.data?.lastPage) {
+                if (records.data?.pagination?.currentPage == records.data?.pagination?.lastPage) {
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
+                    localDatabase.onlineBookingDao().deleteOnlineBookingFromIdToId(
                         startId = 0,
-                        endId = bloodSugarEntities[bloodSugarEntities.size - 1].id,
+                        endId = onlineBookingEntities[onlineBookingEntities.size - 1].id,
                         userId = userId
                     )
 
@@ -148,10 +101,10 @@ class CacheBloodSugarRepositoryHelper(
             else {
 
                 //if current page is first page
-                if (records.data?.currentPage == 1) {
+                if (records.data?.pagination?.currentPage == 1) {
 
                     //execute delete here
-                    localDatabase.bloodSugarDao().deleteBloodSugarRecordsFromId(
+                    localDatabase.onlineBookingDao().deleteOnlineBookingRecordsFromId(
                         startId = 0,
                         userId = userId
                     )
@@ -159,15 +112,15 @@ class CacheBloodSugarRepositoryHelper(
                 }//end if
                 else {
 
-                    val prevBloodSugars = localDatabase.bloodSugarDao().selectPageBloodSugar(
-                        page = records.data?.currentPage!! - 1,
+                    val prevOnlineBooking = localDatabase.onlineBookingDao().selectPageOnlineBooking(
+                        page = records.data?.pagination?.currentPage!! - 1,
                         pageSize = pageSize,
                         userId = userId
                     )
 
-                    localDatabase.bloodSugarDao().deleteBloodSugarsFromIdToId(
+                    localDatabase.onlineBookingDao().deleteOnlineBookingFromIdToId(
                         startId = 0,
-                        endId = prevBloodSugars[prevBloodSugars.size - 1].id,
+                        endId = prevOnlineBooking[prevOnlineBooking.size - 1].id,
                         userId = userId
                     )
 
@@ -180,26 +133,29 @@ class CacheBloodSugarRepositoryHelper(
             ex.message?.let { Log.d("TAG", it) }
         }//end catch
 
-        return records?.data?.lastPage ?: 0
+        return records.data?.pagination?.lastPage ?: 0
 
     }//end cachePageBloodSugarRecords
 
 
     override suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int {
 
         //get article size
-        val bloodSugars = localDatabase.bloodSugarDao().selectBloodSugarCount()
+        val onlineBookingRecords = localDatabase.onlineBookingDao().selectOnlineBookingCount(
+            userId = userId
+        )
 
-        return if ((bloodSugars.toFloat() / pageSize.toFloat()) - (bloodSugars / pageSize) != 0f) {
-            (bloodSugars / pageSize) + 1
+        return if ((onlineBookingRecords.toFloat() / pageSize.toFloat()) - (onlineBookingRecords / pageSize) != 0f) {
+            (onlineBookingRecords / pageSize) + 1
         }//end if
         else {
-            (bloodSugars / pageSize)
+            (onlineBookingRecords / pageSize)
         }.toInt()//end else
 
     }//end getLocalPageCount
 
-}//end BloodSugarRepositoryHelper
+}//end CacheOnlineBookingRepositoryHelper
 

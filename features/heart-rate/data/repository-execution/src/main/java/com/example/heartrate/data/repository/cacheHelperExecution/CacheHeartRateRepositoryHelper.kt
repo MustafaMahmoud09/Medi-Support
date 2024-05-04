@@ -199,11 +199,14 @@ class CacheHeartRateRepositoryHelper(
 
 
     override suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int {
 
         //get article size
-        val heartRateRecordsSize = localDatabase.heartRateDao().selectHeartRateCount()
+        val heartRateRecordsSize = localDatabase.heartRateDao().selectHeartRateCount(
+            userId = userId
+        )
 
         return if ((heartRateRecordsSize.toFloat() / pageSize.toFloat()) - (heartRateRecordsSize / pageSize) != 0f) {
             (heartRateRecordsSize / pageSize) + 1

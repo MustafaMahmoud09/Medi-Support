@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 @HiltViewModel
-internal class OnlineBookingViewModel @Inject constructor(
+class OnlineBookingViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getOnlineDoctorDetailsByIdUseCase: IGetOnlineDoctorDetailsByIdUseCase,
     private val bookOnlineAppointmentUseCase: IBookOnlineAppointmentUseCase,
@@ -205,6 +205,21 @@ internal class OnlineBookingViewModel @Inject constructor(
 
                                 }//end appointment not valid case
 
+                                423 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            bookOnlineAppointmentStatus = state.value
+                                                .bookOnlineAppointmentStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    alreadyHaveBooking = !state.value.bookOnlineAppointmentStatus.alreadyHaveBooking
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end appointment not valid case
+
                             }//end when
 
                         }//end success case
@@ -304,7 +319,7 @@ internal class OnlineBookingViewModel @Inject constructor(
             }//end update
 
             //create coroutine builder here
-            viewModelScope.launch(Dispatchers.IO){
+            viewModelScope.launch(Dispatchers.IO) {
 
                 //make rating to offline doctor here
                 rateOnlineDoctorUseCase(

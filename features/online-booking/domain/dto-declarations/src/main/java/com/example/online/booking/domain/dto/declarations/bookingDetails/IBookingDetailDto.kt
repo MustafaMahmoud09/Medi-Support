@@ -1,21 +1,22 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.bookingDetails
+package com.example.online.booking.domain.dto.declarations.bookingDetails
 
 
-import com.google.gson.annotations.SerializedName
+interface IBookingDetailDto {
 
-data class BookingDetailDto(
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("doctor_name")
-    val doctorName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("status")
-    val status: String?,
-    @SerializedName("username")
-    val username: String?,
-    @SerializedName("specialization")
-    val specialization: String?,
-    @SerializedName("active_status")
-    val activeStatus: Int?,
-)
+    val createdAt: String?
+
+    val doctorName: String?
+
+    val id: Long?
+
+    val userId: Long?
+
+    val status: Int?
+
+    val username: String?
+
+    val specialization: String?
+
+    val activeStatus: Int?
+
+}//end IBookingDetailDto

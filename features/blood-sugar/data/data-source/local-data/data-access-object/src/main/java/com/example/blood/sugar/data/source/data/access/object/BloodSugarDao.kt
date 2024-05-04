@@ -75,9 +75,13 @@ interface BloodSugarDao {
     @Query(
         "SELECT COUNT(*) FROM ${
             BloodSugarInfo.BLOOD_SUGAR_TABLE_NAME
-        }"
+        } WHERE ${
+            BloodSugarInfo.USER_ID_COLUMN_NAME
+        } = :userId"
     )
-    suspend fun selectBloodSugarCount(): Long
+    suspend fun selectBloodSugarCount(
+        userId: Long
+    ): Long
 
 
     //TODO:: FUNCTION FROM DELETE ARTICLES FROM START ID TO END ID

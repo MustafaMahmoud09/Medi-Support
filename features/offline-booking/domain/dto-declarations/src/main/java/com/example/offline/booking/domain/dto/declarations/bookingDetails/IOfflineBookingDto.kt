@@ -1,23 +1,23 @@
-package com.example.offline.booking.data.source.remote.data.dto.execution.bookingDetails
+package com.example.offline.booking.domain.dto.declarations.bookingDetails
 
+interface IOfflineBookingDto {
 
-import com.google.gson.annotations.SerializedName
+    val clinicLocation: String?
 
-data class OfflineBookingDto(
-    @SerializedName("clinic_location")
-    val clinicLocation: String?,
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("date")
-    val date: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("last_name")
-    val lastName: String?,
-    @SerializedName("specialization")
-    val specialization: String?,
-    @SerializedName("time")
+    val createdAt: String?
+
+    val date: String?
+
+    val firstName: String?
+
+    val id: Long?
+
+    val userId: Long?
+
+    val lastName: String?
+
+    val specialization: String?
+
     val time: String?
-)
+
+}//end IOfflineBookingDto

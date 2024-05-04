@@ -16,7 +16,7 @@ class OnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper(
             id = obj.id ?: 0,
             name = (obj.firstName ?: "") + " " + (obj.lastName ?: ""),
             specialization = obj.specialization ?: "",
-            userRating = 0f,
+            userRating = obj.userRating ?: 0f,
             image = baseImageUrl + (obj.avatar ?: ""),
             rating = obj.averageRating ?: 0f,
             price = (obj.price ?: 0).toString(),

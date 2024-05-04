@@ -2,9 +2,11 @@ package com.example.online.booking.domain.repository.declarations
 
 import com.example.libraries.core.remote.data.response.status.EffectResponse
 import com.example.libraries.core.remote.data.response.status.Status
+import com.example.libraries.core.remote.data.response.status.UnEffectResponse
 import com.example.online.booking.domain.dto.declarations.doctorDetails.IOnlineDoctorDetailsResponseDto
 import com.example.online.booking.domain.dto.declarations.pageOnlineDoctor.IPageOnlineDoctorResponseDto
 import com.example.online.booking.domain.dto.declarations.topOnlineDoctors.ITopOnlineDoctorResponseDto
+import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IOnlineBookingRepository {
@@ -34,5 +36,12 @@ interface IOnlineBookingRepository {
         doctorId: Long,
         rate: Int
     ): Flow<Status<EffectResponse<Any>>>
+
+
+    suspend fun getPageOnlineBookings(
+        page: Int,
+        pageSize: Int
+    ): UnEffectResponse<List<IOnlineBookingEntity>>
+
 
 }//end IOfflineBookingRepository

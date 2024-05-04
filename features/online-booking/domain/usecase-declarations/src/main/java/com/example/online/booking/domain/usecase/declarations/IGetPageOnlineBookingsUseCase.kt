@@ -1,13 +1,13 @@
-package com.example.blood.sugar.domain.usecase.declarations
+package com.example.online.booking.domain.usecase.declarations
 
-import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
+import com.example.online.booking.domain.model.OnlineBookingModel
 
-interface IGetPageHistoryRecordsUseCase {
+interface IGetPageOnlineBookingsUseCase {
 
     suspend operator fun invoke(
         page: Int,
         pageSize: Int,
-    ): UnEffectResponse<List<SimpleBloodSugarModel>>
+    ): UnEffectResponse<List<OnlineBookingModel>>
 
 }//end IGetAllHistoryRecordsUseCase

@@ -1,15 +1,18 @@
 package com.damanhour.Graduation.medisupport.di.onlineBooking
 
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingEntityToOnlineBookingModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDtoToOnlineDoctorModelMapper
 import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
 import com.example.online.booking.domain.usecase.declarations.IBookOnlineAppointmentUseCase
 import com.example.online.booking.domain.usecase.declarations.IGetOnlineDoctorDetailsByIdUseCase
+import com.example.online.booking.domain.usecase.declarations.IGetPageOnlineBookingsUseCase
 import com.example.online.booking.domain.usecase.declarations.IGetTopOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.declarations.IGetTotalOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.declarations.IRateOnlineDoctorUseCase
 import com.example.online.booking.domain.usecase.execution.BookOnlineAppointmentUseCase
 import com.example.online.booking.domain.usecase.execution.GetOnlineDoctorDetailsByIdUseCase
+import com.example.online.booking.domain.usecase.execution.GetPageOnlineBookingsUseCase
 import com.example.online.booking.domain.usecase.execution.GetTopOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.execution.GetTotalOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.execution.RateOnlineDoctorUseCase
@@ -86,13 +89,28 @@ object UseCasesModule {
     @Singleton
     fun provideRateOnlineDoctorUseCase(
         onlineBookingRepository: IOnlineBookingRepository
-    ): IRateOnlineDoctorUseCase{
+    ): IRateOnlineDoctorUseCase {
 
         return RateOnlineDoctorUseCase(
             onlineBookingRepository = onlineBookingRepository
         )
 
     }//end provideRateOnlineDoctorUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideGetPageOnlineBookingsUseCase(
+        onlineBookingRepository: IOnlineBookingRepository,
+        onlineBookingEntityToOnlineBookingModelMapper: IOnlineBookingEntityToOnlineBookingModelMapper
+    ): IGetPageOnlineBookingsUseCase {
+
+        return GetPageOnlineBookingsUseCase(
+            onlineBookingRepository = onlineBookingRepository,
+            onlineBookingEntityToOnlineBookingModelMapper = onlineBookingEntityToOnlineBookingModelMapper
+        )
+
+    }//end provideGetPageOnlineBookingsUseCase
 
 
 }//end UseCasesModule

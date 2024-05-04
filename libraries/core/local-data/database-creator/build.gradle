@@ -63,6 +63,16 @@ dependencies {
     implementation(project(':features:bmi:data:data-source:local-data:data-access-object'))
     implementation(project(':features:bmi:domain:entity-declarations'))
 
+    //online booking
+    implementation(project(':features:online-booking:data:data-source:local-data:entity-execution'))
+    implementation(project(':features:online-booking:data:data-source:local-data:data-access-object'))
+    implementation(project(':features:online-booking:domain:entity-declarations'))
+
+    //offline booking
+    implementation(project(':features:offline-booking:data:data-source:local-data:entity-execution'))
+    implementation(project(':features:offline-booking:data:data-source:local-data:data-access-object'))
+    implementation(project(':features:offline-booking:domain:entity-declarations'))
+
     //shared-entity
     implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
 

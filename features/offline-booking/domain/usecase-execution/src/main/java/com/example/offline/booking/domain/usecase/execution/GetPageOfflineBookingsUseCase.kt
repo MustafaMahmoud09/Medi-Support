@@ -1,38 +1,38 @@
-package com.example.online.booking.domain.usecase.execution
+package com.example.offline.booking.domain.usecase.execution
 
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
-import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
-import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingEntityToOnlineBookingModelMapper
-import com.example.online.booking.domain.model.OnlineBookingModel
-import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
-import com.example.online.booking.domain.usecase.declarations.IGetPageOnlineBookingsUseCase
+import com.example.offline.booking.domain.entity.declarations.IOfflineBookingEntity
+import com.example.offline.booking.domain.mapper.declarations.child.IOfflineBookingEntityToOfflineBookingModelMapper
+import com.example.offline.booking.domain.model.OfflineBookingModel
+import com.example.offline.booking.domain.repository.declarations.IOfflineBookingRepository
+import com.example.offline.booking.domain.usecase.declarations.IGetPageOfflineBookingsUseCase
 
-class GetPageOnlineBookingsUseCase(
-    private val onlineBookingRepository: IOnlineBookingRepository,
-    private val onlineBookingEntityToOnlineBookingModelMapper: IOnlineBookingEntityToOnlineBookingModelMapper
-): IGetPageOnlineBookingsUseCase {
+class GetPageOfflineBookingsUseCase(
+    private val offlineBookingRepository: IOfflineBookingRepository,
+    private val offlineBookingEntityToOfflineBookingModelMapper: IOfflineBookingEntityToOfflineBookingModelMapper
+): IGetPageOfflineBookingsUseCase {
 
     //function for provide page contain on blood sugar history records
     override suspend fun invoke(
         page: Int,
         pageSize: Int
-    ): UnEffectResponse<List<OnlineBookingModel>> {
+    ): UnEffectResponse<List<OfflineBookingModel>> {
 
         //get blood sugar entities here
-        val onlineBookingEntities = onlineBookingRepository.getPageOnlineBookings(
+        val offlineBookingEntities = offlineBookingRepository.getPageOfflineBookings(
             page = page,
             pageSize = pageSize
         )
 
         //convert blood sugar entities to models here
-        val onlineBookingModels = onlineBookingEntityToOnlineBookingModelMapper.listConvertor(
-            list = onlineBookingEntities.body as List<IOnlineBookingEntity>
+        val offlineBookingModels = offlineBookingEntityToOfflineBookingModelMapper.listConvertor(
+            list = offlineBookingEntities.body as List<IOfflineBookingEntity>
         )
 
         //return response contain on blood sugar models
         return UnEffectResponse(
-            lastPageNumber = onlineBookingEntities.lastPageNumber,
-            body = onlineBookingModels
+            lastPageNumber = offlineBookingEntities.lastPageNumber,
+            body = offlineBookingModels
         )
 
     }//end invoke

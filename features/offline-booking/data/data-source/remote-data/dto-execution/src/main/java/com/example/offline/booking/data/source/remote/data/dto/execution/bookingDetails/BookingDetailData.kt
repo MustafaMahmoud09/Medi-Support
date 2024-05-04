@@ -1,13 +1,13 @@
 package com.example.offline.booking.data.source.remote.data.dto.execution.bookingDetails
 
-
+import com.example.offline.booking.domain.dto.declarations.bookingDetails.IBookingDetailData
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class BookingDetailData(
     @SerializedName("current_page")
-    val currentPage: Int?,
+    override val currentPage: Int?,
     @SerializedName("data")
-    val `data`: List<DataX>?,
+    override val `data`: List<OfflineBookingDto>?,
     @SerializedName("last_page")
-    val lastPage: Int?
-)
+    override val lastPage: Int?
+): IBookingDetailData

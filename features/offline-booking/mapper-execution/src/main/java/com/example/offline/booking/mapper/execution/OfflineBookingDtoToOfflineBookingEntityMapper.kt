@@ -1,13 +1,14 @@
-package com.example.online.booking.mapper.execution
+package com.example.offline.booking.mapper.execution
 
-import com.example.online.booking.data.source.local.data.entity.execution.onlineBooking.OnlineBookingEntity
-import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailDto
-import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
-import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingDtoToOnlineBookingEntityMapper
+import com.example.offline.booking.data.source.local.data.entity.execution.offlineBooking.OfflineBookingEntity
+import com.example.offline.booking.domain.dto.declarations.bookingDetails.IOfflineBookingDto
+import com.example.offline.booking.domain.entity.declarations.IOfflineBookingEntity
+import com.example.offline.booking.domain.mapper.declarations.child.IOfflineBookingDtoToOfflineBookingEntityMapper
 
-class OnlineBookingDtoToOnlineBookingEntityMapper : IOnlineBookingDtoToOnlineBookingEntityMapper {
+class OfflineBookingDtoToOfflineBookingEntityMapper :
+    IOfflineBookingDtoToOfflineBookingEntityMapper {
 
-    override fun listConvertor(list: List<IBookingDetailDto>): List<IOnlineBookingEntity> {
+    override fun listConvertor(list: List<IOfflineBookingDto>): List<IOfflineBookingEntity> {
 
         return list.map { bloodSugarDto ->
             objectConvertor(
@@ -17,18 +18,19 @@ class OnlineBookingDtoToOnlineBookingEntityMapper : IOnlineBookingDtoToOnlineBoo
 
     }//end listConvertor
 
-    override fun objectConvertor(obj: IBookingDetailDto): IOnlineBookingEntity {
+    override fun objectConvertor(obj: IOfflineBookingDto): IOfflineBookingEntity {
 
-        return OnlineBookingEntity(
+        return OfflineBookingEntity(
             id = obj.id ?: 0,
             createdAt = obj.createdAt ?: "",
             userId = obj.userId ?: 0,
-            doctorName = obj.doctorName ?: "",
+            doctorName = (obj.firstName ?: "") + " " + (obj.lastName ?: ""),
             specialization = obj.specialization ?: "",
-            bookingStatus = obj.status ?: 0,
-            doctorActiveStatus = obj.activeStatus ?: 0,
+            time = obj.time ?: "",
+            date = obj.date ?: "",
+            clinicLocation = obj.clinicLocation ?: ""
         )
 
     }//end objectConvertor
 
-}//end OnlineBookingDtoToOnlineBookingEntityMapper
+}//end OfflineBookingDtoToOfflineBookingEntityMapper

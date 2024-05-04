@@ -186,4 +186,9 @@
     <string name="this_appointment_is_not_available_and_has_already_been_booked">This appointment is not available and has already been booked</string>
     <string name="you_must_chose_a_booking_date">You must chose a booking date</string>
     <string name="the_doctor_is_offline_now">The doctor is offline now</string>
+    <string name="now_you_can_make_video_call_with_the_doctor">Now you Can Make Video Call With The Doctor</string>
+    <string name="waiting">Waiting</string>
+    <string name="reject">Reject</string>
+    <string name="accept">Accept</string>
+    <string name="you_already_have_a_booking_with">You already have a booking with</string>
 </resources>

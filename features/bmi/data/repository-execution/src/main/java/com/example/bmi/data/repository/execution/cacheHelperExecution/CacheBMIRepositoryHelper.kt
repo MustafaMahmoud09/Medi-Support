@@ -194,11 +194,14 @@ class CacheBMIRepositoryHelper(
 
 
     override suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int {
 
         //get article size
-        val bmiRecordsSize = localDatabase.bmiDao().selectBMICount()
+        val bmiRecordsSize = localDatabase.bmiDao().selectBMICount(
+            userId = userId
+        )
 
         return if ((bmiRecordsSize.toFloat() / pageSize.toFloat()) - (bmiRecordsSize / pageSize) != 0f) {
             (bmiRecordsSize / pageSize) + 1

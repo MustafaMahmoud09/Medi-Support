@@ -1,4 +1,4 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.pageOnlineDoctor
+package com.example.online.booking.data.source.remote.data.dto.execution
 
 
 import com.example.online.booking.domain.dto.declarations.pageOnlineDoctor.IPagination

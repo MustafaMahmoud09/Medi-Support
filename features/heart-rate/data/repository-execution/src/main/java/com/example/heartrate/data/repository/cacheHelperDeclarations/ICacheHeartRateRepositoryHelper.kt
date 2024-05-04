@@ -20,7 +20,8 @@ interface ICacheHeartRateRepositoryHelper {
 
 
     suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int
 
 }//end ICacheHeartRateRepositoryHelper

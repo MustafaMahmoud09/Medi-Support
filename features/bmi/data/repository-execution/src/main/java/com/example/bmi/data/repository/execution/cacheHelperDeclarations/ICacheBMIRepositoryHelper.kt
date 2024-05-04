@@ -19,7 +19,8 @@ interface ICacheBMIRepositoryHelper {
 
 
     suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int
 
 }//end ICacheBMIRepositoryHelper

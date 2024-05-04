@@ -22,7 +22,8 @@ data class BookOfflineAppointmentStatus(
     val internetError: Boolean = false,
     val serverError: Boolean = false,
     val appointmentNotValid: Boolean = false,
-    val appointNotSelected: Boolean = false
+    val appointNotSelected: Boolean = false,
+    val alreadyHaveBooking: Boolean = false
 )
 
 

@@ -9,16 +9,16 @@ import com.example.offline.booking.data.source.local.data.entity.execution.offli
 import com.example.offline.booking.data.source.local.data.entity.execution.offlineBooking.OfflineBookingInfo
 
 @Dao
-interface BloodSugarDao {
+interface OfflineBookingDao {
 
-    //TODO:: FUNCTION FOR INSERT ONLINE BOOKINGS RECORDS IN DATABASE
+    //TODO:: FUNCTION FOR INSERT OFFLINE BOOKINGS RECORDS IN DATABASE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOnlineBookingRecord(
+    suspend fun insertOfflineBookingRecord(
         bloodPressureRecords: List<OfflineBookingEntity>
     )
 
 
-    //TODO:: FUNCTION FOR DELETE ONLINE BOOKING FROM DATABASE FROM START ID
+    //TODO:: FUNCTION FOR DELETE OFFLINE BOOKING FROM DATABASE FROM START ID
     @Query(
         "DELETE FROM ${
             OfflineBookingInfo.OFFLINE_BOOKING_TABLE_NAME
@@ -28,13 +28,13 @@ interface BloodSugarDao {
             OfflineBookingInfo.ID_COLUMN_NAME
         } > :startId"
     )
-    suspend fun deleteOnlineBookingRecordsFromId(
+    suspend fun deleteOfflineBookingRecordsFromId(
         startId: Long,
         userId: Long
     )
 
 
-    //TODO:: FUNCTION FOR SELECT PAGE FROM ONLINE BOOKING TABLE
+    //TODO:: FUNCTION FOR SELECT PAGE FROM OFFLINE BOOKING TABLE
     @Transaction
     @Query(
         "SELECT * FROM ${
@@ -46,23 +46,27 @@ interface BloodSugarDao {
         } DESC LIMIT :pageSize" +
                 " OFFSET ((:page - 1) * :pageSize)"
     )
-    suspend fun selectPageOnlineBooking(
+    suspend fun selectPageOfflineBooking(
         pageSize: Int,
         page: Int,
         userId: Long
     ): List<OfflineBookingEntity>
 
 
-    //TODO:: FUNCTION FOR PROVIDE ONLINE BOOKING RECORD COUNT
+    //TODO:: FUNCTION FOR PROVIDE OFFLINE BOOKING RECORD COUNT
     @Query(
         "SELECT COUNT(*) FROM ${
             OfflineBookingInfo.OFFLINE_BOOKING_TABLE_NAME
-        }"
+        } WHERE ${
+            OfflineBookingInfo.USER_ID_COLUMN_NAME
+        } = :userId"
     )
-    suspend fun selectOnlineBookingCount(): Long
+    suspend fun selectOfflineBookingCount(
+        userId: Long
+    ): Long
 
 
-    //TODO:: FUNCTION FROM DELETE ONLINE BOOKING FROM START ID TO END ID
+    //TODO:: FUNCTION FROM DELETE OFFLINE BOOKING FROM START ID TO END ID
     @Query(
         "DELETE FROM ${
             OfflineBookingInfo.OFFLINE_BOOKING_TABLE_NAME
@@ -74,10 +78,10 @@ interface BloodSugarDao {
             OfflineBookingInfo.USER_ID_COLUMN_NAME
         } == :userId"
     )
-    suspend fun deleteOnlineBookingFromIdToId(
+    suspend fun deleteOfflineBookingFromIdToId(
         startId: Long,
         endId: Long,
         userId: Long
     )
 
-}//end BloodSugarDao
+}//end OfflineBookingDao

@@ -1,13 +1,12 @@
-package com.example.offline.booking.data.source.remote.data.dto.execution.bookingDetails
+package com.example.offline.booking.domain.dto.declarations.bookingDetails
 
 
-import com.google.gson.annotations.SerializedName
+interface IBookingDetailData {
 
-data class BookingDetailData(
-    @SerializedName("current_page")
-    val currentPage: Int?,
-    @SerializedName("data")
-    val `data`: List<OfflineBookingDto>?,
-    @SerializedName("last_page")
+    val currentPage: Int?
+
+    val `data`: List<IOfflineBookingDto>?
+
     val lastPage: Int?
-)
+
+}//end IBookingDetailData

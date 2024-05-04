@@ -1,8 +1,8 @@
-package com.example.online.booking.domain.mapper.declarations.child
+package com.example.offline.booking.domain.mapper.declarations.child
 
-import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
-import com.example.online.booking.domain.mapper.declarations.IListMapper
-import com.example.online.booking.domain.model.OnlineBookingModel
+import com.example.offline.booking.domain.entity.declarations.IOfflineBookingEntity
+import com.example.offline.booking.domain.mapper.declarations.IListMapper
+import com.example.offline.booking.domain.model.OfflineBookingModel
 
-interface IOnlineBookingEntityToOnlineBookingModelMapper
-    : IListMapper<IOnlineBookingEntity, OnlineBookingModel>
+interface IOfflineBookingEntityToOfflineBookingModelMapper
+    : IListMapper<IOfflineBookingEntity, OfflineBookingModel>

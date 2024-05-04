@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.offline.booking.domain.model.OfflineBookingModel
 import com.example.sharedui.R
 import com.example.sharedui.uiElement.components.composable.WorkerView
 import com.example.sharedui.uiElement.components.items.IconTextSection
@@ -19,6 +20,7 @@ import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.robotoMedium
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 internal fun OfflineBookingSection(
@@ -64,6 +66,9 @@ internal fun OfflineBookingSection(
     chatIconSize: Float = dimen.dimen_2,
     chatIconTint: Color = theme.green33A351,
     onClickOnChatButton: () -> Unit,
+    offlineBookingModel: OfflineBookingModel,
+    placeHolderState: Boolean = false,
+    placeHolderColor: Color = theme.grayLight,
     modifier: Modifier = Modifier,
 ) {
 
@@ -89,10 +94,10 @@ internal fun OfflineBookingSection(
         WorkerView(
             dimen = dimen,
             theme = theme,
-            workerName = "Dr: Ahmed Mohamed",
+            workerName = offlineBookingModel.doctorName,
             workerNameSize = doctorNameSize,
             workerNameColor = doctorNameColor,
-            work = "Dentist",
+            work = offlineBookingModel.specialization,
             workSize = jopSize,
             workColor = jopColor,
             doctorIsOnline = false,
@@ -113,13 +118,17 @@ internal fun OfflineBookingSection(
                     )
                     width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
         //create location box here
         IconTextSection(
             theme = theme,
             dimen = dimen,
-            text = "Cairo",
+            text = offlineBookingModel.clinicLocation,
             fontFamily = robotoMedium,
             fontSize = addressTextSize,
             fontColor = addressTextColor,
@@ -139,13 +148,17 @@ internal fun OfflineBookingSection(
                     )
                     width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
         //create time box here
         IconTextSection(
             theme = theme,
             dimen = dimen,
-            text = "20 Oct 2023 | 12:30 AM",
+            text = offlineBookingModel.date,
             fontFamily = robotoMedium,
             fontSize = timeTextSize,
             fontColor = timeTextColor,
@@ -169,6 +182,10 @@ internal fun OfflineBookingSection(
                     )
                     width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
         //create chat section here
@@ -197,7 +214,10 @@ internal fun OfflineBookingSection(
                         dimen.dimen_1_75.dp
                     )
                     width = Dimension.fillToConstraints
-                }
+                }.placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
     }//end ConstraintLayout

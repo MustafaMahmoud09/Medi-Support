@@ -1,13 +1,8 @@
-package com.example.blood.sugar.data.repository.execution.cacheHelperDeclarations
+package com.example.online.booking.data.repository.execution.cacheHelperDeclarations
 
-interface IServerBloodSugarRepositoryHelper {
+interface IServerOnlineBookingRepositoryHelper {
 
-    suspend fun getLastWeekBloodSugarRecordsFromServer(
-        userAuthId: Long
-    )
-
-
-    suspend fun getPageBloodSugarRecordsFromSever(
+    suspend fun getPageOnlineBookingRecordsFromSever(
         userAuthId: Long,
         page: Int,
         pageSize: Int

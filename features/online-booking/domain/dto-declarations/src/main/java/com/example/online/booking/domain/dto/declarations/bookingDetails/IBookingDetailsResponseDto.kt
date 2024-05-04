@@ -1,13 +1,12 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.bookingDetails
+package com.example.online.booking.domain.dto.declarations.bookingDetails
 
 
-import com.google.gson.annotations.SerializedName
+interface IBookingDetailsResponseDto {
 
-data class BookingDetailsResponseDto(
-    @SerializedName("data")
-    val `data`: BookingDetailData?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val `data`: IBookingDetailData?
+
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end IBookingDetailsResponseDto

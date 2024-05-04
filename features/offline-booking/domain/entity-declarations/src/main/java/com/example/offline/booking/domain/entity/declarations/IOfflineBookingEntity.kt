@@ -1,6 +1,6 @@
 package com.example.offline.booking.domain.entity.declarations
 
-interface IOnlineBookingEntity {
+interface IOfflineBookingEntity {
 
     val id: Long
 
@@ -11,6 +11,8 @@ interface IOnlineBookingEntity {
     val time: String
 
     val date: String
+
+    val clinicLocation: String
 
     val specialization: String
 

@@ -1,17 +1,19 @@
-package com.example.bmi.domain.entity.declarations
+package com.example.online.booking.domain.entity.declarations
 
-interface IBMIEntity {
+interface IOnlineBookingEntity {
 
     val id: Long
 
     val userId: Long
 
-    val result: Double
+    val doctorName: String
 
-    val advice: String?
+    val specialization: String
 
-    val type: String
+    val bookingStatus: Int
+
+    val doctorActiveStatus: Int
 
     val createdAt: String
 
-}//end IBMIEntity
+}//end IOnlineBookingEntity

@@ -1,11 +1,11 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.bookingDetails
+package com.example.online.booking.domain.dto.declarations.bookingDetails
 
-import com.example.online.booking.data.source.remote.data.dto.execution.Pagination
-import com.google.gson.annotations.SerializedName
+import com.example.online.booking.domain.dto.declarations.pageOnlineDoctor.IPagination
 
-data class BookingDetailData(
-    @SerializedName("data")
-    val `data`: List<BookingDetailDto>?,
-    @SerializedName("pagination")
-    val pagination: Pagination?
-)
+interface IBookingDetailData {
+
+    val `data`: List<IBookingDetailDto>?
+
+    val pagination: IPagination?
+
+}//end IBookingDetailData

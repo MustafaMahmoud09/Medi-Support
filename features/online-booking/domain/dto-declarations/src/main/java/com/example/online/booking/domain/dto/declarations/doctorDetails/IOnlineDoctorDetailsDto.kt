@@ -22,6 +22,8 @@ interface IOnlineDoctorDetailsDto {
 
     val lastName: String?
 
+    val userRating: Float?
+
     val phone: String?
 
     val price: Int?

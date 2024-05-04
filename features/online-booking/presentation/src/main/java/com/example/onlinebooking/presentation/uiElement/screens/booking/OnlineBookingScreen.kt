@@ -66,6 +66,9 @@ internal fun OnlineBookingScreen(
     val doctorIsNotOnline =
         stringResource(R.string.the_doctor_is_offline_now)
 
+    val alreadyHaveBooking =
+        stringResource(R.string.you_already_have_a_booking_with)
+
     OnlineBookingContent(
         onClickOnBackButton = popBookingNavGraph,
         uiState = state.value,
@@ -106,6 +109,20 @@ internal fun OnlineBookingScreen(
 
             snackbarHostState.showSnackbar(
                 message = serverError
+            )
+        }//end if
+
+    }//end LaunchedEffect
+
+    LaunchedEffect(
+        key1 = state.value.bookOnlineAppointmentStatus.alreadyHaveBooking
+    ) {
+
+        if (!state.value.startRunning) {
+
+            snackbarHostState.showSnackbar(
+                message = alreadyHaveBooking + " "
+                        + (state.value.onlineDoctorDetailsStatus.data?.name ?: "")
             )
         }//end if
 

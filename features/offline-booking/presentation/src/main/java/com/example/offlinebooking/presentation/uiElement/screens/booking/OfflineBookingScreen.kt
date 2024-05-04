@@ -73,6 +73,9 @@ fun OfflineBookingScreen(
     val appointmentDataNotSelected =
         stringResource(R.string.you_must_chose_a_booking_date)
 
+    val alreadyHaveBooking =
+        stringResource(R.string.you_already_have_a_booking_with)
+
     OfflineBookingContent(
         onClickOnBackButton = popBookingNavGraph,
         uiState = state.value,
@@ -132,6 +135,20 @@ fun OfflineBookingScreen(
 
             snackbarHostState.showSnackbar(
                 message = appointmentDataNotSelected
+            )
+        }//end if
+
+    }//end LaunchedEffect
+
+    LaunchedEffect(
+        key1 = state.value.bookOfflineAppointmentStatus.alreadyHaveBooking
+    ) {
+
+        if (!state.value.startRunning) {
+
+            snackbarHostState.showSnackbar(
+                message = alreadyHaveBooking + " "
+                        + (state.value.offlineDoctorDetailsStatus.data?.name ?: "")
             )
         }//end if
 

@@ -21,7 +21,7 @@ class ServerHeartRateRepositoryHelper(
     private val heartRateRequest: HeartRateRequest,
     private val wrapper: ResponseWrapper,
     private val cacheHeartRateRepositoryHelper: ICacheHeartRateRepositoryHelper,
-): IServerHeartRateRepositoryHelper{
+) : IServerHeartRateRepositoryHelper {
 
     //function for make request on server for get last heart rate records
     //after that cache data in local data base
@@ -155,7 +155,8 @@ class ServerHeartRateRepositoryHelper(
         if (lastPage == 0) {
 
             lastPage = cacheHeartRateRepositoryHelper.getLocalPageCount(
-                pageSize = pageSize
+                pageSize = pageSize,
+                userId = userAuthId
             )
 
         }//end if

@@ -1,17 +1,17 @@
-package com.example.online.booking.pagination
+package com.example.offline.booking.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.online.booking.domain.model.OnlineBookingModel
-import com.example.online.booking.domain.usecase.declarations.IGetPageOnlineBookingsUseCase
+import com.example.offline.booking.domain.model.OfflineBookingModel
+import com.example.offline.booking.domain.usecase.declarations.IGetPageOfflineBookingsUseCase
 
-class OnlineBookingDataSource(
-    private val getPageOnlineBookingsUseCase: IGetPageOnlineBookingsUseCase,
-) : PagingSource<Int, OnlineBookingModel>() {
+class OfflineBookingDataSource(
+    private val getPageOfflineBookingsUseCase: IGetPageOfflineBookingsUseCase,
+) : PagingSource<Int, OfflineBookingModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, OnlineBookingModel> {
+    ): LoadResult<Int, OfflineBookingModel> {
 
         return try {
 
@@ -22,7 +22,7 @@ class OnlineBookingDataSource(
             val pageSize = params.loadSize
 
             //get current page data here
-            val data = getPageOnlineBookingsUseCase(
+            val data = getPageOfflineBookingsUseCase(
                 page = currentPageNumber,
                 pageSize = 10
             )
@@ -47,7 +47,7 @@ class OnlineBookingDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, OnlineBookingModel>
+        state: PagingState<Int, OfflineBookingModel>
     ): Int? = state.anchorPosition
 
 }//end RemindersDataSource

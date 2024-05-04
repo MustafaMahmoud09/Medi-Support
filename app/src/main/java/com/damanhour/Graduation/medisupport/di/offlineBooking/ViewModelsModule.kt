@@ -1,10 +1,10 @@
 package com.damanhour.Graduation.medisupport.di.offlineBooking
 
-import com.example.bmi.domain.usecase.declarations.IAddNewBMIRecordUseCase
-import com.example.bmi.presentation.uiState.viewModel.RecordBMIViewModel
+import com.example.offline.booking.domain.usecase.declarations.IGetPageOfflineBookingsUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetTopOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.declarations.IGetTotalOfflineDoctorsUseCase
 import com.example.offline.booking.domain.usecase.declarations.ISearchOnOfflineDoctorsUseCase
+import com.example.offlinebooking.presentation.uiState.viewModel.OfflineDetailsViewModel
 import com.example.offlinebooking.presentation.uiState.viewModel.SearchViewModel
 import com.example.offlinebooking.presentation.uiState.viewModel.TopOfflineDoctorsViewModel
 import com.example.offlinebooking.presentation.uiState.viewModel.TotalOfflineDoctorsViewModel
@@ -21,7 +21,7 @@ object ViewModelsModule {
     @Provides
     fun provideTopOfflineDoctorsViewModel(
         getTopOfflineDoctorsUseCase: IGetTopOfflineDoctorsUseCase
-    ):  TopOfflineDoctorsViewModel{
+    ): TopOfflineDoctorsViewModel {
 
         return TopOfflineDoctorsViewModel(
             getTopOfflineDoctorsUseCase = getTopOfflineDoctorsUseCase
@@ -53,6 +53,18 @@ object ViewModelsModule {
         )
 
     }//end provideSearchViewModel
+
+
+    @Provides
+    fun provideOfflineDetailsViewModel(
+        getPageOfflineBookingsUseCase: IGetPageOfflineBookingsUseCase
+    ): OfflineDetailsViewModel {
+
+        return OfflineDetailsViewModel(
+            getPageOfflineBookingsUseCase = getPageOfflineBookingsUseCase
+        )
+
+    }//end provideOfflineDetailsViewModel
 
 
 }//end ViewModelsModule

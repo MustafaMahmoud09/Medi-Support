@@ -1,13 +1,13 @@
-package com.example.online.booking.domain.usecase.declarations
+package com.example.offline.booking.domain.usecase.declarations
 
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
-import com.example.online.booking.domain.model.OnlineBookingModel
+import com.example.offline.booking.domain.model.OfflineBookingModel
 
-interface IGetPageOnlineBookingsUseCase {
+interface IGetPageOfflineBookingsUseCase {
 
     suspend operator fun invoke(
         page: Int,
         pageSize: Int,
-    ): UnEffectResponse<List<OnlineBookingModel>>
+    ): UnEffectResponse<List<OfflineBookingModel>>
 
-}//end IGetAllHistoryRecordsUseCase
+}//end IGetPageOfflineBookingsUseCase

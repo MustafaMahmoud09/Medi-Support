@@ -75,9 +75,13 @@ interface BMIDao {
     @Query(
         "SELECT COUNT(*) FROM ${
             BMIInfo.BMI_TABLE_NAME
-        }"
+        } WHERE ${
+            BMIInfo.USER_ID_COLUMN_NAME
+        } = :userId"
     )
-    suspend fun selectBMICount(): Long
+    suspend fun selectBMICount(
+        userId: Long
+    ): Long
 
 
     //TODO:: FUNCTION FROM DELETE BMI FROM START ID TO END ID

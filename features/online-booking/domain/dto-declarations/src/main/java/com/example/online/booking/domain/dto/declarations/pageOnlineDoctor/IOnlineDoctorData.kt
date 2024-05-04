@@ -3,7 +3,7 @@ package com.example.online.booking.domain.dto.declarations.pageOnlineDoctor
 import com.example.online.booking.domain.dto.declarations.IOnlineDoctorDto
 
 
-interface IData {
+interface IOnlineDoctorData {
 
     val `data`: List<IOnlineDoctorDto>?
 

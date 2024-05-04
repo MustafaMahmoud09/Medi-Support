@@ -1,11 +1,11 @@
 package com.damanhour.Graduation.medisupport.di.onlineBooking
 
-import com.example.offline.booking.domain.mapper.declarations.child.IDateTimeDtoToTimeModelMapper
-import com.example.offline.booking.domain.mapper.declarations.child.IOfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
-import com.example.offline.booking.mapper.execution.DateTimeDtoToTimeModelMapper
-import com.example.offline.booking.mapper.execution.OfflineDoctorDetailsDtoToOfflineDoctorDetailsModelMapper
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingDtoToOnlineBookingEntityMapper
+import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingEntityToOnlineBookingModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDtoToOnlineDoctorModelMapper
+import com.example.online.booking.mapper.execution.OnlineBookingDtoToOnlineBookingEntityMapper
+import com.example.online.booking.mapper.execution.OnlineBookingEntityToOnlineBookingModelMapper
 import com.example.online.booking.mapper.execution.OnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
 import com.example.online.booking.mapper.execution.OnlineDoctorDtoToOnlineDoctorModelMapper
 import dagger.Module
@@ -43,5 +43,19 @@ object MappersModule {
         )
 
     }//end provideOnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
+
+
+    @Provides
+    @Singleton
+    fun provideOnlineBookingEntityToOnlineBookingModelMapper()
+            : IOnlineBookingEntityToOnlineBookingModelMapper =
+        OnlineBookingEntityToOnlineBookingModelMapper()
+
+
+    @Provides
+    @Singleton
+    fun provideOnlineBookingDtoToOnlineBookingEntityMapper()
+            : IOnlineBookingDtoToOnlineBookingEntityMapper =
+        OnlineBookingDtoToOnlineBookingEntityMapper()
 
 }//end MappersModule

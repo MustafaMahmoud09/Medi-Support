@@ -1,35 +1,35 @@
 package com.example.online.booking.data.repository.execution.cacheHelperExecution
 
 import android.util.Log
-import com.example.online.booking.data.repository.execution.cacheHelperDeclarations.ICacheOnlineBookingRepositoryHelper
-import com.example.online.booking.data.repository.execution.cacheHelperDeclarations.IServerOnlineBookingRepositoryHelper
+import com.example.offline.booking.data.repository.execution.cacheHelperDeclarations.ICacheOfflineBookingRepositoryHelper
+import com.example.offline.booking.data.repository.execution.cacheHelperDeclarations.IServerOfflineBookingRepositoryHelper
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.wrapper.ResponseWrapper
-import com.example.online.booking.data.source.remote.data.dto.execution.bookingDetails.BookingDetailsResponseDto
-import com.example.online.booking.data.source.remote.data.requests.OnlineBookingRequest
-import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailsResponseDto
+import com.example.offline.bookin.data.source.remote.data.requests.OfflineBookingRequest
+import com.example.offline.booking.data.source.remote.data.dto.execution.bookingDetails.BookingDetailResponseDto
+import com.example.offline.booking.domain.dto.declarations.bookingDetails.IBookingDetailResponseDto
 import kotlinx.coroutines.flow.collectLatest
 
-class ServerBloodSugarRepositoryHelper(
+class ServerOfflineBookingRepositoryHelper(
     private val wrapper: ResponseWrapper,
-    private val onlineBookingRequest: OnlineBookingRequest,
-    private val cacheOnlineBookingRepositoryHelper: ICacheOnlineBookingRepositoryHelper,
-): IServerOnlineBookingRepositoryHelper {
+    private val offlineBookingRequest: OfflineBookingRequest,
+    private val cacheOnlineBookingRepositoryHelper: ICacheOfflineBookingRepositoryHelper,
+) : IServerOfflineBookingRepositoryHelper {
 
 
-    override suspend fun getPageOnlineBookingRecordsFromSever(
+    override suspend fun getPageOfflineBookingRecordsFromSever(
         userAuthId: Long,
         page: Int,
         pageSize: Int
-    ): Int{
+    ): Int {
 
         var lastPage = 0
 
         try {
             //make request on server here
             //collect and handle response here
-            wrapper.wrapper<IBookingDetailsResponseDto, BookingDetailsResponseDto> {
-                onlineBookingRequest.getOnlineBookings(
+            wrapper.wrapper<IBookingDetailResponseDto, BookingDetailResponseDto> {
+                offlineBookingRequest.getOfflineBookings(
                     page = page
                 )
             }.collectLatest { status ->
@@ -42,11 +42,12 @@ class ServerBloodSugarRepositoryHelper(
                         //process is success
                         if (status.toData()?.statusCode == 200) {
                             //make cache article in local database here
-                            lastPage = cacheOnlineBookingRepositoryHelper.cachePageOnlineBookingRecords(
-                                records = status.toData()?.body!!,
-                                userId = userAuthId,
-                                pageSize = pageSize
-                            )
+                            lastPage =
+                                cacheOnlineBookingRepositoryHelper.cachePageOfflineBookingRecords(
+                                    records = status.toData()?.body!!,
+                                    userId = userAuthId,
+                                    pageSize = pageSize
+                                )
                         }//end if
                         return@collectLatest
                     }//end Success

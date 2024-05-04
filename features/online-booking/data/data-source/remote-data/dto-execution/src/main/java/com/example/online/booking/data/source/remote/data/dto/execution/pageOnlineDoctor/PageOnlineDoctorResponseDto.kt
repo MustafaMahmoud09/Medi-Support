@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class PageOnlineDoctorResponseDto(
     @SerializedName("data")
-    override val `data`: Data?,
+    override val `data`: OnlineDoctorData?,
     @SerializedName("error")
     override val error: Boolean?,
     @SerializedName("message")

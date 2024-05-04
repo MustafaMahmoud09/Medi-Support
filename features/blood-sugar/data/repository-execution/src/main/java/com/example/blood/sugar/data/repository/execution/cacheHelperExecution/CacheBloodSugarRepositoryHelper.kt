@@ -186,11 +186,14 @@ class CacheBloodSugarRepositoryHelper(
 
 
     override suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int {
 
         //get article size
-        val bloodSugars = localDatabase.bloodSugarDao().selectBloodSugarCount()
+        val bloodSugars = localDatabase.bloodSugarDao().selectBloodSugarCount(
+            userId = userId
+        )
 
         return if ((bloodSugars.toFloat() / pageSize.toFloat()) - (bloodSugars / pageSize) != 0f) {
             (bloodSugars / pageSize) + 1

@@ -2,7 +2,7 @@ package com.example.onlinebooking.presentation.uiState.state
 
 import com.example.online.booking.domain.model.OnlineDoctorDetailsModel
 
-internal data class OnlineBookingUiState(
+data class OnlineBookingUiState(
     val doctorId: Long = 0,
     val onlineDoctorDetailsStatus: GetDoctorDetailsStatus = GetDoctorDetailsStatus(),
     val startRunning: Boolean = true,
@@ -15,6 +15,7 @@ data class BookOfflineAppointmentStatus(
     val internetError: Boolean = false,
     val serverError: Boolean = false,
     val doctorNotOnline: Boolean = false,
+    val alreadyHaveBooking: Boolean = false,
 )
 
 data class GetDoctorDetailsStatus(

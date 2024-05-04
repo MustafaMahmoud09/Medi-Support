@@ -156,7 +156,8 @@ class ServerBMIRepositoryHelper(
         if (lastPage == 0) {
 
             lastPage = cacheBMIRepositoryHelper.getLocalPageCount(
-                pageSize = pageSize
+                pageSize = pageSize,
+                userId = userAuthId
             )
 
         }//end if

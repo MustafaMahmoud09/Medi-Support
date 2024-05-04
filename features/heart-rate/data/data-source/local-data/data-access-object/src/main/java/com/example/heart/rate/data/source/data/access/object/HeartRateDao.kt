@@ -75,9 +75,13 @@ interface HeartRateDao {
     @Query(
         "SELECT COUNT(*) FROM ${
             HeartRateInfo.HEART_RATE_TABLE_NAME
-        }"
+        } WHERE ${
+            HeartRateInfo.USER_ID_COLUMN_NAME
+        } = :userId"
     )
-    suspend fun selectHeartRateCount(): Long
+    suspend fun selectHeartRateCount(
+        userId: Long
+    ): Long
 
 
     //TODO:: FUNCTION FROM DELETE HEART RATE FROM START ID TO END ID

@@ -1,5 +1,6 @@
 package com.example.offline.bookin.data.source.remote.data.requests
 
+import com.example.offline.booking.data.source.remote.data.dto.execution.bookingDetails.BookingDetailResponseDto
 import com.example.offline.booking.data.source.remote.data.dto.execution.doctorDetails.DoctorDetailsResponseDto
 import com.example.offline.booking.data.source.remote.data.dto.execution.doctorTime.DoctorTimeResponseDto
 import retrofit2.Response
@@ -39,5 +40,15 @@ interface OfflineBookingRequest {
         @Field("doctor_id") doctorId: Long,
         @Field("time_id") timeId: Long
     ): Response<Any>
+
+
+    /**
+     * function for make request on server for get offline bookings
+     **/
+    @GET("user/booking/get-all-booking")
+    suspend fun getOfflineBookings(
+        @Query("page") page: Int
+    ): Response<BookingDetailResponseDto>
+
 
 }//end OfflineBookingRequest

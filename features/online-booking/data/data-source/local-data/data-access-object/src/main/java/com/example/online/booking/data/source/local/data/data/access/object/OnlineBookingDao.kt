@@ -9,7 +9,7 @@ import com.example.online.booking.data.source.local.data.entity.execution.online
 import com.example.online.booking.data.source.local.data.entity.execution.onlineBooking.OnlineBookingInfo
 
 @Dao
-interface BloodSugarDao {
+interface OnlineBookingDao {
 
     //TODO:: FUNCTION FOR INSERT ONLINE BOOKINGS RECORDS IN DATABASE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -57,9 +57,13 @@ interface BloodSugarDao {
     @Query(
         "SELECT COUNT(*) FROM ${
             OnlineBookingInfo.ONLINE_BOOKING_TABLE_NAME
-        }"
+        } WHERE ${
+            OnlineBookingInfo.USER_ID_COLUMN_NAME
+        } = :userId"
     )
-    suspend fun selectOnlineBookingCount(): Long
+    suspend fun selectOnlineBookingCount(
+        userId: Long
+    ): Long
 
 
     //TODO:: FUNCTION FROM DELETE ONLINE BOOKING FROM START ID TO END ID
@@ -80,4 +84,4 @@ interface BloodSugarDao {
         userId: Long
     )
 
-}//end BloodSugarDao
+}//end OnlineBookingDao

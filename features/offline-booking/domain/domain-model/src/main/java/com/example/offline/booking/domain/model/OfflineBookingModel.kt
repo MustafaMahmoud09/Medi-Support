@@ -1,9 +1,9 @@
-package com.example.online.booking.domain.model
+package com.example.offline.booking.domain.model
 
-data class OnlineBookingModel(
+data class OfflineBookingModel(
     val id: Long,
     val doctorName: String,
     val specialization: String,
-    val activeStatus: Boolean,
-    val bookingStatus: Int
+    val clinicLocation: String,
+    val date: String
 )

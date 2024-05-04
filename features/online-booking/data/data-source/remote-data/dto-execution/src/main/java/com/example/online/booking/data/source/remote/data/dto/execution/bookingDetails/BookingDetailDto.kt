@@ -1,17 +1,23 @@
 package com.example.online.booking.data.source.remote.data.dto.execution.bookingDetails
 
-
+import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailDto
 import com.google.gson.annotations.SerializedName
 
-data class DataX(
+data class BookingDetailDto(
     @SerializedName("created_at")
-    val createdAt: String?,
+    override val createdAt: String?,
     @SerializedName("doctor_name")
-    val doctorName: String?,
+    override val doctorName: String?,
     @SerializedName("id")
-    val id: Int?,
+    override val id: Long?,
+    @SerializedName("user_id")
+    override val userId: Long?,
     @SerializedName("status")
-    val status: String?,
+    override val status: Int?,
     @SerializedName("username")
-    val username: String?
-)
+    override val username: String?,
+    @SerializedName("specialization")
+    override val specialization: String?,
+    @SerializedName("active_status")
+    override val activeStatus: Int?,
+): IBookingDetailDto

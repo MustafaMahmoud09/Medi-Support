@@ -1,11 +1,11 @@
-package com.example.online.booking.data.repository.execution.cacheHelperDeclarations
+package com.example.offline.booking.data.repository.execution.cacheHelperDeclarations
 
-import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailsResponseDto
+import com.example.offline.booking.domain.dto.declarations.bookingDetails.IBookingDetailResponseDto
 
-interface ICacheOnlineBookingRepositoryHelper {
+interface ICacheOfflineBookingRepositoryHelper {
 
-    suspend fun cachePageOnlineBookingRecords(
-        records: IBookingDetailsResponseDto,
+    suspend fun cachePageOfflineBookingRecords(
+        records: IBookingDetailResponseDto,
         pageSize: Int,
         userId: Long
     ): Int
@@ -16,4 +16,4 @@ interface ICacheOnlineBookingRepositoryHelper {
         userId: Long
     ): Int
 
-}//end ICacheBloodSugarRepositoryHelper
+}//end ICacheOfflineBookingRepositoryHelper

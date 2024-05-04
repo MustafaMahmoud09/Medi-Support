@@ -1,9 +1,9 @@
 package com.damanhour.Graduation.medisupport.di.bloodSugar
 
-import com.example.blood.sugar.data.repository.execution.cacheHelperExecution.CacheBloodSugarRepositoryHelper
 import com.example.blood.sugar.data.repository.execution.BloodSugarRepositoryImpl
 import com.example.blood.sugar.data.repository.execution.cacheHelperDeclarations.ICacheBloodSugarRepositoryHelper
 import com.example.blood.sugar.data.repository.execution.cacheHelperDeclarations.IServerBloodSugarRepositoryHelper
+import com.example.blood.sugar.data.repository.execution.cacheHelperExecution.CacheBloodSugarRepositoryHelper
 import com.example.blood.sugar.data.repository.execution.cacheHelperExecution.ServerBloodSugarRepositoryHelper
 import com.example.blood.sugar.data.source.remote.data.requests.BloodSugarRequest
 import com.example.blood.sugar.domain.mapper.declarations.child.IBloodSugarDtoToBloodSugarEntityMapper
@@ -49,7 +49,7 @@ object RepositoriesModule {
         wrapper: ResponseWrapper,
         bloodSugarRequest: BloodSugarRequest,
         cacheBloodSugarRepositoryHelper: ICacheBloodSugarRepositoryHelper,
-    ): IServerBloodSugarRepositoryHelper{
+    ): IServerBloodSugarRepositoryHelper {
 
         return ServerBloodSugarRepositoryHelper(
             localDatabase = localDatabase,

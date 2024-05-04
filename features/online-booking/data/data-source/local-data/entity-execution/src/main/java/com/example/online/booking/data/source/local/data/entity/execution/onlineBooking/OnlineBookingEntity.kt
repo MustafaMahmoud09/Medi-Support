@@ -1,44 +1,48 @@
-package com.example.bmi.data.source.local.data.entity.execution.bmi
+package com.example.online.booking.data.source.local.data.entity.execution.onlineBooking
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.bmi.domain.entity.declarations.IBMIEntity
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
 import com.example.libraries.local.data.shared.entities.entity.execution.user.UserInfo
+import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
 
 @Entity(
-    tableName = BMIInfo.BMI_TABLE_NAME,
+    tableName = OnlineBookingInfo.ONLINE_BOOKING_TABLE_NAME,
     foreignKeys = [
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = [UserInfo.ID_COLUMN_NAME],
-            childColumns = [BMIInfo.USER_ID_COLUMN_NAME],
+            childColumns = [OnlineBookingInfo.USER_ID_COLUMN_NAME],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
     ]
 )
-data class BMIEntity(
+data class OnlineBookingEntity(
     @PrimaryKey
     @ColumnInfo(
-        name = BMIInfo.ID_COLUMN_NAME
+        name = OnlineBookingInfo.ID_COLUMN_NAME
     ) override val id: Long,
     @ColumnInfo(
-        name = BMIInfo.USER_ID_COLUMN_NAME
+        name = OnlineBookingInfo.USER_ID_COLUMN_NAME
     ) override val userId: Long,
     @ColumnInfo(
-        name = BMIInfo.RESULT_COLUMN_NAME
-    ) override val result: Double,
+        name = OnlineBookingInfo.DOCTOR_NAME_COLUMN_NAME
+    ) override val doctorName: String,
     @ColumnInfo(
-        name = BMIInfo.ADVICE_COLUMN_NAME
-    ) override val advice: String? = null,
+        name = OnlineBookingInfo.SPECIALIZATION_COLUMN_NAME
+    ) override val specialization: String,
     @ColumnInfo(
-        name = BMIInfo.TYPE_COLUMN_NAME
+        name = OnlineBookingInfo.BOOKING_STATUS_COLUMN_NAME
     )
-    override val type: String,
+    override val bookingStatus: Int,
     @ColumnInfo(
-        name = BMIInfo.CREATED_AT_COLUMN_NAME
+        name = OnlineBookingInfo.DOCTOR_STATUS_COLUMN_NAME
+    )
+    override val doctorActiveStatus: Int,
+    @ColumnInfo(
+        name = OnlineBookingInfo.CREATED_AT_COLUMN_NAME
     ) override val createdAt: String
-) : IBMIEntity
+): IOnlineBookingEntity

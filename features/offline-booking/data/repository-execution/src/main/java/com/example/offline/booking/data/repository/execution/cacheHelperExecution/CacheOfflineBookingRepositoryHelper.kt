@@ -8,7 +8,7 @@ import com.example.offline.booking.data.source.remote.data.dto.execution.booking
 import com.example.offline.booking.domain.dto.declarations.bookingDetails.IBookingDetailResponseDto
 import com.example.offline.booking.domain.mapper.declarations.child.IOfflineBookingDtoToOfflineBookingEntityMapper
 
-class CacheOnlineBookingRepositoryHelper(
+class CacheOfflineBookingRepositoryHelper(
     private val localDatabase: MediSupportDatabase,
     private val offlineDtoToOfflineBookingEntityMapper: IOfflineBookingDtoToOfflineBookingEntityMapper
 ) : ICacheOfflineBookingRepositoryHelper {

@@ -200,11 +200,14 @@ class CacheBloodPressureRepositoryHelper(
 
 
     override suspend fun getLocalPageCount(
-        pageSize: Int
+        pageSize: Int,
+        userId: Long
     ): Int {
 
         //get article size
-        val bloodPressureRecordsSize = localDatabase.bloodPressureDao().selectBloodPressureCount()
+        val bloodPressureRecordsSize = localDatabase.bloodPressureDao().selectBloodPressureCount(
+            userId = userId
+        )
 
         return if ((bloodPressureRecordsSize.toFloat() / pageSize.toFloat()) - (bloodPressureRecordsSize / pageSize) != 0f) {
             (bloodPressureRecordsSize / pageSize) + 1

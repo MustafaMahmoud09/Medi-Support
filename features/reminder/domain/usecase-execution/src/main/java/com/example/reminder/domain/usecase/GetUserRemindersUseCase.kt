@@ -18,7 +18,6 @@ class GetUserRemindersUseCase(
 
         //get reminders from data source
         val remindersEntity = reminderRepository.getReminders(
-            userId = 1,
             page = page,
             pageSize = pageSize
         )

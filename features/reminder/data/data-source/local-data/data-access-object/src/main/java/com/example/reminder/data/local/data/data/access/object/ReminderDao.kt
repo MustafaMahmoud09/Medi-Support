@@ -25,32 +25,29 @@ interface ReminderDao {
     //TODO:: Function For Delete Reminder Row
     @Query(
         "DELETE FROM ${ReminderInfo.REMINDER_TABLE_NAME}" +
-                " WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id " +
-                "AND ${ReminderInfo.USER_ID_COLUMN_NAME} = :userId"
+                " WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id "
     )
-    suspend fun delete(id: Long, userId: Long)
+    suspend fun delete(id: Long)
 
 
     //TODO:: Function For Select All Reminders
     @Transaction
     @Query(
-        "SELECT * FROM ${ReminderInfo.REMINDER_TABLE_NAME}" +
-                " WHERE ${ReminderInfo.USER_ID_COLUMN_NAME} = :userId " +
+        "SELECT * FROM ${ReminderInfo.REMINDER_TABLE_NAME} " +
                 "ORDER BY ${ReminderInfo.TIME_COLUMN_NAME} ASC " +
                 "LIMIT :pageSize " +
                 "OFFSET ((:page - 1) * :pageSize)"
     )
-    suspend fun select(userId: Long, pageSize: Int, page: Int): List<ReminderWithDays>
+    suspend fun select(pageSize: Int, page: Int): List<ReminderWithDays>
 
 
     //TODO:: Function For Update Reminder Status
     @Query(
         "UPDATE ${ReminderInfo.REMINDER_TABLE_NAME} SET " +
                 "${ReminderInfo.STATUS_COLUMN_NAME} = :status " +
-                "WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id AND " +
-                "${ReminderInfo.USER_ID_COLUMN_NAME} = :userId"
+                "WHERE ${ReminderInfo.ID_COLUMN_NAME} = :id"
     )
-    suspend fun update(id: Long, status: Boolean, userId: Long)
+    suspend fun update(id: Long, status: Boolean,)
 
 
     //TODO:: Function For Get Nearest Reminder
@@ -98,10 +95,7 @@ interface ReminderDao {
                     DayInfo.ID_COLUMN_NAME
                 } WHERE reminder.${
                     ReminderInfo.STATUS_COLUMN_NAME
-                } = :status AND " +
-                "reminder.${
-                    ReminderInfo.USER_ID_COLUMN_NAME
-                } = :userId " +
+                } = :status " +
                 "ORDER BY endResultdaysDifferent ASC," +
                 "reminder.${
                     ReminderInfo.TIME_COLUMN_NAME
@@ -111,7 +105,6 @@ interface ReminderDao {
     fun nearestReminder(
         status: Boolean,
         localTime: LocalTime,
-        userId: Long
     ): Flow<List<NearestReminder>>
 
 
@@ -121,12 +114,10 @@ interface ReminderDao {
             ReminderInfo.REMINDER_TABLE_NAME
         } WHERE ${
             ReminderInfo.STATUS_COLUMN_NAME
-        } = :status AND " +
-                "${ReminderInfo.USER_ID_COLUMN_NAME} = :userId"
+        } = :status "
     )
     fun selectRemindersByStatus(
-        status: Boolean,
-        userId: Long
+        status: Boolean
     ): Flow<List<ReminderEntity>>
 
 }//end ReminderDao

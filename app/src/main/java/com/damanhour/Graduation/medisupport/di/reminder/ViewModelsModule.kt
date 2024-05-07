@@ -53,9 +53,9 @@ object ViewModelsModule {
         addDaysUseCase: IAddDaysUseCase,
         getDaysUseCase: IGetDaysUseCase,
         addReminderUseCase: IAddReminderUseCase,
-        getReminderActiveSizeUseCase: IGetActiveRemindersSizeUseCase,
+//        getReminderActiveSizeUseCase: IGetActiveRemindersSizeUseCase,
         setReminderServiceRunningStateUseCase: ISetReminderServiceRunningStateUseCase,
-        getReminderServiceRunningStateUseCase: IGetReminderServiceRunningStateUseCase,
+//        getReminderServiceRunningStateUseCase: IGetReminderServiceRunningStateUseCase,
         @ApplicationContext context: Context
     ): AddReminderViewModel {
 
@@ -63,9 +63,9 @@ object ViewModelsModule {
             addDaysUseCase = addDaysUseCase,
             getDaysUseCase = getDaysUseCase,
             addReminderUseCase = addReminderUseCase,
-            getReminderActiveSizeUseCase = getReminderActiveSizeUseCase,
+//            getReminderActiveSizeUseCase = getReminderActiveSizeUseCase,
             setReminderServiceRunningStateUseCase = setReminderServiceRunningStateUseCase,
-            getReminderServiceRunningStateUseCase = getReminderServiceRunningStateUseCase,
+//            getReminderServiceRunningStateUseCase = getReminderServiceRunningStateUseCase,
             context = context
         )
 
@@ -77,13 +77,21 @@ object ViewModelsModule {
     fun provideReminderServiceViewModel(
         getNearestRemindersUseCase: IGetNearestRemindersUseCase,
         reminderNotificationHelper: IReminderNotificationHelper,
-        calculateDifferentDaysUseCase: ICalculateDifferentDaysUseCase
+        calculateDifferentDaysUseCase: ICalculateDifferentDaysUseCase,
+        getReminderActiveSizeUseCase: IGetActiveRemindersSizeUseCase,
+        setReminderServiceRunningStateUseCase: ISetReminderServiceRunningStateUseCase,
+        getReminderServiceRunningStateUseCase: IGetReminderServiceRunningStateUseCase,
+        @ApplicationContext context: Context
     ): ReminderServiceViewModel {
 
         return ReminderServiceViewModel(
             getNearestRemindersUseCase = getNearestRemindersUseCase,
             reminderNotificationHelper = reminderNotificationHelper,
-            calculateDifferentDaysUseCase = calculateDifferentDaysUseCase
+            calculateDifferentDaysUseCase = calculateDifferentDaysUseCase,
+            getReminderActiveSizeUseCase = getReminderActiveSizeUseCase,
+            setReminderServiceRunningStateUseCase = setReminderServiceRunningStateUseCase,
+            getReminderServiceRunningStateUseCase = getReminderServiceRunningStateUseCase,
+            context = context
         )
 
     }//end provideReminderServiceViewModel

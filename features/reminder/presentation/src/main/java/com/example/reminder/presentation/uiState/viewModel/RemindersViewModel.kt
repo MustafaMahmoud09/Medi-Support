@@ -2,13 +2,10 @@ package com.example.reminder.presentation.uiState.viewModel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.filter
-import androidx.paging.flatMap
+import androidx.paging.cachedIn
 import androidx.paging.map
-import com.example.reminder.domaim.domain.model.reminder.ReminderPresentationModel
 import com.example.reminder.domaim.domain.model.reminder.ReminderUpdateData
 import com.example.reminder.domain.usecase.interfaces.IDeleteReminderUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
@@ -20,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -58,13 +55,15 @@ class RemindersViewModel @Inject constructor(
                 getUserRemindersUseCase = getUserRemindersUseCase
             )
         }.flow
+            .cachedIn(viewModelScope)
+            .flowOn(Dispatchers.IO)
 
         //change reminders state here
         _state.update {
             it.copy(
                 reminders = currentPageReminders
             )
-        }
+        }//end update
 
     }//end getReminders
 
@@ -138,7 +137,7 @@ class RemindersViewModel @Inject constructor(
 
     }//end onReminderDeleted
 
-    fun onReminderBackupCreated(){
+    fun onReminderBackupCreated() {
 
         _state.update {
             it.copy(

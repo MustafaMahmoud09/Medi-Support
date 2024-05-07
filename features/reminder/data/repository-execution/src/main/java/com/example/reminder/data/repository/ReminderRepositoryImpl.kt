@@ -1,7 +1,6 @@
 package com.example.reminder.data.repository
 
 import com.example.database_creator.MediSupportDatabase
-import com.example.libraries.local.data.shared.entities.entity.execution.user.UserEntity
 import com.example.reminder.data.source.entity.execution.entities.day.DayEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder.ReminderEntity
 import com.example.reminder.data.source.entity.execution.entities.reminder_date.ReminderDateEntity
@@ -64,25 +63,22 @@ class ReminderRepositoryImpl(
     //fun for store week days
     override suspend fun storeWeekDays(days: List<String>) {
 
+        var dayId = 1L
+
         //loop on days to store it in room database
         days.forEach { day ->
 
             //create day row here
             localDatabase.dayDao().insert(
                 day = DayEntity(
-                    day = day
+                    day = day,
+                    id = dayId
                 )
             )
 
-        }//end forEach
+            dayId += 1
 
-//        localDatabase.userDao().insert(
-//            user = UserEntity(
-//                email = "mustafa@gmail.com",
-//                password = "12345678",
-//                auth = true
-//            )
-//        )
+        }//end forEach
 
     }//end storeWeekDays
 
@@ -97,7 +93,6 @@ class ReminderRepositoryImpl(
     //function for store reminder
     override suspend fun storeReminder(
         name: String,
-        userId: Long,
         time: LocalTime,
         days: List<Long>
     ) {
@@ -108,18 +103,17 @@ class ReminderRepositoryImpl(
                 name = name,
                 time = time,
                 status = true,
-                userId = userId,
             )
         )
 
         //for loop on days here
-        days.forEach {
+        days.forEach { dayId ->
 
             //create reminder date here
             localDatabase.reminderDateDao().insert(
                 reminderDay = ReminderDateEntity(
                     reminderId = reminderId,
-                    dayId = it
+                    dayId = dayId
                 )
             )
 
@@ -129,13 +123,11 @@ class ReminderRepositoryImpl(
 
     //function for get reminders from local database
     override suspend fun getReminders(
-        userId: Long,
         pageSize: Int,
         page: Int
     ): List<IReminderWithDays> {
 
         return localDatabase.reminderDao().select(
-            userId = userId,
             pageSize = pageSize,
             page = page
         )
@@ -144,12 +136,10 @@ class ReminderRepositoryImpl(
 
     override suspend fun getRemindersByStatus(
         status: Boolean,
-        userId: Long
     ): Flow<List<IReminderEntity>> {
 
         return localDatabase.reminderDao().selectRemindersByStatus(
             status = status,
-            userId = userId
         )
 
     }//end getRemindersByStatus
@@ -158,7 +148,6 @@ class ReminderRepositoryImpl(
     override suspend fun getNearestReminder(
         status: Boolean,
         localTime: LocalTime,
-        userId: Long
     ): Flow<List<INearestReminder>> {
 
         return localDatabase
@@ -166,7 +155,6 @@ class ReminderRepositoryImpl(
             .nearestReminder(
                 status = status,
                 localTime = localTime,
-                userId = userId
             )
 
     }//end getNearestReminder
@@ -174,12 +162,10 @@ class ReminderRepositoryImpl(
     //function for delete reminder
     override suspend fun deleteReminder(
         id: Long,
-        userId: Long
     ) {
 
         localDatabase.reminderDao().delete(
             id = id,
-            userId = userId
         )
 
     }//end deleteReminder
@@ -188,13 +174,11 @@ class ReminderRepositoryImpl(
     override suspend fun updateReminderStatus(
         reminderId: Long,
         newValue: Boolean,
-        userId: Long
     ) {
 
         localDatabase.reminderDao().update(
             id = reminderId,
             status = newValue,
-            userId = userId,
         )
 
     }//end updateReminderStatus

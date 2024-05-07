@@ -14,8 +14,6 @@ interface IReminderEntity {
 
     val status: Boolean
 
-    val userId: Long //foreign key
-
     val createdAt: Long
 
 }//end IReminderEntity

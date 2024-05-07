@@ -10,6 +10,7 @@ data class SearchUiState(
     val focusOnSearch: Boolean = false,
     val searchOfflineDoctorsStatus: Flow<PagingData<OfflineDoctorModel>>? = null,
     val pagerStack: List<Int> = listOf(0),
+    val firstRunning: Boolean = true,
     val doctorPlaceHolder: OfflineDoctorModel = OfflineDoctorModel(
         id = 0,
         name = "js",

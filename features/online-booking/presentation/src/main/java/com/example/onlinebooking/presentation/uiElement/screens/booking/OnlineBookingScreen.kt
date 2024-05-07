@@ -298,6 +298,7 @@ private fun OnlineBookingContent(
                         } else {
                             {}
                         },
+                        load = uiState.bookOnlineAppointmentStatus.loading,
                         modifier = Modifier
                             .constrainAs(bookAppointmentId) {
                                 start.linkTo(

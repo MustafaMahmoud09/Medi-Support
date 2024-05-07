@@ -1,3 +1,5 @@
+@file:OptIn(FlowPreview::class)
+
 package com.example.offlinebooking.presentation.uiState.viewModel
 
 import android.util.Log
@@ -22,7 +24,6 @@ import kotlinx.coroutines.launch
 import java.util.LinkedList
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchOnOfflineDoctorsUseCase: ISearchOnOfflineDoctorsUseCase,
@@ -36,12 +37,17 @@ class SearchViewModel @Inject constructor(
 
     init {
         onSearchOnOfflineDoctors()
+        _state.update {
+            it.copy(
+                firstRunning = false
+            )
+        }//end update
     }//end init
 
     private fun onSearchOnOfflineDoctors() {
 
         //create coroutine builder for call suspend functions in it
-        viewModelScope.launch(Dispatchers.IO) {
+        getCoroutineScope().launch(Dispatchers.IO) {
 
             try {
 
@@ -93,6 +99,15 @@ class SearchViewModel @Inject constructor(
 
     //function for update search key
     fun onSearchKeyChanged(newValue: String) {
+
+        if(state.value.firstRunning){
+            onSearchOnOfflineDoctors()
+            _state.update {
+                it.copy(
+                    firstRunning = false
+                )
+            }//end update
+        }//end if
 
         //update search key by new value here
         _state.value.searchKey.update {
@@ -176,5 +191,18 @@ class SearchViewModel @Inject constructor(
         return 0
 
     }//end getPrevPage
+
+    override fun onCleared() {
+        _state.update {
+            it.copy(
+                searchKey = MutableStateFlow(""),
+                focusOnSearch = false,
+                pagerStack = listOf(0),
+                searchOfflineDoctorsStatus = null,
+                firstRunning = true
+            )
+        }//end update
+        super.onCleared()
+    }//end onCleared
 
 }//end SearchViewModel

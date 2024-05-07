@@ -26,8 +26,7 @@ class GetNearestReminderUseCase(
             //observe repository flow here
             reminderRepository.getNearestReminder(
                 status = status,
-                localTime = localTime,
-                userId = 1
+                localTime = localTime
             ).collect { reminder ->
 
                 //convert reminder from entity to model here

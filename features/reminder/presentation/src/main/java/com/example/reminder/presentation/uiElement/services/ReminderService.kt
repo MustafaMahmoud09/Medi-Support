@@ -2,8 +2,7 @@ package com.example.reminder.presentation.uiElement.services
 
 import android.app.Service
 import android.content.Intent
-import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE
-import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
@@ -16,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 @AndroidEntryPoint
 class ReminderService : Service() {
@@ -39,14 +37,14 @@ class ReminderService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         //show foreground service notification here
-        showForegroundSeNotification()
+        showForegroundNotification()
 
         // If we get killed, after returning from here, restart
         return START_STICKY
 
     }//end onStartCommand
 
-    private fun showForegroundSeNotification() {
+    private fun showForegroundNotification() {
 
         //create coroutine builder here
         CoroutineScope(Dispatchers.IO).launch {
@@ -77,7 +75,11 @@ class ReminderService : Service() {
                     .setSilent(true)
                     .build()
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    startForeground(1, notification, FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+                } else {
                     startForeground(1, notification)
+                }
 
             }//end collectLatest
 

@@ -13,8 +13,7 @@ class UpdateReminderStatusUseCase(
 
         reminderRepository.updateReminderStatus(
             reminderId = reminder.reminderId,
-            newValue = reminder.status,
-            userId = 1
+            newValue = reminder.status
         )
 
     }//end invoke

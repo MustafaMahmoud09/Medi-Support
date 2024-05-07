@@ -18,8 +18,7 @@ class GetActiveRemindersSizeUseCase(
 
             //observe repository flow here
             reminderRepository.getRemindersByStatus(
-                status = true,
-                userId = 1
+                status = true
             ).collect { reminders ->
 
                 //emit reminder size here

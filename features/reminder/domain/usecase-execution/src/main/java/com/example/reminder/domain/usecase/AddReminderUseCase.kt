@@ -15,7 +15,6 @@ class AddReminderUseCase(
             name = reminder.reminderName,
             time = reminder.time,
             days = reminder.days,
-            userId = 1
         )
 
     }//end invoke

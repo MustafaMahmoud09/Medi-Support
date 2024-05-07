@@ -11,8 +11,7 @@ class DeleteReminderUseCase(
     override suspend fun invoke(reminderId: Long) {
 
         reminderRepository.deleteReminder(
-            id = reminderId,
-            userId = 1
+            id = reminderId
         )
 
     }//end invoke

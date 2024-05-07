@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.reminder.domaim.domain.model.reminder.ReminderPresentationModel
 import com.example.reminder.domain.usecase.interfaces.IGetUserRemindersUseCase
-import kotlinx.coroutines.flow.collectLatest
 
 class RemindersDataSource(
     private val getUserRemindersUseCase: IGetUserRemindersUseCase,
@@ -36,14 +35,14 @@ class RemindersDataSource(
             //get current page data here
             val data = getUserRemindersUseCase(
                 page = numberOfCurrentPage,
-                pageSize = pageSize
+                pageSize = 10
             )
 
             //return current page here
             LoadResult.Page(
                 data = data,
                 prevKey = if (numberOfCurrentPage == 1) null else numberOfCurrentPage.minus(1),
-                nextKey = if (data.size <= pageSize) null else numberOfCurrentPage.plus(1)
+                nextKey = if (data.isEmpty()) null else numberOfCurrentPage.plus(1)
             )
 
         }//end try

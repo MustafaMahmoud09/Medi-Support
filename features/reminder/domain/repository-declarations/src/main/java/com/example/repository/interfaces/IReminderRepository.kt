@@ -23,12 +23,10 @@ interface IReminderRepository {
 
     suspend fun storeReminder(
         name: String,
-        userId: Long,
         time: LocalTime, days: List<Long>
     )
 
     suspend fun getReminders(
-        userId: Long,
         pageSize: Int,
         page: Int
     ): List<IReminderWithDays>
@@ -36,20 +34,17 @@ interface IReminderRepository {
     suspend fun getNearestReminder(
         status: Boolean,
         localTime: LocalTime,
-        userId: Long
     ): Flow<List<INearestReminder>>
 
     suspend fun getRemindersByStatus(
-        status: Boolean,
-        userId: Long
+        status: Boolean
     ): Flow<List<IReminderEntity>>
 
-    suspend fun deleteReminder(id: Long, userId: Long)
+    suspend fun deleteReminder(id: Long)
 
     suspend fun updateReminderStatus(
         reminderId: Long,
-        newValue: Boolean,
-        userId: Long
+        newValue: Boolean
     )
 
 

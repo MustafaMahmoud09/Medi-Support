@@ -1,8 +1,15 @@
 package com.example.reminder.presentation.uiState.viewModel.reminderService
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.reminder.domain.usecase.interfaces.ICalculateDifferentDaysUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetActiveRemindersSizeUseCase
 import com.example.reminder.domain.usecase.interfaces.IGetNearestRemindersUseCase
+import com.example.reminder.domain.usecase.interfaces.IGetReminderServiceRunningStateUseCase
+import com.example.reminder.domain.usecase.interfaces.ISetReminderServiceRunningStateUseCase
+import com.example.reminder.presentation.uiElement.services.ReminderService
 import com.example.reminder.presentation.uiState.state.ReminderServiceUiState
 import com.example.reminder.presentation.uiState.viewModel.reminderService.helperDeclarations.IReminderNotificationHelper
 import com.example.sharedui.uiState.viewModel.BaseViewModel
@@ -14,6 +21,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
 
@@ -21,7 +29,11 @@ import javax.inject.Inject
 class ReminderServiceViewModel @Inject constructor(
     private val getNearestRemindersUseCase: IGetNearestRemindersUseCase,
     private val reminderNotificationHelper: IReminderNotificationHelper,
-    private val calculateDifferentDaysUseCase: ICalculateDifferentDaysUseCase
+    private val calculateDifferentDaysUseCase: ICalculateDifferentDaysUseCase,
+    private val getReminderActiveSizeUseCase: IGetActiveRemindersSizeUseCase,
+    private val setReminderServiceRunningStateUseCase: ISetReminderServiceRunningStateUseCase,
+    private val getReminderServiceRunningStateUseCase: IGetReminderServiceRunningStateUseCase,
+    private val context: Context
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -32,12 +44,65 @@ class ReminderServiceViewModel @Inject constructor(
 
     init {
 
+        onReminderServiceStateChanged()
         onTimeNowChanged()
         getNearestActiveReminder()
         onReminderRemainingTimeChanged()
         onReminderNotificationNotified()
 
     }//end init
+
+
+    //function for run reminder service
+    private fun onReminderServiceStateChanged() {
+
+        val serviceIntent = Intent(context, ReminderService::class.java)
+
+        //create coroutine builder here
+        viewModelScope.launch(Dispatchers.IO) {
+
+            //collect user reminders here
+            getReminderActiveSizeUseCase().collectLatest { remindersSize ->
+
+                try {
+
+                    //check service is running
+                    if (remindersSize == 0L) {
+
+                        context.stopService(serviceIntent)
+
+                        //change reminder service state here
+                        setReminderServiceRunningStateUseCase(
+                            status = false
+                        )
+
+                    }//end else if
+                    else if (remindersSize > 0L) {
+
+                        //start foreground service here
+                        context.startForegroundService(
+                            serviceIntent
+                        )
+
+                        //change reminder service state here
+                        setReminderServiceRunningStateUseCase(
+                            status = true
+                        )
+
+                    }//end else
+
+                } catch (ex: Exception) {
+
+                    ex.message?.let { Log.e("ERROR", it) }
+
+                }//end ex
+
+            }//end collectLatest
+
+        }//end launch
+
+    }//end runReminderService
+
 
     //function for change time now each one second
     private fun onTimeNowChanged() {
@@ -150,6 +215,9 @@ class ReminderServiceViewModel @Inject constructor(
 
             //observe time now state here
             state.value.currentTimeState.collectLatest { currentTime ->
+
+                Log.d("TAG_ordinal", state.value.currentNearestReminder.dayNumber.toString())
+                Log.d("TAG_current", LocalDate.now().dayOfWeek.value.toString())
 
                 //if current time equal reminder time notify notification
                 if (

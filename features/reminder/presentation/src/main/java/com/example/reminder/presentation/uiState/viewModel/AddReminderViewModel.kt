@@ -31,9 +31,7 @@ class AddReminderViewModel @Inject constructor(
     private val addDaysUseCase: IAddDaysUseCase,
     private val getDaysUseCase: IGetDaysUseCase,
     private val addReminderUseCase: IAddReminderUseCase,
-    private val getReminderActiveSizeUseCase: IGetActiveRemindersSizeUseCase,
     private val setReminderServiceRunningStateUseCase: ISetReminderServiceRunningStateUseCase,
-    private val getReminderServiceRunningStateUseCase: IGetReminderServiceRunningStateUseCase,
     private val context: Context
 ) : BaseViewModel() {
 
@@ -47,66 +45,21 @@ class AddReminderViewModel @Inject constructor(
 
         onWeekDaysStored()
         getWeekDays()
-        onReminderServiceStateChanged()
+        onRunReminderService()
 
     }//end init
 
 
-    //function for run reminder service
-    private fun onReminderServiceStateChanged() {
+    private fun onRunReminderService() {
 
         val serviceIntent = Intent(context, ReminderService::class.java)
 
-        //create coroutine builder here
-        viewModelScope.launch(Dispatchers.IO) {
+        //start foreground service here
+        context.startForegroundService(
+            serviceIntent
+        )
 
-            //collect user reminders here
-            getReminderActiveSizeUseCase().collectLatest { remindersSize ->
-
-                try {
-
-                    //check service is not running
-                    if (
-                        remindersSize == 1L &&
-                        !getReminderServiceRunningStateUseCase()
-                    ) {
-
-                        //start foreground service here
-                        context.startForegroundService(serviceIntent)
-
-                        //change reminder service state here
-                        setReminderServiceRunningStateUseCase(
-                            status = true
-                        )
-
-                    }//end if
-
-                    //check service is running
-                    else if (
-                        remindersSize == 0L &&
-                        getReminderServiceRunningStateUseCase()
-                    ) {
-
-                        context.stopService(serviceIntent)
-
-                        //change reminder service state here
-                        setReminderServiceRunningStateUseCase(
-                            status = false
-                        )
-
-                    }//end else if
-
-                } catch (ex: Exception) {
-
-                    ex.message?.let { Log.e("ERROR", it) }
-
-                }//end ex
-
-            }//end collectLatest
-
-        }//end launch
-
-    }//end runReminderService
+    }//end onRunReminderService
 
 
     //function for store week days

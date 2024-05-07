@@ -17,13 +17,9 @@ class CalculateDifferentDaysUseCase : ICalculateDifferentDaysUseCase {
         //0 - reminder day number - 6
         //to day have number id
         //calculate different between today and reminder number
-        val result = if (
-            dayNumber.toInt() - 1 > ordinal ||
-            ((dayNumber.toInt() - ordinal - 1) == 0 &&
-                    !LocalTime.now().isAfter(reminderTime))
-        ) {
+        val result = if (dayNumber.toInt() - 1 > ordinal) {
 
-            if (!LocalTime.now().isAfter(reminderTime)) {
+            if (LocalTime.now().second < reminderTime.second) {
 
                 dayNumber.toInt() - ordinal - 1
 
@@ -34,9 +30,9 @@ class CalculateDifferentDaysUseCase : ICalculateDifferentDaysUseCase {
             }//end else
 
         }//end if
-        else {
+        else if (dayNumber.toInt() - 1 < ordinal) {
 
-            if (!LocalTime.now().isAfter(reminderTime)) {
+            if (LocalTime.now().second < reminderTime.second) {
 
                 6 - ordinal + dayNumber.toInt()
 
@@ -47,8 +43,17 @@ class CalculateDifferentDaysUseCase : ICalculateDifferentDaysUseCase {
             }//end else
 
         }//end else
+        else {
 
-        return if (result == -1) 0 else result
+            if (LocalTime.now().second >= reminderTime.second) {
+                0
+            }//end if
+            else {
+                6
+            }
+        }//end else
+
+        return result
 
     }//end invoke
 

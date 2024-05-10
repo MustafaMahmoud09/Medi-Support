@@ -1,8 +1,8 @@
-package com.example.blood.pressure.domain.mapper.declarations.child
+package com.example.account.setting.domain.mapper.declarations.child
 
-import com.example.blood.pressure.domain.entity.declarations.IBloodPressureEntity
-import com.example.blood.pressure.domain.mapper.declarations.IListMapper
-import com.example.blood.pressure.domain.model.AdviceBloodPressureModel
+import com.example.account.setting.domain.mapper.declarations.IListMapper
+import com.example.account.setting.domain.model.UserModel
+import com.example.libraries.core.local.data.entity.declarations.IUserEntity
 
-interface IBloodPressureEntityToAdviceBloodPressureModelMapper :
-    IListMapper<IBloodPressureEntity, AdviceBloodPressureModel>
+interface IUserEntityToUserModelMapper :
+    IListMapper<IUserEntity, UserModel>

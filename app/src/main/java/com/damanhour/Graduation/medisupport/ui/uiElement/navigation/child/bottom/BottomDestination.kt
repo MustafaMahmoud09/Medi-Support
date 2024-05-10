@@ -41,7 +41,8 @@ internal fun NavGraphBuilder.bottomDestination(
     navigateToHeartRateNavGraph: KFunction0<Unit>,
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToOfflineBookingDestination: (Int) -> Unit
+    navigateToOfflineBookingDestination: (Int) -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
 ) {
     //create bottom destination
     composable(
@@ -61,7 +62,8 @@ internal fun NavGraphBuilder.bottomDestination(
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
             navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
             navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
-            navigateToOfflineBookingDestination = navigateToOfflineBookingDestination
+            navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
     }//end composable
 

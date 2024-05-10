@@ -28,6 +28,7 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.naviga
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.navigateToBmiNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.navigateToHeartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.activity.popActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.login.navigateToLoginNavGraphWithPopBottomDestination
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.popHeartPredictionNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.history.navigateToHistoryDestination
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.history.popHistoryDestination
@@ -139,6 +140,7 @@ fun RootNavGraph(
                     navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestinationWithPopOfflineBookingDestination,
                     navigateToOnlineBookingNavGraph = navHostController::navigateToOnlineBookingDestination,
                     navigateToOfflineBookingDestination = navHostController::navigateToOfflineBookingDestination,
+                    navigateToLoginNavGraphWithPopBottomDestination = navHostController::navigateToLoginNavGraphWithPopBottomDestination
                 )
 
                 activityNavGraph(

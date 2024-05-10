@@ -34,6 +34,7 @@ fun BasicButtonView(
     roundSize: Float = dimen.dimen_1_25,
     fontColor: Color = theme.white,
     load: Boolean = false,
+    loadColor: Color = theme.background,
     progressLoadSize: Float = dimen.dimen_4,
     strokeWidth: Float = dimen.dimen_0_125,
     modifier: Modifier = Modifier
@@ -73,7 +74,7 @@ fun BasicButtonView(
         ) {
 
             CircularProgressIndicator(
-                color = theme.background,
+                color = loadColor,
                 trackColor = color,
                 strokeWidth = strokeWidth.dp,
                 modifier = Modifier

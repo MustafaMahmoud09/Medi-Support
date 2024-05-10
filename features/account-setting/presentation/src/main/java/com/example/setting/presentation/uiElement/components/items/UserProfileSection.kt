@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.sharedui.uiElement.components.composable.LoadImageViewII
+import com.example.sharedui.uiElement.components.composable.ServerLoadImageView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -44,7 +45,9 @@ internal fun UserProfileSection(
     editBoxHeight: Float = dimen.dimen_2_5,
     editIconSize: Float = dimen.dimen_1_5,
     editIconTint: Color = theme.white,
-    modifier: Modifier = Modifier
+    urlLoad: String,
+    modifier: Modifier = Modifier,
+    imageUpdated: Boolean,
 ) {
 
     //create container here
@@ -79,17 +82,36 @@ internal fun UserProfileSection(
                 )
         ) {
 
-            //create image here
-            painter?.let {
-                LoadImageViewII(
-                    imageUri = it,
+            if (imageUpdated) {
+
+                //create image here
+                painter?.let {
+                    LoadImageViewII(
+                        imageUri = it,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(
+                                shape = CircleShape
+                            )
+                    )
+                }
+
+            }//end if
+
+            else {
+
+                ServerLoadImageView(
+                    theme = theme,
+                    dimen = dimen,
+                    imageUrl = urlLoad,
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(
                             shape = CircleShape
                         )
                 )
-            }
+
+            }//end else
 
         }//end Box
 

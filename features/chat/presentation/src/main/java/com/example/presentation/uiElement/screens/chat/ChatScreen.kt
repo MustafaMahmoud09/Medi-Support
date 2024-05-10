@@ -83,7 +83,6 @@ internal fun ChatScreen(
         },
         keyboardIsVisible = isKeyboardVisible,
         onClickOnOpenFileButton = {
-
             filesLauncher.launch("*/*")
         },
         onClickOnOpenCameraButton = {

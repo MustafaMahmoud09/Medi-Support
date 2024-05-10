@@ -177,8 +177,16 @@ dependencies {
     //room
     implementation(project(':features:room:presentation'))
 
-    //setting
+    //account setting
     implementation(project(':features:account-setting:presentation'))
+    implementation(project(':features:account-setting:domain:usecase-declarations'))
+    implementation(project(':features:account-setting:domain:usecase-execution'))
+    implementation(project(':features:account-setting:domain:repository-declarations'))
+    implementation(project(':features:account-setting:data:repository-execution'))
+    implementation(project(':features:account-setting:domain:mapper-declarations'))
+    implementation(project(':features:account-setting:mapper-execution'))
+    implementation(project(':features:account-setting:data:data-source:remote-data:requests'))
+
 
     //response wrapper
     implementation(project(":libraries:core:remote-database:response-wrapper"))

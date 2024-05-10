@@ -1,21 +1,19 @@
-package com.example.article.data.repository.execution.cacheHelperDeclarations
+package com.example.account.setting.data.repository.execution.cacheHelperDeclarations
 
-import com.example.article.domain.dto.declarations.articleById.IArticleResponseDto
-import com.example.article.domain.dto.declarations.articles.IArticlesResponseDto
+import com.example.account.setting.domain.dto.declarations.profileInfo.IProfileInfoResponseDto
 
-interface ICacheArticleRepositoryHelper {
+interface ICacheAccountRepositoryHelper {
 
-    suspend fun cachePageArticles(
-        articles: IArticlesResponseDto?,
-        pageSize: Int
-    ): Int
-
-
-    suspend fun cacheSingleArticle(article: IArticleResponseDto)
+    suspend fun cacheUserAccountInfo(
+        accountInfo: IProfileInfoResponseDto,
+        accessToken: String
+    )
 
 
-    suspend fun getLocalPageCount(
-        pageSize: Int
-    ): Int
+    suspend fun cacheUpdateAccountInfo(
+        lastName: String?,
+        firstName: String?,
+        accessToken: String
+    )
 
-}//end ICacheArticleRepositoryHelper
+}//end ICacheAccountRepositoryHelper

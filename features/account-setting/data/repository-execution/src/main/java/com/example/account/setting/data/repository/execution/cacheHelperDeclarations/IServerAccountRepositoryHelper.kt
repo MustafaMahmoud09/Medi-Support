@@ -1,15 +1,9 @@
-package com.example.article.data.repository.execution.cacheHelperDeclarations
+package com.example.account.setting.data.repository.execution.cacheHelperDeclarations
 
-interface IServerArticleRepositoryHelper {
+interface IServerAccountRepositoryHelper {
 
-    suspend fun getArticleByIdFromServer(
-        articleId: Long
+    suspend fun getAccountInfoServer(
+        accessToken: String
     )
 
-
-    suspend fun getPageArticlesFromServer(
-        page: Int,
-        pageSize: Int
-    ): Int
-
-}//end IServerArticleRepositoryHelper
+}//end IServerAccountRepositoryHelper

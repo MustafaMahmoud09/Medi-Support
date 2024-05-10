@@ -1,13 +1,12 @@
-package com.example.account.setting.data.source.remote.data.dto.execution.profileInfo
+package com.example.account.setting.domain.dto.declarations.profileInfo
 
 
-import com.google.gson.annotations.SerializedName
+interface IProfileInfoResponseDto {
 
-data class ProfileInfoResponseDto(
-    @SerializedName("data")
-    val `data`: ProfileInfoDto?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val `data`: IProfileInfoDto?
+
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end IProfileInfoResponseDto

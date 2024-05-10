@@ -20,26 +20,18 @@ class CalculateDifferentDaysUseCase : ICalculateDifferentDaysUseCase {
         val result = if (dayNumber.toInt() - 1 > ordinal) {
 
             if (LocalTime.now().second < reminderTime.second) {
-
                 dayNumber.toInt() - ordinal - 1
-
             } else {
-
                 dayNumber.toInt() - ordinal - 2
-
             }//end else
 
         }//end if
         else if (dayNumber.toInt() - 1 < ordinal) {
 
             if (LocalTime.now().second < reminderTime.second) {
-
                 6 - ordinal + dayNumber.toInt()
-
             } else {
-
                 6 - ordinal + dayNumber.toInt() - 1
-
             }//end else
 
         }//end else

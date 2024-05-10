@@ -49,6 +49,9 @@ dependencies {
     //domain model
     implementation(project(':features:account-setting:domain:domain-model'))
 
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 
@@ -68,6 +71,7 @@ dependencies {
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
 
     //material 3
     implementation "androidx.compose.material3:material3:$material3_versoin"

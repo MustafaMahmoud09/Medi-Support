@@ -58,6 +58,7 @@ internal fun CancelDialogSection(
     messageSize: Float = dimen.dimen_2,
     buttonTitle: String,
     onClick: () -> Unit,
+    load: Boolean = false,
     modifier: Modifier = Modifier
 ) {
 
@@ -211,6 +212,7 @@ internal fun CancelDialogSection(
                     theme = theme,
                     text = buttonTitle,
                     onClick = onClick,
+                    load = load,
                     modifier = Modifier
                         .constrainAs(buttonId) {
                             start.linkTo(

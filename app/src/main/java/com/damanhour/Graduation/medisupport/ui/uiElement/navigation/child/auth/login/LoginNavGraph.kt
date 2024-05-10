@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.login.forgotten.FORGOT_PASSWORD_NAV_GRAPH
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.auth.login.forgotten.forgotPasswordNavGraph
+import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bottom.BOTTOM_DESTINATION_ROUTE
 import com.example.auth.presentation.uiElement.screens.login.LOGIN_DESTINATION_ROUTE
 import com.example.auth.presentation.uiElement.screens.login.loginDestination
 import com.example.auth.presentation.uiElement.screens.welcome.WELCOME_DESTINATION_ROUTE
@@ -34,6 +35,27 @@ internal fun NavHostController.navigateToLoginNavGraphWithPopWelcomeDestination(
     }//end navigate
 
 }//end navigateToLoginNavGraphWithPopWelcomeDestination
+
+
+
+//function for add login nav graph to top root nav graph and pop welcome destination from back stack
+internal fun NavHostController.navigateToLoginNavGraphWithPopBottomDestination() {
+
+    //navigate to login nav graph
+    navigate(
+        route = LOGIN_NAV_GRAPH_ROUTE
+    ) {
+        //pop welcome destination from back stack
+        popUpTo(
+            route = BOTTOM_DESTINATION_ROUTE
+        ) {
+            inclusive = true
+        }//end popUpTo
+
+    }//end navigate
+
+}//end navigateToLoginNavGraphWithPopWelcomeDestination
+
 
 //function for add login nav graph to top root nav graph and pop forgot password nav graph from back stack
 internal fun NavHostController.navigateToLoginNavGraphWithPopForgotPasswordNavGraph() {

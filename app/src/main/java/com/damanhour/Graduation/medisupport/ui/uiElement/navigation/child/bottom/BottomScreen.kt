@@ -68,7 +68,8 @@ internal fun BottomScreen(
     navigateToHeartRateNavGraph: KFunction0<Unit>,
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToOfflineBookingDestination: (Int) -> Unit
+    navigateToOfflineBookingDestination: (Int) -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()
@@ -107,6 +108,7 @@ internal fun BottomScreen(
         navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
         navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
         navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
+        navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
     )
 
 }//end BottomScreen
@@ -141,7 +143,8 @@ private fun BottomContent(
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
-    uiState: BottomNavigationUiState
+    uiState: BottomNavigationUiState,
+    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
 ) {
 
     BaseScreen(
@@ -242,7 +245,8 @@ private fun BottomContent(
                     navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
                     navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
                     navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
-                    navigateToOfflineBookingDestination = navigateToOfflineBookingDestination
+                    navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
+                    navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
                 )
 
             }//end Box

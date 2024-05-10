@@ -1,19 +1,18 @@
-package com.example.account.setting.data.source.remote.data.dto.execution.profileInfo
+package com.example.account.setting.domain.dto.declarations.profileInfo
 
 
-import com.google.gson.annotations.SerializedName
+interface IProfileInfoDto {
 
-data class ProfileInfoDto(
-    @SerializedName("active_status")
-    val activeStatus: Int?,
-    @SerializedName("avatar")
-    val avatar: String?,
-    @SerializedName("email")
-    val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("last_name")
+    val activeStatus: Int?
+
+    val avatar: String?
+
+    val email: String?
+
+    val firstName: String?
+
+    val id: Int?
+
     val lastName: String?
-)
+
+}//end IProfileInfoDto

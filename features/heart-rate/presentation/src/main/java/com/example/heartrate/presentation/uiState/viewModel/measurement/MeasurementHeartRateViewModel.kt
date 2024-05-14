@@ -334,15 +334,6 @@ class MeasurementHeartRateViewModel @Inject constructor(
             //detect ppg region here
             val ppgRegionMask = matrixImage.onPPGRegionDetected()
 
-//            val imageResult = matToBitmap(ppgRegionMask)
-//
-//
-//            _state.update {
-//                it.copy(
-//                    imageResult = imageResult
-//                )
-//            }
-
             //if ppg region percentage greater than or equal 98 ,calculate heart rate
             if (reflectedLightSignalHelper.calculateMaskPercentage(ppgRegionMask) >= 98f) {
 
@@ -450,21 +441,28 @@ class MeasurementHeartRateViewModel @Inject constructor(
             //collect mean intensities state here
             state.value.meanIntensitiesForPPGRegion.collectLatest { intensities ->
 
-                //calculate peaks count
-                val peaksCount = detectHeartBeatHelper.calculatePeeks(
-                    list = intensities
-                )
+                try {
 
-                //change peaks count and heart rate rate value
-                _state.update {
-                    it.copy(
-                        peaksCount = peaksCount,
-                        heartRateResultValue = detectHeartBeatHelper.calculateHeartRate(
-                            beats = peaksCount,
-                            time = state.value.measurementTime
-                        )
+                    //calculate peaks count
+                    val peaksCount = detectHeartBeatHelper.calculatePeeks(
+                        list = intensities
                     )
-                }//end update
+
+                    //change peaks count and heart rate rate value
+                    _state.update {
+                        it.copy(
+                            peaksCount = peaksCount,
+                            heartRateResultValue = detectHeartBeatHelper.calculateHeartRate(
+                                beats = peaksCount,
+                                time = state.value.measurementTime
+                            )
+                        )
+                    }//end update
+
+                }//end try
+                catch (ex: Exception){
+                    ex.message?.let { Log.d("TAG", it) }
+                }
 
             }//end collectLatest
 
@@ -473,7 +471,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
     }//onHeartBeatsCalculated
 
     //functions for control on camera
-//function for define object from camera
+    //function for define object from camera
     fun onCameraObjectDefined(camera: Camera): CameraControl {
 
         //change camera state here
@@ -516,17 +514,5 @@ class MeasurementHeartRateViewModel @Inject constructor(
         super.onCleared()
         onCameraClosed()
     }//end onCleared
-
-
-//    // تحويل مصفوفة الصورة (Mat) إلى Bitmap
-//    private fun matToBitmap(mat: Mat): Bitmap {
-//        // إنشاء Bitmap فارغة لتخزين الصورة
-//        val bitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888)
-//
-//        // تحويل مصفوفة الصورة (Mat) إلى Bitmap
-//        Utils.matToBitmap(mat, bitmap)
-//
-//        return bitmap
-//    }
 
 }//end MeasurementHeartRateViewModel

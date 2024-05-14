@@ -8,6 +8,7 @@ data class ProfileUiState(
     val errorTypeMimeSelected: Boolean = false,
     val startRunning: Boolean = true,
     val imageUpdated: Boolean = false,
+    val imageUploaded: Boolean = false,
     val userName: String = "",
     val passwordValue: String = "",
     val passwordConfirmPassword: String = "",

@@ -88,7 +88,8 @@ class ProfileViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         imageUri = uri,
-                        imageUpdated = true
+                        imageUpdated = true,
+                        imageUploaded = true
                     )
                 }//end update
 
@@ -167,163 +168,142 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             if (
-                (state.value.lastNameValue.trim().isEmpty() ||
-                        state.value.lastNameValue.trim().length in 2..30) &&
-                (state.value.firstNameValue.trim().isEmpty() ||
-                        state.value.firstNameValue.trim().length in 2..20) &&
-                ((state.value.passwordValue.trim().isEmpty() &&
-                        state.value.passwordConfirmPassword.trim().isEmpty()) ||
-                        (state.value.passwordValue.trim() == state.value.passwordConfirmPassword.trim() &&
-                                state.value.passwordValue.trim().length in 6..30))
+                state.value.lastNameValue.trim().length in 2..30 ||
+                state.value.firstNameValue.trim().length in 2..20 ||
+                (state.value.passwordValue.trim() == state.value.passwordConfirmPassword.trim() &&
+                        state.value.passwordValue.trim().length in 6..30) ||
+                state.value.imageUploaded
             ) {
 
-                if (state.value.lastNameValue.trim().isNotEmpty() ||
-                    state.value.passwordValue.trim().isNotEmpty() ||
-                    state.value.firstNameValue.trim().isNotEmpty() ||
-                    state.value.imageUpdated
-                ) {
+                try {
 
-                    try {
+                    updateProfileInfoUseCase(
+                        firstName = state.value.firstNameValue.trim().ifEmpty { null },
+                        lastName = state.value.lastNameValue.trim().ifEmpty { null },
+                        password = state.value.passwordValue.trim().ifEmpty { null },
+                        imageUri = if (state.value.imageUploaded) state.value.imageUri else null
+                    ).collectLatest { status ->
 
-                        updateProfileInfoUseCase(
-                            firstName = state.value.firstNameValue.trim().ifEmpty { null },
-                            lastName = state.value.lastNameValue.trim().ifEmpty { null },
-                            password = state.value.passwordValue.trim().ifEmpty { null },
-                            imageUri = if (state.value.imageUpdated) state.value.imageUri else null
-                        ).collectLatest { status ->
+                        when (status) {
 
-                            when (status) {
+                            is Status.Success -> {
 
-                                is Status.Success -> {
+                                when (status.toData()?.statusCode) {
 
-                                    when (status.toData()?.statusCode) {
+                                    200 -> {
+                                        _state.update {
+                                            it.copy(
+                                                updateProfileEventStatus = state.value
+                                                    .updateProfileEventStatus.copy(
+                                                        success = true,
+                                                        loading = false
+                                                    ),
+                                                imageUploaded = false
+                                            )
+                                        }//end update
 
-                                        200 -> {
-                                            _state.update {
-                                                it.copy(
-                                                    updateProfileEventStatus = state.value
-                                                        .updateProfileEventStatus.copy(
-                                                            success = true,
-                                                            loading = false
-                                                        )
-                                                )
-                                            }//end update
+                                        delay(1000)
 
-                                            delay(1000)
+                                        _state.update {
+                                            it.copy(
+                                                updateProfileEventStatus = state.value
+                                                    .updateProfileEventStatus.copy(
+                                                        success = false,
+                                                        loading = false
+                                                    )
+                                            )
+                                        }//end update
 
-                                            _state.update {
-                                                it.copy(
-                                                    updateProfileEventStatus = state.value
-                                                        .updateProfileEventStatus.copy(
-                                                            success = false,
-                                                            loading = false
-                                                        )
-                                                )
-                                            }//end update
+                                    }//end success case
 
-                                        }//end success case
+                                    404, 500 -> {
+                                        _state.update {
+                                            it.copy(
+                                                updateProfileEventStatus = state.value
+                                                    .updateProfileEventStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        serverError = !state.value.updateProfileEventStatus.serverError
+                                                    )
+                                            )
+                                        }//end update
+                                    }//end error server case
 
-                                        404, 500 -> {
-                                            _state.update {
-                                                it.copy(
-                                                    updateProfileEventStatus = state.value
-                                                        .updateProfileEventStatus.copy(
-                                                            success = false,
-                                                            loading = false,
-                                                            serverError = !state.value.updateProfileEventStatus.serverError
-                                                        )
-                                                )
-                                            }//end update
-                                        }//end error server case
+                                }//end when
 
-                                    }//end when
+                            }//end success case
 
-                                }//end success case
+                            is Status.Loading -> {
 
-                                is Status.Loading -> {
+                                _state.update {
+                                    it.copy(
+                                        updateProfileEventStatus = state.value
+                                            .updateProfileEventStatus.copy(
+                                                success = false,
+                                                loading = true
+                                            )
+                                    )
+                                }//end update
 
-                                    _state.update {
-                                        it.copy(
-                                            updateProfileEventStatus = state.value
-                                                .updateProfileEventStatus.copy(
-                                                    success = false,
-                                                    loading = true
-                                                )
-                                        )
-                                    }//end update
+                            }//end loading case
 
-                                }//end loading case
+                            is Status.Error -> {
 
-                                is Status.Error -> {
+                                when (status.status) {
 
-                                    when (status.status) {
+                                    400 -> {
 
-                                        400 -> {
+                                        _state.update {
+                                            it.copy(
+                                                updateProfileEventStatus = state.value
+                                                    .updateProfileEventStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        internetError = !state.value.updateProfileEventStatus.internetError
+                                                    )
+                                            )
+                                        }//end update
 
-                                            _state.update {
-                                                it.copy(
-                                                    updateProfileEventStatus = state.value
-                                                        .updateProfileEventStatus.copy(
-                                                            success = false,
-                                                            loading = false,
-                                                            internetError = !state.value.updateProfileEventStatus.internetError
-                                                        )
-                                                )
-                                            }//end update
+                                    }//end internet error case
 
-                                        }//end internet error case
+                                    500 -> {
 
-                                        500 -> {
+                                        _state.update {
+                                            it.copy(
+                                                updateProfileEventStatus = state.value
+                                                    .updateProfileEventStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        serverError = !state.value.updateProfileEventStatus.serverError
+                                                    )
+                                            )
+                                        }//end update
 
-                                            _state.update {
-                                                it.copy(
-                                                    updateProfileEventStatus = state.value
-                                                        .updateProfileEventStatus.copy(
-                                                            success = false,
-                                                            loading = false,
-                                                            serverError = !state.value.updateProfileEventStatus.serverError
-                                                        )
-                                                )
-                                            }//end update
+                                    }//end server error case
 
-                                        }//end server error case
+                                }//end when
 
-                                    }//end when
+                            }//end error case
 
-                                }//end error case
+                        }//end when
 
-                            }//end when
+                    }//end collectLatest
 
-                        }//end collectLatest
+                }//end try
+                catch (ex: IOException) {
 
-                    }//end try
-                    catch (ex: IOException) {
-
-                        //failed connected with internet
-                        _state.update {
-                            it.copy(
-                                updateProfileEventStatus = state.value.updateProfileEventStatus.copy(
-                                    success = false,
-                                    loading = false,
-                                    internetError = !state.value.updateProfileEventStatus.internetError
-                                )
-                            )
-                        }//end update
-
-                    }//end catch
-
-                }//end if
-                else {
-
+                    //failed connected with internet
                     _state.update {
                         it.copy(
                             updateProfileEventStatus = state.value.updateProfileEventStatus.copy(
-                                dataError = !state.value.updateProfileEventStatus.dataNotFound
+                                success = false,
+                                loading = false,
+                                internetError = !state.value.updateProfileEventStatus.internetError
                             )
                         )
                     }//end update
 
-                }//end else
+                }//end catch
 
             }//end if
             else {

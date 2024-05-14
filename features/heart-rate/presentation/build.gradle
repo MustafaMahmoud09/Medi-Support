@@ -102,7 +102,6 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-
     //pagination
     implementation "androidx.paging:paging-runtime:$paging_version"
 
@@ -123,7 +122,6 @@ dependencies {
 
     implementation("androidx.camera:camera-view:$camerax_version")
     implementation("androidx.camera:camera-extensions:$camerax_version")
-
 
 
 }

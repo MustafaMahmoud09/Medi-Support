@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
@@ -215,6 +216,10 @@ class ReminderServiceViewModel @Inject constructor(
 
             //observe time now state here
             state.value.currentTimeState.collectLatest { currentTime ->
+
+                DayOfWeek.values().forEach { day->
+                    Log.d("TAG", "${day.value} ${day.name}")
+                }
 
                 Log.d("TAG_ordinal", state.value.currentNearestReminder.dayNumber.toString())
                 Log.d("TAG_current", LocalDate.now().dayOfWeek.value.toString())

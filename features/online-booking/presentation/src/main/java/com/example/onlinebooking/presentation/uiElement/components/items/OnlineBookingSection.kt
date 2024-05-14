@@ -166,7 +166,7 @@ internal fun OnlineBookingSection(
                 }
 
                 else -> {
-                    theme.green33A351
+                    theme.green8CFFAB
                 }
             },
             modifier = Modifier
@@ -211,7 +211,6 @@ internal fun OnlineBookingSection(
             )
 
         }//end if
-
 
     }//end ConstraintLayout
 

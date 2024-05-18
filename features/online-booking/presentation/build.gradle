@@ -92,4 +92,7 @@ dependencies {
     // optional - Jetpack Compose integration
     implementation "androidx.paging:paging-compose:$compose_paging_version"
 
+    //stripe payment
+    implementation "com.stripe:stripe-android:20.28.3"
+
 }

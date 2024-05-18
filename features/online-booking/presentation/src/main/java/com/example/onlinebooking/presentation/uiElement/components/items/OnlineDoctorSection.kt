@@ -2,13 +2,17 @@ package com.example.onlinebooking.presentation.uiElement.components.items
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -95,19 +99,10 @@ fun OnlineDoctorSection(
                     visible = placeHolderState,
                     color = placeHolderColor
                 )
-        ){
-            val (nameId,onlineIconId) = createRefs()
+        ) {
+            val (nameId, onlineIconId) = createRefs()
 
-            //create name text here
-            TextSemiBoldView(
-                theme = theme,
-                dimen = dimen,
-                text = onlineDoctor.name,
-                size = dimen.dimen_1_75,
-                fontColor = nameColor,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                textAlign = null,
+            Row(
                 modifier = Modifier
                     .constrainAs(nameId) {
                         start.linkTo(parent.start)
@@ -117,38 +112,56 @@ fun OnlineDoctorSection(
                             dimen.dimen_1_5.dp
                         )
                         width = Dimension.fillToConstraints
-                    }
-            )
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
 
-
-            //if doctor is online create online icon
-            if (onlineDoctor.active) {
-
-                //create online icon here
-                Spacer(
+                //create name text here
+                TextSemiBoldView(
+                    theme = theme,
+                    dimen = dimen,
+                    text = onlineDoctor.name,
+                    size = dimen.dimen_1_75,
+                    fontColor = nameColor,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    textAlign = null,
                     modifier = Modifier
-                        .constrainAs(onlineIconId) {
-                            top.linkTo(nameId.top)
-                            bottom.linkTo(nameId.bottom)
-                            start.linkTo(
-                                nameId.end,
-                                dimen.dimen_0_5.dp
-                            )
-                        }
-                        .size(
-                            size = onlineIconSize.dp
-                        )
-                        .clip(
-                            shape = onlineIconShape
-                        )
-                        .background(
-                            color = onlineIconColor
+                        .weight(
+                            0.85f,
+                            fill = false
                         )
                 )
 
-            }//end if
+                Spacer(
+                    modifier = Modifier
+                        .weight(0.05f)
+                )
 
-        }//end ConstraintLayout
+
+                //if doctor is online create online icon
+                if (onlineDoctor.active) {
+
+                    //create online icon here
+                    Spacer(
+                        modifier = Modifier
+                            .size(
+                                size = onlineIconSize.dp
+                            )
+                            .clip(
+                                shape = onlineIconShape
+                            )
+                            .background(
+                                color = onlineIconColor
+                            )
+                    )
+
+                }//end if
+
+            }//end ConstraintLayout
+
+        }//end Row
 
         //create location box here
         IconTextSection(
@@ -281,7 +294,7 @@ fun OnlineDoctorSection(
                     top.linkTo(buttonId.bottom)
                 }
                 .height(
-                    height = dimen.dimen_0_75.dp
+                    height = dimen.dimen_1_5.dp
                 )
         )
 

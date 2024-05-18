@@ -84,4 +84,27 @@ interface OnlineBookingDao {
         userId: Long
     )
 
+
+    //TODO:: FUNCTION FOR DELETE ONLINE BOOKING FROM LOCAL DATA BASE BY ID
+    @Query(
+        "DELETE FROM ${
+            OnlineBookingInfo.ONLINE_BOOKING_TABLE_NAME
+        } WHERE ${
+            OnlineBookingInfo.ID_COLUMN_NAME
+        } = :id"
+    )
+    suspend fun deleteOnlineBookingById(id: Long)
+
+
+    @Query(
+        "UPDATE ${
+            OnlineBookingInfo.ONLINE_BOOKING_TABLE_NAME
+        } SET ${
+            OnlineBookingInfo.BOOKING_STATUS_COLUMN_NAME
+        } = :status WHERE ${
+            OnlineBookingInfo.ID_COLUMN_NAME
+        } = :id"
+    )
+    suspend fun updateOnlineBookingStatusById(id: Long, status: Int)
+
 }//end OnlineBookingDao

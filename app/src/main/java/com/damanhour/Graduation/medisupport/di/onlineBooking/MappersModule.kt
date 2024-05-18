@@ -4,10 +4,12 @@ import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookin
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingEntityToOnlineBookingModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDtoToOnlineDoctorModelMapper
+import com.example.online.booking.domain.mapper.declarations.child.IPaymentDtoToPaymentModelMapper
 import com.example.online.booking.mapper.execution.OnlineBookingDtoToOnlineBookingEntityMapper
 import com.example.online.booking.mapper.execution.OnlineBookingEntityToOnlineBookingModelMapper
 import com.example.online.booking.mapper.execution.OnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
 import com.example.online.booking.mapper.execution.OnlineDoctorDtoToOnlineDoctorModelMapper
+import com.example.online.booking.mapper.execution.PaymentDtoToPaymentModelMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -57,5 +59,12 @@ object MappersModule {
     fun provideOnlineBookingDtoToOnlineBookingEntityMapper()
             : IOnlineBookingDtoToOnlineBookingEntityMapper =
         OnlineBookingDtoToOnlineBookingEntityMapper()
+
+
+    @Provides
+    @Singleton
+    fun providePaymentDtoToPaymentModelMapper()
+            : IPaymentDtoToPaymentModelMapper =
+        PaymentDtoToPaymentModelMapper()
 
 }//end MappersModule

@@ -3,16 +3,19 @@ package com.damanhour.Graduation.medisupport.di.onlineBooking
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineBookingEntityToOnlineBookingModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDetailsDtoToOnlineDoctorDetailsModelMapper
 import com.example.online.booking.domain.mapper.declarations.child.IOnlineDoctorDtoToOnlineDoctorModelMapper
+import com.example.online.booking.domain.mapper.declarations.child.IPaymentDtoToPaymentModelMapper
 import com.example.online.booking.domain.repository.declarations.IOnlineBookingRepository
 import com.example.online.booking.domain.usecase.declarations.IBookOnlineAppointmentUseCase
 import com.example.online.booking.domain.usecase.declarations.IGetOnlineDoctorDetailsByIdUseCase
 import com.example.online.booking.domain.usecase.declarations.IGetPageOnlineBookingsUseCase
+import com.example.online.booking.domain.usecase.declarations.IGetPaymentIntentSecretUseCase
 import com.example.online.booking.domain.usecase.declarations.IGetTopOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.declarations.IGetTotalOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.declarations.IRateOnlineDoctorUseCase
 import com.example.online.booking.domain.usecase.execution.BookOnlineAppointmentUseCase
 import com.example.online.booking.domain.usecase.execution.GetOnlineDoctorDetailsByIdUseCase
 import com.example.online.booking.domain.usecase.execution.GetPageOnlineBookingsUseCase
+import com.example.online.booking.domain.usecase.execution.GetPaymentIntentSecretUseCase
 import com.example.online.booking.domain.usecase.execution.GetTopOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.execution.GetTotalOnlineDoctorsUseCase
 import com.example.online.booking.domain.usecase.execution.RateOnlineDoctorUseCase
@@ -112,5 +115,19 @@ object UseCasesModule {
 
     }//end provideGetPageOnlineBookingsUseCase
 
+
+    @Provides
+    @Singleton
+    fun provideGetPaymentIntentSecretUseCase(
+        onlineBookingRepository: IOnlineBookingRepository,
+        paymentDtoToPaymentModelMapper: IPaymentDtoToPaymentModelMapper
+    ): IGetPaymentIntentSecretUseCase {
+
+        return GetPaymentIntentSecretUseCase(
+            onlineBookingRepository = onlineBookingRepository,
+            paymentDtoToPaymentModelMapper = paymentDtoToPaymentModelMapper
+        )
+
+    }//end provideGetPaymentIntentSecretUseCase
 
 }//end UseCasesModule

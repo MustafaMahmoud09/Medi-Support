@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.example.payment.presentation.uiElement.screens.payment.PAYMENT_DESTINATION_ROUTE
 import com.example.payment.presentation.uiElement.screens.payment.paymentDestination
+import com.example.room.presentation.uiElement.screens.room.ONLINE_ROOM_DESTINATION_ROUTE
 import com.example.room.presentation.uiElement.screens.room.onlineRoomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
@@ -43,17 +44,17 @@ internal fun NavGraphBuilder.onlineRoomNavGraph(
 
     navigation(
         route = ONLINE_ROOM_NAV_GRAPH_ROUTE,
-        startDestination = PAYMENT_DESTINATION_ROUTE,
+        startDestination = ONLINE_ROOM_DESTINATION_ROUTE,
         enterTransition = { enterTransitionZero() },
         popEnterTransition = { enterTransitionZero() },
         exitTransition = { exitTransition() },
         popExitTransition = { exitTransition() }
     ) {
 
-        paymentDestination(
-            popOnlineRoomGraph = popOnlineRoomGraph,
-            navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
-        )
+//        paymentDestination(
+//            popOnlineRoomGraph = popOnlineRoomGraph,
+//            navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
+//        )
 
         onlineRoomDestination()
 

@@ -261,7 +261,7 @@ fun OfflineDoctorSection(
                     top.linkTo(buttonId.bottom)
                 }
                 .height(
-                    height = dimen.dimen_0_75.dp
+                    height = dimen.dimen_1_5.dp
                 )
         )
 

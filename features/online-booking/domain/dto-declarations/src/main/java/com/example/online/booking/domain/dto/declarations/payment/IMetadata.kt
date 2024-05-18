@@ -1,13 +1,12 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.payment
+package com.example.online.booking.domain.dto.declarations.payment
 
 
-import com.google.gson.annotations.SerializedName
+interface IMetadata {
 
-data class Metadata(
-    @SerializedName("booking_id")
-    val bookingId: String?,
-    @SerializedName("doctor_id")
-    val doctorId: String?,
-    @SerializedName("user_id")
+    val bookingId: Long?
+
+    val doctorId: String?
+
     val userId: String?
-)
+
+}//end IMetadata

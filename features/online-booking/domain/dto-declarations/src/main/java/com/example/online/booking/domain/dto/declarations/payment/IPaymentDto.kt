@@ -1,15 +1,14 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.payment
+package com.example.online.booking.domain.dto.declarations.payment
 
 
-import com.google.gson.annotations.SerializedName
+interface IPaymentDto {
 
-data class PaymentDto(
-    @SerializedName("client_secret")
-    val clientSecret: String?,
-    @SerializedName("customer")
-    val customer: String?,
-    @SerializedName("id")
-    val id: String?,
-    @SerializedName("metadata")
-    val metadata: Metadata?
-)
+    val clientSecret: String?
+
+    val customer: String?
+
+    val id: String?
+
+    val metadata: IMetadata?
+
+}//end PaymentDto

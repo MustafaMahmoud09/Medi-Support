@@ -193,4 +193,5 @@
     <string name="you_already_have_a_booking_with">You already have a booking with</string>
     <string name="please_use_png_or_jpeg_or_jpg_image_formats">Please use PNG or JPEG or JPG image formats</string>
     <string name="log_out_of_your_account">Log out of your account?</string>
+    <string name="complected">Complected</string>
 </resources>

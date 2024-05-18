@@ -2,6 +2,7 @@ package com.example.online.booking.data.source.remote.data.requests
 
 import com.example.online.booking.data.source.remote.data.dto.execution.bookingDetails.BookingDetailsResponseDto
 import com.example.online.booking.data.source.remote.data.dto.execution.doctorDetails.OnlineDoctorDetailsResponseDto
+import com.example.online.booking.data.source.remote.data.dto.execution.payment.PaymentResponseDto
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -39,5 +40,13 @@ interface OnlineBookingRequest {
         @Query("page") page: Int
     ): Response<BookingDetailsResponseDto>
 
+
+    /**
+     * function for make request on server for provide intent secret for payment
+     **/
+    @POST("user/online-booking/payment/{id}")
+    suspend fun getPaymentIntentSecret(
+        @Path("id") id: Long
+    ): Response<PaymentResponseDto>
 
 }//end OnlineBookingRequest

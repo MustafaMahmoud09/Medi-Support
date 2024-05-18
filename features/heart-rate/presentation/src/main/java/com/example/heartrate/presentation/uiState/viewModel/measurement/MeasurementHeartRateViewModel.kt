@@ -250,7 +250,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
 
                         //if measurement stopped to one second
                         //destroy heart rate measurement
-                        if (checkMeasurementStopped == 10) {
+                        if (checkMeasurementStopped == 5) {
                             onHeartRateMeasurementStopped()
                         }//end if
 
@@ -390,18 +390,16 @@ class MeasurementHeartRateViewModel @Inject constructor(
 
     //function for execute image processing on image
     private fun Mat.onImageProcessingExecuted(): Mat {
-
-        //for apply median blur
-        var matrixImage = imageProcessingHelper.applyMedianBlur(
-            inputMat = this
-        )
+//
+//        //for apply median blur
+//        var matrixImage = imageProcessingHelper.applyMedianBlur(
+//            inputMat = this
+//        )
 
         //for apply gaussian blur
-        matrixImage = imageProcessingHelper.applyGaussianBlur(
-            inputMat = matrixImage
+        return imageProcessingHelper.applyGaussianBlur(
+            inputMat = this
         )
-
-        return matrixImage
 
     }//end onImageProcessingExecuted
 
@@ -460,7 +458,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
                     }//end update
 
                 }//end try
-                catch (ex: Exception){
+                catch (ex: Exception) {
                     ex.message?.let { Log.d("TAG", it) }
                 }
 

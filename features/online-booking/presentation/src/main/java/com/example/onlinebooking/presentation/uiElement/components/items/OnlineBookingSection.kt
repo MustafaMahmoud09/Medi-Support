@@ -43,7 +43,7 @@ internal fun OnlineBookingSection(
     ),
     videoCallSize: Float = dimen.dimen_2_5,
     videoCallTint: Color = theme.greenLight,
-    onClickOnVideoCallButton: () -> Unit,
+    onClickOnVideoCallButton: (Long) -> Unit,
     onlineBooking: OnlineBookingModel,
     placeHolderState: Boolean = false,
     placeHolderColor: Color = theme.grayLight,
@@ -136,7 +136,7 @@ internal fun OnlineBookingSection(
                 }
 
                 2 -> {
-                    stringResource(R.string.reject)
+                    stringResource(R.string.complected)
                 }
 
                 else -> {
@@ -149,7 +149,7 @@ internal fun OnlineBookingSection(
                 }
 
                 2 -> {
-                    theme.redDark
+                    theme.green33A351
                 }
 
                 else -> {
@@ -162,7 +162,7 @@ internal fun OnlineBookingSection(
                 }
 
                 2 -> {
-                    theme.redFF9696
+                    theme.green8CFFAB
                 }
 
                 else -> {
@@ -185,13 +185,15 @@ internal fun OnlineBookingSection(
                 )
         )
 
-        if (onlineBooking.bookingStatus == 1) {
+        if (onlineBooking.bookingStatus in 1..2) {
 
             //create video call button here
             IconButtonView(
                 dimen = dimen,
                 theme = theme,
-                onClick = onClickOnVideoCallButton,
+                onClick = {
+                    onClickOnVideoCallButton(onlineBooking.id)
+                },
                 size = videoCallSize,
                 icon = videoCallIcon,
                 tint = videoCallTint,

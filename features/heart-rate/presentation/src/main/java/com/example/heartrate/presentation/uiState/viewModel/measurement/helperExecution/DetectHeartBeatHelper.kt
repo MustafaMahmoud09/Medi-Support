@@ -1,5 +1,6 @@
 package com.example.heartrate.presentation.uiState.viewModel.measurement.helperExecution
 
+import android.util.Log
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IDetectHeartBeatHelper
 import org.opencv.core.Scalar
 import java.util.LinkedList
@@ -10,34 +11,47 @@ class DetectHeartBeatHelper : IDetectHeartBeatHelper {
     override fun calculatePeeks(list: List<Scalar>): Int {
 
         if (list.size >= 3) {
+//
+//            val countItem = 12
 
             val signals = list.map { signal ->
-                signal.`val`[2]
+                signal.`val`[0]
             }
 
             val signalsScale = scaleSignals(
                 signals = signals
             )
 
-            val meanSignals = getMeanSignals(
-                signals = signalsScale
-            )
+//            val meanSignals = getMeanSignals(
+//                signals = signalsScale,
+//                countItem = countItem
+//            )
+
+            Log.d("TAG_SCALE", signalsScale.toString())
+//            Log.d("TAG_MEAN", meanSignals.toString())
 
             var peeks = 0
-            val thresholdMean = 0.000235
-            val thresholdAboutItem = 0.000335
+//            val thresholdMean = 0.001
+            val thresholdAboutItem = 0.0005
+
+            val result = LinkedList<Int>()
 
             for (count in 1 until signalsScale.size - 1) {
 
                 if (
-                    signalsScale[count] > meanSignals[count / 15] + thresholdMean &&
-                    signalsScale[count] > signalsScale[count - 1] + thresholdAboutItem &&
-                    signalsScale[count] > signalsScale[count + 1] + thresholdAboutItem
+//                    signalsScale[count] > meanSignals[count / countItem] + thresholdMean &&
+                    (signalsScale[count] > signalsScale[count - 1] + thresholdAboutItem &&
+                            signalsScale[count] <= signalsScale[count - 1] * 1.5) &&
+                    (signalsScale[count] > signalsScale[count + 1] + thresholdAboutItem &&
+                            signalsScale[count] <= signalsScale[count + 1] * 1.5)
                 ) {
                     peeks += 1
+                    result.add(count)
                 }//end if
 
             }//end count
+
+            Log.d("TAG_PEEKS", result.toString())
 
             return peeks
 
@@ -65,7 +79,10 @@ class DetectHeartBeatHelper : IDetectHeartBeatHelper {
     }//end scaleSignals
 
     //function for get mean for each 15 signals
-    private fun getMeanSignals(signals: List<Double>): List<Double> {
+    private fun getMeanSignals(
+        signals: List<Double>,
+        countItem: Int = 15
+    ): List<Double> {
 
         val result = LinkedList<Double>()
 
@@ -77,7 +94,7 @@ class DetectHeartBeatHelper : IDetectHeartBeatHelper {
             countSignals += 1
             resultFor15Signals += signals[count]
 
-            if (countSignals == 15 || count == signals.size - 1) {
+            if (countSignals == countItem || count == signals.size - 1) {
                 result.add(resultFor15Signals / countSignals)
                 countSignals = 0
                 resultFor15Signals = (0).toDouble()

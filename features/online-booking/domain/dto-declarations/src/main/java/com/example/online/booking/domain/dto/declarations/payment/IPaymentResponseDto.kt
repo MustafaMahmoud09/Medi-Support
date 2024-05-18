@@ -1,9 +1,8 @@
-package com.example.online.booking.data.source.remote.data.dto.execution.payment
+package com.example.online.booking.domain.dto.declarations.payment
 
 
-import com.google.gson.annotations.SerializedName
+interface IPaymentResponseDto {
 
-data class PaymentResponseDto(
-    @SerializedName("response")
-    val response: PaymentDto?
-)
+    val response: IPaymentDto?
+
+}//end IPaymentResponseDto

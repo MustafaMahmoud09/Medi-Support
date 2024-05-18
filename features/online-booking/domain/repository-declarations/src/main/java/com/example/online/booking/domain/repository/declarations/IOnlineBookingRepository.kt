@@ -5,6 +5,7 @@ import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.core.remote.data.response.status.UnEffectResponse
 import com.example.online.booking.domain.dto.declarations.doctorDetails.IOnlineDoctorDetailsResponseDto
 import com.example.online.booking.domain.dto.declarations.pageOnlineDoctor.IPageOnlineDoctorResponseDto
+import com.example.online.booking.domain.dto.declarations.payment.IPaymentResponseDto
 import com.example.online.booking.domain.dto.declarations.topOnlineDoctors.ITopOnlineDoctorResponseDto
 import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
 import kotlinx.coroutines.flow.Flow
@@ -43,5 +44,9 @@ interface IOnlineBookingRepository {
         pageSize: Int
     ): UnEffectResponse<List<IOnlineBookingEntity>>
 
+
+    suspend fun getPaymentIntent(
+        bookingId: Long
+    ): Flow<Status<EffectResponse<IPaymentResponseDto>>>
 
 }//end IOfflineBookingRepository

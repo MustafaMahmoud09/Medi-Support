@@ -63,6 +63,7 @@ dependencies {
 
     //accompanist
     implementation "com.google.accompanist:accompanist-navigation-animation:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
 
     //material 3
     implementation "androidx.compose.material3:material3:$material3_versoin"
@@ -72,5 +73,8 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_compose_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // The Video library resides on Maven Central
+    implementation 'com.twilio:video-android:7.5.1'
 
 }

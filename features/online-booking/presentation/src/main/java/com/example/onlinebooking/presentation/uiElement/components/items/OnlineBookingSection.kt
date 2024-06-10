@@ -1,8 +1,13 @@
 package com.example.onlinebooking.presentation.uiElement.components.items
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -47,6 +52,8 @@ internal fun OnlineBookingSection(
     onlineBooking: OnlineBookingModel,
     placeHolderState: Boolean = false,
     placeHolderColor: Color = theme.grayLight,
+    itemIdLoad: Long = 0,
+    loadState: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
 
@@ -63,7 +70,7 @@ internal fun OnlineBookingSection(
             )
     ) {
         //create ids for components here
-        val (doctorNameId, messageId, statusId, videoCallId) = createRefs()
+        val (doctorNameId, messageId, statusId, videoCallId, loadBar) = createRefs()
 
         //create guides here
         val guideFromStart67P = createGuidelineFromStart(0.65f)
@@ -211,6 +218,40 @@ internal fun OnlineBookingSection(
                         color = placeHolderColor
                     )
             )
+
+        }//end if
+
+        if (
+            loadState &&
+            itemIdLoad == onlineBooking.id
+        ) {
+
+            Box(
+                modifier = Modifier
+                    .constrainAs(loadBar) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.fillToConstraints
+                    }.background(
+                        color = theme.transparent
+                    ),//end constrainAs
+                contentAlignment = Alignment.Center
+            ) {
+
+                CircularProgressIndicator(
+                    color = theme.grayLight,
+                    trackColor = theme.background,
+                    strokeWidth = (dimen.dimen_0_25 + dimen.dimen_0_125).dp,
+                    modifier = Modifier
+                        .size(
+                            size = dimen.dimen_3.dp
+                        )
+                )
+
+            }//end Box
 
         }//end if
 

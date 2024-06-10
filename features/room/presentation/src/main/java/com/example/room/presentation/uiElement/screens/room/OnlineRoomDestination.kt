@@ -33,7 +33,20 @@ fun NavHostController.navigateToOnlineRoomDestination(
 
 }//end navigateToOnlineRoomDestination
 
-fun NavGraphBuilder.onlineRoomDestination() {
+//function for navigate to online room destination
+fun NavHostController.popOnlineRoomDestination(
+    poppedDestination: String
+) {
+
+    //execute navigate to online room destination here
+   popBackStack(
+       route = ONLINE_ROOM_DESTINATION_ROUTE,
+       inclusive = true
+   )
+
+}//end navigateToOnlineRoomDestination
+
+fun NavGraphBuilder.onlineRoomDestination(popOnlineRoomGraph: () -> Unit) {
 
     composable(
         route = ONLINE_ROOM_DESTINATION_ROUTE,
@@ -43,7 +56,9 @@ fun NavGraphBuilder.onlineRoomDestination() {
         popExitTransition = { exitTransition() }
     ) {
 
-        OnlineRoomScreen()
+        OnlineRoomScreen(
+            popOnlineRoomGraph = popOnlineRoomGraph
+        )
 
     }//end composable
 

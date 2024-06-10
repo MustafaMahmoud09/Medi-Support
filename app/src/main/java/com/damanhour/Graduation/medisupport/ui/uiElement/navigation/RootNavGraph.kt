@@ -81,6 +81,7 @@ import com.example.heartrate.presentation.uiElement.screens.statistics.popStatis
 import com.example.onlinebooking.presentation.uiElement.screens.booking.navigateToOnlineBookingDestination
 import com.example.onlinebooking.presentation.uiElement.screens.booking.popOnlineBookingDestination
 import com.example.room.presentation.uiElement.screens.room.navigateToOnlineRoomDestination
+import com.example.room.presentation.uiElement.screens.room.popOnlineRoomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.example.sharedui.uiElement.screen.BaseScreen
@@ -172,7 +173,7 @@ fun RootNavGraph(
                             poppedDestination = PAYMENT_DESTINATION_ROUTE
                         )
 
-                    }//end scope
+                    }
                 )
 
 

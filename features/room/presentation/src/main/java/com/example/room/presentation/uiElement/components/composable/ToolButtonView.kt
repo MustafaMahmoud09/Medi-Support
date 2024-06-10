@@ -68,7 +68,8 @@ internal fun ToolButtonView(
         BasicIconView(
             painter = icon,
             color = iconTint,
-            size = iconSize
+            size = iconSize,
+            onClick = onClick
         )
 
     }//end Box

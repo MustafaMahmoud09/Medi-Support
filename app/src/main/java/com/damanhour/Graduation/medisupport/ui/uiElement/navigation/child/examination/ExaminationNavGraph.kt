@@ -32,7 +32,7 @@ internal fun NavGraphBuilder.examinationNavGraph(
     popOnlineRoomGraph: () -> Unit,
     navigateToOnlineRoomDestination: () -> Unit,
     popOnlineBookingNavGraph: KFunction0<Unit>,
-    navigateToBookingDetailsDestinationWithPopOnlineBookingDestination: KFunction1<Int, Unit>
+    navigateToBookingDetailsDestinationWithPopOnlineBookingDestination: KFunction1<Int, Unit>,
 ) {
 
     navigation(

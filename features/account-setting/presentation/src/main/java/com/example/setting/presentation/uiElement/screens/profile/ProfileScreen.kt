@@ -75,7 +75,7 @@ internal fun ProfileScreen(
                 )
             )
         } else {
-            TODO("VERSION.SDK_INT < TIRAMISU")
+            null
         }
 
 
@@ -89,7 +89,7 @@ internal fun ProfileScreen(
                 )
             )
         } else {
-            TODO("VERSION.SDK_INT < UPSIDE_DOWN_CAKE")
+            null
         }
 
     val startRunning = remember {
@@ -122,13 +122,13 @@ internal fun ProfileScreen(
         onLastNameChanged = viewModel::onLastNameChanged,
         onClickOnProfileEditButton =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            if (android34MediaPermissionState.allPermissionsGranted) {
+            if (android34MediaPermissionState!!.allPermissionsGranted) {
                 { galleryLauncher.launch("image/*") }
             } else {
                 { android34MediaPermissionState.launchMultiplePermissionRequest() }
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (android33MediaPermissionState.allPermissionsGranted) {
+            if (android33MediaPermissionState!!.allPermissionsGranted) {
                 { galleryLauncher.launch("image/*") }
             } else {
                 { android33MediaPermissionState.launchMultiplePermissionRequest() }

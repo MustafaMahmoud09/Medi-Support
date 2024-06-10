@@ -67,7 +67,11 @@ fun OnlineDetailsScreen(
     OnlineDetailsContent(
         dimen = dimen,
         theme = theme,
-        onClickOnVideoCallButton = viewModel::onGetPaymentIntentSecret,
+        onClickOnVideoCallButton = { id ->
+            if (!state.value.getPaymentIntentSecretStatus.loading) {
+                viewModel.onGetPaymentIntentSecret(id)
+            }//end if
+        },
         uiState = state.value,
         totalOnlineBookingStatus = state.value.totalOnlineBookingStatus?.collectAsLazyPagingItems(),
         cacheTotalOnlineBookingStatus = state.value.cacheTotalOnlineBookingStatus?.collectAsLazyPagingItems(),
@@ -78,14 +82,18 @@ fun OnlineDetailsScreen(
         key1 = state.value.getPaymentIntentSecretStatus.success
     ) {
 
-        if (state.value.getPaymentIntentSecretStatus.success) {
+        if (!startRunning.value) {
 
-            paymentSheet.presentWithPaymentIntent(
-                paymentIntentClientSecret = state.value.getPaymentIntentSecretStatus.paymentModel.paymentIntent,
-                configuration = PaymentSheet.Configuration.Builder(
-                    merchantDisplayName = "Online Booking"
-                ).build()
-            )
+            if (state.value.getPaymentIntentSecretStatus.success) {
+
+                paymentSheet.presentWithPaymentIntent(
+                    paymentIntentClientSecret = state.value.getPaymentIntentSecretStatus.paymentModel.paymentIntent,
+                    configuration = PaymentSheet.Configuration.Builder(
+                        merchantDisplayName = "Online Booking"
+                    ).build()
+                )
+
+            }//end if
 
         }//end if
 
@@ -145,7 +153,7 @@ fun OnlineDetailsScreen(
 private fun OnlineDetailsContent(
     dimen: CustomDimen,
     theme: CustomTheme,
-    onClickOnVideoCallButton: KFunction1<Long, Unit>,
+    onClickOnVideoCallButton: (Long) -> Unit,
     uiState: OnlineDetailsUiState,
     totalOnlineBookingStatus: LazyPagingItems<OnlineBookingModel>?,
     cacheTotalOnlineBookingStatus: LazyPagingItems<OnlineBookingModel>?,
@@ -266,10 +274,12 @@ private fun OnlineDetailsContent(
                                     R.string.now_you_can_make_video_call_with_the_doctor
                                 ),
                                 onlineBooking = booking,
+                                itemIdLoad = uiState.getPaymentIntentSecretStatus.bookingId,
+                                loadState = uiState.getPaymentIntentSecretStatus.loading,
                                 modifier = Modifier
                                     .fillMaxWidth()
                             )
-                        }
+                        }//end item
 
                     }//end items
 

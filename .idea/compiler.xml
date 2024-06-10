@@ -385,10 +385,31 @@
       <module name="MediSupport.features.reminder.mapper.test" target="17" />
       <module name="MediSupport.features.reminder.paginations" target="17" />
       <module name="MediSupport.features.reminder.presentation" target="17" />
+      <module name="MediSupport.features.room.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.room.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.room.data.repository" target="17" />
+      <module name="MediSupport.features.room.data.repository-execution" target="17" />
+      <module name="MediSupport.features.room.domain.domain-model" target="17" />
+      <module name="MediSupport.features.room.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.room.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.room.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.room.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.room.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.room.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.room.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.room.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.room.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.room.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.room.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.room.domain.use-case" target="17" />
       <module name="MediSupport.features.room.domain.use-case.main" target="17" />
       <module name="MediSupport.features.room.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.room.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.room.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.room.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.room.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.room.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.room.domain.usecase-execution.test" target="17" />
       <module name="MediSupport.features.room.presentation" target="17" />
       <module name="MediSupport.features.setting.domain.use-case.main" target="17" />
       <module name="MediSupport.features.setting.domain.use-case.test" target="17" />

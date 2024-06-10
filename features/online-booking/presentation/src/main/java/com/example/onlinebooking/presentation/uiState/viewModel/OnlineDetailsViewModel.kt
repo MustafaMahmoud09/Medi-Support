@@ -92,7 +92,9 @@ class OnlineDetailsViewModel @Inject constructor(
                     )
                 }//end update
 
-                onUpdateOnlineBookingPaymentStatus()
+                onUpdateOnlineBookingPaymentStatus(
+                    newStatus = 2
+                )
 
             }//end Completed status
 
@@ -114,7 +116,7 @@ class OnlineDetailsViewModel @Inject constructor(
 
 
     //function for update online booking selected to 2 status
-    private fun onUpdateOnlineBookingPaymentStatus() {
+    private fun onUpdateOnlineBookingPaymentStatus(newStatus: Int) {
 
         _state.update {
             it.copy(
@@ -127,9 +129,9 @@ class OnlineDetailsViewModel @Inject constructor(
             //map reminders here
             onlineBookings.map { booking ->
 
-                if (booking.id == 1L) {
+                if (booking.id == state.value.getPaymentIntentSecretStatus.bookingId) {
                     booking.copy(
-                        bookingStatus = 0
+                        bookingStatus = newStatus
                     )
                 }//end if
 
@@ -234,7 +236,9 @@ class OnlineDetailsViewModel @Inject constructor(
                                         )
                                     }//end update
 
-                                    onUpdateOnlineBookingPaymentStatus()
+                                    onUpdateOnlineBookingPaymentStatus(
+                                        newStatus = 2
+                                    )
 
                                 }//end appointment not valid case
 

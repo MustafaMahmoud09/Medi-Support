@@ -5,8 +5,6 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.exami
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.payment.presentation.uiElement.screens.payment.PAYMENT_DESTINATION_ROUTE
-import com.example.payment.presentation.uiElement.screens.payment.paymentDestination
 import com.example.room.presentation.uiElement.screens.room.ONLINE_ROOM_DESTINATION_ROUTE
 import com.example.room.presentation.uiElement.screens.room.onlineRoomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
@@ -56,7 +54,9 @@ internal fun NavGraphBuilder.onlineRoomNavGraph(
 //            navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
 //        )
 
-        onlineRoomDestination()
+        onlineRoomDestination(
+            popOnlineRoomGraph = popOnlineRoomGraph
+        )
 
     }//end navigation
 

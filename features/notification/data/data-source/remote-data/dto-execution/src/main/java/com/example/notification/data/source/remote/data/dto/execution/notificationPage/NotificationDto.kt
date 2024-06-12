@@ -1,13 +1,14 @@
 package com.example.notification.data.source.remote.data.dto.execution.notificationPage
 
 
+import com.example.notification.domain.dto.declarations.notificationPage.INotificationDto
 import com.google.gson.annotations.SerializedName
 
-data class DataX(
+data class NotificationDto(
     @SerializedName("id")
-    val id: String?,
+    override val id: String?,
     @SerializedName("message")
-    val message: String?,
+    override val message: String?,
     @SerializedName("read_at")
-    val readAt: String?
-)
+    override val readAt: String?
+): INotificationDto

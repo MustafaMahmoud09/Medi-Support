@@ -131,6 +131,13 @@ dependencies {
 
     //notification
     implementation(project(':features:notification:presentation'))
+    implementation(project(':features:notification:domain:usecase-declarations'))
+    implementation(project(':features:notification:domain:usecase-execution'))
+    implementation(project(':features:notification:domain:repository-declarations'))
+    implementation(project(':features:notification:data:repository-execution'))
+    implementation(project(':features:notification:domain:mapper-declarations'))
+    implementation(project(':features:notification:mapper-execution'))
+    implementation(project(':features:notification:data:data-source:remote-data:requests'))
 
     //heart rate
     implementation(project(':features:heart-rate:presentation'))

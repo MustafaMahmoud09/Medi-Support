@@ -1,8 +1,9 @@
-package com.example.blood.sugar.domain.mapper.declarations.child
+package com.example.notification.domain.mapper.declarations.child
 
-import com.example.bmi.domain.dto.declarations.IBMIDto
-import com.example.bmi.domain.entity.declarations.IBMIEntity
-import com.example.bmi.domain.mapper.declarations.IListMapper
+import com.example.notification.domain.dto.declarations.notificationPage.INotificationDto
+import com.example.notification.domain.mapper.declarations.IListMapper
+import com.example.notification.domain.model.NotificationModel
 
-interface IBMIDtoToBMIEntityMapper
-    : IListMapper<IBMIDto, IBMIEntity>
+
+interface INotificationDtoToNotificationModelMapper
+    : IListMapper<INotificationDto, NotificationModel>

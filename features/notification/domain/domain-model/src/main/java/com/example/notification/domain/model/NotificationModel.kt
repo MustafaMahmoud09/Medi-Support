@@ -1,4 +1,7 @@
 package com.example.notification.domain.model
 
-class MyClass {
-}
+data class NotificationModel(
+    val id: String,
+    val notification: String,
+    val read: Boolean
+)

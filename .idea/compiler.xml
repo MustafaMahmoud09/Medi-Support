@@ -260,6 +260,29 @@
       <module name="MediSupport.features.heart-rate.mapper-execution.test" target="17" />
       <module name="MediSupport.features.heart-rate.paginations" target="17" />
       <module name="MediSupport.features.heart-rate.presentation" target="17" />
+      <module name="MediSupport.features.notification.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.notification.data.data-source.remote-data.requests" target="17" />
+      <module name="MediSupport.features.notification.data.repository-execution" target="17" />
+      <module name="MediSupport.features.notification.domain.domain-model" target="17" />
+      <module name="MediSupport.features.notification.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.notification.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.notification.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.notification.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.notification.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.notification.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.notification.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.notification.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.notification.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.notification.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.notification.domain.repository-declarations.test" target="17" />
+      <module name="MediSupport.features.notification.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.notification.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.notification.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.notification.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.notification.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.notification.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.notification.mapper-execution" target="17" />
+      <module name="MediSupport.features.notification.pagination" target="17" />
       <module name="MediSupport.features.notification.presentation" target="17" />
       <module name="MediSupport.features.offline-booking.data.data-source.local-data.data-access-object" target="17" />
       <module name="MediSupport.features.offline-booking.data.data-source.local-data.entity-execution" target="17" />

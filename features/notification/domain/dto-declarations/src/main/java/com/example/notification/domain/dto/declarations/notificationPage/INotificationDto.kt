@@ -1,13 +1,13 @@
-package com.example.notification.data.source.remote.data.dto.execution.notificationPage
+package com.example.notification.domain.dto.declarations.notificationPage
 
 
-import com.google.gson.annotations.SerializedName
 
-data class NotificationDto(
-    @SerializedName("id")
-    val id: String?,
-    @SerializedName("message")
-    val message: String?,
-    @SerializedName("read_at")
+interface INotificationDto {
+
+    val id: String?
+
+    val message: String?
+
     val readAt: String?
-)
+
+}//end INotificationDto

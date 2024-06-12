@@ -26,7 +26,7 @@ internal fun CheckBoxView(
     dimen: CustomDimen,
     theme: CustomTheme,
     checked: Boolean,
-    onChanged: (Boolean) -> Unit,
+    onChanged: () -> Unit,
     size: Float,
     color: Color = theme.redDark,
     borderWidth: Float = dimen.dimen_0_125,
@@ -49,7 +49,7 @@ internal fun CheckBoxView(
                 all = dimen.dimen_0_125.dp
             )
             .clickableWithoutHover {
-                onChanged(!checked)
+                onChanged()
             }
     ) {
 

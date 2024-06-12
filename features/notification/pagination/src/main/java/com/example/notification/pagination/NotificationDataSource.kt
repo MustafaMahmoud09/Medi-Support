@@ -1,17 +1,17 @@
-package com.example.online.booking.pagination
+package com.example.notification.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.online.booking.domain.model.OnlineDoctorModel
-import com.example.online.booking.domain.usecase.declarations.IGetTotalOnlineDoctorsUseCase
+import com.example.notification.domain.model.NotificationModel
+import com.example.notification.domain.usecase.declarations.IGetPageNotificationsUseCase
 
-class TotalOnlineDoctorDataSource(
-    private val getTotalOnlineDoctorsUseCase: IGetTotalOnlineDoctorsUseCase,
-) : PagingSource<Int, OnlineDoctorModel>() {
+class NotificationDataSource(
+    private val getPageNotificationsUseCase: IGetPageNotificationsUseCase,
+) : PagingSource<Int, NotificationModel>() {
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, OnlineDoctorModel> {
+    ): LoadResult<Int, NotificationModel> {
 
         return try {
 
@@ -22,7 +22,7 @@ class TotalOnlineDoctorDataSource(
             val pageSize = params.loadSize
 
             //get current page data here
-            val data = getTotalOnlineDoctorsUseCase(
+            val data = getPageNotificationsUseCase(
                 page = currentPageNumber
             )
 
@@ -46,7 +46,7 @@ class TotalOnlineDoctorDataSource(
     }//end load
 
     override fun getRefreshKey(
-        state: PagingState<Int, OnlineDoctorModel>
+        state: PagingState<Int, NotificationModel>
     ): Int? = state.anchorPosition
 
 }//end RemindersDataSource

@@ -27,7 +27,7 @@ internal fun ReadNotificationsSection(
     checkBoxBorderWidth: Float = dimen.dimen_0_125,
     checkBoxBorderShape: Shape = RectangleShape,
     checkBoxState: Boolean,
-    onCheckBoxChanged: (Boolean) -> Unit,
+    onCheckBoxChanged: () -> Unit,
     modifier: Modifier = Modifier
 ){
 

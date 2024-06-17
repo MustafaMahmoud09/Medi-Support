@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -65,7 +64,6 @@ internal fun InputFieldSection(
     keyboardType: KeyboardType = KeyboardType.Text,
     backgroundOnFocus: Color = theme.background,
     backgroundOnNotFocus: Color = theme.grayLightF2F2F2,
-    onClickOnOperation: () -> Unit = {},
     numberField: Int,
     modifier: Modifier = Modifier,
     numberFieldIsFocusNow: Int,
@@ -144,7 +142,7 @@ internal fun InputFieldSection(
                                 dimen.dimen_0_75.dp
                             )
                             .clickableWithoutHover {
-                                onClickOnOperation()
+
                             }
                     )
 
@@ -170,7 +168,7 @@ internal fun InputFieldSection(
                                 dimen.dimen_0_75.dp
                             )
                             .clickableWithoutHover {
-                                onClickOnOperation()
+
                             }
                     )
 

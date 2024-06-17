@@ -35,14 +35,13 @@ import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.rememberPaymentSheet
 import kotlinx.coroutines.delay
-import kotlin.reflect.KFunction1
 
 @Composable
 fun OnlineDetailsScreen(
     viewModel: OnlineDetailsViewModel = hiltViewModel(),
     dimen: CustomDimen,
     theme: CustomTheme,
-    navigateToOnlineRoomNavGraph: () -> Unit
+    navigateToOnlineRoomNavGraph: (Int) -> Unit
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()
@@ -107,7 +106,7 @@ fun OnlineDetailsScreen(
         if (!startRunning.value) {
 
             if (state.value.getPaymentIntentSecretStatus.paymentDone) {
-                navigateToOnlineRoomNavGraph()
+                navigateToOnlineRoomNavGraph(state.value.getPaymentIntentSecretStatus.bookingId.toInt())
             }//end if
 
         }//end if

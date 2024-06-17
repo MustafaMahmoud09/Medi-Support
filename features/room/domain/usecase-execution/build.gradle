@@ -7,3 +7,28 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    //dto declarations
+    implementation(project(':features:room:domain:dto-declarations'))
+
+    //domain model
+    implementation(project(':features:room:domain:domain-model'))
+
+    //mapper declaration
+    implementation(project(':features:room:domain:mapper-declarations'))
+
+    //use case declarations
+    implementation(project(':features:room:domain:usecase-declarations'))
+
+    //repository declarations
+    implementation(project(':features:room:domain:repository-declarations'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
+    //kotlin flow dependency
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_flow"
+
+}

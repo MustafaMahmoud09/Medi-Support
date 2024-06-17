@@ -44,6 +44,18 @@ dependencies {
     //project
     implementation(project(':libraries:shared-ui'))
 
+    //use case declarations
+    implementation(project(':features:room:domain:usecase-declarations'))
+
+    //domain model
+    implementation(project(':features:room:domain:domain-model'))
+
+    //request status
+    implementation(project(":libraries:core:remote-database:request-status"))
+
+    //constraint layout
+    implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
+
     //constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:$constraint_layout_version"
 

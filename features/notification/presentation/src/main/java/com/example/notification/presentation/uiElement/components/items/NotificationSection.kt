@@ -39,7 +39,7 @@ internal fun NotificationSection(
     modifier: Modifier,
     notification: NotificationModel,
     placeHolderState: Boolean = false,
-    onClick: (String, Boolean) -> Unit,
+    onClick: (String, String, Long, Boolean) -> Unit,
     placeHolderColor: Color = theme.grayLight,
 ) {
 
@@ -51,7 +51,14 @@ internal fun NotificationSection(
                 borderColor = if (placeHolderState) theme.grayLight else borderColor,
                 shape = shape
             )
-            .clickableWithoutHover { onClick(notification.id, notification.read) }
+            .clickableWithoutHover {
+                onClick(
+                    notification.id,
+                    notification.type,
+                    notification.bookingId,
+                    notification.read
+                )
+            }
             .padding(
                 vertical = dimen.dimen_1_5.dp
             )

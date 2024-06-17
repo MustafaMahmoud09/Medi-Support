@@ -30,7 +30,8 @@ import kotlin.reflect.KFunction0
 
 @Composable
 fun NotificationScreen(
-    viewModel: NotificationViewModel = hiltViewModel()
+    viewModel: NotificationViewModel = hiltViewModel(),
+    navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
     val state = viewModel.state.collectAsState()
 
@@ -38,7 +39,15 @@ fun NotificationScreen(
         uiState = state.value,
         notifications = state.value.totalNotificationStatus?.collectAsLazyPagingItems(),
         backupNotification = state.value.backupTotalNotificationStatus?.collectAsLazyPagingItems(),
-        onClickOnNotification = viewModel::onReadNotificationById,
+        onClickOnNotification = { notificationId, notificationType, bookingId, notificationState ->
+            if (notificationType == "video_call") {
+                navigateToOnlineRoomDestination(bookingId.toInt())
+            }//end if
+            viewModel.onReadNotificationById(
+                id = notificationId,
+                read = notificationState
+            )
+        },
         onClickOnReadAllNotification = viewModel::onReadAllNotification,
         onNotificationBackupCreated = viewModel::onNotificationBackupCreated
     )
@@ -51,13 +60,13 @@ private fun NotificationContent(
     theme: CustomTheme = MediSupportAppTheme(),
     uiState: NotificationUiState,
     notifications: LazyPagingItems<NotificationModel>?,
-    onClickOnNotification: (String, Boolean) -> Unit,
+    onClickOnNotification: (String, String, Long, Boolean) -> Unit,
     backupNotification: LazyPagingItems<NotificationModel>?,
     onNotificationBackupCreated: KFunction0<Unit>,
     onClickOnReadAllNotification: KFunction0<Unit>
 ) {
 
-    if(
+    if (
         notifications?.loadState?.refresh !is LoadState.NotLoading &&
         backupNotification?.loadState?.refresh !is LoadState.NotLoading
     ) {
@@ -118,7 +127,7 @@ private fun NotificationContent(
                     theme = theme,
                     notification = uiState.notificationPlaceHolder,
                     placeHolderState = true,
-                    onClick = {_,_->},
+                    onClick = { _, _, _, _ -> },
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -130,14 +139,14 @@ private fun NotificationContent(
     }//end if
 
 
-    if(
+    if (
         notifications?.loadState?.refresh is LoadState.NotLoading ||
         backupNotification?.loadState?.refresh is LoadState.NotLoading
     ) {
 
-        val notificationsResult = if(notifications?.loadState?.refresh is LoadState.NotLoading){
+        val notificationsResult = if (notifications?.loadState?.refresh is LoadState.NotLoading) {
             notifications
-        }else{
+        } else {
             backupNotification
         }
 

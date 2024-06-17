@@ -57,7 +57,8 @@ internal fun NavGraphBuilder.homeNavGraph(
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToOfflineBookingDestination: (Int) -> Unit
+    navigateToOfflineBookingDestination: (Int) -> Unit,
+    navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
     //create home nav graph
     navigation(
@@ -78,7 +79,8 @@ internal fun NavGraphBuilder.homeNavGraph(
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
             navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
             navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
-            navigateToOfflineBookingDestination = navigateToOfflineBookingDestination
+            navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
+            navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
         )
 
         reminderNavGraph(

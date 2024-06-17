@@ -36,7 +36,6 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.bloodS
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.navigateToChatNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.navigateToOnlineRoomNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.popChatNavGraph
-import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.popOnlineRoomGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.examinationNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.heartRateNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.navigateToBloodPressureNavGraphWithPopActivityNavGraph
@@ -141,7 +140,16 @@ fun RootNavGraph(
                     navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestinationWithPopOfflineBookingDestination,
                     navigateToOnlineBookingNavGraph = navHostController::navigateToOnlineBookingDestination,
                     navigateToOfflineBookingDestination = navHostController::navigateToOfflineBookingDestination,
-                    navigateToLoginNavGraphWithPopBottomDestination = navHostController::navigateToLoginNavGraphWithPopBottomDestination
+                    navigateToLoginNavGraphWithPopBottomDestination = navHostController::navigateToLoginNavGraphWithPopBottomDestination,
+                    navigateToOnlineRoomDestination = {bookingId->
+
+                        //execute navigate to online room and pop payment here
+                        navHostController.navigateToOnlineRoomDestination(
+                            poppedDestination = PAYMENT_DESTINATION_ROUTE,
+                            bookingId = bookingId
+                        )
+
+                    }
                 )
 
                 activityNavGraph(
@@ -164,18 +172,18 @@ fun RootNavGraph(
                     navigateToChatDestination = navHostController::navigateToChatDestination,
                     popChatDestination = navHostController::popChatDestination,
                     navigateToOnlineRoomNavGraph = navHostController::navigateToOnlineRoomNavGraph,
-                    popOnlineRoomGraph = navHostController::popOnlineRoomGraph,
+                    popOnlineRoomGraph = navHostController::popOnlineRoomDestination,
                     navigateToBookingDetailsDestinationWithPopOnlineBookingDestination = navHostController::navigateToBookingDetailsDestinationWithPopOnlineBookingDestination,
-                    navigateToOnlineRoomDestination = {
+                    navigateToOnlineRoomDestination = {bookingId->
 
                         //execute navigate to online room and pop payment here
                         navHostController.navigateToOnlineRoomDestination(
-                            poppedDestination = PAYMENT_DESTINATION_ROUTE
+                            poppedDestination = PAYMENT_DESTINATION_ROUTE,
+                            bookingId = bookingId
                         )
 
                     }
                 )
-
 
                 heartPredictionNavGraph(
                     popHeartPredictionNavGraph = navHostController::popHeartPredictionNavGraph,

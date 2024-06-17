@@ -10,6 +10,8 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details
 import com.example.offlinebooking.presentation.uiElement.screens.booking.offlineBookingDestination
 import com.example.onlinebooking.presentation.uiElement.screens.booking.ONLINE_BOOKING_DESTINATION_ARGS_ROUTE
 import com.example.onlinebooking.presentation.uiElement.screens.booking.onlineBookingDestination
+import com.example.room.presentation.uiElement.screens.room.onlineRoomDestination
+import com.example.room.presentation.uiElement.screens.room.popOnlineRoomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation
@@ -30,7 +32,7 @@ internal fun NavGraphBuilder.examinationNavGraph(
     popChatDestination: () -> Unit,
     navigateToOnlineRoomNavGraph: () -> Unit,
     popOnlineRoomGraph: () -> Unit,
-    navigateToOnlineRoomDestination: () -> Unit,
+    navigateToOnlineRoomDestination: (Int) -> Unit,
     popOnlineBookingNavGraph: KFunction0<Unit>,
     navigateToBookingDetailsDestinationWithPopOnlineBookingDestination: KFunction1<Int, Unit>,
 ) {
@@ -57,12 +59,11 @@ internal fun NavGraphBuilder.examinationNavGraph(
         bookingDetailsDestination(
             popBookingDetailsDestination = popBookingDetailsDestination,
             navigateToChatNavGraph = navigateToChatNavGraph,
-            navigateToOnlineRoomNavGraph = navigateToOnlineRoomNavGraph
+            navigateToOnlineRoomNavGraph = navigateToOnlineRoomDestination
         )
 
-        onlineRoomNavGraph(
-            popOnlineRoomGraph = popOnlineRoomGraph,
-            navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
+        onlineRoomDestination(
+            popOnlineRoomGraph = popOnlineRoomGraph
         )
 
         chatNavGraph(

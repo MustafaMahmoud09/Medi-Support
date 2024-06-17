@@ -82,7 +82,9 @@ class NotificationViewModel @Inject constructor(
                                 NotificationModel(
                                     id = notification.id,
                                     notification = notification.notification,
-                                    read = true
+                                    read = true,
+                                    bookingId = notification.bookingId,
+                                    type = notification.type
                                 )
                             } else {
                                 notification
@@ -124,7 +126,9 @@ class NotificationViewModel @Inject constructor(
                         NotificationModel(
                             id = notification.id,
                             notification = notification.notification,
-                            read = true
+                            read = true,
+                            bookingId = notification.bookingId,
+                            type = notification.type
                         )
                     }//end map
                 }//end map

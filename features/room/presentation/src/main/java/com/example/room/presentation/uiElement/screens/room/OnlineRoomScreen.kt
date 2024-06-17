@@ -3,23 +3,37 @@
 package com.example.room.presentation.uiElement.screens.room
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,10 +57,12 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 import com.example.sharedui.R
+import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.twilio.video.VideoView
+import kotlinx.coroutines.delay
 
 @Composable
 internal fun OnlineRoomScreen(
@@ -63,7 +79,23 @@ internal fun OnlineRoomScreen(
         )
     )
 
+    val internetError =
+        stringResource(R.string.the_device_is_not_connected_to_the_internet)
+
+    val serverError =
+        stringResource(R.string.there_is_a_problem_with_the_server)
+
+    val onlineRoomNotCompletedError =
+        stringResource(R.string.payment_not_completed)
+
+    val startRunning = remember {
+        mutableStateOf(true)
+    }
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
     OnlineRoomContent(
+        snackbarHostState = snackbarHostState,
         soundData = VideoToolData(
             icon = if (state.value.localAudioEnable) {
                 painterResource(
@@ -125,6 +157,64 @@ internal fun OnlineRoomScreen(
 
     }//end LaunchedEffect
 
+    LaunchedEffect(
+        key1 = state.value.onlineRoomStatus.onlineRoomNotCompleted
+    ) {
+
+        if (!startRunning.value) {
+
+            snackbarHostState.showSnackbar(
+                message = onlineRoomNotCompletedError
+            )
+
+            delay(500)
+
+            popOnlineRoomGraph()
+        }//end if
+
+    }//end LaunchedEffect
+
+    LaunchedEffect(
+        key1 = state.value.onlineRoomStatus.internetError
+    ) {
+
+        if (!startRunning.value) {
+
+            snackbarHostState.showSnackbar(
+                message = internetError
+            )
+
+            delay(500)
+
+            popOnlineRoomGraph()
+        }//end if
+
+    }//end LaunchedEffect
+
+    LaunchedEffect(
+        key1 = state.value.onlineRoomStatus.serverError
+    ) {
+
+        if (!startRunning.value) {
+
+            snackbarHostState.showSnackbar(
+                message = serverError
+            )
+
+            delay(500)
+
+            popOnlineRoomGraph()
+        }//end if
+
+    }//end LaunchedEffect
+
+    LaunchedEffect(key1 = true) {
+        delay(250)
+        startRunning.value = false
+    }
+
+    BackHandler {}
+
 }//end ChatScreen
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -137,7 +227,8 @@ private fun OnlineRoomContent(
     cameraData: VideoToolData,
     rotateData: VideoToolData,
     onClickOnCloseVideoCallButton: () -> Unit,
-    uiState: OnlineRoomUiState
+    uiState: OnlineRoomUiState,
+    snackbarHostState: SnackbarHostState
 ) {
 
     //create base screen for define status and navigation bar color
@@ -148,6 +239,9 @@ private fun OnlineRoomContent(
 
         //create scaffold to create bottom navigation contain on video call tools
         Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },//end snack bar Host
             bottomBar = {
 
                 //create bottom app bar here
@@ -214,7 +308,7 @@ private fun OnlineRoomContent(
                     )
             ) {
                 //create ids for screen components here
-                val (remoteVideoId, localVideoId, gtInfoSectionId, timeSectionId) = createRefs()
+                val (remoteVideoId, localVideoId, gtInfoSectionId, timeSectionId, loadingTokenId) = createRefs()
 
                 //if remote video track not null then show remote video
                 if (uiState.remoteVideoTrack != null) {
@@ -228,7 +322,8 @@ private fun OnlineRoomContent(
                                 bottom.linkTo(parent.bottom)
                                 width = Dimension.fillToConstraints
                                 height = Dimension.fillToConstraints
-                            }.background(
+                            }
+                            .background(
                                 brush = Brush.linearGradient(
                                     listOf(theme.green7FF0F7, theme.green27E8F4)
                                 )
@@ -240,6 +335,7 @@ private fun OnlineRoomContent(
                             AndroidView(
                                 factory = {
                                     val videoView = VideoView(it)
+                                    videoView.id = 0
                                     videoView
                                 },
                                 modifier = Modifier
@@ -268,7 +364,7 @@ private fun OnlineRoomContent(
                                 )
                                 bottom.linkTo(
                                     parent.bottom,
-                                    dimen.dimen_4_5.dp
+                                    dimen.dimen_5_5.dp
                                 )
                             }
                             .clip(
@@ -365,6 +461,135 @@ private fun OnlineRoomContent(
                         }//end Box
 
                     }//end else
+
+                }//end if
+
+
+                AnimatedVisibility(
+                    visible = uiState.onlineRoomStatus.loading,
+                    enter = fadeIn(
+                        animationSpec = tween(
+                            delayMillis = 50
+                        )
+                    ),
+                    exit = fadeOut(
+                        animationSpec = tween(
+                            delayMillis = 50
+                        )
+                    ),
+                    modifier = Modifier
+                        .constrainAs(loadingTokenId) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                        }
+                ) {
+
+                    CircularProgressIndicator(
+                        color = theme.grayLight,
+                        trackColor = theme.transparent,
+                        strokeWidth = dimen.dimen_0_125.dp,
+                        modifier = Modifier
+                            .size(
+                                size = dimen.dimen_5.dp
+                            )
+                    )
+
+                }//end AnimatedVisibility
+
+                if(uiState.remoteVideoTrack != null) {
+
+                    Row(
+                        modifier = Modifier
+                            .constrainAs(timeSectionId) {
+                                start.linkTo(
+                                    parent.start,
+                                    dimen.dimen_2_5.dp
+                                )
+                                bottom.linkTo(
+                                    parent.bottom,
+                                    dimen.dimen_5.dp
+                                )
+                            }
+                            .clip(
+                                shape = RoundedCornerShape(
+                                    size = dimen.dimen_1_5.dp
+                                )
+                            )
+                            .background(
+                                color = theme.visibleGray
+                            )
+                            .padding(
+                                vertical = dimen.dimen_0_5.dp,
+                                horizontal = dimen.dimen_1.dp
+                            ),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Spacer(
+                            modifier = Modifier
+                                .size(
+                                    size = dimen.dimen_1.dp
+                                )
+                                .clip(
+                                    shape = CircleShape
+                                )
+                                .background(
+                                    color = theme.background
+                                )
+                                .padding(
+                                    all = dimen.dimen_0_25.dp
+                                )
+                                .clip(
+                                    shape = CircleShape
+                                )
+                                .background(
+                                    color = theme.redDark
+                                )
+                        )
+
+                        Spacer(
+                            modifier = Modifier
+                                .width(
+                                    width = dimen.dimen_0_75.dp
+                                )
+                        )
+
+                        TextSemiBoldView(
+                            theme = theme,
+                            dimen = dimen,
+                            text = uiState.timerFormatter,
+                            size = dimen.dimen_1_75,
+                            fontColor = theme.background
+                        )
+
+                    }//end Row
+
+
+                    TextNormalView(
+                        theme = theme,
+                        dimen = dimen,
+                        text = uiState.doctorName,
+                        size = dimen.dimen_2_25,
+                        fontColor = theme.background,
+                        textAlign = null,
+                        maxLines = 1,
+                        defineLine = true,
+                        modifier = Modifier
+                            .constrainAs(gtInfoSectionId) {
+                                start.linkTo(timeSectionId.start)
+                                bottom.linkTo(
+                                    timeSectionId.top,
+                                )
+                                end.linkTo(
+                                    localVideoId.start,
+                                    dimen.dimen_1.dp
+                                )
+                                width = Dimension.fillToConstraints
+                            }
+                    )
 
                 }//end if
 

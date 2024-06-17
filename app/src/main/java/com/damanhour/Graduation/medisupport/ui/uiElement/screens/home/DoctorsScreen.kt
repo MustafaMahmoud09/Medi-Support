@@ -49,7 +49,8 @@ internal fun DoctorsScreen(
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToOfflineBookingDestination: (Int) -> Unit
+    navigateToOfflineBookingDestination: (Int) -> Unit,
+    navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
 
     //collect state here
@@ -74,6 +75,7 @@ internal fun DoctorsScreen(
         navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
         focusRequester = focusRequester,
         coroutineScope = coroutineScope,
+        navigateToOnlineRoomDestination = navigateToOnlineRoomDestination,
         onClickOnSearchField = {
 
             //on search page pushed
@@ -160,6 +162,7 @@ private fun DoctorsContent(
     onClickOnNotificationButton: () -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
     searchKey: String,
+    navigateToOnlineRoomDestination: (Int) -> Unit,
 ) {
 
     //create container here
@@ -352,7 +355,9 @@ private fun DoctorsContent(
                 //if page number equal 3 show notification screen
                 3 -> {
 
-                    NotificationScreen()
+                    NotificationScreen(
+                        navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
+                    )
                 }//end case
 
             }//end when

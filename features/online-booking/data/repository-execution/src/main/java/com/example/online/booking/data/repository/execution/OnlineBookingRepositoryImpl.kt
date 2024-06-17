@@ -155,6 +155,18 @@ class OnlineBookingRepositoryImpl(
                                 status = 2
                             )
                         }//end if
+                        if (status.toData()?.statusCode == 421) {
+                            localDatabase.onlineBookingDao().updateOnlineBookingStatusById(
+                                id = bookingId,
+                                status = 0
+                            )
+                        }//end if
+                        if (status.toData()?.statusCode == 423) {
+                            localDatabase.onlineBookingDao().updateOnlineBookingStatusById(
+                                id = bookingId,
+                                status = 3
+                            )
+                        }//end if
                         else if (status.toData()?.statusCode == 403) {
                             localDatabase.onlineBookingDao().deleteOnlineBookingById(
                                 id = bookingId

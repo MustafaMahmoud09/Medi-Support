@@ -10,6 +10,8 @@ data class NotificationUiState(
     val notificationPlaceHolder: NotificationModel = NotificationModel(
         id = "",
         notification = "dr mohammed ahmed accepted your booking and now you can",
-        read = false
+        read = false,
+        type = "",
+        bookingId = 0
     )
 )

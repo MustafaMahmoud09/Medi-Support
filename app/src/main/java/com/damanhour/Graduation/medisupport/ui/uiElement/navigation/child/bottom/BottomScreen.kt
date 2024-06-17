@@ -69,7 +69,8 @@ internal fun BottomScreen(
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
+    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>,
+    navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()
@@ -108,7 +109,8 @@ internal fun BottomScreen(
         navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
         navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
         navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
-        navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
+        navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination,
+        navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
     )
 
 }//end BottomScreen
@@ -144,7 +146,8 @@ private fun BottomContent(
     navigateToBookingDetailsDestination: (Int) -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
     uiState: BottomNavigationUiState,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
+    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>,
+    navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
 
     BaseScreen(
@@ -246,7 +249,8 @@ private fun BottomContent(
                     navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
                     navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
                     navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
-                    navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
+                    navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination,
+                    navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
                 )
 
             }//end Box

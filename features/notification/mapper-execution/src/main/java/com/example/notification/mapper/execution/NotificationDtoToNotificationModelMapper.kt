@@ -23,7 +23,9 @@ class NotificationDtoToNotificationModelMapper : INotificationDtoToNotificationM
         return NotificationModel(
             id = obj.id ?: "",
             notification = obj.message ?: "",
-            read = obj.readAt.toString() != "null"
+            read = obj.readAt.toString() != "null",
+            type = obj.type ?: "",
+            bookingId = obj.bookingId ?: 0
         )
 
     }//end objectConvertor

@@ -254,6 +254,7 @@
             <option value="$PROJECT_DIR$/features/room/domain/repository-declarations" />
             <option value="$PROJECT_DIR$/features/room/domain/usecase-declarations" />
             <option value="$PROJECT_DIR$/features/room/domain/usecase-execution" />
+            <option value="$PROJECT_DIR$/features/room/mapper-execution" />
             <option value="$PROJECT_DIR$/features/room/presentation" />
             <option value="$PROJECT_DIR$/libraries" />
             <option value="$PROJECT_DIR$/libraries/core" />

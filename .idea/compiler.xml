@@ -433,6 +433,7 @@
       <module name="MediSupport.features.room.domain.usecase-execution" target="17" />
       <module name="MediSupport.features.room.domain.usecase-execution.main" target="17" />
       <module name="MediSupport.features.room.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.room.mapper-execution" target="17" />
       <module name="MediSupport.features.room.presentation" target="17" />
       <module name="MediSupport.features.setting.domain.use-case.main" target="17" />
       <module name="MediSupport.features.setting.domain.use-case.test" target="17" />

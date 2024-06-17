@@ -146,8 +146,12 @@ internal fun OnlineBookingSection(
                     stringResource(R.string.complected)
                 }
 
-                else -> {
+                1 -> {
                     stringResource(R.string.accept)
+                }
+
+                else -> {
+                    stringResource(R.string.finished)
                 }
             },
             statusColor = when (onlineBooking.bookingStatus) {
@@ -159,8 +163,12 @@ internal fun OnlineBookingSection(
                     theme.green33A351
                 }
 
-                else -> {
+                1 -> {
                     theme.green33A351
+                }
+
+                else -> {
+                    theme.redDark
                 }
             },
             background = when (onlineBooking.bookingStatus) {
@@ -172,8 +180,12 @@ internal fun OnlineBookingSection(
                     theme.green8CFFAB
                 }
 
-                else -> {
+                1 -> {
                     theme.green8CFFAB
+                }
+
+                else -> {
+                    theme.redFF9696
                 }
             },
             modifier = Modifier
@@ -235,7 +247,8 @@ internal fun OnlineBookingSection(
                         bottom.linkTo(parent.bottom)
                         width = Dimension.fillToConstraints
                         height = Dimension.fillToConstraints
-                    }.background(
+                    }
+                    .background(
                         color = theme.transparent
                     ),//end constrainAs
                 contentAlignment = Alignment.Center

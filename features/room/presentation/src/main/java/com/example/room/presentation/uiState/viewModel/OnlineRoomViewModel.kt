@@ -2,20 +2,37 @@ package com.example.room.presentation.uiState.viewModel
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import com.example.libraries.core.remote.data.response.status.Status
+import com.example.room.domain.usecase.declarations.IFinishOnlineRoomUseCase
+import com.example.room.domain.usecase.declarations.IGetOnlineRoomUseCase
+import com.example.room.domain.usecase.declarations.IStartOnlineRoomUseCase
+import com.example.room.presentation.uiElement.screens.room.OnlineRoomArgs
 import com.example.room.presentation.uiState.state.OnlineRoomUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import com.twilio.video.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import tvi.webrtc.Camera2Enumerator
+import java.io.IOException
 import javax.inject.Inject
 
 
 @HiltViewModel
 class OnlineRoomViewModel @Inject constructor(
-    private val context: Context
+    savedStateHandle: SavedStateHandle,
+    private val getOnlineRoomUseCase: IGetOnlineRoomUseCase,
+    private val startOnlineRoomUseCase: IStartOnlineRoomUseCase,
+    private val finishOnlineRoomUseCase: IFinishOnlineRoomUseCase,
+    @ApplicationContext private val context: Context
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -24,13 +41,254 @@ class OnlineRoomViewModel @Inject constructor(
     //for observe by screen
     val state = _state.asStateFlow()
 
+    //get booking arguments here
+    private val arguments: OnlineRoomArgs =
+        OnlineRoomArgs(
+            savedStateHandle
+        )
+
+    init {
+        _state.update {
+            it.copy(
+                bookingId = arguments.bookingId
+            )
+        }//end update
+        onGenerateVideoCallTimer()
+    }//end init
+
+
+    //function for make video call timer
+    private fun onGenerateVideoCallTimer() {
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            while (true) {
+
+                if (state.value.remoteVideoTrack != null) {
+
+                    val timer = state.value.timer.plusSeconds(1)
+
+                    _state.update {
+                        it.copy(
+                            timer = timer,
+                            timerFormatter = formatLocalTime(timer, "HH:mm:ss"),
+                        )
+                    }
+
+                }//end if
+                delay(1000)
+            }//end while
+
+        }//end coroutine builder scope
+
+    }//end onGenerateVideoCallTimer
+
+
+    //function for initialize local video object
+    fun onInitializeLocalVideoComponent() {
+
+        // A video track requires an implementation of a VideoCapturer. Here's how to use the front camera with a Camera2Capturer.
+        val camera2Enumerator = Camera2Enumerator(context)
+        var frontCameraId: String? = null
+        for (cameraId in camera2Enumerator.deviceNames) {
+            if (camera2Enumerator.isFrontFacing(cameraId)) {
+                frontCameraId = cameraId
+                break
+            }//end if
+        }//end for
+
+        if (frontCameraId != null) {
+
+            // Create the CameraCapturer with the front camera
+            val cameraCapturer = Camera2Capturer(context, frontCameraId)
+
+            //update camera capturer status
+            _state.update {
+                it.copy(
+                    cameraCapturer = cameraCapturer
+                )
+            }//end update
+
+            // Create a video track
+            val localVideoTrack =
+                state.value.cameraCapturer?.let { LocalVideoTrack.create(context, true, it) }
+
+            // update local video track here
+            _state.update {
+                it.copy(
+                    localVideoTrack = localVideoTrack
+                )
+            }//end update
+
+        }//end if
+
+        //generate local audio track
+        val localAudioTrack = LocalAudioTrack.create(context, true)!!
+
+        //update local audio track here
+        _state.update {
+            it.copy(
+                localAudioTrack = localAudioTrack
+            )
+        }//end update
+
+        onGetOnlineRoomToken()
+
+    }//end onInitializeLocalVideoComponent
+
+    //function for make request on use case for get room token
+    private fun onGetOnlineRoomToken() {
+
+        //create coroutine builder scope here
+        viewModelScope.launch(Dispatchers.IO) {
+
+            try {
+
+                //make add blood pressure record use case here
+                //observe use case flow
+                //collect add blood pressure record status
+                getOnlineRoomUseCase(
+                    bookingId = state.value.bookingId.toLong(),
+                ).collectLatest { status ->
+
+                    when (status) {
+
+                        is Status.Success -> {
+
+                            when (status.toData()?.statusCode) {
+
+                                200 -> {
+                                    _state.update {
+                                        it.copy(
+                                            onlineRoomStatus = state.value
+                                                .onlineRoomStatus.copy(
+                                                    success = true,
+                                                    loading = false,
+                                                    onlineRoom = status.toData()?.body?.get(0)!!
+                                                )
+                                        )
+                                    }//end update
+
+                                    //make online room here
+                                    connectToRoom()
+                                }//end success case
+
+                                404, 500 -> {
+                                    _state.update {
+                                        it.copy(
+                                            onlineRoomStatus = state.value
+                                                .onlineRoomStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.onlineRoomStatus.serverError
+                                                )
+                                        )
+                                    }//end update
+                                }//end error server case
+
+                                400 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            onlineRoomStatus = state.value
+                                                .onlineRoomStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    onlineRoomNotCompleted = !state.value.onlineRoomStatus.onlineRoomNotCompleted
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end appointment not valid case
+
+                            }//end when
+
+                        }//end success case
+
+                        is Status.Loading -> {
+
+                            _state.update {
+                                it.copy(
+                                    onlineRoomStatus = state.value
+                                        .onlineRoomStatus.copy(
+                                            success = false,
+                                            loading = true
+                                        )
+                                )
+                            }//end update
+
+                        }//end loading case
+
+                        is Status.Error -> {
+
+                            when (status.status) {
+
+                                400 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            onlineRoomStatus = state.value
+                                                .onlineRoomStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    internetError = !state.value.onlineRoomStatus.internetError
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end internet error case
+
+                                500 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            onlineRoomStatus = state.value
+                                                .onlineRoomStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    serverError = !state.value.onlineRoomStatus.serverError
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end server error case
+
+                            }//end when
+
+                        }//end error case
+
+                    }//end when
+
+                }//end collectLatest
+
+            }//end try
+            catch (ex: IOException) {
+
+                _state.update {
+                    it.copy(
+                        onlineRoomStatus = state.value
+                            .onlineRoomStatus.copy(
+                                success = false,
+                                loading = false,
+                                internetError = !state.value.onlineRoomStatus.internetError
+                            )
+                    )
+                }//end update
+
+            }//end catch
+
+        }//end coroutine builder scope
+
+    }//end onGetOnlineRoomToken
+
+
     //function for make connect with room
-    private fun connectToRoom(roomName: String) {
+    private fun connectToRoom() {
 
         //make connection option object here
         val connectOptions = ConnectOptions.Builder(
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzNjODcyYTJlZmE4NDY1MWNkYmQ3Y2M1YmEwNGVlYjkyLTE3MTc5OTE0MTMiLCJpc3MiOiJTSzNjODcyYTJlZmE4NDY1MWNkYmQ3Y2M1YmEwNGVlYjkyIiwic3ViIjoiQUM4NjQyNDAwYWE3Zjk3NjE5Zjc3NzAzMTI4NjAxYTU4MSIsImV4cCI6MTcxNzk5ODYxMywiZ3JhbnRzIjp7ImlkZW50aXR5IjoibXVzdGFmYW1haG1vdWRAZ21haWwuY29tIiwidmlkZW8iOnsicm9vbSI6Im15X3Jvb20ifX19.4zSgCE97u5x41mQy2oV8_1bi8SWl11YaYOX4ieBsxXM"
-        ).roomName(roomName)
+            state.value.onlineRoomStatus.onlineRoom.token
+        ).roomName(state.value.onlineRoomStatus.onlineRoom.roomName)
             .audioTracks(listOf(state.value.localAudioTrack))
             .videoTracks(listOf(state.value.localVideoTrack))
             .build()
@@ -46,7 +304,6 @@ class OnlineRoomViewModel @Inject constructor(
         }//end update
 
     }//end connectToRoom
-
 
     //function for make listener on room
     private fun roomListener(): Room.Listener {
@@ -78,11 +335,22 @@ class OnlineRoomViewModel @Inject constructor(
 
             override fun onParticipantConnected(room: Room, participant: RemoteParticipant) {
                 Log.d("TAG", "onParticipantConnected")
+                _state.update {
+                    it.copy(
+                        doctorName = participant.identity
+                    )
+                }//end update
                 room.remoteParticipants.firstOrNull()?.setListener(remoteParticularListener())
             }
 
             override fun onParticipantDisconnected(room: Room, participant: RemoteParticipant) {
                 Log.d("TAG", "onParticipantDisconnected")
+                _state.update {
+                    it.copy(
+                        doctorName = "",
+                        remoteVideoTrack = null
+                    )
+                }//end update
                 room.remoteParticipants.firstOrNull()?.setListener(remoteParticularListener())
             }
 
@@ -167,10 +435,13 @@ class OnlineRoomViewModel @Inject constructor(
                 //update remote video track by p2
                 _state.update {
                     it.copy(
-                        remoteVideoTrack = p2
+                        remoteVideoTrack = p2,
+                        particularExist = true
                     )
                 }//end update
 
+                //make request for start video call here
+                onStartVideoCall()
             }//end onVideoTrackSubscribed
 
             override fun onVideoTrackSubscriptionFailed(
@@ -266,60 +537,26 @@ class OnlineRoomViewModel @Inject constructor(
 
     }//end remoteParticularListener
 
+    //function for make request for start video call
+    private fun onStartVideoCall() {
 
-    //function for initialize local video object
-    fun onInitializeLocalVideoComponent() {
+        viewModelScope.launch(Dispatchers.IO) {
 
-        // A video track requires an implementation of a VideoCapturer. Here's how to use the front camera with a Camera2Capturer.
-        val camera2Enumerator = Camera2Enumerator(context)
-        var frontCameraId: String? = null
-        for (cameraId in camera2Enumerator.deviceNames) {
-            if (camera2Enumerator.isFrontFacing(cameraId)) {
-                frontCameraId = cameraId
-                break
-            }//end if
-        }//end for
+            try {
 
-        if (frontCameraId != null) {
+                startOnlineRoomUseCase(
+                    callId = state.value.onlineRoomStatus.onlineRoom.callId
+                ).collectLatest {
 
-            // Create the CameraCapturer with the front camera
-            val cameraCapturer = Camera2Capturer(context, frontCameraId)
+                }//end collectLatest
 
-            //update camera capturer status
-            _state.update {
-                it.copy(
-                    cameraCapturer = cameraCapturer
-                )
-            }//end update
+            }//end try
+            catch (ex: Exception) {
+            }
 
-            // Create a video track
-            val localVideoTrack =
-                state.value.cameraCapturer?.let { LocalVideoTrack.create(context, true, it) }
+        }//end viewModelScope
 
-            // update local video track here
-            _state.update {
-                it.copy(
-                    localVideoTrack = localVideoTrack
-                )
-            }//end update
-
-        }//end if
-
-        //generate local audio track
-        val localAudioTrack = LocalAudioTrack.create(context, true)!!
-
-        //update local audio track here
-        _state.update {
-            it.copy(
-                localAudioTrack = localAudioTrack
-            )
-        }
-
-        connectToRoom(
-            roomName = "my_room"
-        )
-
-    }//end onInitializeLocalVideoComponent
+    }//end onStartVideoCall
 
 
     //function for change local video enable status
@@ -406,6 +643,8 @@ class OnlineRoomViewModel @Inject constructor(
 
         state.value.cameraCapturer?.stopCapture()
 
+        onFinishVideoCall()
+
         //update room status here
         _state.update {
             it.copy(
@@ -417,5 +656,36 @@ class OnlineRoomViewModel @Inject constructor(
         }//end update
 
     }//end onCloseVideoCall
+
+    override fun onCleared() {
+        super.onCleared()
+        onFinishVideoCall()
+    }//end onCleared
+
+    //function for make finish for video call
+    private fun onFinishVideoCall() {
+
+        if (state.value.particularExist) {
+
+            viewModelScope.launch(Dispatchers.IO) {
+
+                try {
+
+                    finishOnlineRoomUseCase(
+                        bookingId = state.value.bookingId.toLong(),
+                        callId = state.value.onlineRoomStatus.onlineRoom.callId
+                    ).collectLatest {
+
+                    }//end collectLatest
+
+                }//end try
+                catch (ex: Exception) {
+                }//end catch
+
+            }//end coroutine builder scope
+
+        }//end if
+
+    }//end onFinishVideoCall
 
 }//end OnlineRoomViewModel

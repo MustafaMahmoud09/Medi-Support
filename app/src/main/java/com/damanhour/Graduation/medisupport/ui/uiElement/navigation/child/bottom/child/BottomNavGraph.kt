@@ -40,7 +40,8 @@ internal fun BottomNavGraph(
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
+    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>,
+    navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
 
     AnimatedNavHost(
@@ -64,7 +65,8 @@ internal fun BottomNavGraph(
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
             navigateToOnlineBookingNavGraph = navigateToOnlineBookingNavGraph,
             navigateToBookingDetailsDestination = navigateToBookingDetailsDestination,
-            navigateToOfflineBookingDestination = navigateToOfflineBookingDestination
+            navigateToOfflineBookingDestination = navigateToOfflineBookingDestination,
+            navigateToOnlineRoomDestination = navigateToOnlineRoomDestination
         )
 
         articleNavGraph(

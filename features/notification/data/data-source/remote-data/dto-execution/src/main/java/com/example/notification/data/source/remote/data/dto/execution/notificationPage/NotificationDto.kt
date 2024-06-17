@@ -10,5 +10,9 @@ data class NotificationDto(
     @SerializedName("message")
     override val message: String?,
     @SerializedName("read_at")
-    override val readAt: String?
+    override val readAt: String?,
+    @SerializedName("type")
+    override val type: String?,
+    @SerializedName("online_booking_id")
+    override val bookingId: Long?
 ): INotificationDto

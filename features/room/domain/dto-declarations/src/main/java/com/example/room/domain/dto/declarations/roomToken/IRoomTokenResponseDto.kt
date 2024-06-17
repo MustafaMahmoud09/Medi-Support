@@ -1,13 +1,11 @@
-package com.example.dto_execution.roomToken
+package com.example.room.domain.dto.declarations.roomToken
 
+interface IRoomTokenResponseDto {
 
-import com.google.gson.annotations.SerializedName
+    val `data`: IOnlineRoomDto?
 
-data class RoomTokenResponseDto(
-    @SerializedName("data")
-    val `data`: Data?,
-    @SerializedName("error")
-    val error: Boolean?,
-    @SerializedName("message")
+    val error: Boolean?
+
     val message: String?
-)
+
+}//end IRoomTokenResponseDto

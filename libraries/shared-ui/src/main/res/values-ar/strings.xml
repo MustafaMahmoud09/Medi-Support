@@ -196,4 +196,6 @@
     <string name="log_out_of_your_account">هل تريد تسجيل الخروج من حسابك؟</string>
     <string name="complected">مكتمل</string>
     <string name="you_are_not_the_camera_operator">أنت لست مشغل الكاميرا</string>
+    <string name="payment_not_completed">لم تكتمل عملية الدفع</string>
+    <string name="finished">منتهبة</string>
 </resources>

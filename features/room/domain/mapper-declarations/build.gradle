@@ -7,3 +7,13 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+dependencies {
+
+    //dto declarations
+    implementation(project(':features:room:domain:dto-declarations'))
+
+    //domain model
+    implementation(project(':features:room:domain:domain-model'))
+
+}

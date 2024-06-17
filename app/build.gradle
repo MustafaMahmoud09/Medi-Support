@@ -194,6 +194,15 @@ dependencies {
     implementation(project(':features:account-setting:mapper-execution'))
     implementation(project(':features:account-setting:data:data-source:remote-data:requests'))
 
+    //online room
+    implementation(project(':features:room:presentation'))
+    implementation(project(':features:room:domain:usecase-declarations'))
+    implementation(project(':features:room:domain:usecase-execution'))
+    implementation(project(':features:room:domain:repository-declarations'))
+    implementation(project(':features:room:data:repository-execution'))
+    implementation(project(':features:room:domain:mapper-declarations'))
+    implementation(project(':features:room:mapper-execution'))
+    implementation(project(':features:room:data:data-source:remote-data:requests'))
 
     //response wrapper
     implementation(project(":libraries:core:remote-database:response-wrapper"))

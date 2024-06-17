@@ -10,4 +10,8 @@ interface INotificationDto {
 
     val readAt: String?
 
+    val type: String?
+
+    val bookingId: Long?
+
 }//end INotificationDto

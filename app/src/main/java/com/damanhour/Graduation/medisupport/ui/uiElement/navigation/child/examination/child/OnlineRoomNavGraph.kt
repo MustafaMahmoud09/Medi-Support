@@ -37,7 +37,7 @@ internal fun NavHostController.popOnlineRoomGraph() {
 //function for create chat nav graph and added to destinations in it
 internal fun NavGraphBuilder.onlineRoomNavGraph(
     popOnlineRoomGraph: () -> Unit,
-    navigateToOnlineRoomDestination: () -> Unit
+    navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
 
     navigation(

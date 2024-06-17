@@ -70,7 +70,7 @@ fun NavHostController.popBookingDetailsDestination() {
 fun NavGraphBuilder.bookingDetailsDestination(
     popBookingDetailsDestination: KFunction0<Unit>,
     navigateToChatNavGraph: () -> Unit,
-    navigateToOnlineRoomNavGraph: () -> Unit
+    navigateToOnlineRoomNavGraph: (Int) -> Unit
 ) {
 
     composable(

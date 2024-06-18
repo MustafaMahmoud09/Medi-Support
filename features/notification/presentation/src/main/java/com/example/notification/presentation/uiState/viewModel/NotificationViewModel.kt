@@ -143,7 +143,8 @@ class NotificationViewModel @Inject constructor(
                 readAllNotificationUseCase().collectLatest {}
 
             }//end try
-            catch (ex: Exception) { }
+            catch (ex: Exception) {
+            }
 
         }//end viewModelScope
 
@@ -161,5 +162,25 @@ class NotificationViewModel @Inject constructor(
         }//end update
 
     }//end onNotificationBackupCreated
+
+
+    //function for refresh notifications
+    fun onRefreshNotifications() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetNotification()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshNotifications
 
 }//end NotificationViewModel

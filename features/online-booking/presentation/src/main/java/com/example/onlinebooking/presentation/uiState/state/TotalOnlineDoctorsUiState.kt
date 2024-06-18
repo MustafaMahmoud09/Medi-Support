@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 data class TotalOnlineDoctorsUiState(
     val totalOnlineDoctorsStatus: Flow<PagingData<OnlineDoctorModel>>? = null,
+    val cacheOnlineDoctorsStatus: Flow<PagingData<OnlineDoctorModel>>? = null,
+    val refreshState: Boolean = false,
     val doctorPlaceHolder: OnlineDoctorModel = OnlineDoctorModel(
         id = 0,
         name = "js",

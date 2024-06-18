@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
+import kotlin.reflect.KFunction1
 
 //route name
 const val RECORD_HEART_PREDICTION_DESTINATION_ROUTE = "recordHeartPredictionDestination"
@@ -35,7 +36,7 @@ fun NavHostController.popRecordHeartPredictionDestination() {
 //function for create  record heart prediction destination and create record heart prediction in it
 fun NavGraphBuilder.recordHeartPredictionDestination(
     popRecordHeartPredictionDestination: () -> Unit,
-    navigateToPredictionHeartPredictionDestination: () -> Unit
+    navigateToPredictionHeartPredictionDestination: KFunction1<Int, Unit>
 ) {
 
     //create  record heart prediction destination

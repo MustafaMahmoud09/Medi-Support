@@ -8,16 +8,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.heartprediction.presentation.uiElement.components.items.ResultPredictionSection
+import com.example.heartprediction.presentation.uiState.state.ResultHeartDiseaseUiState
+import com.example.heartprediction.presentation.uiState.viewModel.ResultHeartDiseaseViewModel
 import com.example.sharedui.R
-import com.example.sharedui.uiElement.components.composable.IconButtonView
-import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.components.items.HeaderSection
 import com.example.sharedui.uiElement.screen.BaseScreen
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
@@ -29,11 +31,14 @@ import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
 @Composable
 internal fun PredictionHeartPredictionScreen(
+    viewModel: ResultHeartDiseaseViewModel = hiltViewModel(),
     popPredictionHeartPredictionDestination: () -> Unit
 ) {
+    val state = viewModel.state.collectAsState()
 
     PredictionHeartPredictionContent(
-        onClickBack = popPredictionHeartPredictionDestination
+        onClickBack = popPredictionHeartPredictionDestination,
+        uiState = state.value
     )
 }//end PredictionHeartPredictionScreen
 
@@ -41,7 +46,8 @@ internal fun PredictionHeartPredictionScreen(
 private fun PredictionHeartPredictionContent(
     dimen: CustomDimen = MediSupportAppDimen(),
     theme: CustomTheme = MediSupportAppTheme(),
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    uiState: ResultHeartDiseaseUiState
 ) {
 
     //define navigation color and status color for system ui
@@ -119,18 +125,34 @@ private fun PredictionHeartPredictionContent(
                     ResultPredictionSection(
                         dimen = dimen,
                         theme = theme,
-                        parentMessage = stringResource(
-                            R.string.congratulations_message_heart_prediction
-                        ),
-                        subMessages = arrayOf(
-                            stringResource(R.string.congratulations)
-                        ),
+                        parentMessage = if (uiState.classResult == 0) {
+                            stringResource(
+                                R.string.congratulations_message_heart_prediction
+                            )
+                        } else {
+                            stringResource(R.string.sorry_you_may_have_heart_disease)
+                        },
+                        subMessages = if (uiState.classResult == 0) {
+                            arrayOf(stringResource(R.string.congratulations))
+                        } else {
+                            arrayOf(stringResource(R.string.sorry))
+                        },
                         subMessageFamily = arrayOf(robotoMedium),
                         parentMessageFamily = robotoRegular,
-                        painter = painterResource(
-                            id = R.drawable.smale
-                        ),
-                        iconTint = theme.greenMed4CAF50,
+                        painter = if (uiState.classResult == 0) {
+                            painterResource(
+                                id = R.drawable.smale
+                            )
+                        } else {
+                            painterResource(
+                                id = R.drawable.sad
+                            )
+                        },
+                        iconTint = if (uiState.classResult == 0) {
+                            theme.greenMed4CAF50
+                        } else {
+                            theme.redDark
+                        },
                         parentNote = stringResource(
                             R.string.note_on_prediction_heart_dis
                         ),

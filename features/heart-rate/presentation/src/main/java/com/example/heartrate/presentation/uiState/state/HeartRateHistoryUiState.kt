@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 data class HeartRateHistoryUiState(
     val heartRateRecords: Flow<PagingData<SimpleHeartRateModel>>? = null,
+    val refreshState: Boolean = false,
+    val heartRateRecordsBackup: Flow<PagingData<SimpleHeartRateModel>>? = null,
     val placeHolderHeartRate: SimpleHeartRateModel = SimpleHeartRateModel(
         id = 0,
         rate = 0,

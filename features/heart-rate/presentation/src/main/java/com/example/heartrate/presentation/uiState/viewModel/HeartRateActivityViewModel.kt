@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.heart.rate.domain.usecase.declarations.IGetLastHistoryRecordsUseCase
 import com.example.heart.rate.domain.usecase.declarations.IGetLastWeekHeartRateRecordsUseCase
 import com.example.heart.rate.domain.usecase.declarations.IGetLatestHeartRateMeasurementUseCase
-import com.example.heartrate.presentation.uiState.state.BloodSugarActivityUiState
+import com.example.heartrate.presentation.uiState.state.HeartRateActivityUiState
 import com.example.libraries.shered.logic.usecase.declarations.IGetMonthDaysUseCase
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +26,7 @@ class HeartRateActivityViewModel @Inject constructor(
 ): BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(BloodSugarActivityUiState())
+    private val _state = MutableStateFlow(HeartRateActivityUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
@@ -167,5 +167,30 @@ class HeartRateActivityViewModel @Inject constructor(
 
     }//end onGetMonthDays
 
+
+    fun onRefreshHeartRateActivity() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+
+        onGetMonthDays()
+
+        onGetLastWeekHeartRateRecords()
+
+        onGetLatestHeartRateRecord()
+
+        onGetLastHistoryHeartRateRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodSugarActivity
 
 }//end HeartRateActivityViewModel

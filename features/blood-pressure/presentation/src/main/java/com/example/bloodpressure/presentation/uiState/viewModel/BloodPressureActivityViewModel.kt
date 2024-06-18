@@ -357,4 +357,36 @@ class BloodPressureActivityViewModel @Inject constructor(
 
     }//end onGetMonthDays
 
+
+    fun onRefreshBloodPressureActivity() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        //get latest blood pressure record
+        onGetLatestBloodPressureRecord()
+
+        //get month days
+        onGetMonthDays()
+
+        //get Systolic Blood Pressure Result
+        onGetSystolicBloodPressureResult()
+
+        //get Diastolic Blood Pressure Result
+        onGetDiastolicBloodPressureResult()
+
+        //get last history blood pressure records
+        onGetLastHistoryBloodPressureRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodPressureActivity
+
 }//end StatisticsBloodPressureViewModel

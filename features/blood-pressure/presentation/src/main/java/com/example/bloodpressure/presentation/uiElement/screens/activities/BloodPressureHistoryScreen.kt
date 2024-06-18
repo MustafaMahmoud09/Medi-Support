@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.example.bloodpressure.presentation.uiElement.screens.activities
 
 import androidx.compose.animation.AnimatedVisibility
@@ -13,7 +15,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +38,7 @@ import com.example.bloodpressure.presentation.uiState.viewModel.BloodPressureHis
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import kotlin.reflect.KFunction0
 
 @Composable
 fun BloodPressureHistoryScreen(
@@ -41,10 +49,18 @@ fun BloodPressureHistoryScreen(
     //get screen state
     val state = viewModel.state.collectAsState()
 
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = state.value.refreshState,
+        onRefresh = viewModel::onRefreshBloodPressureRecords
+    )
+
     BloodPressureHistoryContent(
         theme = theme,
         dimen = dimen,
         bloodPressureRecords = state.value.bloodPressureRecords?.collectAsLazyPagingItems(),
+        bloodPressureRecordsBackup = state.value.bloodPressureRecordsBackup?.collectAsLazyPagingItems(),
+        pullRefreshState = pullRefreshState,
+        onBloodPressureBackupCreated = viewModel::onBloodPressureBackupCreated,
         uiState = state.value
     )
 }//end BloodPressureHistoryScreen
@@ -55,6 +71,9 @@ private fun BloodPressureHistoryContent(
     dimen: CustomDimen,
     uiState: BloodPressureHistoryUiState,
     bloodPressureRecords: LazyPagingItems<SimpleBloodPressureModel>?,
+    pullRefreshState: PullRefreshState,
+    bloodPressureRecordsBackup: LazyPagingItems<SimpleBloodPressureModel>?,
+    onBloodPressureBackupCreated: KFunction0<Unit>,
 ) {
 
     //create container here
@@ -84,7 +103,8 @@ private fun BloodPressureHistoryContent(
 
         //if request state is loading show placeholder
         AnimatedVisibility(
-            visible = bloodPressureRecords?.loadState?.refresh is LoadState.Loading,
+            visible = bloodPressureRecords?.loadState?.refresh !is LoadState.NotLoading &&
+                    bloodPressureRecordsBackup?.loadState?.refresh !is LoadState.NotLoading,
             enter = fadeIn(
                 animationSpec = tween(
                     durationMillis = 50
@@ -154,7 +174,8 @@ private fun BloodPressureHistoryContent(
 
         //if request state is success show items
         AnimatedVisibility(
-            visible = bloodPressureRecords?.loadState?.refresh is LoadState.NotLoading,
+            visible = bloodPressureRecords?.loadState?.refresh is LoadState.NotLoading ||
+                    bloodPressureRecordsBackup?.loadState?.refresh is LoadState.NotLoading,
             enter = fadeIn(
                 animationSpec = tween(
                     durationMillis = 50
@@ -176,52 +197,79 @@ private fun BloodPressureHistoryContent(
                 },
         ) {
 
-            //create column contain on all histories here
-            LazyColumn(
+            val bloodPressures =
+                if (bloodPressureRecords?.loadState?.refresh is LoadState.NotLoading) {
+                    bloodPressureRecords
+                }//end if
+                else {
+                    bloodPressureRecordsBackup
+                }//end else
+
+            Box(
                 modifier = Modifier
-                    .fillMaxSize(),
-                contentPadding = PaddingValues(
-                    horizontal = dimen.dimen_1.dp,
-                    vertical = dimen.dimen_2.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = dimen.dimen_2.dp
-                )
+                    .pullRefresh(pullRefreshState)
             ) {
 
-                //create history items here
-                bloodPressureRecords?.let {
-                    items(
-                        count = it.itemCount
-                    ) { count ->
+                //create column contain on all histories here
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(
+                        horizontal = dimen.dimen_1.dp,
+                        vertical = dimen.dimen_2.dp
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(
+                        space = dimen.dimen_2.dp
+                    )
+                ) {
 
-                        //create single history here
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = dimen.dimen_1_5.dp
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
+                    //create history items here
+                    bloodPressures?.let {
+                        items(
+                            count = it.itemCount
+                        ) { count ->
 
-                            SingleHistorySection(
-                                dimen = dimen,
-                                theme = theme,
-                                record = bloodPressureRecords[count]!!,
+                            //create single history here
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxWidth(),
-                            )
+                                    .fillMaxWidth()
+                                    .padding(
+                                        horizontal = dimen.dimen_1_5.dp
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
 
-                        }//end Box
+                                SingleHistorySection(
+                                    dimen = dimen,
+                                    theme = theme,
+                                    record = bloodPressures[count]!!,
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                )
 
-                    }
-                }//end items
+                            }//end Box
 
-            }//end LazyColumn
+                        }
+                    }//end items
+
+                }//end LazyColumn
+
+            }//end Box
 
         }//end LazyColumn
 
     }//end ConstraintLayout
+
+    LaunchedEffect(
+        key1 = bloodPressureRecords?.loadState?.refresh
+    ) {
+
+        if (bloodPressureRecords?.loadState?.refresh is LoadState.NotLoading) {
+
+            onBloodPressureBackupCreated()
+
+        }//end if
+
+    }//end LaunchedEffect
 
 }//end BloodPressureHistoryContent

@@ -69,9 +69,9 @@ internal fun InputFieldSection(
     numberFieldIsFocusNow: Int,
 ) {
     //state have state field to execute changes
-    var isFocus by rememberSaveable {
-        mutableStateOf(false)
-    }
+//    var isFocus by rememberSaveable {
+//        mutableStateOf(false)
+//    }
 
     //create container here
     Column(
@@ -84,7 +84,7 @@ internal fun InputFieldSection(
             dimen = dimen,
             text = title,
             size = dimen.dimen_1_75,
-            fontColor = if (isFocus) titleColorOnFocus else titleColorOnNotFocus
+            fontColor = if (numberField == numberFieldIsFocusNow) titleColorOnFocus else titleColorOnNotFocus
         )
 
         //create padding here
@@ -100,11 +100,11 @@ internal fun InputFieldSection(
                 .height(height.dp)
                 .appBorder(
                     borderWidth = borderWidth,
-                    borderColor = if (isFocus) borderColorOnFocus else borderColorOnNotFocus,
+                    borderColor = if (numberField == numberFieldIsFocusNow) borderColorOnFocus else borderColorOnNotFocus,
                     shape = shape
                 )
                 .background(
-                    color = if (isFocus) backgroundOnFocus else backgroundOnNotFocus
+                    color = if (numberField == numberFieldIsFocusNow) backgroundOnFocus else backgroundOnNotFocus
                 )
                 .padding(
                     horizontal = dimen.dimen_2.dp
@@ -133,7 +133,7 @@ internal fun InputFieldSection(
                             id = com.example.sharedui.R.drawable.minus
                         ),
                         contentDescription = "icon",
-                        tint = if (isFocus) operationColorOnFocus else operationColorOnNotFocus,
+                        tint = if (numberField == numberFieldIsFocusNow) operationColorOnFocus else operationColorOnNotFocus,
                         modifier = Modifier
                             .width(
                                 dimen.dimen_1_5.dp
@@ -159,7 +159,7 @@ internal fun InputFieldSection(
                             id = com.example.sharedui.R.drawable.plus
                         ),
                         contentDescription = "icon",
-                        tint = if (isFocus) operationColorOnFocus else operationColorOnNotFocus,
+                        tint = if (numberField == numberFieldIsFocusNow) operationColorOnFocus else operationColorOnNotFocus,
                         modifier = Modifier
                             .width(
                                 dimen.dimen_1_5.dp
@@ -186,7 +186,7 @@ internal fun InputFieldSection(
                 textStyle = TextStyle.Default.copy(
                     fontFamily = robotoMedium,
                     fontSize = inputSize.sp,
-                    color = if (isFocus) inputColorOnFocus else inputColorOnNotFocus
+                    color = if (numberField == numberFieldIsFocusNow) inputColorOnFocus else inputColorOnNotFocus
                 ),
                 //if this field is focus make enable equal true
                 enabled = numberField == numberFieldIsFocusNow,
@@ -218,13 +218,13 @@ internal fun InputFieldSection(
                             )
                         }
                         width = Dimension.fillToConstraints
-                    }
-                    .focusRequester(
-                        focusRequester = focusRequester
-                    )
-                    .onFocusChanged {
-                        isFocus = it.isFocused
                     },
+//                    .focusRequester(
+//                        focusRequester = focusRequester
+//                    )
+//                    .onFocusChanged {
+//                        isFocus = it.isFocused
+//                    },
                 maxLines = maxLines
             )
 
@@ -237,7 +237,7 @@ internal fun InputFieldSection(
                     text = hint,
                     size = inputSize,
                     textAlign = null,
-                    fontColor = if (isFocus) inputColorOnFocus else inputColorOnNotFocus,
+                    fontColor = if (numberField == numberFieldIsFocusNow) inputColorOnFocus else inputColorOnNotFocus,
                     modifier = Modifier
                         .constrainAs(hintId) {
                             start.linkTo(parent.start)

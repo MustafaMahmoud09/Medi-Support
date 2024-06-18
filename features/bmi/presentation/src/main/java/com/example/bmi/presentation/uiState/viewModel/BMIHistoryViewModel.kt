@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.example.bmi.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
 import com.example.bmi.pagination.BMIDataSource
-import com.example.bmi.presentation.uiState.state.BloodSugarHistoryUiState
+import com.example.bmi.presentation.uiState.state.BMIHistoryUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class BMIHistoryViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(BloodSugarHistoryUiState())
+    private val _state = MutableStateFlow(BMIHistoryUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
@@ -55,5 +55,37 @@ class BMIHistoryViewModel @Inject constructor(
         }//end update
 
     }//end onGetArticles
+
+
+    //function
+    fun onRefreshBMIRecords() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetBMIRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodSugarRecords
+
+
+    //function
+    fun onBMIBackupCreated() {
+
+        _state.update {
+            it.copy(
+                bmiRecordsBackup = state.value.bmiRecords
+            )
+        }//end update
+
+    }//end onBloodSugarBackupCreated
 
 }//end BloodSugarHistoryViewModel

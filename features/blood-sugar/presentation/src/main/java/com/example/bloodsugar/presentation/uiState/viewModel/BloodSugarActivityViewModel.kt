@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.blood.sugar.domain.usecase.declarations.IGetLastHistoryRecordsUseCase
 import com.example.blood.sugar.domain.usecase.declarations.IGetLastWeekBloodSugarRecordsUseCase
 import com.example.blood.sugar.domain.usecase.declarations.IGetLatestBloodSugarMeasurementUseCase
-import com.example.bloodsugar.presentation.uiState.state.BMIActivityUiState
+import com.example.bloodsugar.presentation.uiState.state.BloodSugarActivityUiState
 import com.example.libraries.shered.logic.usecase.declarations.IGetMonthDaysUseCase
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +26,7 @@ class BloodSugarActivityViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(BMIActivityUiState())
+    private val _state = MutableStateFlow(BloodSugarActivityUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
@@ -166,5 +166,30 @@ class BloodSugarActivityViewModel @Inject constructor(
         }//end update
 
     }//end onGetMonthDays
+
+
+    fun onRefreshBloodSugarActivity() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetMonthDays()
+
+        onGetLastWeekBloodSugarRecords()
+
+        onGetLatestBloodSugarRecord()
+
+        onGetLastHistoryBloodSugarRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodSugarActivity
 
 }//end BloodSugarActivityViewModel

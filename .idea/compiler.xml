@@ -220,10 +220,25 @@
       <module name="MediSupport.features.chat.domain.use-case.main" target="17" />
       <module name="MediSupport.features.chat.domain.use-case.test" target="17" />
       <module name="MediSupport.features.chat.presentation" target="17" />
+      <module name="MediSupport.features.heart-prediction.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.heart-prediction.data.data-source.remote-data.requests" target="17" />
       <module name="MediSupport.features.heart-prediction.data.repository" target="17" />
+      <module name="MediSupport.features.heart-prediction.data.repository-execution" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.heart-prediction.domain.use-case" target="17" />
       <module name="MediSupport.features.heart-prediction.domain.use-case.main" target="17" />
       <module name="MediSupport.features.heart-prediction.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.heart-prediction.domain.usecase-execution.test" target="17" />
       <module name="MediSupport.features.heart-prediction.presentation" target="17" />
       <module name="MediSupport.features.heart-rate.data.data-source.local-data.data-access-object" target="17" />
       <module name="MediSupport.features.heart-rate.data.data-source.local-data.entity-execution" target="17" />

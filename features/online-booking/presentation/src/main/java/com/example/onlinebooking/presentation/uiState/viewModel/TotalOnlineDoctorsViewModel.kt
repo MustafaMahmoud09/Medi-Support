@@ -56,4 +56,36 @@ class TotalOnlineDoctorsViewModel @Inject constructor(
 
     }//end onGetTotalOnlineDoctors
 
+
+    //function
+    fun onRefreshOnlineDoctors() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetTotalOnlineDoctors()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshOnlineDoctors
+
+
+    //function
+    fun onTotalOnlineDoctorsBackupCreated() {
+
+        _state.update {
+            it.copy(
+                cacheOnlineDoctorsStatus = state.value.totalOnlineDoctorsStatus
+            )
+        }//end update
+
+    }//end onTotalOnlineDoctorsBackupCreated
+
 }//end TotalOfflineDoctorsViewModel

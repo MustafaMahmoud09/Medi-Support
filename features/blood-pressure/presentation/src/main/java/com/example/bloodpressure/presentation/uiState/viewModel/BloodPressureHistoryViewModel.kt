@@ -56,4 +56,36 @@ class BloodPressureHistoryViewModel @Inject constructor(
 
     }//end onGetArticles
 
+
+    //function
+    fun onRefreshBloodPressureRecords() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetBloodPressureRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodSugarRecords
+
+
+    //function
+    fun onBloodPressureBackupCreated() {
+
+        _state.update {
+            it.copy(
+                bloodPressureRecordsBackup = state.value.bloodPressureRecords
+            )
+        }//end update
+
+    }//end onBloodSugarBackupCreated
+
 }//end BloodPressureHistoryViewModel

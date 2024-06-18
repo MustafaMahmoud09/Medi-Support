@@ -167,4 +167,29 @@ class BMIActivityViewModel @Inject constructor(
 
     }//end onGetMonthDays
 
+
+    fun onRefreshBMIActivity() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetMonthDays()
+
+        onGetLastWeekBMIRecords()
+
+        onGetLatestBMIRecord()
+
+        onGetLastHistoryBMIRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodSugarActivity
+
 }//end BloodSugarActivityViewModel

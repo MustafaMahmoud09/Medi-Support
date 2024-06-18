@@ -5,7 +5,7 @@ import com.example.heart.rate.domain.domain.model.SimpleHeartRateModel
 import com.example.libraries.shared.logic.domain.model.DayModel
 import java.time.LocalDate
 
-data class BloodSugarActivityUiState(
+data class HeartRateActivityUiState(
     val adviceHeartRateModel: AdviceHeartRateModel? = null,
     val getHeartRateChartStatus: GetChartDataStatus = GetChartDataStatus(),
     val lastHistoryHeartRateRecords: List<SimpleHeartRateModel> = emptyList(),

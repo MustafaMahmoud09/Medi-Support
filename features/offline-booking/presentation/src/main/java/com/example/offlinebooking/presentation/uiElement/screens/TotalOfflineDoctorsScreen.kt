@@ -14,8 +14,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,15 +47,21 @@ fun TotalOfflineDoctorsScreen(
     //get screen state here
     val state = viewModel.state.collectAsState()
 
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = state.value.refreshState,
+        onRefresh = viewModel::onRefreshTotalOfflineDoctors
+    )
+
     //create total offline doctors content here
     TotalOfflineDoctorsContent(
         theme = theme,
         dimen = dimen,
         navigateToBookingNavGraph = navigateToBookingNavGraph,
         uiState = state.value,
+        pullRefreshState = pullRefreshState,
+        onTotalOfflineDoctorsBackupCreated = viewModel::onTotalOfflineDoctorsBackupCreated,
         totalOfflineDoctorsStatus = state.value.totalOfflineDoctorsStatus?.collectAsLazyPagingItems(),
         totalOfflineDoctorsBackupStatus = state.value.totalOfflineDoctorsBackupStatus?.collectAsLazyPagingItems(),
-        onRefreshDoctors = viewModel::onRefreshTotalOfflineDoctors
     )
 }//end TotalOfflineDoctorsScreen
 
@@ -63,89 +72,90 @@ private fun TotalOfflineDoctorsContent(
     navigateToBookingNavGraph: (Int) -> Unit,
     uiState: TotalOfflineDoctorsUiState,
     totalOfflineDoctorsStatus: LazyPagingItems<OfflineDoctorModel>?,
-    onRefreshDoctors: KFunction0<Unit>,
     totalOfflineDoctorsBackupStatus: LazyPagingItems<OfflineDoctorModel>?,
+    pullRefreshState: PullRefreshState,
+    onTotalOfflineDoctorsBackupCreated: KFunction0<Unit>,
 ) {
 
-    Box(
+    AnimatedVisibility(
+        visible = totalOfflineDoctorsStatus?.loadState?.refresh !is LoadState.NotLoading &&
+                totalOfflineDoctorsBackupStatus?.loadState?.refresh !is LoadState.NotLoading,
+        enter = fadeIn(
+            animationSpec = tween(
+                durationMillis = 50
+            )
+        ),
+        exit = fadeOut(
+            animationSpec = tween(
+                durationMillis = 50
+            )
+        ),
         modifier = Modifier
             .fillMaxSize()
     ) {
 
-        AnimatedVisibility(
-            visible = totalOfflineDoctorsStatus?.loadState?.refresh is LoadState.Loading &&
-                    totalOfflineDoctorsBackupStatus?.loadState?.refresh !is LoadState.NotLoading,
-            enter = fadeIn(
-                animationSpec = tween(
-                    durationMillis = 50
-                )
-            ),
-            exit = fadeOut(
-                animationSpec = tween(
-                    durationMillis = 50
-                )
-            ),
+        //create container here
+        LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            contentPadding = PaddingValues(
+                bottom = dimen.dimen_2.dp,
+                top = dimen.dimen_1_5.dp,
+                start = dimen.dimen_2.dp,
+                end = dimen.dimen_2.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(
+                space = dimen.dimen_1_5.dp
+            ),
         ) {
 
-            //create container here
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentPadding = PaddingValues(
-                    bottom = dimen.dimen_2.dp,
-                    top = dimen.dimen_1_5.dp,
-                    start = dimen.dimen_2.dp,
-                    end = dimen.dimen_2.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = dimen.dimen_1_5.dp
-                ),
+            //create doctor items
+            items(
+                count = 10
             ) {
 
-                //create doctor items
-                items(
-                    count = 10
-                ) {
-
-                    //create single doctor here
-                    OfflineDoctorSection(
-                        dimen = dimen,
-                        theme = theme,
-                        textButton = stringResource(
-                            id = R.string.book_now
-                        ),
-                        onClickOnButton = {},
-                        doctorIsOnline = false,
-                        offlineDoctor = uiState.doctorPlaceHolder,
-                        placeHolderState = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-
-                }//end items
-
-            }//end LazyColumn
-
-        }//end AnimatedVisibility
-
-
-        AnimatedVisibility(
-            visible = totalOfflineDoctorsStatus?.loadState?.refresh is LoadState.NotLoading ||
-                    totalOfflineDoctorsBackupStatus?.loadState?.refresh is LoadState.NotLoading,
-            enter = fadeIn(
-                animationSpec = tween(
-                    durationMillis = 50
+                //create single doctor here
+                OfflineDoctorSection(
+                    dimen = dimen,
+                    theme = theme,
+                    textButton = stringResource(
+                        id = R.string.book_now
+                    ),
+                    onClickOnButton = {},
+                    doctorIsOnline = false,
+                    offlineDoctor = uiState.doctorPlaceHolder,
+                    placeHolderState = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
-            ),
-            exit = fadeOut(
-                animationSpec = tween(
-                    durationMillis = 50
-                )
-            ),
+
+            }//end items
+
+        }//end LazyColumn
+
+    }//end AnimatedVisibility
+
+
+    AnimatedVisibility(
+        visible = totalOfflineDoctorsStatus?.loadState?.refresh is LoadState.NotLoading ||
+                totalOfflineDoctorsBackupStatus?.loadState?.refresh is LoadState.NotLoading,
+        enter = fadeIn(
+            animationSpec = tween(
+                durationMillis = 50
+            )
+        ),
+        exit = fadeOut(
+            animationSpec = tween(
+                durationMillis = 50
+            )
+        ),
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+
+        Box(
             modifier = Modifier
-                .fillMaxSize()
+                .pullRefresh(pullRefreshState)
         ) {
 
             val doctorsPagination =
@@ -198,17 +208,27 @@ private fun TotalOfflineDoctorsContent(
 
             }//end LazyColumn
 
-        }//end AnimatedVisibility
+            PullRefreshIndicator(
+                refreshing = uiState.refreshState,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
 
-        PullRefreshIndicator(
-            refreshing = uiState.refreshDoctorsState,
-            state = rememberPullRefreshState(
-                refreshing = uiState.refreshDoctorsState,
-                onRefresh = onRefreshDoctors
-            ),
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
+        }//end Box
 
-    }//end Box
+    }//end AnimatedVisibility
+
+
+    LaunchedEffect(
+        key1 = totalOfflineDoctorsStatus?.loadState?.refresh
+    ) {
+
+        if (totalOfflineDoctorsStatus?.loadState?.refresh is LoadState.NotLoading) {
+
+            onTotalOfflineDoctorsBackupCreated()
+
+        }//end if
+
+    }//end LaunchedEffect
 
 }//end TotalOfflineDoctorsContent

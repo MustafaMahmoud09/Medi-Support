@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 data class BloodPressureHistoryUiState(
     val bloodPressureRecords: Flow<PagingData<SimpleBloodPressureModel>>? = null,
+    val bloodPressureRecordsBackup: Flow<PagingData<SimpleBloodPressureModel>>? = null,
+    val refreshState: Boolean = false,
     val placeHolderBloodPressure: SimpleBloodPressureModel = SimpleBloodPressureModel(
         id = 0,
         systolic = 0,

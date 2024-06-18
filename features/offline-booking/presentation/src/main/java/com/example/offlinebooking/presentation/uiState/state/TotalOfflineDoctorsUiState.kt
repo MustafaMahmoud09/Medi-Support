@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 data class TotalOfflineDoctorsUiState(
     val totalOfflineDoctorsStatus: Flow<PagingData<OfflineDoctorModel>>? = null,
     val totalOfflineDoctorsBackupStatus: Flow<PagingData<OfflineDoctorModel>>? = null,
-    val refreshDoctorsState: Boolean = false,
+    val refreshState: Boolean = false,
     val doctorPlaceHolder: OfflineDoctorModel = OfflineDoctorModel(
         id = 0,
         name = "js",

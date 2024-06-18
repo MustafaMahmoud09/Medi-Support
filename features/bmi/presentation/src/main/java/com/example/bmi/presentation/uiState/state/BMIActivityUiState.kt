@@ -10,5 +10,6 @@ data class BMIActivityUiState(
     val getBMIChartStatus: GetChartDataStatus = GetChartDataStatus(),
     val lastHistoryBMIRecords: List<SimpleBMIModel> = emptyList(),
     val monthDays: List<DayModel> = emptyList(),
+    val refreshState: Boolean = false,
     val currentDayNumber: Int = LocalDate.now().dayOfMonth
 )

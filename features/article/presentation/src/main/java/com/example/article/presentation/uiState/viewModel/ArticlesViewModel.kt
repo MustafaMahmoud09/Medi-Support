@@ -12,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -57,6 +56,39 @@ class ArticlesViewModel @Inject constructor(
         }
 
     }//end onGetArticles
+
+
+    //function
+    fun onRefreshArticles(){
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetArticles()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshArticles
+
+
+    //function
+    fun onArticlesBackupCreated() {
+
+        //update total online booking
+        _state.update {
+            it.copy(
+                cacheArticles = state.value.articles
+            )
+        }//end update
+
+    }//end onOnlineBookingBackupCreated
 
 
 }//end ArticlesViewModel

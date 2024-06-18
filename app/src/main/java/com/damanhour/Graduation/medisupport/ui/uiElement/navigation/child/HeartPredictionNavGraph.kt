@@ -13,6 +13,7 @@ import com.example.sharedui.uiElement.navigation.transitions.enterTransitionMain
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation
+import kotlin.reflect.KFunction1
 
 //route name
 internal const val HEART_PREDICTION_NAV_GRAPH_ROUTE = "heartPredictionNavGraph"
@@ -41,7 +42,7 @@ internal fun NavGraphBuilder.heartPredictionNavGraph(
     popHeartPredictionNavGraph: () -> Unit,
     navigateToRecordHeartPredictionDestination: () -> Unit,
     popRecordHeartPredictionDestination: () -> Unit,
-    navigateToPredictionHeartPredictionDestination: () -> Unit,
+    navigateToPredictionHeartPredictionDestination: KFunction1<Int, Unit>,
     popPredictionHeartPredictionDestination: () -> Unit
 ) {
     //create heart prediction nav graph here

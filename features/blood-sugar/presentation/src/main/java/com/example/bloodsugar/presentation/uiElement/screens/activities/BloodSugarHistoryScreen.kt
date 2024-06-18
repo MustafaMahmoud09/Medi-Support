@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.example.bloodsugar.presentation.uiElement.screens.activities
 
 import androidx.compose.animation.AnimatedVisibility
@@ -13,7 +15,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,11 +34,12 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
 import com.example.bloodsugar.presentation.uiElement.components.items.SingleHistorySection
-import com.example.bloodsugar.presentation.uiState.state.BMIHistoryUiState
+import com.example.bloodsugar.presentation.uiState.state.BloodSugarHistoryUiState
 import com.example.bloodsugar.presentation.uiState.viewModel.BloodSugarHistoryViewModel
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import kotlin.reflect.KFunction0
 
 @Composable
 fun BloodSugarHistoryScreen(
@@ -41,11 +50,19 @@ fun BloodSugarHistoryScreen(
     //get screen state here
     val state = viewModel.state.collectAsState()
 
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = state.value.refreshState,
+        onRefresh = viewModel::onRefreshBloodSugarRecords
+    )
+
     BloodSugarHistoryContent(
         theme = theme,
         dimen = dimen,
         uiState = state.value,
+        pullRefreshState = pullRefreshState,
         bloodSugarRecords = state.value.bloodSugarRecords?.collectAsLazyPagingItems(),
+        bloodSugarRecordsBackup = state.value.bloodSugarRecordsBackup?.collectAsLazyPagingItems(),
+        onBloodSugarBackupCreated = viewModel::onBloodSugarBackupCreated
     )
 }//end BloodSugarHistoryScreen
 
@@ -53,8 +70,11 @@ fun BloodSugarHistoryScreen(
 private fun BloodSugarHistoryContent(
     theme: CustomTheme,
     dimen: CustomDimen,
-    uiState: BMIHistoryUiState,
+    uiState: BloodSugarHistoryUiState,
     bloodSugarRecords: LazyPagingItems<SimpleBloodSugarModel>?,
+    pullRefreshState: PullRefreshState,
+    bloodSugarRecordsBackup: LazyPagingItems<SimpleBloodSugarModel>?,
+    onBloodSugarBackupCreated: KFunction0<Unit>,
 ) {
 
     //create container here
@@ -84,7 +104,8 @@ private fun BloodSugarHistoryContent(
 
         //if request state is loading show placeholder
         AnimatedVisibility(
-            visible = bloodSugarRecords?.loadState?.refresh is LoadState.Loading,
+            visible = bloodSugarRecords?.loadState?.refresh !is LoadState.NotLoading &&
+                    bloodSugarRecordsBackup?.loadState?.refresh !is LoadState.NotLoading,
             enter = fadeIn(
                 animationSpec = tween(
                     durationMillis = 50
@@ -154,7 +175,8 @@ private fun BloodSugarHistoryContent(
 
         //if request state is success show items
         AnimatedVisibility(
-            visible = bloodSugarRecords?.loadState?.refresh is LoadState.NotLoading,
+            visible = bloodSugarRecords?.loadState?.refresh is LoadState.NotLoading ||
+                    bloodSugarRecordsBackup?.loadState?.refresh is LoadState.NotLoading,
             enter = fadeIn(
                 animationSpec = tween(
                     durationMillis = 50
@@ -176,52 +198,85 @@ private fun BloodSugarHistoryContent(
                 },
         ) {
 
-            //create column contain on all histories here
-            LazyColumn(
+
+            val bloodSugars = if (bloodSugarRecords?.loadState?.refresh is LoadState.NotLoading) {
+                bloodSugarRecords
+            }//end if
+            else {
+                bloodSugarRecordsBackup
+            }//end else
+
+            Box(
                 modifier = Modifier
-                    .fillMaxSize(),
-                contentPadding = PaddingValues(
-                    horizontal = dimen.dimen_1.dp,
-                    vertical = dimen.dimen_2.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = dimen.dimen_2.dp
-                )
+                    .pullRefresh(pullRefreshState)
             ) {
 
-                //create history items here
-                bloodSugarRecords?.let {
-                    items(
-                        count = it.itemCount
-                    ) { count ->
+                //create column contain on all histories here
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(
+                        horizontal = dimen.dimen_1.dp,
+                        vertical = dimen.dimen_2.dp
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(
+                        space = dimen.dimen_2.dp
+                    )
+                ) {
 
-                        //create single history here
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = dimen.dimen_1_5.dp
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
+                    //create history items here
+                    bloodSugars?.let {
+                        items(
+                            count = it.itemCount
+                        ) { count ->
 
-                            SingleHistorySection(
-                                dimen = dimen,
-                                theme = theme,
-                                record = bloodSugarRecords[count]!!,
+                            //create single history here
+                            Box(
                                 modifier = Modifier
-                                    .fillMaxWidth(),
-                            )
+                                    .fillMaxWidth()
+                                    .padding(
+                                        horizontal = dimen.dimen_1_5.dp
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
 
-                        }//end Box
+                                SingleHistorySection(
+                                    dimen = dimen,
+                                    theme = theme,
+                                    record = bloodSugars[count]!!,
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                )
 
-                    }
-                }//end items
+                            }//end Box
 
-            }//end LazyColumn
+                        }
+                    }//end items
+
+                }//end LazyColumn
+
+                PullRefreshIndicator(
+                    refreshing = uiState.refreshState,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter)
+                )
+
+            }//end Box
 
         }//end LazyColumn
 
     }//end ConstraintLayout
+
+    LaunchedEffect(
+        key1 = bloodSugarRecords?.loadState?.refresh
+    ) {
+
+        if (bloodSugarRecords?.loadState?.refresh is LoadState.NotLoading) {
+
+            onBloodSugarBackupCreated()
+
+        }//end if
+
+    }//end LaunchedEffect
 
 }//end BloodSugarHistoryContent

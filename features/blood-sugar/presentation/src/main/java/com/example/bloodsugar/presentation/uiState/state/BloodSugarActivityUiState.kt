@@ -5,8 +5,9 @@ import com.example.blood.sugar.domain.model.SimpleBloodSugarModel
 import com.example.libraries.shared.logic.domain.model.DayModel
 import java.time.LocalDate
 
-data class BMIActivityUiState(
+data class BloodSugarActivityUiState(
     val adviceBloodSugarModel: AdviceBloodSugarModel? = null,
+    val refreshState: Boolean = false,
     val getBloodSugarChartStatus: GetChartDataStatus = GetChartDataStatus(),
     val lastHistoryBloodSugarRecords: List<SimpleBloodSugarModel> = emptyList(),
     val monthDays: List<DayModel> = emptyList(),

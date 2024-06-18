@@ -11,5 +11,6 @@ data class BloodPressureActivityUiState(
     val systolicResult: GetChartDataStatus = GetChartDataStatus(),
     val diastolicResult: GetChartDataStatus = GetChartDataStatus(),
     val currentDayNumber: Int = LocalDate.now().dayOfMonth,
-    val lastHistoryRecords: List<SimpleBloodPressureModel> = emptyList()
+    val lastHistoryRecords: List<SimpleBloodPressureModel> = emptyList(),
+    val refreshState: Boolean = false
 )

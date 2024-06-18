@@ -57,4 +57,36 @@ class HeartRateHistoryViewModel @Inject constructor(
 
     }//end onGetArticles
 
+
+    //function
+    fun onRefreshHeartRateRecords() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetHeartRateRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodSugarRecords
+
+
+    //function
+    fun onHeartRateBackupCreated() {
+
+        _state.update {
+            it.copy(
+                heartRateRecordsBackup = state.value.heartRateRecords
+            )
+        }//end update
+
+    }//end onBloodSugarBackupCreated
+
 }//end HeartRateHistoryViewModel

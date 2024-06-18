@@ -169,6 +169,15 @@ dependencies {
     implementation(project(':features:online-booking:mapper-execution'))
     implementation(project(':features:online-booking:data:data-source:remote-data:requests'))
 
+    //online booking
+    implementation(project(':features:heart-prediction:presentation'))
+    implementation(project(':features:heart-prediction:domain:usecase-declarations'))
+    implementation(project(':features:heart-prediction:domain:usecase-execution'))
+    implementation(project(':features:heart-prediction:domain:repository-declarations'))
+    implementation(project(':features:heart-prediction:data:repository-execution'))
+    implementation(project(':features:heart-prediction:data:data-source:remote-data:requests'))
+
+
     //payment
     implementation(project(':features:payment:presentation'))
 

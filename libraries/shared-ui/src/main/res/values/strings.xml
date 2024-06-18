@@ -66,7 +66,7 @@
     <string name="all_doctors">All Doctors</string>
     <string name="heart_disease_prediction">Heart Disease Prediction</string>
     <string name="result">Result</string>
-    <string name="congratulations_message_heart_prediction">" Congratulations ,We think You Don’t Have Heart Disease"</string>
+    <string name="congratulations_message_heart_prediction">Congratulations ,We think You Don’t Have Heart Disease"</string>
     <string name="congratulations">Congratulations</string>
     <string name="note_on_prediction_heart_dis">Important Note : This prediction is based on machine learning algorithms and is not a substitute for professional medical advice .For accurate diagnosis and personalized care , We strongly recommend consulting with a healthcare professional or your primary care physician.</string>
     <string name="important_note">Important Note :</string>
@@ -258,4 +258,7 @@
     <string name="do_you_have_kidney_disease">Do you have kidney disease ?</string>
     <string name="skin_cancer">Skin Cancer</string>
     <string name="do_you_have_skin_cancer">Do you have skin cancer ?</string>
+    <string name="data_is_incomplete">Data is incomplete</string>
+    <string name="sorry">Sorry,</string>
+    <string name="sorry_you_may_have_heart_disease">Sorry, You  May Have Heart Disease</string>
 </resources>

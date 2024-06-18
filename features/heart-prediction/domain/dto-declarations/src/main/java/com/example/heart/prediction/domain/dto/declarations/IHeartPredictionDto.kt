@@ -1,11 +1,9 @@
-package com.example.heart.prediction.data.source.remote.data.dto.execution
+package com.example.heart.prediction.domain.dto.declarations
 
+interface IHeartPredictionDto {
 
-import com.google.gson.annotations.SerializedName
+    val message: String?
 
-data class HeartPredictionDto(
-    @SerializedName("message")
-    val message: String?,
-    @SerializedName("prediction")
     val prediction: Int?
-)
+
+}//end HeartPredictionDto

@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
 import com.example.blood.sugar.pagination.BloodSugarDataSource
-import com.example.bloodsugar.presentation.uiState.state.BMIHistoryUiState
+import com.example.bloodsugar.presentation.uiState.state.BloodSugarHistoryUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class BloodSugarHistoryViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //for manage screen state from view model
-    private val _state = MutableStateFlow(BMIHistoryUiState())
+    private val _state = MutableStateFlow(BloodSugarHistoryUiState())
 
     //for observe by screen
     val state = _state.asStateFlow()
@@ -55,5 +55,37 @@ class BloodSugarHistoryViewModel @Inject constructor(
         }
 
     }//end onGetArticles
+
+
+    //function
+    fun onRefreshBloodSugarRecords() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetBloodSugarRecords()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshBloodSugarRecords
+
+
+    //function
+    fun onBloodSugarBackupCreated() {
+
+        _state.update {
+            it.copy(
+                bloodSugarRecordsBackup = state.value.bloodSugarRecords
+            )
+        }//end update
+
+    }//end onBloodSugarBackupCreated
 
 }//end BloodSugarHistoryViewModel

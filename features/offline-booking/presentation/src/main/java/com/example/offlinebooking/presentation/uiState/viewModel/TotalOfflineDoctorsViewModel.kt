@@ -71,8 +71,7 @@ class TotalOfflineDoctorsViewModel @Inject constructor(
         //update backup doctors state and refresh state here
         _state.update {
             it.copy(
-                totalOfflineDoctorsBackupStatus = state.value.totalOfflineDoctorsStatus,
-                refreshDoctorsState = true
+                refreshState = true
             )
         }//end update
 
@@ -80,12 +79,24 @@ class TotalOfflineDoctorsViewModel @Inject constructor(
         onGetTotalOfflineDoctors()
 
         //update backup doctors state and refresh state here
-//        _state.update {
-//            it.copy(
-//                refreshDoctorsState = false
-//            )
-//        }//end update
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
 
     }//end onRefreshTotalOfflineDoctors
+
+
+    //function
+    fun onTotalOfflineDoctorsBackupCreated() {
+
+        _state.update {
+            it.copy(
+                totalOfflineDoctorsBackupStatus = state.value.totalOfflineDoctorsStatus
+            )
+        }//end update
+
+    }//end onTotalOfflineDoctorsBackupCreated
 
 }//end TotalOfflineDoctorsViewModel

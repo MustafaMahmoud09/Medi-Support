@@ -178,6 +178,37 @@ class OnlineDetailsViewModel @Inject constructor(
     }//end onGetTotalOnlineDoctors
 
 
+    fun onOnlineBookingBackupCreated() {
+
+        //update total online booking
+        _state.update {
+            it.copy(
+                cacheTotalOnlineBookingStatus = state.value.totalOnlineBookingStatus
+            )
+        }//end update
+
+    }//end onOnlineBookingBackupCreated
+
+
+    fun onRefreshOnlineBooking() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetTotalOnlineBookings()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshOnlineBooking
+
+
     //function for get payment intent secret
     fun onGetPaymentIntentSecret(
         bookingId: Long
@@ -241,6 +272,43 @@ class OnlineDetailsViewModel @Inject constructor(
                                     )
 
                                 }//end appointment not valid case
+
+                                421 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            getPaymentIntentSecretStatus = state.value.getPaymentIntentSecretStatus.copy(
+                                                success = false,
+                                                loading = false,
+                                            ),
+                                        )
+                                    }//end update
+
+                                    onUpdateOnlineBookingPaymentStatus(
+                                        newStatus = 0
+                                    )
+
+                                }//end appointment not valid case
+
+
+                                423 -> {
+
+                                    _state.update {
+                                        it.copy(
+                                            getPaymentIntentSecretStatus = state.value.getPaymentIntentSecretStatus.copy(
+                                                success = false,
+                                                loading = false,
+                                            ),
+                                        )
+                                    }//end update
+
+                                    onUpdateOnlineBookingPaymentStatus(
+                                        newStatus = 3
+                                    )
+
+                                }//end appointment not valid case
+
+
 
                                 403 -> {
 
@@ -344,13 +412,6 @@ class OnlineDetailsViewModel @Inject constructor(
     private fun onDeleteOnlineBookingFromPagination(
         bookingId: Long
     ) {
-
-        //update total online booking
-        _state.update {
-            it.copy(
-                cacheTotalOnlineBookingStatus = state.value.totalOnlineBookingStatus
-            )
-        }//end update
 
         val bookings = state.value.totalOnlineBookingStatus?.map { onlineBookings ->
             onlineBookings.filter { booking ->

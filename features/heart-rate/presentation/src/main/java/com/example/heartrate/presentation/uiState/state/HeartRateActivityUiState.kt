@@ -9,6 +9,7 @@ data class BloodSugarActivityUiState(
     val adviceHeartRateModel: AdviceHeartRateModel? = null,
     val getHeartRateChartStatus: GetChartDataStatus = GetChartDataStatus(),
     val lastHistoryHeartRateRecords: List<SimpleHeartRateModel> = emptyList(),
+    val refreshState: Boolean = false,
     val monthDays: List<DayModel> = emptyList(),
     val currentDayNumber: Int = LocalDate.now().dayOfMonth
 )

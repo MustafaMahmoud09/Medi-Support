@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OfflineDetailsViewModel @Inject constructor(
     private val getPageOfflineBookingsUseCase: IGetPageOfflineBookingsUseCase
-): BaseViewModel(){
+) : BaseViewModel() {
 
     //for manage screen state from view model
     private val _state = MutableStateFlow(OfflineDetailsUiState())
@@ -56,5 +56,37 @@ class OfflineDetailsViewModel @Inject constructor(
         }//end update
 
     }//end onGetTotalOfflineBookings
+
+
+    //function
+    fun onRefreshTotalOfflineBookings() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetTotalOfflineBookings()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshTotalOfflineBookings
+
+
+    //function
+    fun onTotalOfflineBookingsBackupCreated() {
+
+        _state.update {
+            it.copy(
+                cacheTotalOfflineBookingStatus = state.value.totalOfflineBookingStatus
+            )
+        }//end update
+
+    }//end onTotalOfflineBookingsBackupCreated
 
 }//end OfflineDetailsViewModel

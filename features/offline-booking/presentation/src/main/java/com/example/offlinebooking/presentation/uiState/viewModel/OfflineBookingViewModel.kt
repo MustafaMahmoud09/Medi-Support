@@ -1,6 +1,7 @@
 package com.example.offlinebooking.presentation.uiState.viewModel
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.libraries.core.remote.data.response.status.Status
@@ -10,6 +11,7 @@ import com.example.offline.booking.domain.usecase.declarations.IGetBookingTimeUs
 import com.example.offline.booking.domain.usecase.declarations.IGetOfflineDoctorDetailsByIdUseCase
 import com.example.offline.booking.domain.usecase.declarations.IRateOfflineDoctorUseCase
 import com.example.offlinebooking.presentation.uiElement.screens.booking.OfflineBookingArgs
+import com.example.offlinebooking.presentation.uiState.state.InfiniteGetterStatus
 import com.example.offlinebooking.presentation.uiState.state.OfflineBookingUiState
 import com.example.sharedui.uiState.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -303,7 +305,13 @@ class OfflineBookingViewModel @Inject constructor(
                                             .offlineDoctorDetailsStatus.copy(
                                                 loading = false,
                                                 data = status.data.body
-                                            )
+                                            ),
+                                        timeIdSelected = -1,
+                                        dateIdSelected = MutableStateFlow(-1),
+                                        dateTimeStatus = InfiniteGetterStatus(
+                                            data = emptyList()
+                                        ),
+                                        numberOfSuccessRequests = 1
                                     )
                                 }//end update
 
@@ -355,6 +363,26 @@ class OfflineBookingViewModel @Inject constructor(
         }//end coroutine builder scope
 
     }//end onGetDoctorDetails
+
+
+    //function
+    fun onRefreshOfflineDoctor() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetDoctorDetails()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshOfflineDoctor
 
 
     //function for get booking date times

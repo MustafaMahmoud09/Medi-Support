@@ -4,6 +4,8 @@ import com.example.online.booking.domain.model.OnlineDoctorDetailsModel
 
 data class OnlineBookingUiState(
     val doctorId: Long = 0,
+    val refreshState: Boolean = false,
+    val numberOfSuccessRequests: Int = 0,
     val onlineDoctorDetailsStatus: GetDoctorDetailsStatus = GetDoctorDetailsStatus(),
     val startRunning: Boolean = true,
     val bookOnlineAppointmentStatus: BookOfflineAppointmentStatus = BookOfflineAppointmentStatus()

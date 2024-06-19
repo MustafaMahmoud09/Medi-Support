@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.example.onlinebooking.presentation.uiElement.screens.booking
 
 import android.annotation.SuppressLint
@@ -6,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +16,11 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -21,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -69,13 +78,19 @@ internal fun OnlineBookingScreen(
     val alreadyHaveBooking =
         stringResource(R.string.you_already_have_a_booking_with)
 
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = state.value.refreshState,
+        onRefresh = viewModel::onRefreshOnlineDoctor
+    )
+
     OnlineBookingContent(
         onClickOnBackButton = popBookingNavGraph,
         uiState = state.value,
         onClickOnBookingButton = viewModel::onBookOnlineAppointment,
         onClickOnDoneButton = navigateToBookingDetailsDestination,
         snackbarHostState = snackbarHostState,
-        onRateOnlineDoctor = viewModel::onRateOfflineDoctor
+        onRateOnlineDoctor = viewModel::onRateOfflineDoctor,
+        pullRefreshState = pullRefreshState
     )
 
     LaunchedEffect(
@@ -154,7 +169,8 @@ private fun OnlineBookingContent(
     onClickOnBookingButton: () -> Unit,
     onClickOnDoneButton: (Int) -> Unit,
     snackbarHostState: SnackbarHostState,
-    onRateOnlineDoctor: KFunction1<Int, Unit>
+    onRateOnlineDoctor: KFunction1<Int, Unit>,
+    pullRefreshState: PullRefreshState
 ) {
 
     //create base screen for define navigation and status bar color
@@ -169,246 +185,262 @@ private fun OnlineBookingContent(
             }//end snack bar Host
         ) {
 
-            //create container here
-            ConstraintLayout(
+            Box(
                 modifier = Modifier
-                    .navigationBarsPadding()
-                    .fillMaxSize()
-                    .background(
-                        color = theme.background
-                    )
+                    .pullRefresh(pullRefreshState)
             ) {
-                //create ids for screen components here
-                val (
-                    doctorProfileId, successDialogId,
-                    infoDoctorId, bookAppointmentId, backButtonId
-                ) = createRefs()
 
-                //create guides here
-                val guideLineFromTop58P = createGuidelineFromTop(0.5725f)
-                val guideLineFromTop60P = createGuidelineFromTop(0.6075f)
-
-                AnimatedVisibility(
-                    visible = uiState.bookOnlineAppointmentStatus.success,
-                    enter = fadeIn(
-                        animationSpec = tween(
-                            durationMillis = 150
+                //create container here
+                ConstraintLayout(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .fillMaxSize()
+                        .background(
+                            color = theme.background
                         )
-                    ),
-                    exit = fadeOut(
-                        animationSpec = tween(
-                            durationMillis = 150
-                        )
-                    )
                 ) {
+                    //create ids for screen components here
+                    val (
+                        doctorProfileId, successDialogId,
+                        infoDoctorId, bookAppointmentId, backButtonId
+                    ) = createRefs()
 
-                    //create booking successfully dialog here
-                    MessagesDialogSection(
-                        dimen = dimen,
-                        theme = theme,
-                        logo = painterResource(
-                            id = R.drawable.success
+                    //create guides here
+                    val guideLineFromTop58P = createGuidelineFromTop(0.5725f)
+                    val guideLineFromTop60P = createGuidelineFromTop(0.6075f)
+
+                    AnimatedVisibility(
+                        visible = uiState.bookOnlineAppointmentStatus.success,
+                        enter = fadeIn(
+                            animationSpec = tween(
+                                durationMillis = 150
+                            )
                         ),
-                        logoTint = theme.greenLight,
-                        title = stringResource(
-                            id = R.string.booking_successful
-                        ),
-                        buttonTitle = stringResource(
-                            id = R.string.done
-                        ),
-                        titlePaddingTop = dimen.dimen_2_5,
-                        logoPaddingTop = dimen.dimen_6,
-                        messagesPaddingTop = dimen.dimen_2_5,
-                        buttonPaddingTop = dimen.dimen_2_5,
-                        buttonTitleSize = dimen.dimen_2_25,
-                        buttonTitleColor = theme.background,
-                        buttonBackground = theme.redDark,
-                        onClickOnButton = { onClickOnDoneButton(0) },
-                        messages = arrayOf(
-                            DialogMessage(
-                                message = stringResource(
-                                    id = R.string.online_message_during_first_step_in_booking
+                        exit = fadeOut(
+                            animationSpec = tween(
+                                durationMillis = 150
+                            )
+                        )
+                    ) {
+
+                        //create booking successfully dialog here
+                        MessagesDialogSection(
+                            dimen = dimen,
+                            theme = theme,
+                            logo = painterResource(
+                                id = R.drawable.success
+                            ),
+                            logoTint = theme.greenLight,
+                            title = stringResource(
+                                id = R.string.booking_successful
+                            ),
+                            buttonTitle = stringResource(
+                                id = R.string.done
+                            ),
+                            titlePaddingTop = dimen.dimen_2_5,
+                            logoPaddingTop = dimen.dimen_6,
+                            messagesPaddingTop = dimen.dimen_2_5,
+                            buttonPaddingTop = dimen.dimen_2_5,
+                            buttonTitleSize = dimen.dimen_2_25,
+                            buttonTitleColor = theme.background,
+                            buttonBackground = theme.redDark,
+                            onClickOnButton = { onClickOnDoneButton(0) },
+                            messages = arrayOf(
+                                DialogMessage(
+                                    message = stringResource(
+                                        id = R.string.online_message_during_first_step_in_booking
+                                    ),
+                                    color = theme.hintIconBottom,
+                                    size = (dimen.dimen_1_75 + dimen.dimen_0_125),
+                                    paddingTop = dimen.dimen_0,
+                                    paddingHorizontal = dimen.dimen_3_25,
+                                )
+                            ),
+                            horizontalMargin = dimen.dimen_1_5,
+                            paddingBottom = dimen.dimen_6,
+                            modifier = Modifier
+                                .constrainAs(successDialogId) {
+                                    top.linkTo(parent.top)
+                                    bottom.linkTo(parent.bottom)
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    width = Dimension.fillToConstraints
+                                }
+                        )
+
+                    }//end AnimatedVisibility
+
+                    if (uiState.numberOfSuccessRequests == 0) {
+
+                        CircularProgressIndicator(
+                            color = theme.grayLight,
+                            trackColor = theme.background,
+                            strokeWidth = dimen.dimen_0_5.dp,
+                            modifier = Modifier
+                                .constrainAs(createRef()) {
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    bottom.linkTo(parent.bottom)
+                                    top.linkTo(parent.top)
+                                }
+                                .size(
+                                    size = dimen.dimen_3.dp
+                                )
+                        )
+
+                    }//end if
+                    else {
+
+                        //create doctor profile here
+                        ServerLoadImageView(
+                            theme = theme,
+                            dimen = dimen,
+                            imageUrl = uiState.onlineDoctorDetailsStatus.data?.image ?: "",
+                            modifier = Modifier
+                                .constrainAs(doctorProfileId) {
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    top.linkTo(parent.top)
+                                    bottom.linkTo(guideLineFromTop60P)
+                                    width = Dimension.fillToConstraints
+                                    height = Dimension.fillToConstraints
+                                }
+                        )
+
+                        //create book appointment button here
+                        BasicButtonView(
+                            dimen = dimen,
+                            theme = theme,
+                            text = stringResource(
+                                id = R.string.book_appointment
+                            ),
+                            onClick = if (!uiState.bookOnlineAppointmentStatus.loading) {
+                                onClickOnBookingButton
+                            } else {
+                                {}
+                            },
+                            load = uiState.bookOnlineAppointmentStatus.loading,
+                            modifier = Modifier
+                                .constrainAs(bookAppointmentId) {
+                                    start.linkTo(
+                                        parent.start,
+                                        dimen.dimen_2.dp
+                                    )
+                                    end.linkTo(
+                                        parent.end,
+                                        dimen.dimen_2.dp
+                                    )
+                                    bottom.linkTo(
+                                        parent.bottom,
+                                        dimen.dimen_2.dp
+                                    )
+                                    width = Dimension.fillToConstraints
+                                }
+                        )
+
+                        //create info box here
+                        LazyColumn(
+                            modifier = Modifier
+                                .constrainAs(infoDoctorId) {
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    top.linkTo(guideLineFromTop58P)
+                                    bottom.linkTo(bookAppointmentId.top)
+                                    width = Dimension.fillToConstraints
+                                    height = Dimension.fillToConstraints
+                                }
+                                .clip(
+                                    shape = RoundedCornerShape(
+                                        topStart = dimen.dimen_3_75.dp,
+                                        topEnd = dimen.dimen_3_75.dp
+                                    )
+                                )
+                                .drawBehind {
+                                    drawRoundRect(
+                                        color = theme.blackTR25
+                                    )
+                                }
+                                .background(
+                                    color = theme.background
                                 ),
-                                color = theme.hintIconBottom,
-                                size = (dimen.dimen_1_75 + dimen.dimen_0_125),
-                                paddingTop = dimen.dimen_0,
-                                paddingHorizontal = dimen.dimen_3_25,
+                            contentPadding = PaddingValues(
+                                top = dimen.dimen_3_5.dp,
+                                start = dimen.dimen_2.dp,
+                                end = dimen.dimen_3_75.dp,
+                                bottom = dimen.dimen_2.dp
                             )
-                        ),
-                        horizontalMargin = dimen.dimen_1_5,
-                        paddingBottom = dimen.dimen_6,
-                        modifier = Modifier
-                            .constrainAs(successDialogId) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                width = Dimension.fillToConstraints
-                            }
-                    )
+                        ) {
 
-                }//end AnimatedVisibility
+                            //create item contain on doctor info here
+                            item(
+                                key = 1
+                            ) {
 
-                if (uiState.onlineDoctorDetailsStatus.loading) {
+                                //create doctor info here
+                                BookedDoctorInformationSection(
+                                    dimen = dimen,
+                                    theme = theme,
+                                    doctorName = uiState.onlineDoctorDetailsStatus.data?.name ?: "",
+                                    jop = uiState.onlineDoctorDetailsStatus.data?.specialization
+                                        ?: "",
+                                    price = uiState.onlineDoctorDetailsStatus.data?.price ?: "",
+                                    currency = stringResource(
+                                        id = R.string.egp
+                                    ),
+                                    address = uiState.onlineDoctorDetailsStatus.data?.clinicLocation
+                                        ?: "",
+                                    interactionRatingValue = (uiState.onlineDoctorDetailsStatus.data?.userRating
+                                        ?: 0).toInt(),
+                                    interactionRatingOnChanged = onRateOnlineDoctor,
+                                    interactionRatingTitle = stringResource(
+                                        id = R.string.rate
+                                    ),
+                                    doctorIsOnline = uiState.onlineDoctorDetailsStatus.data?.active
+                                        ?: false,
+                                    phoneNumber = uiState.onlineDoctorDetailsStatus.data?.phone
+                                        ?: "",
+                                    aboutContent = uiState.onlineDoctorDetailsStatus.data?.bio
+                                        ?: "",
+                                    rating = uiState.onlineDoctorDetailsStatus.data?.rating ?: 0f,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                )
 
-                    CircularProgressIndicator(
-                        color = theme.grayLight,
-                        trackColor = theme.background,
-                        strokeWidth = dimen.dimen_0_5.dp,
-                        modifier = Modifier
-                            .constrainAs(createRef()) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                bottom.linkTo(parent.bottom)
-                                top.linkTo(parent.top)
-                            }
-                            .size(
-                                size = dimen.dimen_3.dp
-                            )
-                    )
+                            }//end item
 
-                }//end if
-                else {
+                        }//end LazyColumn
 
-                    //create doctor profile here
-                    ServerLoadImageView(
-                        theme = theme,
-                        dimen = dimen,
-                        imageUrl = uiState.onlineDoctorDetailsStatus.data?.image ?: "",
-                        modifier = Modifier
-                            .constrainAs(doctorProfileId) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                top.linkTo(parent.top)
-                                bottom.linkTo(guideLineFromTop60P)
-                                width = Dimension.fillToConstraints
-                                height = Dimension.fillToConstraints
-                            }
-                    )
+                    }//end else
 
-                    //create book appointment button here
-                    BasicButtonView(
+                    //create back button here
+                    IconButtonView(
                         dimen = dimen,
                         theme = theme,
-                        text = stringResource(
-                            id = R.string.book_appointment
-                        ),
-                        onClick = if (!uiState.bookOnlineAppointmentStatus.loading) {
-                            onClickOnBookingButton
-                        } else {
-                            {}
-                        },
-                        load = uiState.bookOnlineAppointmentStatus.loading,
+                        onClick = onClickOnBackButton,
                         modifier = Modifier
-                            .constrainAs(bookAppointmentId) {
+                            .constrainAs(backButtonId) {
                                 start.linkTo(
                                     parent.start,
                                     dimen.dimen_2.dp
                                 )
-                                end.linkTo(
-                                    parent.end,
-                                    dimen.dimen_2.dp
+                                top.linkTo(
+                                    parent.top,
+                                    (dimen.dimen_7_5 - dimen.dimen_0_125).dp
                                 )
-                                bottom.linkTo(
-                                    parent.bottom,
-                                    dimen.dimen_2.dp
-                                )
-                                width = Dimension.fillToConstraints
                             }
                     )
 
-                    //create info box here
-                    LazyColumn(
-                        modifier = Modifier
-                            .constrainAs(infoDoctorId) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                top.linkTo(guideLineFromTop58P)
-                                bottom.linkTo(bookAppointmentId.top)
-                                width = Dimension.fillToConstraints
-                                height = Dimension.fillToConstraints
-                            }
-                            .clip(
-                                shape = RoundedCornerShape(
-                                    topStart = dimen.dimen_3_75.dp,
-                                    topEnd = dimen.dimen_3_75.dp
-                                )
-                            )
-                            .drawBehind {
-                                drawRoundRect(
-                                    color = theme.blackTR25
-                                )
-                            }
-                            .background(
-                                color = theme.background
-                            ),
-                        contentPadding = PaddingValues(
-                            top = dimen.dimen_3_5.dp,
-                            start = dimen.dimen_2.dp,
-                            end = dimen.dimen_3_75.dp,
-                            bottom = dimen.dimen_2.dp
-                        )
-                    ) {
+                }//end Scaffold
 
-                        //create item contain on doctor info here
-                        item(
-                            key = 1
-                        ) {
-
-                            //create doctor info here
-                            BookedDoctorInformationSection(
-                                dimen = dimen,
-                                theme = theme,
-                                doctorName = uiState.onlineDoctorDetailsStatus.data?.name ?: "",
-                                jop = uiState.onlineDoctorDetailsStatus.data?.specialization ?: "",
-                                price = uiState.onlineDoctorDetailsStatus.data?.price ?: "",
-                                currency = stringResource(
-                                    id = R.string.egp
-                                ),
-                                address = uiState.onlineDoctorDetailsStatus.data?.clinicLocation
-                                    ?: "",
-                                interactionRatingValue = (uiState.onlineDoctorDetailsStatus.data?.userRating
-                                    ?: 0).toInt(),
-                                interactionRatingOnChanged = onRateOnlineDoctor,
-                                interactionRatingTitle = stringResource(
-                                    id = R.string.rate
-                                ),
-                                doctorIsOnline = uiState.onlineDoctorDetailsStatus.data?.active
-                                    ?: false,
-                                phoneNumber = uiState.onlineDoctorDetailsStatus.data?.phone ?: "",
-                                aboutContent = uiState.onlineDoctorDetailsStatus.data?.bio ?: "",
-                                rating = uiState.onlineDoctorDetailsStatus.data?.rating ?: 0f,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            )
-
-                        }//end item
-
-                    }//end LazyColumn
-
-                }//end else
-
-                //create back button here
-                IconButtonView(
-                    dimen = dimen,
-                    theme = theme,
-                    onClick = onClickOnBackButton,
-                    modifier = Modifier
-                        .constrainAs(backButtonId) {
-                            start.linkTo(
-                                parent.start,
-                                dimen.dimen_2.dp
-                            )
-                            top.linkTo(
-                                parent.top,
-                                (dimen.dimen_7_5 - dimen.dimen_0_125).dp
-                            )
-                        }
+                PullRefreshIndicator(
+                    refreshing = uiState.refreshState,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter)
                 )
 
-            }//end Scaffold
+            }//end ConstraintLayout
 
-        }//end ConstraintLayout
+        }//end Box
 
     }//end BaseScreen
 

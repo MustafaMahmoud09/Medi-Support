@@ -90,7 +90,8 @@ class OnlineBookingViewModel @Inject constructor(
                                             .onlineDoctorDetailsStatus.copy(
                                                 loading = false,
                                                 data = status.data.body
-                                            )
+                                            ),
+                                        numberOfSuccessRequests = 1
                                     )
                                 }//end update
 
@@ -142,6 +143,26 @@ class OnlineBookingViewModel @Inject constructor(
         }//end coroutine builder scope
 
     }//end onGetDoctorDetails
+
+
+    //function
+    fun onRefreshOnlineDoctor(){
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetDoctorDetails()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshOnlineDoctor
 
 
     //function for book online appointment

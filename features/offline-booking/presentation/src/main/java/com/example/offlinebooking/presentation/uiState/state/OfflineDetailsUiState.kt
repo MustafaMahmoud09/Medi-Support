@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 data class OfflineDetailsUiState(
     val totalOfflineBookingStatus: Flow<PagingData<OfflineBookingModel>>? = null,
+    val cacheTotalOfflineBookingStatus: Flow<PagingData<OfflineBookingModel>>? = null,
+    val refreshState: Boolean = false,
     val bookingPlaceHolder: OfflineBookingModel = OfflineBookingModel(
         id = 0,
         doctorName = "js",

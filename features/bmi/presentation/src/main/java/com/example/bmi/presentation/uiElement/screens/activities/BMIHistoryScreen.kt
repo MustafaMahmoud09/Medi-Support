@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class)
 
 package com.example.bmi.presentation.uiElement.screens.activities
 
@@ -198,6 +198,13 @@ private fun BMIHistoryContent(
                 },
         ) {
 
+            val bmi = if (bmiRecords?.loadState?.refresh is LoadState.NotLoading) {
+                bmiRecords
+            }//end if
+            else {
+                bmiRecordsBackup
+            }//end else
+
             Box(
                 modifier = Modifier
                     .pullRefresh(pullRefreshState)
@@ -217,7 +224,7 @@ private fun BMIHistoryContent(
                 ) {
 
                     //create history items here
-                    bmiRecords?.let {
+                    bmi?.let {
                         items(
                             count = it.itemCount
                         ) { count ->
@@ -235,7 +242,7 @@ private fun BMIHistoryContent(
                                 SingleHistorySection(
                                     dimen = dimen,
                                     theme = theme,
-                                    record = bmiRecords[count]!!,
+                                    record = bmi[count]!!,
                                     modifier = Modifier
                                         .fillMaxWidth(),
                                 )

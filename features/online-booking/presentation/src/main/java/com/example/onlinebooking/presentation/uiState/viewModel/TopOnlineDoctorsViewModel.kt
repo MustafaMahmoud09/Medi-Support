@@ -55,7 +55,8 @@ class TopOnlineDoctorsViewModel @Inject constructor(
                                             .getTopOnlineDoctorsStatus.copy(
                                                 loading = false,
                                                 data = status.toData()?.body ?: emptyList()
-                                            )
+                                            ),
+                                        numberOfSuccessRequest = 1
                                     )
                                 }//end update
 
@@ -93,5 +94,25 @@ class TopOnlineDoctorsViewModel @Inject constructor(
         }//end coroutine builder scope
 
     }//end onGetTopOfflineDoctors
+
+
+    //function
+    fun onRefreshTopOnlineDoctors() {
+
+        _state.update {
+            it.copy(
+                refreshState = true
+            )
+        }//end update
+
+        onGetTopOnlineDoctors()
+
+        _state.update {
+            it.copy(
+                refreshState = false
+            )
+        }//end update
+
+    }//end onRefreshTopOnlineDoctors
 
 }//end TopOfflineDoctorsViewModel

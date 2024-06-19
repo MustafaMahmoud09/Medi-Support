@@ -6,6 +6,8 @@ data class TopOfflineDoctorsUiState(
     val getTopOfflineDoctorsStatus: InfiniteGetterStatus<List<OfflineDoctorModel>> = InfiniteGetterStatus(
         data = emptyList()
     ),
+    val numberOfSuccessRequest:Int = 0,
+    val refreshState: Boolean = false,
     val doctorPlaceHolder: OfflineDoctorModel = OfflineDoctorModel(
         id = 0,
         name = "js",

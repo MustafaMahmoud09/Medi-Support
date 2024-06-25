@@ -148,6 +148,7 @@ class ReminderRepositoryImpl(
     override suspend fun getNearestReminder(
         status: Boolean,
         localTime: LocalTime,
+        currentDayNumber: Int
     ): Flow<List<INearestReminder>> {
 
         return localDatabase
@@ -155,6 +156,7 @@ class ReminderRepositoryImpl(
             .nearestReminder(
                 status = status,
                 localTime = localTime,
+                currentDayNumber = currentDayNumber
             )
 
     }//end getNearestReminder

@@ -1,7 +1,6 @@
 package com.example.offlinebooking.presentation.uiState.viewModel
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.libraries.core.remote.data.response.status.Status
@@ -307,14 +306,15 @@ class OfflineBookingViewModel @Inject constructor(
                                                 data = status.data.body
                                             ),
                                         timeIdSelected = -1,
-                                        dateIdSelected = MutableStateFlow(-1),
                                         dateTimeStatus = InfiniteGetterStatus(
                                             data = emptyList()
                                         ),
                                         numberOfSuccessRequests = 1
                                     )
                                 }//end update
-
+                                state.value.dateIdSelected.update {
+                                    -1
+                                }
                             }//end if
 
                             else if (status.toData()?.statusCode == 404) {

@@ -34,6 +34,7 @@ interface IReminderRepository {
     suspend fun getNearestReminder(
         status: Boolean,
         localTime: LocalTime,
+        currentDayNumber: Int
     ): Flow<List<INearestReminder>>
 
     suspend fun getRemindersByStatus(

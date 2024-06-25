@@ -17,7 +17,8 @@ class GetNearestReminderUseCase(
     //function for provide nearest reminder
     override suspend fun invoke(
         status: Boolean,
-        localTime: LocalTime
+        localTime: LocalTime,
+        currentDayNumber: Int
     ): Flow<List<NearestReminderPresentationModel>> {
 
         //create stream of data here
@@ -26,7 +27,8 @@ class GetNearestReminderUseCase(
             //observe repository flow here
             reminderRepository.getNearestReminder(
                 status = status,
-                localTime = localTime
+                localTime = localTime,
+                currentDayNumber = currentDayNumber
             ).collect { reminder ->
 
                 //convert reminder from entity to model here

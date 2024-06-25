@@ -141,7 +141,8 @@ class ReminderServiceViewModel @Inject constructor(
                 //observe use case flow here
                 getNearestRemindersUseCase(
                     status = true,
-                    localTime = currentTime
+                    localTime = currentTime,
+                    currentDayNumber = calculateDifferentDaysUseCase.provideCurrentDay()
                 ).collectLatest { reminder ->
 
                     //if reminders list is not empty
@@ -217,7 +218,7 @@ class ReminderServiceViewModel @Inject constructor(
             //observe time now state here
             state.value.currentTimeState.collectLatest { currentTime ->
 
-                DayOfWeek.values().forEach { day->
+                DayOfWeek.values().forEach { day ->
                     Log.d("TAG", "${day.value} ${day.name}")
                 }
 

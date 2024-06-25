@@ -12,11 +12,11 @@ class ReflectedLightSignalHelper : IReflectedLightSignalHelper {
 
         //detect region color attributes
         //ppg region signal have red color
-        val firstLowerRed = Scalar(0.0, 50.0, 20.0)
-        val firstUpperRed = Scalar(5.0, 255.0, 255.0)
+        val firstLowerRed = Scalar(0.0, 50.0, 50.0)
+        val firstUpperRed = Scalar(10.0, 255.0, 255.0)
 
         //
-        val secondLowerRed = Scalar(175.0, 50.0, 20.0)
+        val secondLowerRed = Scalar(170.0, 50.0, 50.0)
         val secondUpperRed = Scalar(180.0, 255.0, 255.0)
 
         //detect ppg region in image here

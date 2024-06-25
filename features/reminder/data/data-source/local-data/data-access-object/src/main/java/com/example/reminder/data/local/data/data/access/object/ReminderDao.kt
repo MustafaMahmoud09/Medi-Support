@@ -67,16 +67,16 @@ interface ReminderDao {
                 "CASE " +
                 "WHEN day.${
                     DayInfo.ID_COLUMN_NAME
-                } - CAST(strftime('%w', 'now') AS INTEGER)  - 1 > 0 OR(" +
+                } - :currentDayNumber  - 1 > 0 OR(" +
                 " day.${
                     DayInfo.ID_COLUMN_NAME
-                } - CAST(strftime('%w', 'now') AS INTEGER)  - 1 == 0 AND :localTime <= reminder.${
+                } - :currentDayNumber  - 1 == 0 AND :localTime <= reminder.${
                     ReminderInfo.TIME_COLUMN_NAME
                 }) THEN " +
                 "day.${
                     DayInfo.ID_COLUMN_NAME
-                } - CAST(strftime('%w', 'now') AS INTEGER) - 1 " +
-                "ELSE 6 - CAST(strftime('%w', 'now') AS INTEGER) + day.${
+                } - :currentDayNumber - 1 " +
+                "ELSE 6 - :currentDayNumber + day.${
                     DayInfo.ID_COLUMN_NAME
                 }  END AS endResultDaysDifferent " +
                 "FROM ${
@@ -105,6 +105,7 @@ interface ReminderDao {
     fun nearestReminder(
         status: Boolean,
         localTime: LocalTime,
+        currentDayNumber: Int
     ): Flow<List<NearestReminder>>
 
 

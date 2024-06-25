@@ -80,7 +80,7 @@ class ImageProcessingHelper : IImageProcessingHelper {
         val outputMat = Mat()
 
         // Apply Gaussian blur
-        Imgproc.GaussianBlur(inputMat, outputMat, Size(5.0, 5.0), 0.0)
+        Imgproc.GaussianBlur(inputMat, outputMat, Size(11.0, 11.0), 0.1)
 
         //return output image after apply gaussian blur
         return outputMat

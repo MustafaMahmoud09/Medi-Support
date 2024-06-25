@@ -8,7 +8,8 @@ interface IGetNearestRemindersUseCase {
 
     suspend operator fun invoke(
         status: Boolean,
-        localTime: LocalTime
+        localTime: LocalTime,
+        currentDayNumber: Int
     ): Flow<List<NearestReminderPresentationModel>>
 
 

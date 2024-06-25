@@ -72,7 +72,7 @@ class CalculateDifferentDaysUseCase : ICalculateDifferentDaysUseCase {
     }//end invoke
 
 
-    private fun provideCurrentDay(): Int {
+    override fun provideCurrentDay(): Int {
 
         return when (LocalDate.now().dayOfWeek.name) {
             DayOfWeek.SUNDAY.name -> {

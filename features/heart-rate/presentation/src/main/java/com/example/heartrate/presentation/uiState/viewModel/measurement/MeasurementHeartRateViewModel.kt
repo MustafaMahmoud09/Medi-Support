@@ -234,7 +234,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
         //create coroutine scope here
         viewModelScope.launch(Dispatchers.IO) {
 
-            var checkMeasurementStopped = 0
+//            var checkMeasurementStopped = 0
 
             while (true) {
 
@@ -250,11 +250,11 @@ class MeasurementHeartRateViewModel @Inject constructor(
 
                         //if measurement stopped to one second
                         //destroy heart rate measurement
-                        if (checkMeasurementStopped == 5) {
+//                        if (checkMeasurementStopped == 5) {
                             onHeartRateMeasurementStopped()
-                        }//end if
+//                        }//end if
 
-                        checkMeasurementStopped += 1
+//                        checkMeasurementStopped += 1
 
                     }//end if
 
@@ -268,7 +268,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
                             )
                         }//end update
 
-                        checkMeasurementStopped = 0
+//                        checkMeasurementStopped = 0
 
                     }//end else
 
@@ -304,7 +304,8 @@ class MeasurementHeartRateViewModel @Inject constructor(
         //destroy mean intensities
         _state.value.meanIntensitiesForPPGRegion.update {
             emptyList()
-        }
+        }//end update
+
 
         //destroy time and ratio and heart rate result here
         _state.update {
@@ -322,51 +323,57 @@ class MeasurementHeartRateViewModel @Inject constructor(
     //function for analyzed image for calculate reflected light intensity
     fun onImageAnalysed(imageProxy: ImageProxy) {
 
-        OpenCVLoader.initDebug()
+        viewModelScope.launch{
 
-        if (!state.value.measurementIsFinished) {
+            OpenCVLoader.initDebug()
 
-            //convert image proxy to matrix here
-            val matrixImage = imageProcessingHelper.imageProxyToMatrix(
-                image = imageProxy
-            )
+            if (!state.value.measurementIsFinished) {
 
-            //detect ppg region here
-            val ppgRegionMask = matrixImage.onPPGRegionDetected()
+                //convert image proxy to matrix here
+                val matrixImage = imageProcessingHelper.imageProxyToMatrix(
+                    image = imageProxy
+                )
 
-            //if ppg region percentage greater than or equal 98 ,calculate heart rate
-            if (reflectedLightSignalHelper.calculateMaskPercentage(ppgRegionMask) >= 98f) {
+                //detect ppg region here
+                val ppgRegionMask = matrixImage.onPPGRegionDetected()
 
-                //image after execute filters
-                val imageFilter = matrixImage.onImageProcessingExecuted()
+                //if ppg region percentage greater than or equal 98 ,calculate heart rate
+                if (reflectedLightSignalHelper.calculateMaskPercentage(ppgRegionMask) >= 98f) {
 
-                //compute mean intensity in ppg regions
-                val meanIntensityInPPGRegion =
-                    reflectedLightSignalHelper.computeMeanIntensityInPPGRegions(
-                        image = imageFilter,
-                        mask = ppgRegionMask
+                    //image after execute filters
+                    val imageFilter = matrixImage.onImageProcessingExecuted()
+
+                    //compute mean intensity in ppg regions
+                    val meanIntensityInPPGRegion =
+                        reflectedLightSignalHelper.computeMeanIntensityInPPGRegions(
+                            image = imageFilter,
+                            mask = ppgRegionMask
+                        )
+
+                    //change mean intensities state here
+                    onMeanIntensitiesChanged(
+                        newValue = meanIntensityInPPGRegion
                     )
 
-                //change mean intensities state here
-                onMeanIntensitiesChanged(
-                    newValue = meanIntensityInPPGRegion
-                )
+                    delay(100)
+
+                }//end if
+
+                else {
+                    //change measurement state here
+                    _state.update {
+                        it.copy(
+                            measurementState = false,
+                        )
+                    }//end update
+                }//end else
 
             }//end if
 
-            else {
-                //change measurement state here
-                _state.update {
-                    it.copy(
-                        measurementState = false,
-                    )
-                }
-            }//end else
+            // Close the ImageProxy
+            imageProxy.close()
 
-        }//end if
-
-        // Close the ImageProxy
-        imageProxy.close()
+        }//end try
 
     }//end onImageAnalysed
 
@@ -392,7 +399,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
     private fun Mat.onImageProcessingExecuted(): Mat {
 //
 //        //for apply median blur
-//        var matrixImage = imageProcessingHelper.applyMedianBlur(
+//        val matrixImage = imageProcessingHelper.applyMedianBlur(
 //            inputMat = this
 //        )
 
@@ -406,8 +413,8 @@ class MeasurementHeartRateViewModel @Inject constructor(
 
     //function change mean intensities state
     private fun onMeanIntensitiesChanged(newValue: Scalar) {
-
-        Log.d("TAG", newValue.`val`[0].toString())
+//
+//        Log.d("TAG", newValue.`val`[0].toString())
 
         //add new mean intensities here
         val meanIntensitiesForPPGRegion =
@@ -443,7 +450,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
 
                     //calculate peaks count
                     val peaksCount = detectHeartBeatHelper.calculatePeeks(
-                        list = intensities
+                        list = intensities as LinkedList
                     )
 
                     //change peaks count and heart rate rate value

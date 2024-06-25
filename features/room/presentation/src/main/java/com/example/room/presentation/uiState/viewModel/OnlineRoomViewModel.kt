@@ -335,22 +335,11 @@ class OnlineRoomViewModel @Inject constructor(
 
             override fun onParticipantConnected(room: Room, participant: RemoteParticipant) {
                 Log.d("TAG", "onParticipantConnected")
-                _state.update {
-                    it.copy(
-                        doctorName = participant.identity
-                    )
-                }//end update
                 room.remoteParticipants.firstOrNull()?.setListener(remoteParticularListener())
             }
 
             override fun onParticipantDisconnected(room: Room, participant: RemoteParticipant) {
                 Log.d("TAG", "onParticipantDisconnected")
-                _state.update {
-                    it.copy(
-                        doctorName = "",
-                        remoteVideoTrack = null
-                    )
-                }//end update
                 room.remoteParticipants.firstOrNull()?.setListener(remoteParticularListener())
             }
 
@@ -436,6 +425,7 @@ class OnlineRoomViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         remoteVideoTrack = p2,
+                        doctorName = p0.identity,
                         particularExist = true
                     )
                 }//end update
@@ -659,7 +649,7 @@ class OnlineRoomViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        onFinishVideoCall()
+        onCloseVideoCall()
     }//end onCleared
 
     //function for make finish for video call

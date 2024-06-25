@@ -6,4 +6,6 @@ interface ICalculateDifferentDaysUseCase {
 
     operator fun invoke(reminderTime: LocalTime, dayNumber: Long): Int
 
+    fun provideCurrentDay(): Int
+
 }//end ICalculateDifferentDaysUseCase

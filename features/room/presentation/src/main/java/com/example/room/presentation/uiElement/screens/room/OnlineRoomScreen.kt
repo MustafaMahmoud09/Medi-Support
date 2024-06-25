@@ -573,7 +573,7 @@ private fun OnlineRoomContent(
                         dimen = dimen,
                         text = uiState.doctorName,
                         size = dimen.dimen_2_25,
-                        fontColor = theme.background,
+                        fontColor = theme.black,
                         textAlign = null,
                         maxLines = 1,
                         defineLine = true,
@@ -582,6 +582,7 @@ private fun OnlineRoomContent(
                                 start.linkTo(timeSectionId.start)
                                 bottom.linkTo(
                                     timeSectionId.top,
+                                    dimen.dimen_1_75.dp
                                 )
                                 end.linkTo(
                                     localVideoId.start,

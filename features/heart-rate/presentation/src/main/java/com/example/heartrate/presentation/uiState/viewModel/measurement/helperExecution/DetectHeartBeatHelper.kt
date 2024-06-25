@@ -8,42 +8,49 @@ import java.util.LinkedList
 class DetectHeartBeatHelper : IDetectHeartBeatHelper {
 
     //function for calculate number of peeks
-    override fun calculatePeeks(list: List<Scalar>): Int {
+    override fun calculatePeeks(list: LinkedList<Scalar>): Int {
 
-        if (list.size >= 3) {
-//
-//            val countItem = 12
+        if (list.size >= 6) {
 
-            val signals = list.map { signal ->
+            val newList = LinkedList<Scalar>()
+
+            newList.addAll(list)
+
+            for(index in 0..2){
+                newList.removeAt(0)
+            }//end for
+
+            val signals = newList.map { signal ->
                 signal.`val`[0]
-            }
+            }//end signals
 
-            val signalsScale = scaleSignals(
-                signals = signals
+            Log.d("TAG_SIGNALS", signals.toString())
+
+            Log.d("TAG_Red_SCALE",
+                newList.map { signal ->
+                    signal.`val`[2]
+                }.toString()
             )
 
-//            val meanSignals = getMeanSignals(
-//                signals = signalsScale,
-//                countItem = countItem
-//            )
-
-            Log.d("TAG_SCALE", signalsScale.toString())
-//            Log.d("TAG_MEAN", meanSignals.toString())
+            Log.d("TAG_Green_SCALE",
+                newList.map { signal ->
+                    signal.`val`[1]
+                }.toString()
+            )
 
             var peeks = 0
-//            val thresholdMean = 0.001
-            val thresholdAboutItem = 0.0005
+            val maxThreshold = 0.3
+            val minThreshold = 0.25
 
             val result = LinkedList<Int>()
 
-            for (count in 1 until signalsScale.size - 1) {
+            for (count in 1 until signals.size - 1) {
 
                 if (
-//                    signalsScale[count] > meanSignals[count / countItem] + thresholdMean &&
-                    (signalsScale[count] > signalsScale[count - 1] + thresholdAboutItem &&
-                            signalsScale[count] <= signalsScale[count - 1] * 1.5) &&
-                    (signalsScale[count] > signalsScale[count + 1] + thresholdAboutItem &&
-                            signalsScale[count] <= signalsScale[count + 1] * 1.5)
+                    (signals[count] > signals[count - 1] + maxThreshold &&
+                            signals[count] > signals[count + 1] + minThreshold) ||
+                    (signals[count] > signals[count - 1] + minThreshold &&
+                            signals[count] > signals[count + 1] + maxThreshold)
                 ) {
                     peeks += 1
                     result.add(count)
@@ -69,10 +76,10 @@ class DetectHeartBeatHelper : IDetectHeartBeatHelper {
         val maxValue = signals.maxOrNull() ?: return emptyList()
 
         return signals.map {
-            if (maxValue != minValue) {
+            if (maxValue != minValue || it != minValue) {
                 (it - minValue) / (maxValue - minValue)
             } else {
-                (1).toDouble()
+                (0).toDouble()
             }
         }//end map
 

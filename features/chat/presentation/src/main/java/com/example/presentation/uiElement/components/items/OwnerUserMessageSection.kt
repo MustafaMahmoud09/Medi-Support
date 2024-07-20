@@ -2,6 +2,7 @@ package com.example.presentation.uiElement.components.items
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -11,10 +12,11 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.example.presentation.uiElement.components.composable.MessageView
+import com.example.chat.domain.model.MessageModel
 import com.example.sharedui.uiElement.components.composable.TextBoldView
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import kotlin.reflect.KFunction3
 
 @Composable
 internal fun OwnerUserMessageSection(
@@ -29,12 +31,14 @@ internal fun OwnerUserMessageSection(
     isEndMessage: Boolean = false,
     isEndChatMessage: Boolean = false,
     background: Color = theme.redDark,
-    message: String,
     messageColor: Color = theme.background,
     messageSize: Float = dimen.dimen_1_5,
     timeColor: Color = theme.gray797C7B,
     timeSize: Float = dimen.dimen_1_25,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    messageModel: MessageModel,
+    onOpenDownloadFile: KFunction3<String, String, String, Unit>,
+    messageLoading: Boolean
 ) {
 
     //create container here
@@ -77,10 +81,15 @@ internal fun OwnerUserMessageSection(
                 theme = theme,
                 dimen = dimen,
                 background = background,
-                message = message,
+                message = messageModel,
                 messageColor = messageColor,
                 messageSize = messageSize,
-                messageShape = messageShape
+                messageShape = messageShape,
+                fileBackground = theme.redF04444,
+                onOpenDownloadFile = onOpenDownloadFile,
+                messageLoading = messageLoading,
+                modifier = Modifier
+                    .fillMaxWidth()
             )
 
         }//end Row
@@ -92,7 +101,7 @@ internal fun OwnerUserMessageSection(
             TextBoldView(
                 theme = theme,
                 dimen = dimen,
-                text = "09:25 AM",
+                text = messageModel.time,
                 size = timeSize,
                 color = timeColor,
                 modifier = Modifier

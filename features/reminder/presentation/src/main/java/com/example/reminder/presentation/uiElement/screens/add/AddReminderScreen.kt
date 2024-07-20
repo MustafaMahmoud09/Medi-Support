@@ -167,10 +167,16 @@ internal fun AddReminderScreen(
                 postNotificationPermissionState.launchPermissionRequest()
 
             }//end if
+            else{
+                addReminderViewModel.onRunReminderService()
+            }//end else
 
         }//end LaunchedEffect
 
     }//end if
+    else{
+        addReminderViewModel.onRunReminderService()
+    }//end else
 
 }//end AddReminderScreen
 

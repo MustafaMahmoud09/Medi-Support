@@ -36,4 +36,5 @@ data class PredictHeartDiseaseStatus(
     val internetError: Boolean = false,
     val serverError: Boolean = false,
     val dataNotComplete: Boolean = false,
+    val unAuthorized: Boolean = false
 )

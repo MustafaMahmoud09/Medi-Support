@@ -15,6 +15,8 @@ data class OfflineBookingDto(
     override val firstName: String?,
     @SerializedName("id")
     override val id: Long?,
+    @SerializedName("doctor_id")
+    override val doctorId: Long?,
     @SerializedName("user_id")
     override val userId: Long?,
     @SerializedName("last_name")

@@ -1,11 +1,10 @@
-package com.example.chat.data.source.remote.data.dto.execution.sendMessage
+package com.example.chat.domain.dto.declarations.sendMessage
 
 
-import com.google.gson.annotations.SerializedName
+interface IError {
 
-data class Error(
-    @SerializedName("message")
-    val message: Any?,
-    @SerializedName("status")
+    val message: Any?
+
     val status: Int?
-)
+
+}

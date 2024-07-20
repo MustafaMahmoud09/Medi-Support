@@ -39,7 +39,8 @@ import kotlin.reflect.KFunction1
 internal fun RecordBMIScreen(
     viewModel: RecordBMIViewModel = hiltViewModel(),
     popRecordBMIDestination: () -> Unit,
-    navigateToDeterminationBMIDestination: () -> Unit
+    navigateToDeterminationBMIDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()
@@ -82,6 +83,20 @@ internal fun RecordBMIScreen(
             snackbarHostState.showSnackbar(
                 message = internetError
             )
+        }//end if
+
+    }//end LaunchedEffect
+
+
+    LaunchedEffect(
+        key1 = state.value.addBMIRecordStatus.unAuthorized
+    ) {
+
+        if (
+            !state.value.startRunning &&
+            state.value.addBMIRecordStatus.unAuthorized
+        ) {
+            navigateToLoginNavGraphWithPopBottomDestination()
         }//end if
 
     }//end LaunchedEffect

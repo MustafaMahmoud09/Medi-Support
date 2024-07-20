@@ -1,13 +1,11 @@
-package com.example.chat.data.source.remote.data.dto.execution.chat
+package com.example.chat.domain.dto.declarations.chat
 
+interface ILastMessage {
 
-import com.google.gson.annotations.SerializedName
+    val createdAt: String?
 
-data class LastMessage(
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("last_message")
-    val lastMessage: String?,
-    @SerializedName("timeAgo")
+    val lastMessage: String?
+
     val timeAgo: String?
-)
+
+}//end ILastMessage

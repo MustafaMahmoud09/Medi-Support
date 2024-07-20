@@ -49,7 +49,8 @@ import com.patrykandpatrick.vico.core.dimensions.emptyDimensions
 internal fun StatisticsBloodPressureScreen(
     viewModel: StatisticsBloodPressureViewModel = hiltViewModel(),
     popStatisticsBloodPressureDestination: () -> Unit,
-    navigateToRecordBloodPressureDestination: () -> Unit
+    navigateToRecordBloodPressureDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     //get screen state here
@@ -61,6 +62,26 @@ internal fun StatisticsBloodPressureScreen(
         uiState = state.value,
         daysColumnState = rememberLazyListState()
     )
+
+
+    //if register event status is email not valid
+    //show snack bar contain on error message
+    LaunchedEffect(
+        key1 = state.value.diastolicResult.unAuthorized,
+        key2 = state.value.systolicResult.unAuthorized
+    ) {
+
+        if (
+            state.value.diastolicResult.unAuthorized ||
+            state.value.systolicResult.unAuthorized
+        ) {
+
+            //show email snack bar here
+            navigateToLoginNavGraphWithPopBottomDestination()
+
+        }//end if
+
+    }//end LaunchedEffect
 
 }//end StatisticsBloodPressureScreen
 

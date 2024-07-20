@@ -5,13 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekDiastolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekSystolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLatestBloodPressureMeasurementUserCase
+import com.example.blood.pressure.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bloodpressure.presentation.uiState.state.StatisticsBloodPressureUiState
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.shered.logic.usecase.declarations.IGetMonthDaysUseCase
 import com.example.sharedui.uiState.viewModel.BaseViewModel
-import com.patrykandpatrick.vico.core.entry.ChartEntryModel
-import com.patrykandpatrick.vico.core.entry.entryModelOf
-import com.patrykandpatrick.vico.core.extension.setFieldValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +26,8 @@ class StatisticsBloodPressureViewModel @Inject constructor(
     private val getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
     private val getMonthDaysUseCase: IGetMonthDaysUseCase,
     private val getLastWeekSystolicRecordsUseCase: IGetLastWeekSystolicRecordsUseCase,
-    private val getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase
+    private val getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -69,38 +68,62 @@ class StatisticsBloodPressureViewModel @Inject constructor(
 
                         is Status.Success -> {
 
-                            //get systolic records
-                            val systolicRecords = status.toData()?.body
+                            when (status.toData()?.statusCode) {
 
-                            Log.d("TAG", systolicRecords.toString())
-                            //make default value
-                            val measurementDays: LinkedList<String> = LinkedList()
-                            val systolicResult: LinkedList<Long> = LinkedList()
-                            var maxValue = 0L
 
-                            systolicRecords!!.forEach { model ->
-                                //add new day to list contain on measurement days
-                                measurementDays.add(model.dayName)
-                                //set new entry model represent user measurement
-                                systolicResult.add(model.measurementValue)
-                                //get max measurement value for complete app logic
-                                if (model.measurementValue > maxValue) {
-                                    maxValue = model.measurementValue
-                                }//end if
+                                200 -> {
 
-                            }//end for
+                                    //get systolic records
+                                    val systolicRecords = status.toData()?.body
 
-                            //update systolic value
-                            _state.update {
-                                it.copy(
-                                    systolicResult = state.value.systolicResult.copy(
-                                        xAxisData = measurementDays,
-                                        maxValue = maxValue,
-                                        dataResult = setChartEntries(systolicResult),
-                                        load = false
-                                    )
-                                )
-                            }//end update
+                                    Log.d("TAG", systolicRecords.toString())
+                                    //make default value
+                                    val measurementDays: LinkedList<String> = LinkedList()
+                                    val systolicResult: LinkedList<Long> = LinkedList()
+                                    var maxValue = 0L
+
+                                    systolicRecords!!.forEach { model ->
+                                        //add new day to list contain on measurement days
+                                        measurementDays.add(model.dayName)
+                                        //set new entry model represent user measurement
+                                        systolicResult.add(model.measurementValue)
+                                        //get max measurement value for complete app logic
+                                        if (model.measurementValue > maxValue) {
+                                            maxValue = model.measurementValue
+                                        }//end if
+
+                                    }//end for
+
+                                    //update systolic value
+                                    _state.update {
+                                        it.copy(
+                                            systolicResult = state.value.systolicResult.copy(
+                                                xAxisData = measurementDays,
+                                                maxValue = maxValue,
+                                                dataResult = setChartEntries(systolicResult),
+                                                load = false
+                                            )
+                                        )
+                                    }//end update
+
+                                }//end 200 case
+
+                                401 -> {
+
+                                    logoutFromLocalDatabaseUseCase()
+
+                                    _state.update {
+                                        it.copy(
+                                            systolicResult = state.value.systolicResult.copy(
+                                                load = false,
+                                                unAuthorized = true
+                                            )
+                                        )
+                                    }//end update
+
+                                }//end 401 case
+
+                            }//end when
 
                         }//end success case
 
@@ -182,37 +205,61 @@ class StatisticsBloodPressureViewModel @Inject constructor(
 
                         is Status.Success -> {
 
-                            //get systolic records
-                            val diastolicRecords = status.toData()?.body
+                            when (status.toData()?.statusCode) {
 
-                            //make default value
-                            val measurementDays = LinkedList<String>()
-                            val diastolicResult = LinkedList<Long>()
-                            var maxValue = 0L
 
-                            diastolicRecords!!.forEach { model ->
-                                //add new day to list contain on measurement days
-                                (measurementDays).add(model.dayName)
-                                //set new entry model represent user measurement
-                                diastolicResult.add(model.measurementValue)
-                                //get max measurement value for complete app logic
-                                if (model.measurementValue > maxValue) {
-                                    maxValue = model.measurementValue
-                                }//end if
+                                200 -> {
 
-                            }//end for
+                                    //get systolic records
+                                    val diastolicRecords = status.toData()?.body
 
-                            //update systolic value
-                            _state.update {
-                                it.copy(
-                                    diastolicResult = state.value.diastolicResult.copy(
-                                        xAxisData = measurementDays,
-                                        maxValue = maxValue,
-                                        dataResult = setChartEntries(diastolicResult),
-                                        load = false
-                                    )
-                                )
-                            }//end update
+                                    //make default value
+                                    val measurementDays = LinkedList<String>()
+                                    val diastolicResult = LinkedList<Long>()
+                                    var maxValue = 0L
+
+                                    diastolicRecords!!.forEach { model ->
+                                        //add new day to list contain on measurement days
+                                        (measurementDays).add(model.dayName)
+                                        //set new entry model represent user measurement
+                                        diastolicResult.add(model.measurementValue)
+                                        //get max measurement value for complete app logic
+                                        if (model.measurementValue > maxValue) {
+                                            maxValue = model.measurementValue
+                                        }//end if
+
+                                    }//end for
+
+                                    //update systolic value
+                                    _state.update {
+                                        it.copy(
+                                            diastolicResult = state.value.diastolicResult.copy(
+                                                xAxisData = measurementDays,
+                                                maxValue = maxValue,
+                                                dataResult = setChartEntries(diastolicResult),
+                                                load = false
+                                            )
+                                        )
+                                    }//end update
+
+                                }//end 200 case
+
+                                401 -> {
+
+                                    logoutFromLocalDatabaseUseCase()
+
+                                    _state.update {
+                                        it.copy(
+                                            diastolicResult = state.value.diastolicResult.copy(
+                                                load = false,
+                                                unAuthorized = true
+                                            )
+                                        )
+                                    }//end update
+
+                                }//end 401 case
+
+                            }//end when
 
                         }//end success case
 

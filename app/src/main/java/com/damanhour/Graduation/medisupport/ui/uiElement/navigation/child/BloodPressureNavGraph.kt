@@ -59,7 +59,8 @@ internal fun NavGraphBuilder.bloodPressureNavGraph(
     popRecordBloodPressureDestination: () -> Unit,
     navigateToStatisticsBloodPressureDestination: () -> Unit,
     popStatisticsBloodPressureDestination: () -> Unit,
-    navigateToRecordBloodPressureDestination: () -> Unit
+    navigateToRecordBloodPressureDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     //create blood pressure nav graph here
@@ -74,12 +75,14 @@ internal fun NavGraphBuilder.bloodPressureNavGraph(
         //create destinations here
         statisticsBloodPressureDestination(
             popStatisticsBloodPressureDestination = popStatisticsBloodPressureDestination,
-            navigateToRecordBloodPressureDestination = navigateToRecordBloodPressureDestination
+            navigateToRecordBloodPressureDestination = navigateToRecordBloodPressureDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
         recordBloodPressureDestination(
             popRecordBloodPressureDestination = popRecordBloodPressureDestination,
-            navigateToStatisticsBloodPressureDestination = navigateToStatisticsBloodPressureDestination
+            navigateToStatisticsBloodPressureDestination = navigateToStatisticsBloodPressureDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
     }//end navigation
 

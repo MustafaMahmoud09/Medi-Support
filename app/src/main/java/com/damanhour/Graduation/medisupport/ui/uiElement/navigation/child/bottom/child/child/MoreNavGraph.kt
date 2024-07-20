@@ -16,7 +16,6 @@ import com.example.sharedui.uiElement.navigation.data.BottomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation
-import kotlin.reflect.KFunction0
 
 //create object from bottom destination class have icon and title for show in bottom navigation bar and route name
 //child list have child destinations to home nav graph to organize bottom nav graph
@@ -49,7 +48,7 @@ internal fun NavGraphBuilder.moreNavGraph(
     popAboutDestination: () -> Unit,
     popContactUsDestination: () -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //create more nav graph
     navigation(
@@ -74,7 +73,8 @@ internal fun NavGraphBuilder.moreNavGraph(
         )
 
         contactUsDestination(
-            popContactUsDestination = popContactUsDestination
+            popContactUsDestination = popContactUsDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
     }//end navigation

@@ -39,7 +39,8 @@ fun NavHostController.popRecordBloodPressureDestination(){
 //function for create record blood pressure destination and create screen in it
 fun NavGraphBuilder.recordBloodPressureDestination(
     popRecordBloodPressureDestination: () -> Unit,
-    navigateToStatisticsBloodPressureDestination: () -> Unit
+    navigateToStatisticsBloodPressureDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //create record blood pressure destination here
     composable(
@@ -53,7 +54,8 @@ fun NavGraphBuilder.recordBloodPressureDestination(
         //create record blood pressure screen here
         RecordBloodPressureScreen(
             popRecordBloodPressureDestination = popRecordBloodPressureDestination,
-            navigateToStatisticsBloodPressureDestination = navigateToStatisticsBloodPressureDestination
+            navigateToStatisticsBloodPressureDestination = navigateToStatisticsBloodPressureDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
     }//end composable

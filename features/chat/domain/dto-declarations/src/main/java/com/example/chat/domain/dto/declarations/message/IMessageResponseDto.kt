@@ -1,15 +1,14 @@
-package com.example.chat.data.source.remote.data.dto.execution.message
+package com.example.chat.domain.dto.declarations.message
 
 
-import com.google.gson.annotations.SerializedName
+interface IMessageResponseDto {
 
-data class MessageResponseDto(
-    @SerializedName("last_message_id")
-    val lastMessageId: String?,
-    @SerializedName("last_page")
-    val lastPage: Int?,
-    @SerializedName("messages")
-    val messages: List<MessageDto?>?,
-    @SerializedName("total")
+    val lastMessageId: String?
+
+    val lastPage: Int?
+
+    val messages: List<IMessageDto?>?
+
     val total: Int?
-)
+
+}//end IMessageResponseDto

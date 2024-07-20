@@ -13,5 +13,6 @@ data class SendContactUsEventStatus(
     val internetError: Boolean = false,
     val serverError: Boolean = false,
     val emailError: Boolean = false,
-    val dataError: Boolean = false
+    val dataError: Boolean = false,
+    val unAuthorized: Boolean = false
 )

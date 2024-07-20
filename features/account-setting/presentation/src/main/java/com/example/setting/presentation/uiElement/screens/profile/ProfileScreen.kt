@@ -56,7 +56,8 @@ import kotlin.reflect.KFunction0
 @Composable
 internal fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
-    popProfileDestination: () -> Unit
+    popProfileDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //collect screen state here
     val state = viewModel.state.collectAsState()
@@ -168,6 +169,23 @@ internal fun ProfileScreen(
             )
 
         }
+
+    }//end LaunchedEffect
+
+    //if register event status is email not valid
+    //show snack bar contain on error message
+    LaunchedEffect(
+        key1 = state.value.updateProfileEventStatus.unAuthorized
+    ) {
+
+        if (
+            !startRunning.value &&
+            state.value.updateProfileEventStatus.unAuthorized) {
+
+            //show email snack bar here
+            navigateToLoginNavGraphWithPopBottomDestination()
+
+        }//end if
 
     }//end LaunchedEffect
 

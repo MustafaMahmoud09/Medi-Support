@@ -32,7 +32,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named("domain")
-    fun provideDomain(): String = "https://8b7e-197-63-198-180.ngrok-free.app/"
+    fun provideDomain(): String = "https://d46c-197-63-218-239.ngrok-free.app/"
 
 
     @Provides

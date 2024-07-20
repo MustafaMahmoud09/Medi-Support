@@ -58,7 +58,8 @@ internal fun NavGraphBuilder.bmiNavGraph(
     popRecordBMIDestination: () -> Unit,
     navigateToDeterminationBMIDestination: () -> Unit,
     popDeterminationBMIDestination: () -> Unit,
-    navigateToRecordBMIDestination: () -> Unit
+    navigateToRecordBMIDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //create bmi nav graph here
     navigation(
@@ -72,7 +73,8 @@ internal fun NavGraphBuilder.bmiNavGraph(
         //add destinations to bmi nav graph here
         recordBMIDestination(
             popRecordBMIDestination = popRecordBMIDestination,
-            navigateToDeterminationBMIDestination = navigateToDeterminationBMIDestination
+            navigateToDeterminationBMIDestination = navigateToDeterminationBMIDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
         determinationBMIDestination(

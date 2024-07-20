@@ -1,23 +1,21 @@
-package com.example.chat.data.source.remote.data.dto.execution.message
+package com.example.chat.domain.dto.declarations.message
 
+interface IMessageDto {
 
-import com.google.gson.annotations.SerializedName
+    val attachment: String?
 
-data class MessageDto(
-    @SerializedName("attachment")
-    val attachment: String?,
-    @SerializedName("body")
-    val body: String?,
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("from_id")
-    val fromId: Int?,
-    @SerializedName("id")
-    val id: String?,
-    @SerializedName("seen")
-    val seen: Int?,
-    @SerializedName("to_id")
-    val toId: Int?,
-    @SerializedName("updated_at")
+    val body: String?
+
+    val createdAt: String?
+
+    val fromId: Long?
+
+    val id: String?
+
+    val seen: Int?
+
+    val toId: Long?
+
     val updatedAt: String?
-)
+
+}//end IMessageDto

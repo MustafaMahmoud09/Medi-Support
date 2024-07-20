@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.account.setting.domain.usecase.declarations.IGetProfileInfoUseCase
+import com.example.account.setting.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.account.setting.domain.usecase.declarations.IUpdateProfileInfoUseCase
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.setting.presentation.uiState.state.ProfileUiState
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val updateProfileInfoUseCase: IUpdateProfileInfoUseCase,
     private val getProfileInfoUseCase: IGetProfileInfoUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase,
     private val context: Context
 ) : BaseViewModel() {
 
@@ -215,6 +217,23 @@ class ProfileViewModel @Inject constructor(
                                         }//end update
 
                                     }//end success case
+
+                                    401 -> {
+
+                                        logoutFromLocalDatabaseUseCase()
+
+                                        _state.update {
+                                            it.copy(
+                                                updateProfileEventStatus = state.value
+                                                    .updateProfileEventStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        unAuthorized = true
+                                                    )
+                                            )
+                                        }//end update
+
+                                    }//end unAuthorized case
 
                                     404, 500 -> {
                                         _state.update {

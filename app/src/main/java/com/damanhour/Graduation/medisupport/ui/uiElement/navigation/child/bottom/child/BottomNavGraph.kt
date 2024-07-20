@@ -13,7 +13,6 @@ import com.example.setting.presentation.uiElement.screens.profile.profileDestina
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import kotlin.reflect.KFunction0
 import kotlin.reflect.KFunction1
 
 @Composable
@@ -40,7 +39,7 @@ internal fun BottomNavGraph(
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit,
     navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
 
@@ -76,7 +75,8 @@ internal fun BottomNavGraph(
         )
 
         profileDestination(
-            popProfileDestination = popProfileDestination
+            popProfileDestination = popProfileDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
         moreNavGraph(

@@ -72,7 +72,7 @@ internal class ChatArgs(
 ) {
 
     //get chat id
-    val chatId = checkNotNull(savedStateHandle[CHAT_ID_ARGUMENT])
+    val chatId: Int = checkNotNull(savedStateHandle[CHAT_ID_ARGUMENT])
 
     companion object {
 

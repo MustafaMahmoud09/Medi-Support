@@ -2,8 +2,6 @@
 
 package com.damanhour.Graduation.medisupport.ui.uiElement.screens.activity
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,7 +37,7 @@ import com.example.sharedui.uiElement.style.dimens.MediSupportAppDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 internal fun ActivityScreen(
     viewModel: ActivityViewModel = hiltViewModel(),
@@ -48,7 +46,8 @@ internal fun ActivityScreen(
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
-    navigateToBmiNavGraph: () -> Unit
+    navigateToBmiNavGraph: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //get screen state from view model here
     val state = viewModel.state.collectAsState()
@@ -64,6 +63,7 @@ internal fun ActivityScreen(
         navigateToHistoryDestination = navigateToHistoryDestination,
         uiState = uiState,
         onDropMenusExpandedChanged = viewModel::onDropMenusExpandedChanged,
+        navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination,
         healthCareMenusData = arrayOf(
             MenuData(
                 title = stringResource(
@@ -148,7 +148,7 @@ internal fun ActivityScreen(
     )
 }//end ActivityScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 private fun ActivityContent(
     theme: CustomTheme = MediSupportAppTheme(),
@@ -159,7 +159,8 @@ private fun ActivityContent(
     healthCareMenusData: Array<MenuData>,
     onClickOnAddRecordButton: () -> Unit,
     uiState: ActivityUiState,
-    onDropMenusExpandedChanged: () -> Unit
+    onDropMenusExpandedChanged: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     BaseScreen(
@@ -272,7 +273,8 @@ private fun ActivityContent(
                         BloodPressureActivityScreen(
                             theme = theme,
                             dimen = dimen,
-                            navigateToHistoryDestination = { navigateToHistoryDestination(1) }
+                            navigateToHistoryDestination = { navigateToHistoryDestination(1) },
+                            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
                         )
                     }
 

@@ -9,12 +9,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun BaseScreen(
     navigationColor: Color,
     statusColor: Color,
+    useDarkIcons: Boolean = true,
     content: @Composable () -> Unit
 ) {
     content()
 
     val systemUiController = rememberSystemUiController()
-    val useDarkIcons = true //!isSystemInDarkTheme()
     DisposableEffect(systemUiController, useDarkIcons) {
 
         //NAVIGATION

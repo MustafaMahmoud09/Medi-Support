@@ -111,4 +111,22 @@ class BMIRepositoryImpl(
 
     }//end getPageMeasurements
 
+
+    override suspend fun logoutFromLocalDatabase(){
+
+        //get user auth token
+        val accessToken = sharedPreferencesAccessObject.accessTokenManager().getAccessToken()
+
+        //delete user account from local database
+        localDatabase.userDao().deleteUserAccountByToken(
+            token = accessToken
+        )
+
+        //remove access token from shared preferences
+        sharedPreferencesAccessObject.accessTokenManager().setAccessToken(
+            value = ""
+        )
+
+    }//end logoutFromLocalDatabase
+
 }//end HeartRateRepositoryImpl

@@ -15,4 +15,5 @@ data class AddBloodSugarRecordStatus(
     val loading: Boolean = false,
     val internetError: Boolean = false,
     val serverError: Boolean = false,
+    val unAuthorized: Boolean = false
 )

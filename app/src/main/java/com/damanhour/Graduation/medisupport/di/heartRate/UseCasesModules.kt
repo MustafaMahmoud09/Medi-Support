@@ -10,12 +10,14 @@ import com.example.heart.rate.domain.usecase.declarations.IGetLastHistoryRecords
 import com.example.heart.rate.domain.usecase.declarations.IGetLastWeekHeartRateRecordsUseCase
 import com.example.heart.rate.domain.usecase.declarations.IGetLatestHeartRateMeasurementUseCase
 import com.example.heart.rate.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.heart.rate.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.heartrate.domain.usecase.AddNewHeartRateRecordUseCase
 import com.example.heartrate.domain.usecase.CheckPPGTechnologySupportedUseCase
 import com.example.heartrate.domain.usecase.GetLastHistoryRecordsUseCase
 import com.example.heartrate.domain.usecase.GetLastWeekHeartRateRecordsUseCase
 import com.example.heartrate.domain.usecase.GetLatestHeartRateMeasurementUseCase
 import com.example.heartrate.domain.usecase.GetPageHistoryRecordsUseCase
+import com.example.heartrate.domain.usecase.LogoutFromLocalDatabaseUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -107,6 +109,20 @@ object UseCasesModules {
         return GetPageHistoryRecordsUseCase(
             heartRateRepository = heartRateRepository,
             heartRateEntityToSimpleHeartRateModelMapper = heartRateEntityToSimpleHeartRateModelMapper
+        )
+
+    }//end provideGetPageHistoryRecordsUseCase
+
+
+    @Singleton
+    @Provides
+    fun provideLogoutFromLocalDatabaseUseCase(
+        heartRateRepository: IHeartRateRepository,
+        heartRateEntityToSimpleHeartRateModelMapper: IHeartRateEntityToSimpleHeartRateModelMapper
+    ): ILogoutFromLocalDatabaseUseCase {
+
+        return LogoutFromLocalDatabaseUseCase(
+            heartRateRepository = heartRateRepository,
         )
 
     }//end provideGetPageHistoryRecordsUseCase

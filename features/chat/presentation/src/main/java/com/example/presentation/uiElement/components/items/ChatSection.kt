@@ -1,5 +1,6 @@
 package com.example.presentation.uiElement.components.items
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -10,12 +11,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.chat.domain.model.ChatModel
 import com.example.presentation.uiElement.components.composable.CountView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
 import com.example.sharedui.uiElement.components.modifier.appBorder
 import com.example.sharedui.uiElement.components.modifier.clickableWithoutHover
 import com.example.sharedui.uiElement.style.dimens.CustomDimen
 import com.example.sharedui.uiElement.style.theme.CustomTheme
+import com.google.accompanist.placeholder.placeholder
 
 @Composable
 internal fun ChatSection(
@@ -30,6 +33,9 @@ internal fun ChatSection(
     lastMessageColor: Color = theme.grayA7A6A5,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    placeHolderState: Boolean = false,
+    placeHolderColor: Color = theme.grayLight,
+    chat: ChatModel,
 ) {
 
     //create container here
@@ -54,7 +60,7 @@ internal fun ChatSection(
         TextSemiBoldView(
             theme = theme,
             dimen = dimen,
-            text = "9:12",
+            text = chat.lastMessageTime,
             size = lastMessageSize,
             fontColor = lastMessageColor,
             modifier = Modifier
@@ -68,12 +74,22 @@ internal fun ChatSection(
                         dimen.dimen_2.dp
                     )
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
         //create doctor profile section here
         WorkerSection(
             dimen = dimen,
             theme = theme,
+            name = chat.doctorName,
+            jop = chat.doctorJobType,
+            profilePath = chat.doctorImageUrl,
+            activeStatus = chat.activeStatus,
+            placeHolderState = placeHolderState,
+            placeHolderColor = placeHolderColor,
             modifier = Modifier
                 .constrainAs(doctorProfileId) {
                     start.linkTo(
@@ -92,28 +108,38 @@ internal fun ChatSection(
                 }
         )
 
-        //create unseen messages number here
-        com.example.presentation.uiElement.components.composable.CountView(
-            theme = theme,
-            dimen = dimen,
-            modifier = Modifier
-                .constrainAs(unseenMessagesNumberId) {
-                    end.linkTo(
-                        parent.end,
-                        dimen.dimen_1_5.dp
+
+        if(chat.unseenCount != "0") {
+
+            //create unseen messages number here
+            CountView(
+                theme = theme,
+                dimen = dimen,
+                number = chat.unseenCount,
+                modifier = Modifier
+                    .constrainAs(unseenMessagesNumberId) {
+                        end.linkTo(
+                            parent.end,
+                            dimen.dimen_1_5.dp
+                        )
+                        top.linkTo(
+                            doctorProfileId.bottom,
+                            dimen.dimen_0_75.dp
+                        )
+                    }
+                    .placeholder(
+                        color = placeHolderColor,
+                        visible = placeHolderState
                     )
-                    top.linkTo(
-                        doctorProfileId.bottom,
-                        dimen.dimen_0_75.dp
-                    )
-                }
-        )
+            )
+
+        }//end if
 
         //create last message here
         TextSemiBoldView(
             theme = theme,
             dimen = dimen,
-            text = "Vivamus varius odio non dui gravida, qui hello my bro in my love fuck you so mathch",
+            text = chat.lastMessage,
             size = dimen.dimen_1_5,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -124,14 +150,31 @@ internal fun ChatSection(
                         doctorProfileId.start,
                         dimen.dimen_5_75.dp
                     )
-                    top.linkTo(unseenMessagesNumberId.top)
-                    bottom.linkTo(unseenMessagesNumberId.bottom)
-                    end.linkTo(
-                        unseenMessagesNumberId.start,
-                        dimen.dimen_1_5.dp
-                    )
+
+                    if (chat.unseenCount != "0") {
+                        top.linkTo(unseenMessagesNumberId.top)
+                        bottom.linkTo(unseenMessagesNumberId.bottom)
+                        end.linkTo(
+                            unseenMessagesNumberId.start,
+                            dimen.dimen_1_5.dp
+                        )
+                    }//end if
+                    else{
+                        end.linkTo(
+                            parent.end,
+                            dimen.dimen_1_5.dp
+                        )
+                        top.linkTo(
+                            doctorProfileId.bottom,
+                            dimen.dimen_1_25.dp
+                        )
+                    }
                     width = Dimension.fillToConstraints
                 }
+                .placeholder(
+                    visible = placeHolderState,
+                    color = placeHolderColor
+                )
         )
 
     }//end ConstraintLayout

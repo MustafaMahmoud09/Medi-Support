@@ -56,6 +56,7 @@ internal fun MeasurementHeartRateScreen(
     viewModel: MeasurementHeartRateViewModel = hiltViewModel(),
     popMeasurementHeartRateDestination: () -> Unit,
     navigateToStatisticsHeartRateDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit,
 ) {
     //collect screen state here
     val state = viewModel.state.collectAsState()
@@ -103,6 +104,21 @@ internal fun MeasurementHeartRateScreen(
         }//end if
 
     }//end LaunchedEffect
+
+
+    LaunchedEffect(
+        key1 = state.value.addHeartRateRecordStatus.unAuthorized
+    ) {
+
+        if (
+            !state.value.startRunning &&
+            state.value.addHeartRateRecordStatus.unAuthorized
+        ) {
+            navigateToStatisticsHeartRateDestination()
+        }//end if
+
+    }//end LaunchedEffect
+
 
     LaunchedEffect(
         key1 = state.value.addHeartRateRecordStatus.internetError

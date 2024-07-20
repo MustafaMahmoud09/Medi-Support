@@ -3,6 +3,7 @@ package com.damanhour.Graduation.medisupport.di.accountSetting
 import android.content.Context
 import com.example.account.setting.domain.usecase.declarations.IDeleteAccountUseCase
 import com.example.account.setting.domain.usecase.declarations.IGetProfileInfoUseCase
+import com.example.account.setting.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.account.setting.domain.usecase.declarations.ILogoutUseCase
 import com.example.account.setting.domain.usecase.declarations.ISendContactUsMessageUseCase
 import com.example.account.setting.domain.usecase.declarations.IUpdateProfileInfoUseCase
@@ -23,12 +24,14 @@ object ViewModelsModule {
     fun provideProfileViewModel(
         updateProfileInfoUseCase: IUpdateProfileInfoUseCase,
         getProfileInfoUseCase: IGetProfileInfoUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase,
         @ApplicationContext context: Context
     ): ProfileViewModel {
 
         return ProfileViewModel(
             updateProfileInfoUseCase = updateProfileInfoUseCase,
             getProfileInfoUseCase = getProfileInfoUseCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase,
             context = context
         )
 
@@ -37,11 +40,13 @@ object ViewModelsModule {
 
     @Provides
     fun provideContactUsViewModel(
-        sendContactUsMessageUseCase: ISendContactUsMessageUseCase
+        sendContactUsMessageUseCase: ISendContactUsMessageUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase,
     ): ContactUsViewModel {
 
         return ContactUsViewModel(
-            sendContactUsMessageUseCase = sendContactUsMessageUseCase
+            sendContactUsMessageUseCase = sendContactUsMessageUseCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase
         )
 
     }//end provideContactUsViewModel

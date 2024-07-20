@@ -125,6 +125,14 @@ dependencies {
 
     //chat
     implementation(project(':features:chat:presentation'))
+    implementation(project(':features:chat:domain:usecase-declarations'))
+    implementation(project(':features:chat:domain:usecase-execution'))
+    implementation(project(':features:chat:domain:repository-declarations'))
+    implementation(project(':features:chat:data:repository-execution'))
+    implementation(project(':features:chat:domain:mapper-declarations'))
+    implementation(project(':features:chat:mapper-execution'))
+    implementation(project(':features:chat:data:data-source:remote-data:requests'))
+
 
     //heart prediction
     implementation(project(':features:heart-prediction:presentation'))

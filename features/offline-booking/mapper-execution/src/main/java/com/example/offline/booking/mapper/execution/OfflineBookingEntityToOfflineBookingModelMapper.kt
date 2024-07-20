@@ -28,7 +28,8 @@ class OfflineBookingEntityToOfflineBookingModelMapper :
             doctorName = obj.doctorName,
             specialization = obj.specialization,
             clinicLocation = obj.clinicLocation,
-            date = obj.date + " | " + obj.time
+            date = obj.date + " | " + obj.time,
+            doctorId = obj.doctorId
         )
 
     }//end objectConvertor

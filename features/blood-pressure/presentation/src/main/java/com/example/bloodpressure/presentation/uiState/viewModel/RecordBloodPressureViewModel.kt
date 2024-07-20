@@ -3,6 +3,7 @@ package com.example.bloodpressure.presentation.uiState.viewModel
 import androidx.lifecycle.viewModelScope
 import com.example.blood.pressure.domain.usecase.declarations.IAddBloodPressureRecordUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLatestBloodPressureMeasurementUserCase
+import com.example.blood.pressure.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bloodpressure.presentation.uiState.state.RecordBloodPressureUiState
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.shered.logic.usecase.declarations.IGetMonthDaysUseCase
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class RecordBloodPressureViewModel @Inject constructor(
     private val addBloodPressureRecordUseCase: IAddBloodPressureRecordUseCase,
     private val getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
-    private val getMonthDaysUseCase: IGetMonthDaysUseCase
+    private val getMonthDaysUseCase: IGetMonthDaysUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -201,6 +203,23 @@ class RecordBloodPressureViewModel @Inject constructor(
                                         )
                                     }//end update
                                 }//end error server case
+
+                                401 -> {
+
+                                    logoutFromLocalDatabaseUseCase()
+
+                                    _state.update {
+                                        it.copy(
+                                            addBloodPressureRecordStatus = state.value
+                                                .addBloodPressureRecordStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    unAuthorized = true
+                                            )
+                                        )
+                                    }//end update
+
+                                }//end 401 case
 
                             }//end when
 

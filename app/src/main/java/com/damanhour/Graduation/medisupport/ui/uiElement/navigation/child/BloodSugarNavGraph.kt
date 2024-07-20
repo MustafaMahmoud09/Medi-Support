@@ -2,8 +2,6 @@
 
 package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -55,12 +53,12 @@ internal fun NavHostController.popBloodSugarNavGraph() {
 }//end navigateToBloodSugarNavGraph
 
 //function for create blood sugar nav graph and create destinations into it
-@RequiresApi(Build.VERSION_CODES.O)
 internal fun NavGraphBuilder.bloodSugarNavGraph(
     navigateToStatisticsBloodSugarDestination: () -> Unit,
     popRecordBloodSugarDestination: () -> Unit,
     popStatisticsBloodSugarDestination: () -> Unit,
-    navigateToRecordBloodSugarDestination: () -> Unit
+    navigateToRecordBloodSugarDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //create blood sugar nav graph
     navigation(
@@ -79,7 +77,8 @@ internal fun NavGraphBuilder.bloodSugarNavGraph(
 
         recordBloodSugarDestination(
             navigateToStatisticsBloodSugarDestination = navigateToStatisticsBloodSugarDestination,
-            popRecordBloodSugarDestination = popRecordBloodSugarDestination
+            popRecordBloodSugarDestination = popRecordBloodSugarDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
     }//end navigation

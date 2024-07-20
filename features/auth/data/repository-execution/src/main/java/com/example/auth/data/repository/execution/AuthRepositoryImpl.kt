@@ -82,6 +82,7 @@ class AuthRepositoryImpl(
 
     //function for caching user data in local data base
     override suspend fun cachingUserData(
+        id: Long,
         firstName: String,
         lastName: String,
         email: String,
@@ -105,6 +106,7 @@ class AuthRepositoryImpl(
 
             //update user data here
             localDatabase.userDao().updateUserData(
+                id = id,
                 email = email,
                 lastName = lastName,
                 firstName = firstName,
@@ -124,6 +126,7 @@ class AuthRepositoryImpl(
             //insert new user here
             localDatabase.userDao().insert(
                 user = UserEntity(
+                    id = id,
                     email = email,
                     lastName = lastName,
                     firstName = firstName,

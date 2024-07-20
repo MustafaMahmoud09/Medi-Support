@@ -1,8 +1,9 @@
-package com.example.online.booking.domain.mapper.declarations.child
+package com.example.chat.domain.mapper.declarations.child
 
-import com.example.online.booking.domain.dto.declarations.bookingDetails.IBookingDetailDto
-import com.example.online.booking.domain.entity.declarations.IOnlineBookingEntity
-import com.example.online.booking.domain.mapper.declarations.IListMapper
+import com.example.chat.domain.dto.declarations.chat.IContactDto
+import com.example.chat.domain.mapper.declarations.IListMapper
+import com.example.chat.domain.model.ChatModel
 
-interface IOnlineBookingDtoToOnlineBookingEntityMapper
-    : IListMapper<IBookingDetailDto, IOnlineBookingEntity>
+
+interface IChatDtoToChatModelMapper
+    : IListMapper<IContactDto, ChatModel>

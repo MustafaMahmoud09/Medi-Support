@@ -33,4 +33,7 @@ interface IBloodPressureRepository {
     suspend fun getDiastolicMeasurements()
             : Flow<Status<EffectResponse<IDescBloodPressureResponseDto>>>
 
+
+    suspend fun logoutFromLocalDatabase()
+
 }//end IBloodPressureRepository

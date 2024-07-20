@@ -33,4 +33,7 @@ interface IBloodSugarRepository {
         pageSize: Int
     ): UnEffectResponse<List<IBloodSugarEntity>>
 
+
+    suspend fun logoutFromLocalDatabase()
+
 }//end IBloodSugarRepository

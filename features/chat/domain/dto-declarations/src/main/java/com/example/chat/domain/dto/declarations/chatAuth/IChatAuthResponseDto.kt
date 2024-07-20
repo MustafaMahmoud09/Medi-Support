@@ -1,11 +1,10 @@
-package com.example.chat.data.source.remote.data.dto.execution.chatAuth
+package com.example.chat.domain.dto.declarations.chatAuth
 
 
-import com.google.gson.annotations.SerializedName
+interface IChatAuthResponseDto {
 
-data class ChatAuthResponseDto(
-    @SerializedName("auth")
-    val auth: String?,
-    @SerializedName("channel_data")
+    val auth: String?
+
     val channelData: String?
-)
+
+}//end IChatAuthResponseDto

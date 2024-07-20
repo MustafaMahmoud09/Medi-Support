@@ -37,7 +37,8 @@ fun NavHostController.popMeasurementHeartRateDestination() {
 
 fun NavGraphBuilder.measurementHeartRateDestination(
     popMeasurementHeartRateDestination: () -> Unit,
-    navigateToStatisticsHeartRateDestination: () -> Unit
+    navigateToStatisticsHeartRateDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -50,7 +51,8 @@ fun NavGraphBuilder.measurementHeartRateDestination(
 
         MeasurementHeartRateScreen(
             popMeasurementHeartRateDestination = popMeasurementHeartRateDestination,
-            navigateToStatisticsHeartRateDestination = navigateToStatisticsHeartRateDestination
+            navigateToStatisticsHeartRateDestination = navigateToStatisticsHeartRateDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
     }
 }//end measurementHeartRateDestination

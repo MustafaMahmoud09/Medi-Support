@@ -28,6 +28,7 @@ class OfflineBookingDtoToOfflineBookingEntityMapper :
             specialization = obj.specialization ?: "",
             time = obj.time ?: "",
             date = obj.date ?: "",
+            doctorId = obj.doctorId ?: 0,
             clinicLocation = obj.clinicLocation ?: ""
         )
 

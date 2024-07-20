@@ -11,12 +11,14 @@ import com.example.blood.sugar.domain.usecase.declarations.IGetLastHistoryRecord
 import com.example.blood.sugar.domain.usecase.declarations.IGetLastWeekBloodSugarRecordsUseCase
 import com.example.blood.sugar.domain.usecase.declarations.IGetLatestBloodSugarMeasurementUseCase
 import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.blood.sugar.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.blood.sugar.domain.usecase.execution.AddNewBloodSugarRecordUseCase
 import com.example.blood.sugar.domain.usecase.execution.GetBloodSugarStatusUseCase
 import com.example.blood.sugar.domain.usecase.execution.GetLastHistoryRecordsUseCase
 import com.example.blood.sugar.domain.usecase.execution.GetLastWeekBloodSugarRecordsUseCase
 import com.example.blood.sugar.domain.usecase.execution.GetLatestBloodSugarMeasurementUseCase
 import com.example.blood.sugar.domain.usecase.execution.GetPageHistoryRecordsUseCase
+import com.example.blood.sugar.domain.usecase.execution.LogoutFromLocalDatabaseUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -115,5 +117,20 @@ object UseCasesModule {
         )
 
     }//end provideGetPageHistoryRecordsUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideLogoutFromLocalDatabaseUseCase(
+        bloodSugarRepository: IBloodSugarRepository,
+        bloodSugarEntityToSimpleBloodSugarModelMapper: IBloodSugarEntityToSimpleBloodSugarModelMapper
+    ): ILogoutFromLocalDatabaseUseCase {
+
+        return LogoutFromLocalDatabaseUseCase(
+            bloodSugarRepository = bloodSugarRepository
+        )
+
+    }//end provideGetPageHistoryRecordsUseCase
+
 
 }//end UseCasesModule

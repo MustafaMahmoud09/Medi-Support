@@ -30,4 +30,7 @@ interface IBMIRepository {
         pageSize: Int
     ): UnEffectResponse<List<IBMIEntity>>
 
+
+    suspend fun logoutFromLocalDatabase()
+
 }//end IBMIRepository

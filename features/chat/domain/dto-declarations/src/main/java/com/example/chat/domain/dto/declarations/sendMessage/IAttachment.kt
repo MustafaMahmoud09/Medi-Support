@@ -1,13 +1,13 @@
-package com.example.chat.data.source.remote.data.dto.execution.sendMessage
+package com.example.chat.domain.dto.declarations.sendMessage
 
 
-import com.google.gson.annotations.SerializedName
 
-data class Attachment(
-    @SerializedName("file")
-    val `file`: String?,
-    @SerializedName("title")
-    val title: String?,
-    @SerializedName("type")
+interface IAttachment {
+
+    val `file`: String?
+
+    val title: String?
+
     val type: String?
-)
+
+}

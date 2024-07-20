@@ -50,7 +50,8 @@ import com.google.accompanist.placeholder.placeholder
 internal fun RecordBloodPressureScreen(
     viewModel: RecordBloodPressureViewModel = hiltViewModel(),
     popRecordBloodPressureDestination: () -> Unit,
-    navigateToStatisticsBloodPressureDestination: () -> Unit
+    navigateToStatisticsBloodPressureDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()
@@ -105,6 +106,22 @@ internal fun RecordBloodPressureScreen(
             snackbarHostState.showSnackbar(
                 message = serverError
             )
+        }//end if
+
+    }//end LaunchedEffect
+
+
+    //if register event status is email not valid
+    //show snack bar contain on error message
+    LaunchedEffect(
+        key1 = state.value.addBloodPressureRecordStatus.unAuthorized,
+    ) {
+
+        if (state.value.addBloodPressureRecordStatus.unAuthorized) {
+
+            //show email snack bar here
+            navigateToLoginNavGraphWithPopBottomDestination()
+
         }//end if
 
     }//end LaunchedEffect

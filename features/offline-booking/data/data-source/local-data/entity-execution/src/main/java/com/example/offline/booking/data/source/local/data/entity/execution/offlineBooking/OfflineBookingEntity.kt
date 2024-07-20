@@ -41,6 +41,9 @@ data class OfflineBookingEntity(
         name = OfflineBookingInfo.DATE_COLUMN_NAME
     ) override val date: String,
     @ColumnInfo(
+        name = OfflineBookingInfo.DOCTOR_ID_COLUMN_NAME
+    ) override val doctorId: Long,
+    @ColumnInfo(
         name = OfflineBookingInfo.CLINIC_LOCATION_COLUMN_NAME
     )
     override val clinicLocation: String,

@@ -25,5 +25,6 @@ data class UpdateProfileEventStatus(
     val internetError: Boolean = false,
     val serverError: Boolean = false,
     val dataNotFound: Boolean = false,
-    val dataError: Boolean = false
+    val dataError: Boolean = false,
+    val unAuthorized: Boolean = false
 )

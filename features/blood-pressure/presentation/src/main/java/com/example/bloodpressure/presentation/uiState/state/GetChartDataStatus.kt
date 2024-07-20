@@ -9,5 +9,6 @@ data class GetChartDataStatus(
     val serverError: Boolean = false,
     val xAxisData: List<String> = emptyList(),
     val dataResult: ChartEntryModel = entryModelOf(0f),
+    val unAuthorized: Boolean = false,
     val maxValue: Long = 0
 )

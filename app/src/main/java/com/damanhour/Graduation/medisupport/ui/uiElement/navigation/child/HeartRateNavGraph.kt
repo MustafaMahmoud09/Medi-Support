@@ -45,7 +45,8 @@ internal fun NavGraphBuilder.heartRateNavGraph(
     popMeasurementHeartRateDestination: () -> Unit,
     navigateToStatisticsHeartRateDestination: () -> Unit,
     popStatisticsHeartRateDestination: () -> Unit,
-    navigateToMeasurementHeartRateDestination: () -> Unit
+    navigateToMeasurementHeartRateDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     navigation(
@@ -63,7 +64,8 @@ internal fun NavGraphBuilder.heartRateNavGraph(
 
         measurementHeartRateDestination(
             popMeasurementHeartRateDestination = popMeasurementHeartRateDestination,
-            navigateToStatisticsHeartRateDestination = navigateToStatisticsHeartRateDestination
+            navigateToStatisticsHeartRateDestination = navigateToStatisticsHeartRateDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
     }
 }//end heartRateNavGraph

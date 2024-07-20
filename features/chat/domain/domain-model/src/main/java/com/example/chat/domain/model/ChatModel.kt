@@ -1,4 +1,12 @@
 package com.example.chat.domain.model
 
-class MyClass {
-}
+data class ChatModel(
+    val doctorName: String,
+    val doctorId: Long,
+    val doctorImageUrl: String,
+    val lastMessage: String,
+    val activeStatus: Boolean,
+    val unseenCount: String,
+    val lastMessageTime: String,
+    val doctorJobType: String
+)

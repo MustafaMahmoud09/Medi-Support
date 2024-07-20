@@ -1,37 +1,36 @@
-package com.example.chat.data.source.remote.data.dto.execution.doctorInfo
+package com.example.chat.domain.dto.declarations.doctorInfo
 
 
-import com.google.gson.annotations.SerializedName
+interface IFetch {
 
-data class Fetch(
-    @SerializedName("active_status")
-    val activeStatus: Int?,
-    @SerializedName("admin_id")
-    val adminId: Int?,
-    @SerializedName("avatar")
-    val avatar: String?,
-    @SerializedName("bio")
-    val bio: String?,
-    @SerializedName("clinic_location")
-    val clinicLocation: String?,
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("email")
-    val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("last_name")
-    val lastName: String?,
-    @SerializedName("phone")
-    val phone: String?,
-    @SerializedName("price")
-    val price: Int?,
-    @SerializedName("specialization")
-    val specialization: String?,
-    @SerializedName("updated_at")
-    val updatedAt: String?,
-    @SerializedName("working_hours")
+    val activeStatus: Int?
+
+    val adminId: Int?
+
+    val avatar: String?
+
+    val bio: String?
+
+    val clinicLocation: String?
+
+    val createdAt: String?
+
+    val email: String?
+
+    val firstName: String?
+
+    val id: Int?
+
+    val lastName: String?
+
+    val phone: String?
+
+    val price: Int?
+
+    val specialization: String?
+
+    val updatedAt: String?
+
     val workingHours: String?
-)
+
+}//end IFetch

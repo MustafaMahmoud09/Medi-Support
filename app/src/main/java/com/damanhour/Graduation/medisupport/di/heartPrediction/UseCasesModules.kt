@@ -1,7 +1,9 @@
 package com.damanhour.Graduation.medisupport.di.heartPrediction
 
 import com.example.heart.prediction.domain.repository.declarations.IHeartPredictionRepository
+import com.example.heart.prediction.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.heart.prediction.domain.usecase.declarations.IPredictHeartDiseaseUseCase
+import com.example.heart.prediction.domain.usecase.execution.LogoutFromLocalDatabaseUseCase
 import com.example.heart.prediction.domain.usecase.execution.PredictHeartDiseaseUseCase
 import dagger.Module
 import dagger.Provides
@@ -24,5 +26,18 @@ object UseCasesModules {
         )
 
     }//end provideCheckPPGTechnologySupportedUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideLogoutFromLocalDatabaseUseCase(
+        heartPredictionRepository: IHeartPredictionRepository
+    ): ILogoutFromLocalDatabaseUseCase {
+
+        return LogoutFromLocalDatabaseUseCase(
+            heartPredictionRepository = heartPredictionRepository
+        )
+
+    }//end provideLogoutFromLocalDatabaseUseCase
 
 }//end UseCasesModules

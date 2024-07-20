@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.chat.domain.model.DoctorModel
+import com.example.chat.presentation.R
 import com.example.presentation.uiElement.components.composable.ProfileView
 import com.example.sharedui.uiElement.components.composable.TextNormalView
 import com.example.sharedui.uiElement.components.composable.TextSemiBoldView
@@ -27,6 +30,7 @@ internal fun UserActiveSection(
     activeColor: Color = theme.gray797C7B,
     activeSize: Float = dimen.dimen_1_5,
     modifier: Modifier = Modifier,
+    doctor: DoctorModel?,
 ) {
 
     //create container here
@@ -40,6 +44,7 @@ internal fun UserActiveSection(
         ProfileView(
             dimen = dimen,
             theme = theme,
+            doctorModel = doctor,
             modifier = Modifier
                 .constrainAs(profileId) {
                     start.linkTo(parent.start)
@@ -68,7 +73,7 @@ internal fun UserActiveSection(
             TextSemiBoldView(
                 theme = theme,
                 dimen = dimen,
-                text = "Dr.Ahmed Mohamed",
+                text = doctor?.doctorName ?: "",
                 size = nameSize,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -89,7 +94,11 @@ internal fun UserActiveSection(
             TextNormalView(
                 theme = theme,
                 dimen = dimen,
-                text = "Active now",
+                text = if (doctor != null && doctor.activeStatus) {
+                    stringResource(R.string.active_now)
+                } else {
+                    ""
+                },
                 size = activeSize,
                 fontColor = activeColor,
                 maxLines = 1,

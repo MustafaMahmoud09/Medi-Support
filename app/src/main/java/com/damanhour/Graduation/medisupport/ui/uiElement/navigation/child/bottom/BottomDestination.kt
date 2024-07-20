@@ -42,7 +42,7 @@ internal fun NavGraphBuilder.bottomDestination(
     navigateToOnlineBookingNavGraph: (Int) -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
     navigateToOfflineBookingDestination: (Int) -> Unit,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>,
+    navigateToLoginNavGraphWithPopBottomDestination: (() -> Unit) -> Unit,
     navigateToOnlineRoomDestination: (Int) -> Unit
 ) {
     //create bottom destination

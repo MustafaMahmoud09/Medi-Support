@@ -37,9 +37,12 @@ internal fun NavHostController.navigateToLoginNavGraphWithPopWelcomeDestination(
 }//end navigateToLoginNavGraphWithPopWelcomeDestination
 
 
-
 //function for add login nav graph to top root nav graph and pop welcome destination from back stack
-internal fun NavHostController.navigateToLoginNavGraphWithPopBottomDestination() {
+internal fun NavHostController.navigateToLoginNavGraphWithPopBottomDestination(
+    popFunction: () -> Unit = {}
+) {
+
+    popFunction()
 
     //navigate to login nav graph
     navigate(

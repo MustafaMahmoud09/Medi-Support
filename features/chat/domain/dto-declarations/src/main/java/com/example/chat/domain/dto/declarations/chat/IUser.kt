@@ -1,25 +1,26 @@
-package com.example.chat.data.source.remote.data.dto.execution.chat
+package com.example.chat.domain.dto.declarations.chat
 
 
-import com.google.gson.annotations.SerializedName
+interface IUser {
 
-data class User(
-    @SerializedName("active_status")
-    val activeStatus: Int?,
-    @SerializedName("avatar")
-    val avatar: String?,
-    @SerializedName("created_at")
-    val createdAt: String?,
-    @SerializedName("email")
-    val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
-    @SerializedName("id")
-    val id: Int?,
-    @SerializedName("last_name")
-    val lastName: String?,
-    @SerializedName("max_created_at")
-    val maxCreatedAt: String?,
-    @SerializedName("updated_at")
+    val activeStatus: Int?
+
+    val avatar: String?
+
+    val createdAt: String?
+
+    val email: String?
+
+    val firstName: String?
+
+    val id: Long?
+
+    val specialization: String?
+
+    val lastName: String?
+
+    val maxCreatedAt: String?
+
     val updatedAt: String?
-)
+
+}//end User

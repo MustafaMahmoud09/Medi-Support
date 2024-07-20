@@ -2,8 +2,6 @@
 
 package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.activity
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -40,7 +38,7 @@ internal fun NavHostController.popActivityNavGraph() {
 
 }//end popActivityNavGraph
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 internal fun NavGraphBuilder.activityNavGraph(
     popActivityNavGraph: () -> Unit,
     popHistoryDestination: () -> Unit,
@@ -48,7 +46,8 @@ internal fun NavGraphBuilder.activityNavGraph(
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
     navigateToBloodSugarNavGraph: () -> Unit,
-    navigateToBloodPressureNavGraph: () -> Unit
+    navigateToBloodPressureNavGraph: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: ()-> Unit
 ) {
 
     navigation(
@@ -66,7 +65,8 @@ internal fun NavGraphBuilder.activityNavGraph(
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
             navigateToBmiNavGraph = navigateToBmiNavGraph,
-            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph
+            navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
         historyDestination(

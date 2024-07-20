@@ -44,6 +44,8 @@ interface UserDao {
         "UPDATE ${
             UserInfo.USER_TABLE_NAME
         } SET ${
+            UserInfo.ID_COLUMN_NAME
+        } = :id,${
             UserInfo.LAST_NAME_COLUMN_NAME
         } = :lastName, ${
             UserInfo.FIRST_NAME_COLUMN_NAME
@@ -62,6 +64,7 @@ interface UserDao {
         } = :email"
     )
     suspend fun updateUserData(
+        id: Long,
         email: String,
         lastName: String,
         firstName: String,

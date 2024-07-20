@@ -14,6 +14,7 @@ data class OfflineDetailsUiState(
         doctorName = "js",
         specialization = "js",
         clinicLocation = "js",
-        date = "js"
+        date = "js",
+        doctorId = -1
     )
 )

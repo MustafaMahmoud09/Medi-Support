@@ -5,6 +5,7 @@ import com.example.bmi.domain.usecase.declarations.IGetLastHistoryRecordsUseCase
 import com.example.bmi.domain.usecase.declarations.IGetLastWeekBMIRecordsUseCase
 import com.example.bmi.domain.usecase.declarations.IGetLatestBMIMeasurementUseCase
 import com.example.bmi.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.bmi.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bmi.presentation.uiState.viewModel.BMIActivityViewModel
 import com.example.bmi.presentation.uiState.viewModel.BMIHistoryViewModel
 import com.example.bmi.presentation.uiState.viewModel.DeterminationBMIViewModel
@@ -21,11 +22,13 @@ object ViewModelsModule {
 
     @Provides
     fun provideRecordBMIViewModel(
-        addNewBMIRecordUseCase: IAddNewBMIRecordUseCase
+        addNewBMIRecordUseCase: IAddNewBMIRecordUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
     ): RecordBMIViewModel {
 
         return RecordBMIViewModel(
-            addNewBMIRecordUseCase = addNewBMIRecordUseCase
+            addNewBMIRecordUseCase = addNewBMIRecordUseCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase
         )
 
     }//end provideRecordBMIViewModel

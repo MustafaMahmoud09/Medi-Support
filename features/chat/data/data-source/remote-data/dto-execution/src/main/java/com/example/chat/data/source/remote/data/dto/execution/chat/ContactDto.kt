@@ -1,13 +1,14 @@
 package com.example.chat.data.source.remote.data.dto.execution.chat
 
 
+import com.example.chat.domain.dto.declarations.chat.IContactDto
 import com.google.gson.annotations.SerializedName
 
-data class Contact(
+data class ContactDto(
     @SerializedName("lastMessage")
-    val lastMessage: LastMessage?,
+    override val lastMessage: LastMessage?,
     @SerializedName("unseenCounter")
-    val unseenCounter: Int?,
+    override val unseenCounter: Int?,
     @SerializedName("user")
-    val user: User?
-)
+    override val user: User?
+): IContactDto

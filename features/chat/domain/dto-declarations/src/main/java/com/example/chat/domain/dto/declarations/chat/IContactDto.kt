@@ -1,13 +1,12 @@
-package com.example.chat.data.source.remote.data.dto.execution.chat
+package com.example.chat.domain.dto.declarations.chat
 
 
-import com.google.gson.annotations.SerializedName
+interface IContactDto {
 
-data class ContactDto(
-    @SerializedName("lastMessage")
-    val lastMessage: LastMessage?,
-    @SerializedName("unseenCounter")
-    val unseenCounter: Int?,
-    @SerializedName("user")
-    val user: User?
-)
+    val lastMessage: ILastMessage?
+
+    val unseenCounter: Int?
+
+    val user: IUser?
+
+}//end IContactDto

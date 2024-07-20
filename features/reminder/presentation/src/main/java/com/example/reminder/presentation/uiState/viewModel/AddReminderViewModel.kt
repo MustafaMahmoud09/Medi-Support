@@ -45,12 +45,12 @@ class AddReminderViewModel @Inject constructor(
 
         onWeekDaysStored()
         getWeekDays()
-        onRunReminderService()
+//        onRunReminderService()
 
     }//end init
 
 
-    private fun onRunReminderService() {
+    fun onRunReminderService() {
 
         val serviceIntent = Intent(context, ReminderService::class.java)
 

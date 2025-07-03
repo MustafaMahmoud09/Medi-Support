@@ -18,6 +18,8 @@ object OfflineBookingInfo {
 
     const val DATE_COLUMN_NAME = "date"
 
+    const val DOCTOR_ID_COLUMN_NAME = "doctor_id"
+
     const val CLINIC_LOCATION_COLUMN_NAME = "clinic_location"
 
     const val CREATED_AT_COLUMN_NAME = "created_at"

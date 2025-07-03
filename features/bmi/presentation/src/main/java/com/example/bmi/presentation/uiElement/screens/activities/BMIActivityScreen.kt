@@ -44,7 +44,7 @@ fun BMIActivityScreen(
     viewModel: BMIActivityViewModel = hiltViewModel(),
     theme: CustomTheme,
     dimen: CustomDimen,
-    navigateToHistoryDestination: () -> Unit
+    navigateToHistoryDestination: () -> Unit,
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()

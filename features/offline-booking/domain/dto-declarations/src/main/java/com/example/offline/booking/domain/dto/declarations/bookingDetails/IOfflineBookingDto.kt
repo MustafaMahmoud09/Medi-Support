@@ -16,6 +16,8 @@ interface IOfflineBookingDto {
 
     val lastName: String?
 
+    val doctorId: Long?
+
     val specialization: String?
 
     val time: String?

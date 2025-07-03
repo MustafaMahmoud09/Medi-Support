@@ -11,6 +11,8 @@ data class User(
     override val firstName: String?,
     @SerializedName("last_name")
     override val lastName: String?,
+    @SerializedName("id")
+    override val id: Int?,
     @SerializedName("provider_name")
     override val providerName: String?
 ): IUser

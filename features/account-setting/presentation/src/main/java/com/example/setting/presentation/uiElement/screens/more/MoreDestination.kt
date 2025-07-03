@@ -7,7 +7,6 @@ import androidx.navigation.NavGraphBuilder
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
-import kotlin.reflect.KFunction0
 
 const val MORE_DESTINATION_ROUTE = "moreDestination"
 
@@ -16,7 +15,7 @@ fun NavGraphBuilder.moreDestination(
     navigateToAboutDestination: () -> Unit,
     navigateToContactUsDestination: () -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     composable(

@@ -2,8 +2,6 @@
 
 package com.damanhour.Graduation.medisupport.ui.uiElement.screens.activity
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
@@ -12,14 +10,15 @@ import com.google.accompanist.navigation.animation.composable
 
 const val ACTIVITY_DESTINATION_ROUTE = "activityDestination"
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 fun NavGraphBuilder.activityDestination(
     popActivityNavGraph: () -> Unit,
     navigateToHistoryDestination: (Int) -> Unit,
     navigateToHeartRateNavGraph: () -> Unit,
     navigateToBloodPressureNavGraph: () -> Unit,
     navigateToBmiNavGraph: () -> Unit,
-    navigateToBloodSugarNavGraph: () -> Unit
+    navigateToBloodSugarNavGraph: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -36,7 +35,8 @@ fun NavGraphBuilder.activityDestination(
             navigateToHeartRateNavGraph = navigateToHeartRateNavGraph,
             navigateToBloodPressureNavGraph = navigateToBloodPressureNavGraph,
             navigateToBloodSugarNavGraph = navigateToBloodSugarNavGraph,
-            navigateToBmiNavGraph = navigateToBmiNavGraph
+            navigateToBmiNavGraph = navigateToBmiNavGraph,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
     }//end composable

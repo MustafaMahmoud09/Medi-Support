@@ -27,4 +27,7 @@ interface IHeartPredictionRepository {
         genHealth: Int,
     ): Flow<Status<EffectResponse<IHeartPredictionDto>>>
 
+
+    suspend fun logoutFromLocalDatabase()
+
 }//end IHeartPredictionRepository

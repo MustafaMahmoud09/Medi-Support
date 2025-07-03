@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+
+    //dto declarations
+    implementation(project(':features:chat:domain:dto-declarations'))
+
+    //domain model
+    implementation(project(':features:chat:domain:domain-model'))
+
+}

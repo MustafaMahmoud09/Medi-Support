@@ -6,7 +6,11 @@ import com.patrykandpatrick.vico.core.entry.entryModelOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import java.time.Instant
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -19,6 +23,52 @@ abstract class BaseViewModel : ViewModel() {
         return coroutineScope
 
     }//end getCoroutineScope
+
+    fun String.subStringFromEndBefore(char: Char): String{
+
+        var result = ""
+
+        for (count in this.indices){
+            if(this[this.length - count - 1] == char){
+                break
+            }
+            result += this[this.length - count - 1]
+        }//end for
+
+        var finalResult = ""
+        for (count in result.indices){
+            finalResult += result[result.length - count - 1]
+        }//end for
+
+        return finalResult
+
+    }//end subStringFromEnd
+
+    fun formatMessageTime(time: String, resultFormat:String = "d-M-yyyy HH:mm"): String {
+
+        // تنسيق الوقت المحدد
+        val serverTime = Instant.parse(time)
+
+        val localTime = serverTime.atZone(ZoneId.systemDefault()).toLocalDateTime()
+
+        // الوقت الحالي
+        val currentTime = LocalDateTime.now()
+
+        // مقارنة الوقتين
+        return if (localTime.toLocalDate() == currentTime.toLocalDate()) {
+
+            val finalFormatter = DateTimeFormatter.ofPattern("HH:mm")
+            localTime.format(finalFormatter)
+
+        }//end if
+        else {
+
+            val finalFormatter = DateTimeFormatter.ofPattern(resultFormat)
+            localTime.format(finalFormatter)
+
+        }//end else
+
+    }//end formatMessageTime
 
     fun formatLocalTime(localTime: LocalTime, pattern: String): String {
 

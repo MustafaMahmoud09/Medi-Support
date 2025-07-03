@@ -36,7 +36,8 @@ fun NavHostController.popRecordHeartPredictionDestination() {
 //function for create  record heart prediction destination and create record heart prediction in it
 fun NavGraphBuilder.recordHeartPredictionDestination(
     popRecordHeartPredictionDestination: () -> Unit,
-    navigateToPredictionHeartPredictionDestination: KFunction1<Int, Unit>
+    navigateToPredictionHeartPredictionDestination: KFunction1<Int, Unit>,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     //create  record heart prediction destination
@@ -50,7 +51,8 @@ fun NavGraphBuilder.recordHeartPredictionDestination(
         //create record prediction screen
         RecordHeartPredictionScreen(
             popRecordHeartPredictionDestination = popRecordHeartPredictionDestination,
-            navigateToPredictionHeartPredictionDestination = navigateToPredictionHeartPredictionDestination
+            navigateToPredictionHeartPredictionDestination = navigateToPredictionHeartPredictionDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
     }//end composable

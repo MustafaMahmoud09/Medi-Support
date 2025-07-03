@@ -10,12 +10,14 @@ import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekDiasto
 import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekSystolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLatestBloodPressureMeasurementUserCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetPageHistoryRecordUseCase
+import com.example.blood.pressure.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.blood.pressure.domain.usecase.execution.AddBloodPressureRecordUseCase
 import com.example.blood.pressure.domain.usecase.execution.GetLastHistoryRecordsUseCase
 import com.example.blood.pressure.domain.usecase.execution.GetLastWeekDiastolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.execution.GetLastWeekSystolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.execution.GetLatestBloodPressureMeasurementUserCase
 import com.example.blood.pressure.domain.usecase.execution.GetPageHistoryRecordUseCase
+import com.example.blood.pressure.domain.usecase.execution.LogoutFromLocalDatabaseUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -111,6 +113,21 @@ object UseCasesModule {
         return GetPageHistoryRecordUseCase(
             bloodPressureRepository = bloodPressureRepository,
             bloodPressureEntityToSimpleBloodPressureModelMapper = bloodPressureEntityToSimpleBloodPressureModelMapper
+        )
+
+    }//end provideGetPageHistoryRecordUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideLogoutFromLocalDatabaseUseCase(
+        bloodPressureRepository: IBloodPressureRepository,
+        bloodPressureEntityToSimpleBloodPressureModelMapper: IBloodPressureEntityToSimpleBloodPressureModelMapper
+
+    ): ILogoutFromLocalDatabaseUseCase {
+
+        return LogoutFromLocalDatabaseUseCase(
+            bloodPressureRepository = bloodPressureRepository,
         )
 
     }//end provideGetPageHistoryRecordUseCase

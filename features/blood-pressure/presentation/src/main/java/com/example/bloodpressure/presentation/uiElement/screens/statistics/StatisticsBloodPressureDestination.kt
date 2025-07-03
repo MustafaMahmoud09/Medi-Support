@@ -5,7 +5,6 @@ package com.example.bloodpressure.presentation.uiElement.screens.statistics
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.example.bloodpressure.presentation.uiElement.screens.record.RECORD_BLOOD_PRESSURE_DESTINATION_ROUTE
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.composable
@@ -53,7 +52,8 @@ fun NavHostController.popStatisticsBloodPressureDestination() {
 //function for create statistics blood pressure destination and create screen in it
 fun NavGraphBuilder.statisticsBloodPressureDestination(
     popStatisticsBloodPressureDestination: () -> Unit,
-    navigateToRecordBloodPressureDestination: () -> Unit
+    navigateToRecordBloodPressureDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //create statistics blood pressure destination here
     composable(
@@ -66,7 +66,8 @@ fun NavGraphBuilder.statisticsBloodPressureDestination(
         //create statistics blood pressure screen here
         StatisticsBloodPressureScreen(
             popStatisticsBloodPressureDestination = popStatisticsBloodPressureDestination,
-            navigateToRecordBloodPressureDestination = navigateToRecordBloodPressureDestination
+            navigateToRecordBloodPressureDestination = navigateToRecordBloodPressureDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
     }//end composable

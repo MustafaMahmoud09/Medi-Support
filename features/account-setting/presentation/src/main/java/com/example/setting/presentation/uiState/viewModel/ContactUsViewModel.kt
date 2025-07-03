@@ -1,6 +1,7 @@
 package com.example.setting.presentation.uiState.viewModel
 
 import androidx.lifecycle.viewModelScope
+import com.example.account.setting.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.account.setting.domain.usecase.declarations.ISendContactUsMessageUseCase
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.setting.presentation.uiState.state.ContactUsUiState
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContactUsViewModel @Inject constructor(
-    private val sendContactUsMessageUseCase: ISendContactUsMessageUseCase
+    private val sendContactUsMessageUseCase: ISendContactUsMessageUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -135,6 +137,23 @@ class ContactUsViewModel @Inject constructor(
                                             )
                                         }//end update
                                     }//end error server case
+
+                                    401 -> {
+
+                                        logoutFromLocalDatabaseUseCase()
+
+                                        _state.update {
+                                            it.copy(
+                                                sendContactUsEventStatus = state.value
+                                                    .sendContactUsEventStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        unAuthorized = true
+                                                    )
+                                            )
+                                        }//end update
+
+                                    }//end unAuthorized case
 
                                     422 -> {
                                         _state.update {

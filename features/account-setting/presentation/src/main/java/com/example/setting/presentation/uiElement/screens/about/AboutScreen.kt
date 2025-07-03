@@ -31,7 +31,6 @@ import com.example.sharedui.uiElement.style.robotoBold
 import com.example.sharedui.uiElement.style.theme.CustomTheme
 import com.example.sharedui.uiElement.style.theme.MediSupportAppTheme
 
-
 @Composable
 internal fun AboutScreen(popAboutDestination: () -> Unit) {
 
@@ -193,15 +192,97 @@ private fun AboutContent(
                     )
                 ) {
 
-                    items(10) {
+                    item(
+                       key = 1
+                    ) {
 
                         FeatureSection(
                             theme = theme,
                             dimen = dimen,
                             icon = painterResource(
-                                id = com.example.setting.presentation.R.drawable.test
+                                id = com.example.setting.presentation.R.drawable.feature_one
                             ),
-                            text = "Monitoring the health status of patients with hypertension and diabetes by entering some data about the disease and displaying the results in the form of diagrams. Additionally, determining the patient's BMI by entering their weight and height and providing medical advice to assist them.",
+                            text = stringResource(R.string.feature_one),
+                            borderColor = theme.redDarkTR50
+                        )
+
+                    }//end items
+
+                    item(
+                        key = 2
+                    ) {
+
+                        FeatureSection(
+                            theme = theme,
+                            dimen = dimen,
+                            icon = painterResource(
+                                id = com.example.setting.presentation.R.drawable.feature_one
+                            ),
+                            text = stringResource(R.string.feature_two),
+                            borderColor = theme.redDarkTR50
+                        )
+
+                    }//end items
+
+                    item(
+                        key = 3
+                    ) {
+
+                        FeatureSection(
+                            theme = theme,
+                            dimen = dimen,
+                            icon = painterResource(
+                                id = com.example.setting.presentation.R.drawable.feature_one
+                            ),
+                            text = stringResource(R.string.feature_three),
+                            borderColor = theme.redDarkTR50
+                        )
+
+                    }//end items
+
+                    item(
+                        key = 4
+                    ) {
+
+                        FeatureSection(
+                            theme = theme,
+                            dimen = dimen,
+                            icon = painterResource(
+                                id = com.example.setting.presentation.R.drawable.feature_one
+                            ),
+                            text = stringResource(R.string.feature_four),
+                            borderColor = theme.redDarkTR50
+                        )
+
+                    }//end items
+
+                    item(
+                        key = 5
+                    ) {
+
+                        FeatureSection(
+                            theme = theme,
+                            dimen = dimen,
+                            icon = painterResource(
+                                id = com.example.setting.presentation.R.drawable.feature_one
+                            ),
+                            text = stringResource(R.string.feature_five),
+                            borderColor = theme.redDarkTR50
+                        )
+
+                    }//end items
+
+                    item(
+                        key = 6
+                    ) {
+
+                        FeatureSection(
+                            theme = theme,
+                            dimen = dimen,
+                            icon = painterResource(
+                                id = com.example.setting.presentation.R.drawable.feature_one
+                            ),
+                            text = stringResource(R.string.feature_six),
                             borderColor = theme.redDarkTR50
                         )
 
@@ -258,17 +339,92 @@ private fun AboutContent(
                     )
                 ) {
 
-                    items(10) {
+                    item(
+                        key = 1
+                    ){
 
                         DeveloperSection(
                             dimen = dimen,
                             theme = theme,
                             borderColor = theme.redDarkTR50,
-                            teamName = "Front-end Team",
-                            developers = listOf("Nada Yakout", "Nada Sobhy", "Hossam Ezat")
+                            teamName = stringResource(R.string.mobile_team),
+                            developers = listOf(stringResource(R.string.mustafa_mahmoud))
                         )
 
-                    }//end items
+                    }//end item
+
+                    item(
+                        key = 2
+                    ){
+
+                        DeveloperSection(
+                            dimen = dimen,
+                            theme = theme,
+                            borderColor = theme.redDarkTR50,
+                            teamName = stringResource(R.string.ai_team),
+                            developers = listOf(
+                                stringResource(R.string.mustafa_mahmoud),
+                                stringResource(R.string.alaa_ali),
+                                stringResource(R.string.nada_yakut),
+                                stringResource(R.string.hossam_ezzat)
+                            )
+                        )
+
+                    }//end item
+
+                    item(
+                        key = 3
+                    ){
+
+                        DeveloperSection(
+                            dimen = dimen,
+                            theme = theme,
+                            borderColor = theme.redDarkTR50,
+                            teamName = stringResource(R.string.back_end_team),
+                            developers = listOf(
+                                stringResource(R.string.alaa_ali),
+                                stringResource(R.string.asmaa_gamal),
+                                stringResource(R.string.nada_saied)
+                            )
+                        )
+
+                    }//end item
+
+                    item(
+                        key = 4
+                    ){
+
+                        DeveloperSection(
+                            dimen = dimen,
+                            theme = theme,
+                            borderColor = theme.redDarkTR50,
+                            teamName = stringResource(R.string.front_end_team),
+                            developers = listOf(
+                                stringResource(R.string.nada_yakut),
+                                stringResource(R.string.hossam_ezzat),
+                                stringResource(R.string.nada_sobhy),
+                                stringResource(R.string.rofayda_mohammed)
+                            )
+                        )
+
+                    }//end item
+
+                    item(
+                        key = 5
+                    ){
+
+                        DeveloperSection(
+                            dimen = dimen,
+                            theme = theme,
+                            borderColor = theme.redDarkTR50,
+                            teamName = stringResource(R.string.ui_ux_team),
+                            developers = listOf(
+                                stringResource(R.string.rokaia_shereet),
+                                stringResource(R.string.sara_elbadry)
+                            )
+                        )
+
+                    }//end item
 
                 }//end LazyRow
 
@@ -302,12 +458,12 @@ private fun AboutContent(
                     IconTextSection(
                         theme = theme,
                         dimen = dimen,
-                        text = "+000-213-553-22",
+                        text = "+20-102-581-48",
                         fontFamily = robotoBold,
                         fontSize = dimen.dimen_1_75,
                         fontColor = theme.black,
                         icon = painterResource(
-                            id = com.example.sharedui.R.drawable.phone
+                            id = R.drawable.phone
                         ),
                         iconSize = dimen.dimen_1_75,
                         iconTint = theme.green2BEF4A

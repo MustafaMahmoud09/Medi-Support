@@ -5,5 +5,6 @@ data class OfflineBookingModel(
     val doctorName: String,
     val specialization: String,
     val clinicLocation: String,
+    val doctorId: Long,
     val date: String
 )

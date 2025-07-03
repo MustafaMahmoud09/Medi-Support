@@ -7,6 +7,7 @@ import com.example.heart.rate.domain.usecase.declarations.IGetLastHistoryRecords
 import com.example.heart.rate.domain.usecase.declarations.IGetLastWeekHeartRateRecordsUseCase
 import com.example.heart.rate.domain.usecase.declarations.IGetLatestHeartRateMeasurementUseCase
 import com.example.heart.rate.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.heart.rate.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.heartrate.presentation.uiState.viewModel.HeartRateActivityViewModel
 import com.example.heartrate.presentation.uiState.viewModel.HeartRateHistoryViewModel
 import com.example.heartrate.presentation.uiState.viewModel.StatisticsHeartRateViewModel
@@ -32,7 +33,8 @@ object ViewModelsModule {
         imageProcessingHelper: IImageProcessingHelper,
         reflectedLightSignalHelper: IReflectedLightSignalHelper,
         detectHeartBeatHelper: IDetectHeartBeatHelper,
-        addNewHeartRateRecordUseCase: IAddNewHeartRateRecordUseCase
+        addNewHeartRateRecordUseCase: IAddNewHeartRateRecordUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
     ): MeasurementHeartRateViewModel {
 
         return MeasurementHeartRateViewModel(
@@ -41,7 +43,8 @@ object ViewModelsModule {
             imageProcessingHelper = imageProcessingHelper,
             reflectedLightSignalHelper = reflectedLightSignalHelper,
             detectHeartBeatHelper = detectHeartBeatHelper,
-            addNewHeartRateRecordUseCase = addNewHeartRateRecordUseCase
+            addNewHeartRateRecordUseCase = addNewHeartRateRecordUseCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase
         )
 
     }//end provideMeasurementHeartRateViewModel

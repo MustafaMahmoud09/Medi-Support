@@ -33,4 +33,7 @@ interface IHeartRateRepository {
         pageSize: Int
     ): UnEffectResponse<List<IHeartRateEntity>>
 
+
+    suspend fun logoutFromLocalDatabase()
+
 }//end IHeartRateRepository

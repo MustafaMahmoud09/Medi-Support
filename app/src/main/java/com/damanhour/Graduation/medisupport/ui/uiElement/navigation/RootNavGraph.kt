@@ -44,6 +44,9 @@ import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.naviga
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.navigateToBmiNavGraphWithPopActivityNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.navigateToHeartRateNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.navigateToHeartRateNavGraphWithPopActivityNavGraph
+import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.popBloodPressureNavGraph
+import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.popBloodSugarNavGraph
+import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.popBmiNavGraph
 import com.example.auth.presentation.uiElement.screens.forgotten.code.navigateToCodeDestination
 import com.example.auth.presentation.uiElement.screens.forgotten.newPassword.navigateToNewPasswordDestination
 import com.example.auth.presentation.uiElement.screens.register.navigateToRegisterDestination
@@ -140,17 +143,20 @@ fun RootNavGraph(
                     navigateToBookingDetailsDestination = navHostController::navigateToBookingDetailsDestinationWithPopOfflineBookingDestination,
                     navigateToOnlineBookingNavGraph = navHostController::navigateToOnlineBookingDestination,
                     navigateToOfflineBookingDestination = navHostController::navigateToOfflineBookingDestination,
-                    navigateToLoginNavGraphWithPopBottomDestination = navHostController::navigateToLoginNavGraphWithPopBottomDestination,
-                    navigateToOnlineRoomDestination = {bookingId->
-
-                        //execute navigate to online room and pop payment here
-                        navHostController.navigateToOnlineRoomDestination(
-                            poppedDestination = PAYMENT_DESTINATION_ROUTE,
-                            bookingId = bookingId
+                    navigateToLoginNavGraphWithPopBottomDestination = { popFunction ->
+                        navHostController.navigateToLoginNavGraphWithPopBottomDestination(
+                            popFunction
                         )
-
                     }
-                )
+                ) { bookingId ->
+
+                    //execute navigate to online room and pop payment here
+                    navHostController.navigateToOnlineRoomDestination(
+                        poppedDestination = PAYMENT_DESTINATION_ROUTE,
+                        bookingId = bookingId
+                    )
+
+                }
 
                 activityNavGraph(
                     popActivityNavGraph = navHostController::popActivityNavGraph,
@@ -159,7 +165,12 @@ fun RootNavGraph(
                     navigateToHeartRateNavGraph = navHostController::navigateToHeartRateNavGraphWithPopActivityNavGraph,
                     navigateToBmiNavGraph = navHostController::navigateToBmiNavGraphWithPopActivityNavGraph,
                     navigateToBloodSugarNavGraph = navHostController::navigateToBloodSugarNavGraphWithPopActivityNavGraph,
-                    navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraphWithPopActivityNavGraph
+                    navigateToBloodPressureNavGraph = navHostController::navigateToBloodPressureNavGraphWithPopActivityNavGraph,
+                    navigateToLoginNavGraphWithPopBottomDestination = {
+                        navHostController.navigateToLoginNavGraphWithPopBottomDestination {
+                            navHostController.popActivityNavGraph()
+                        }
+                    }
                 )
 
                 examinationNavGraph(
@@ -174,7 +185,7 @@ fun RootNavGraph(
                     navigateToOnlineRoomNavGraph = navHostController::navigateToOnlineRoomNavGraph,
                     popOnlineRoomGraph = navHostController::popOnlineRoomDestination,
                     navigateToBookingDetailsDestinationWithPopOnlineBookingDestination = navHostController::navigateToBookingDetailsDestinationWithPopOnlineBookingDestination,
-                    navigateToOnlineRoomDestination = {bookingId->
+                    navigateToOnlineRoomDestination = { bookingId ->
 
                         //execute navigate to online room and pop payment here
                         navHostController.navigateToOnlineRoomDestination(
@@ -190,35 +201,60 @@ fun RootNavGraph(
                     navigateToRecordHeartPredictionDestination = navHostController::navigateToRecordHeartPredictionDestination,
                     popRecordHeartPredictionDestination = navHostController::popRecordHeartPredictionDestination,
                     navigateToPredictionHeartPredictionDestination = navHostController::navigateToPredictionHeartPredictionDestination,
-                    popPredictionHeartPredictionDestination = navHostController::popPredictionHeartPredictionDestination
+                    popPredictionHeartPredictionDestination = navHostController::popPredictionHeartPredictionDestination,
+                    navigateToLoginNavGraphWithPopBottomDestination = {
+                        navHostController.navigateToLoginNavGraphWithPopBottomDestination {
+                            navHostController.popHeartPredictionNavGraph()
+                        }
+                    }
                 )
 
                 bmiNavGraph(
                     popRecordBMIDestination = navHostController::popRecordBMIDestination,
                     navigateToDeterminationBMIDestination = navHostController::navigateToDeterminationBMIDestination,
                     popDeterminationBMIDestination = navHostController::popDeterminationBMIDestination,
-                    navigateToRecordBMIDestination = navHostController::navigateToRecordBMIDestination
+                    navigateToRecordBMIDestination = navHostController::navigateToRecordBMIDestination,
+                    navigateToLoginNavGraphWithPopBottomDestination = {
+                        navHostController.navigateToLoginNavGraphWithPopBottomDestination {
+                            navHostController.popBmiNavGraph()
+                        }
+                    }
                 )
 
                 bloodPressureNavGraph(
                     popRecordBloodPressureDestination = navHostController::popRecordBloodPressureDestination,
                     navigateToStatisticsBloodPressureDestination = navHostController::navigateToStatisticsBloodPressureDestination,
                     popStatisticsBloodPressureDestination = navHostController::popStatisticsBloodPressureDestination,
-                    navigateToRecordBloodPressureDestination = navHostController::navigateToRecordBloodPressureDestination
+                    navigateToRecordBloodPressureDestination = navHostController::navigateToRecordBloodPressureDestination,
+                    navigateToLoginNavGraphWithPopBottomDestination = {
+                        navHostController.navigateToLoginNavGraphWithPopBottomDestination {
+                            navHostController.popBloodPressureNavGraph()
+                        }
+                    }
                 )
 
                 bloodSugarNavGraph(
                     navigateToStatisticsBloodSugarDestination = navHostController::navigateToStatisticsBloodSugarDestination,
                     popRecordBloodSugarDestination = navHostController::popRecordBloodSugarDestination,
                     popStatisticsBloodSugarDestination = navHostController::popStatisticsBloodSugarDestination,
-                    navigateToRecordBloodSugarDestination = navHostController::navigateToRecordBloodSugarDestination
+                    navigateToRecordBloodSugarDestination = navHostController::navigateToRecordBloodSugarDestination,
+                    navigateToLoginNavGraphWithPopBottomDestination = {
+                        navHostController.navigateToLoginNavGraphWithPopBottomDestination {
+                            navHostController.popBloodSugarNavGraph()
+                        }
+                    }
                 )
 
                 heartRateNavGraph(
                     popMeasurementHeartRateDestination = navHostController::popMeasurementHeartRateDestination,
                     navigateToStatisticsHeartRateDestination = navHostController::navigateToStatisticsHeartRateDestination,
                     popStatisticsHeartRateDestination = navHostController::popStatisticsHeartRateDestination,
-                    navigateToMeasurementHeartRateDestination = navHostController::navigateToMeasurementHeartRateDestination
+                    navigateToMeasurementHeartRateDestination = navHostController::navigateToMeasurementHeartRateDestination,
+                    navigateToLoginNavGraphWithPopBottomDestination = {
+                        navHostController.navigateToLoginNavGraphWithPopBottomDestination {
+                            navHostController.popMeasurementHeartRateDestination()
+                        }
+                    }
                 )
 
             }//end AnimatedNavHost

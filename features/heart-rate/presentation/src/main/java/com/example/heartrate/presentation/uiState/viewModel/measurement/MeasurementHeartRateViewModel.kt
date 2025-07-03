@@ -13,6 +13,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.lifecycle.viewModelScope
 import com.example.heart.rate.domain.usecase.declarations.IAddNewHeartRateRecordUseCase
 import com.example.heart.rate.domain.usecase.declarations.ICheckPPGTechnologySupportedUseCase
+import com.example.heart.rate.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.heartrate.presentation.uiState.state.MeasurementHeartRateUiState
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IDetectHeartBeatHelper
 import com.example.heartrate.presentation.uiState.viewModel.measurement.helperDeclarations.IImageProcessingHelper
@@ -41,7 +42,8 @@ class MeasurementHeartRateViewModel @Inject constructor(
     private val reflectedLightSignalHelper: IReflectedLightSignalHelper,
     private val detectHeartBeatHelper: IDetectHeartBeatHelper,
     private val checkPPGTechnologySupportedUseCase: ICheckPPGTechnologySupportedUseCase,
-    private val addNewHeartRateRecordUseCase: IAddNewHeartRateRecordUseCase
+    private val addNewHeartRateRecordUseCase: IAddNewHeartRateRecordUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -127,6 +129,23 @@ class MeasurementHeartRateViewModel @Inject constructor(
                                     //restart measurement again
                                     onHeartRateMeasurementRestart()
                                 }//end error server case
+
+                                401 -> {
+
+                                    logoutFromLocalDatabaseUseCase()
+
+                                    _state.update {
+                                        it.copy(
+                                            addHeartRateRecordStatus = state.value
+                                                .addHeartRateRecordStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    unAuthorized = true
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end 401 case
 
                             }//end when
 
@@ -251,7 +270,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
                         //if measurement stopped to one second
                         //destroy heart rate measurement
 //                        if (checkMeasurementStopped == 5) {
-                            onHeartRateMeasurementStopped()
+                        onHeartRateMeasurementStopped()
 //                        }//end if
 
 //                        checkMeasurementStopped += 1
@@ -323,7 +342,7 @@ class MeasurementHeartRateViewModel @Inject constructor(
     //function for analyzed image for calculate reflected light intensity
     fun onImageAnalysed(imageProxy: ImageProxy) {
 
-        viewModelScope.launch{
+        viewModelScope.launch {
 
             OpenCVLoader.initDebug()
 

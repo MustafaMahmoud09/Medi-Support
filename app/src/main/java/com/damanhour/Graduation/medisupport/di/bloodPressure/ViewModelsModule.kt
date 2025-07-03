@@ -6,6 +6,7 @@ import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekDiasto
 import com.example.blood.pressure.domain.usecase.declarations.IGetLastWeekSystolicRecordsUseCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetLatestBloodPressureMeasurementUserCase
 import com.example.blood.pressure.domain.usecase.declarations.IGetPageHistoryRecordUseCase
+import com.example.blood.pressure.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bloodpressure.presentation.uiState.viewModel.BloodPressureActivityViewModel
 import com.example.bloodpressure.presentation.uiState.viewModel.BloodPressureHistoryViewModel
 import com.example.bloodpressure.presentation.uiState.viewModel.RecordBloodPressureViewModel
@@ -24,13 +25,15 @@ object ViewModelsModule {
     fun provideRecordBloodPressureViewModel(
         addBloodPressureRecordUseCase: IAddBloodPressureRecordUseCase,
         getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
-        getMonthDaysUseCase: IGetMonthDaysUseCase
+        getMonthDaysUseCase: IGetMonthDaysUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
     ): RecordBloodPressureViewModel {
 
         return RecordBloodPressureViewModel(
             addBloodPressureRecordUseCase = addBloodPressureRecordUseCase,
             getMonthDaysUseCase = getMonthDaysUseCase,
-            getLatestBloodPressureMeasurementUserCase = getLatestBloodPressureMeasurementUserCase
+            getLatestBloodPressureMeasurementUserCase = getLatestBloodPressureMeasurementUserCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase
         )
 
     }//end provideRecordBloodPressureViewModel
@@ -41,14 +44,16 @@ object ViewModelsModule {
         getLatestBloodPressureMeasurementUserCase: IGetLatestBloodPressureMeasurementUserCase,
         getMonthDaysUseCase: IGetMonthDaysUseCase,
         getLastWeekSystolicRecordsUseCase: IGetLastWeekSystolicRecordsUseCase,
-        getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase
+        getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
     ): StatisticsBloodPressureViewModel {
 
         return StatisticsBloodPressureViewModel(
             getMonthDaysUseCase = getMonthDaysUseCase,
             getLatestBloodPressureMeasurementUserCase = getLatestBloodPressureMeasurementUserCase,
             getLastWeekSystolicRecordsUseCase = getLastWeekSystolicRecordsUseCase,
-            getLastWeekDiastolicRecordsUseCase = getLastWeekDiastolicRecordsUseCase
+            getLastWeekDiastolicRecordsUseCase = getLastWeekDiastolicRecordsUseCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase
         )
 
     }//end provideStatisticsBloodPressureViewModel
@@ -60,7 +65,8 @@ object ViewModelsModule {
         getMonthDaysUseCase: IGetMonthDaysUseCase,
         getLastWeekSystolicRecordsUseCase: IGetLastWeekSystolicRecordsUseCase,
         getLastWeekDiastolicRecordsUseCase: IGetLastWeekDiastolicRecordsUseCase,
-        getLastHistoryRecordsUseCase: IGetLastHistoryRecordsUseCase
+        getLastHistoryRecordsUseCase: IGetLastHistoryRecordsUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
     ): BloodPressureActivityViewModel {
 
         return BloodPressureActivityViewModel(
@@ -68,7 +74,8 @@ object ViewModelsModule {
             getLatestBloodPressureMeasurementUserCase = getLatestBloodPressureMeasurementUserCase,
             getLastWeekSystolicRecordsUseCase = getLastWeekSystolicRecordsUseCase,
             getLastWeekDiastolicRecordsUseCase = getLastWeekDiastolicRecordsUseCase,
-            getLastHistoryRecordsUseCase = getLastHistoryRecordsUseCase
+            getLastHistoryRecordsUseCase = getLastHistoryRecordsUseCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase
         )
 
     }//end provideStatisticsBloodPressureViewModel

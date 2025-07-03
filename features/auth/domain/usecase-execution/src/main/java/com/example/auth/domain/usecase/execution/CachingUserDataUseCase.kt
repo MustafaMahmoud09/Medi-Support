@@ -19,7 +19,8 @@ class CachingUserDataUseCase(
             email = user.data?.user?.email ?: "",
             token = user.data?.token ?: "",
             path = "",
-            remember = true
+            remember = true,
+            id = user.data?.user?.id?.toLong() ?: 0,
         )
 
     }//end cachingSocialUser
@@ -35,7 +36,8 @@ class CachingUserDataUseCase(
             email = user.user?.email ?: "",
             token = user.accessToken ?: "",
             path = user.user?.avatar ?: "",
-            remember = remember
+            remember = remember,
+            id = user.user?.id?.toLong() ?:0
         )
 
     }//end cachingEmailUser

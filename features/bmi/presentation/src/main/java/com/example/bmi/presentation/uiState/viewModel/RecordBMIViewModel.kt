@@ -2,6 +2,7 @@ package com.example.bmi.presentation.uiState.viewModel
 
 import androidx.lifecycle.viewModelScope
 import com.example.bmi.domain.usecase.declarations.IAddNewBMIRecordUseCase
+import com.example.bmi.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bmi.presentation.uiState.state.RecordBMIUiState
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.sharedui.uiState.viewModel.BaseViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecordBMIViewModel @Inject constructor(
     private val addNewBMIRecordUseCase: IAddNewBMIRecordUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -140,6 +142,22 @@ class RecordBMIViewModel @Inject constructor(
                                         )
                                     }//end update
                                 }//end error server case
+
+                                401 -> {
+
+                                    logoutFromLocalDatabaseUseCase()
+                                    _state.update {
+                                        it.copy(
+                                            addBMIRecordStatus = state.value
+                                                .addBMIRecordStatus.copy(
+                                                    success = false,
+                                                    loading = false,
+                                                    unAuthorized = true
+                                                )
+                                        )
+                                    }//end update
+
+                                }//end 401 case
 
                             }//end when
 

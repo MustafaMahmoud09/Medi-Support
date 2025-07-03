@@ -30,4 +30,7 @@ interface IAccountSettingRepository {
 
     suspend fun logout(): Flow<Status<EffectResponse<Any>>>
 
+
+    suspend fun logoutFromLocalDatabase()
+
 }//end IAccountSettingRepository

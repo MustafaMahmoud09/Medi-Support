@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.blood.sugar.domain.usecase.declarations.IAddNewBloodSugarRecordUseCase
 import com.example.blood.sugar.domain.usecase.declarations.IGetBloodSugarStatusUseCase
+import com.example.blood.sugar.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bloodsugar.presentation.uiState.state.RecordBloodSugarUiState
 import com.example.libraries.core.remote.data.response.status.Status
 import com.example.libraries.shered.logic.usecase.declarations.IGetMonthDaysUseCase
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class RecordBloodSugarViewModel @Inject constructor(
     private val addNewBloodSugarRecordUseCase: IAddNewBloodSugarRecordUseCase,
     private val getBloodSugarStatusUseCase: IGetBloodSugarStatusUseCase,
-    private val getMonthDaysUseCase: IGetMonthDaysUseCase
+    private val getMonthDaysUseCase: IGetMonthDaysUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -69,6 +71,19 @@ class RecordBloodSugarViewModel @Inject constructor(
                                         getBloodSugarStatusState = state.value.getBloodSugarStatusState.copy(
                                             loading = false,
                                             status = status.toData()?.body ?: emptyList()
+                                        )
+                                    )
+                                }//end update
+
+                            }//end if
+
+                            if (status.toData()?.statusCode == 401) {
+
+                                _state.update {
+                                    it.copy(
+                                        getBloodSugarStatusState = state.value.getBloodSugarStatusState.copy(
+                                            loading = false,
+                                            unAuthorized = true
                                         )
                                     )
                                 }//end update
@@ -215,6 +230,21 @@ class RecordBloodSugarViewModel @Inject constructor(
                                             )
                                         }//end update
                                     }//end error server case
+
+                                    401 -> {
+
+                                        _state.update {
+                                            it.copy(
+                                                addBloodSugarRecordStatus = state.value
+                                                    .addBloodSugarRecordStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        unAuthorized = true
+                                                    )
+                                            )
+                                        }//end update
+
+                                    }//end 401 case
 
                                 }//end when
 

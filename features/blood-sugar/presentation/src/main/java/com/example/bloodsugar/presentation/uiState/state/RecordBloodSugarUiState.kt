@@ -26,6 +26,7 @@ data class RecordBloodSugarUiState(
 data class BloodSugarStatusState(
     val status: List<StatusModel> = emptyList(),
     val loading: Boolean = false,
+    val unAuthorized: Boolean = false,
 )
 
 data class AddBloodSugarRecordStatus(
@@ -34,4 +35,5 @@ data class AddBloodSugarRecordStatus(
     val internetError: Boolean = false,
     val serverError: Boolean = false,
     val statusNotSelected: Boolean = false,
+    val unAuthorized: Boolean = false,
 )

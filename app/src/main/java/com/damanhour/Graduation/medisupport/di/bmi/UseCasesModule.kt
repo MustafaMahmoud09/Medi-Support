@@ -9,11 +9,13 @@ import com.example.bmi.domain.usecase.declarations.IGetLastHistoryRecordsUseCase
 import com.example.bmi.domain.usecase.declarations.IGetLastWeekBMIRecordsUseCase
 import com.example.bmi.domain.usecase.declarations.IGetLatestBMIMeasurementUseCase
 import com.example.bmi.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.bmi.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bmi.domain.usecase.execution.AddNewBMIRecordUseCase
 import com.example.bmi.domain.usecase.execution.GetLastHistoryRecordsUseCase
 import com.example.bmi.domain.usecase.execution.GetLastWeekBMIRecordsUseCase
 import com.example.bmi.domain.usecase.execution.GetLatestBMIMeasurementUseCase
 import com.example.bmi.domain.usecase.execution.GetPageHistoryRecordsUseCase
+import com.example.bmi.domain.usecase.execution.LogoutFromLocalDatabaseUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -93,6 +95,20 @@ object UseCasesModule {
         return GetPageHistoryRecordsUseCase(
             bmiRepository = bmiRepository,
             heartRateEntityToSimpleHeartRateModelMapper = heartRateEntityToSimpleHeartRateModelMapper
+        )
+
+    }//end provideGetPageHistoryRecordsUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideLogoutFromLocalDatabaseUseCase(
+        bmiRepository: IBMIRepository,
+        heartRateEntityToSimpleHeartRateModelMapper: IBMIEntityToSimpleBMIModelMapper
+    ): ILogoutFromLocalDatabaseUseCase {
+
+        return LogoutFromLocalDatabaseUseCase(
+            bmiRepository = bmiRepository
         )
 
     }//end provideGetPageHistoryRecordsUseCase

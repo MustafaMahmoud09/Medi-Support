@@ -39,7 +39,8 @@ internal fun BookingDetailsScreen(
     viewModel: BookingDetailsViewModel = hiltViewModel(),
     popBookingDetailsDestination: KFunction0<Unit>,
     navigateToChatNavGraph: () -> Unit,
-    navigateToOnlineRoomNavGraph: (Int) -> Unit
+    navigateToOnlineRoomNavGraph: (Int) -> Unit,
+    navigateToChatDestination: (Int) -> Unit
 ) {
     //collect state here
     val state = viewModel.state.collectAsState()
@@ -60,6 +61,7 @@ internal fun BookingDetailsScreen(
         uiState = uiState,
         onCurrentBookingDetailsPageChanged = viewModel::onCurrentBookingDetailsPageChanged,
         navigateToOnlineRoomNavGraph = navigateToOnlineRoomNavGraph,
+        navigateToChatDestination = navigateToChatDestination,
         bookingOnlineTabData = TabData(
             title = stringResource(
                 id = R.string.doctors_online
@@ -114,6 +116,7 @@ private fun BookingDetailsContent(
     uiState: BookingDetailsUiState,
     onCurrentBookingDetailsPageChanged: KFunction1<Int, Unit>,
     navigateToOnlineRoomNavGraph: (Int) -> Unit,
+    navigateToChatDestination: (Int) -> Unit,
 ) {
 
     //create base screen to define navigation and status color
@@ -213,7 +216,8 @@ private fun BookingDetailsContent(
                         OfflineDetailsScreen(
                             dimen = dimen,
                             theme = theme,
-                            navigateToChatNavGraph = navigateToChatNavGraph
+                            navigateToChatNavGraph = navigateToChatNavGraph,
+                            navigateToChatDestination = navigateToChatDestination
                         )
                     }//end offline case
 

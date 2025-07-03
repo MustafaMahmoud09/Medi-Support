@@ -26,7 +26,8 @@ fun NavHostController.popProfileDestination() {
 }//end popProfileDestination
 
 fun NavGraphBuilder.profileDestination(
-    popProfileDestination: () -> Unit
+    popProfileDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -38,7 +39,8 @@ fun NavGraphBuilder.profileDestination(
     ) {
 
         ProfileScreen(
-            popProfileDestination = popProfileDestination
+            popProfileDestination = popProfileDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
     }//end composable
 

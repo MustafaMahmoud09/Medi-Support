@@ -51,6 +51,18 @@ dependencies {
     //response wrapper
     implementation(project(":libraries:core:remote-database:response-wrapper"))
 
+    //database creator
+    implementation(project(':libraries:core:local-data:database-creator'))
+
+    //shared preferences access object
+    implementation(project(":libraries:core:local-data:shared-preferences-access-object"))
+
+    //shared keys preferences
+    implementation(project(":libraries:core:local-data:shared-keys-preferences"))
+
+    //shared entity execution
+    implementation(project(':libraries:core:local-data:shared-entities:entity-execution'))
+
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"

@@ -53,7 +53,7 @@ internal fun MoreScreen(
     navigateToContactUsDestination: () -> Unit,
     navigateToAboutDestination: () -> Unit,
     navigateToBookingDetailsDestination: (Int) -> Unit,
-    navigateToLoginNavGraphWithPopBottomDestination: KFunction0<Unit>
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()

@@ -37,7 +37,8 @@ fun NavHostController.popRecordBloodSugarDestination() {
 
 fun NavGraphBuilder.recordBloodSugarDestination(
     navigateToStatisticsBloodSugarDestination: () -> Unit,
-    popRecordBloodSugarDestination: () -> Unit
+    popRecordBloodSugarDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -49,7 +50,8 @@ fun NavGraphBuilder.recordBloodSugarDestination(
     ) {
         RecordBloodSugarScreen(
             navigateToStatisticsBloodSugarDestination = navigateToStatisticsBloodSugarDestination,
-            popRecordBloodSugarDestination = popRecordBloodSugarDestination
+            popRecordBloodSugarDestination = popRecordBloodSugarDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
     }
 }//end recordBloodSugarDestination

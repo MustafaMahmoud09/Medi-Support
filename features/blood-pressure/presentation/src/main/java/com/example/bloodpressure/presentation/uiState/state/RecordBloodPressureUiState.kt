@@ -19,5 +19,6 @@ data class AddBloodPressureRecordStatus(
     val loading: Boolean = false,
     val internetError: Boolean = false,
     val serverError: Boolean = false,
+    val unAuthorized: Boolean = false
 )
 

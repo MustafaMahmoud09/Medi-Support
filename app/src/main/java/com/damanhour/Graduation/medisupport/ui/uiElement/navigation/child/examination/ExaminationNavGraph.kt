@@ -5,13 +5,11 @@ package com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.exami
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.chatNavGraph
-import com.damanhour.Graduation.medisupport.ui.uiElement.navigation.child.examination.child.onlineRoomNavGraph
 import com.damanhour.Graduation.medisupport.ui.uiElement.screens.booking_details.bookingDetailsDestination
 import com.example.offlinebooking.presentation.uiElement.screens.booking.offlineBookingDestination
 import com.example.onlinebooking.presentation.uiElement.screens.booking.ONLINE_BOOKING_DESTINATION_ARGS_ROUTE
 import com.example.onlinebooking.presentation.uiElement.screens.booking.onlineBookingDestination
 import com.example.room.presentation.uiElement.screens.room.onlineRoomDestination
-import com.example.room.presentation.uiElement.screens.room.popOnlineRoomDestination
 import com.example.sharedui.uiElement.navigation.transitions.enterTransitionZero
 import com.example.sharedui.uiElement.navigation.transitions.exitTransition
 import com.google.accompanist.navigation.animation.navigation
@@ -59,7 +57,8 @@ internal fun NavGraphBuilder.examinationNavGraph(
         bookingDetailsDestination(
             popBookingDetailsDestination = popBookingDetailsDestination,
             navigateToChatNavGraph = navigateToChatNavGraph,
-            navigateToOnlineRoomNavGraph = navigateToOnlineRoomDestination
+            navigateToOnlineRoomNavGraph = navigateToOnlineRoomDestination,
+            navigateToChatDestination = navigateToChatDestination
         )
 
         onlineRoomDestination(

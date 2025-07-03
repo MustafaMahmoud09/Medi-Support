@@ -1,6 +1,7 @@
 package com.example.heartprediction.presentation.uiState.viewModel
 
 import androidx.lifecycle.viewModelScope
+import com.example.heart.prediction.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.heart.prediction.domain.usecase.declarations.IPredictHeartDiseaseUseCase
 import com.example.heartprediction.presentation.uiState.state.HeartPredictionUiState
 import com.example.libraries.core.remote.data.response.status.Status
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeartPredictionViewModel @Inject constructor(
-    private val predictHeartDiseaseUseCase: IPredictHeartDiseaseUseCase
+    private val predictHeartDiseaseUseCase: IPredictHeartDiseaseUseCase,
+    private val logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
 ) : BaseViewModel() {
 
     //for manage screen state from view model
@@ -435,6 +437,23 @@ class HeartPredictionViewModel @Inject constructor(
                                         }//end update
 
                                     }//end success case
+
+
+                                    401 -> {
+
+                                        logoutFromLocalDatabaseUseCase()
+                                        _state.update {
+                                            it.copy(
+                                                predictHeartDiseaseStatus = state.value
+                                                    .predictHeartDiseaseStatus.copy(
+                                                        success = false,
+                                                        loading = false,
+                                                        unAuthorized = true
+                                                    )
+                                            )
+                                        }//end update
+
+                                    }//end 401 case
 
                                     404, 500, 501 -> {
 

@@ -29,7 +29,8 @@ fun NavHostController.popContactUsDestination() {
 }//end popContactUsDestination
 
 fun NavGraphBuilder.contactUsDestination(
-    popContactUsDestination: () -> Unit
+    popContactUsDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     composable(
@@ -41,7 +42,8 @@ fun NavGraphBuilder.contactUsDestination(
     ) {
 
         ContactUsScreen(
-            popContactUsDestination = popContactUsDestination
+            popContactUsDestination = popContactUsDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
     }//end composable
 

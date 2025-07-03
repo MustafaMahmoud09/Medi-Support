@@ -215,10 +215,31 @@
       <module name="MediSupport.features.bmi.mapper-execution" target="17" />
       <module name="MediSupport.features.bmi.pagination" target="17" />
       <module name="MediSupport.features.bmi.presentation" target="17" />
-      <module name="MediSupport.features.chat.data.repository" target="17" />
-      <module name="MediSupport.features.chat.domain.use-case" target="17" />
+      <module name="MediSupport.features.chat.data.data-source.remote-data.dto-execution" target="17" />
+      <module name="MediSupport.features.chat.data.data-source.remote-data.requests" target="17" />
+      <module name="MediSupport.features.chat.data.repository-execution" target="17" />
+      <module name="MediSupport.features.chat.domain.domain-model" target="17" />
+      <module name="MediSupport.features.chat.domain.domain-model.main" target="17" />
+      <module name="MediSupport.features.chat.domain.domain-model.test" target="17" />
+      <module name="MediSupport.features.chat.domain.dto-declarations" target="17" />
+      <module name="MediSupport.features.chat.domain.dto-declarations.main" target="17" />
+      <module name="MediSupport.features.chat.domain.dto-declarations.test" target="17" />
+      <module name="MediSupport.features.chat.domain.mapper-declarations" target="17" />
+      <module name="MediSupport.features.chat.domain.mapper-declarations.main" target="17" />
+      <module name="MediSupport.features.chat.domain.mapper-declarations.test" target="17" />
+      <module name="MediSupport.features.chat.domain.repository-declarations" target="17" />
+      <module name="MediSupport.features.chat.domain.repository-declarations.main" target="17" />
+      <module name="MediSupport.features.chat.domain.repository-declarations.test" target="17" />
       <module name="MediSupport.features.chat.domain.use-case.main" target="17" />
       <module name="MediSupport.features.chat.domain.use-case.test" target="17" />
+      <module name="MediSupport.features.chat.domain.usecase-declarations" target="17" />
+      <module name="MediSupport.features.chat.domain.usecase-declarations.main" target="17" />
+      <module name="MediSupport.features.chat.domain.usecase-declarations.test" target="17" />
+      <module name="MediSupport.features.chat.domain.usecase-execution" target="17" />
+      <module name="MediSupport.features.chat.domain.usecase-execution.main" target="17" />
+      <module name="MediSupport.features.chat.domain.usecase-execution.test" target="17" />
+      <module name="MediSupport.features.chat.mapper-execution" target="17" />
+      <module name="MediSupport.features.chat.pagination" target="17" />
       <module name="MediSupport.features.chat.presentation" target="17" />
       <module name="MediSupport.features.heart-prediction.data.data-source.remote-data.dto-execution" target="17" />
       <module name="MediSupport.features.heart-prediction.data.data-source.remote-data.requests" target="17" />

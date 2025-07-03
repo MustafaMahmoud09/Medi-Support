@@ -46,7 +46,8 @@ import kotlin.reflect.KFunction1
 @Composable
 internal fun ContactUsScreen(
     viewModel: ContactUsViewModel = hiltViewModel(),
-    popContactUsDestination: () -> Unit
+    popContactUsDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //get screen state here
     val state = viewModel.state.collectAsState()
@@ -146,6 +147,24 @@ internal fun ContactUsScreen(
             )
 
         }
+
+    }//end LaunchedEffect
+
+
+    //if register event status is email not valid
+    //show snack bar contain on error message
+    LaunchedEffect(
+        key1 = state.value.sendContactUsEventStatus.unAuthorized
+    ) {
+
+        if (
+            !startRunning.value &&
+            state.value.sendContactUsEventStatus.unAuthorized) {
+
+            //show email snack bar here
+            navigateToLoginNavGraphWithPopBottomDestination()
+
+        }//end if
 
     }//end LaunchedEffect
 

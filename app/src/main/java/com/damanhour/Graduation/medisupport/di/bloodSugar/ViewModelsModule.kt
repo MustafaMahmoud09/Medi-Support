@@ -6,6 +6,7 @@ import com.example.blood.sugar.domain.usecase.declarations.IGetLastHistoryRecord
 import com.example.blood.sugar.domain.usecase.declarations.IGetLastWeekBloodSugarRecordsUseCase
 import com.example.blood.sugar.domain.usecase.declarations.IGetLatestBloodSugarMeasurementUseCase
 import com.example.blood.sugar.domain.usecase.declarations.IGetPageHistoryRecordsUseCase
+import com.example.blood.sugar.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.bloodsugar.presentation.uiState.viewModel.BloodSugarActivityViewModel
 import com.example.bloodsugar.presentation.uiState.viewModel.BloodSugarHistoryViewModel
 import com.example.bloodsugar.presentation.uiState.viewModel.RecordBloodSugarViewModel
@@ -24,13 +25,15 @@ object ViewModelsModule {
     fun provideRecordBloodSugarViewModel(
         addNewBloodSugarRecordUseCase: IAddNewBloodSugarRecordUseCase,
         getBloodSugarStatusUseCase: IGetBloodSugarStatusUseCase,
-        getMonthDaysUseCase: IGetMonthDaysUseCase
+        getMonthDaysUseCase: IGetMonthDaysUseCase,
+        logoutFromLocalDatabaseUseCase: ILogoutFromLocalDatabaseUseCase
     ): RecordBloodSugarViewModel {
 
         return RecordBloodSugarViewModel(
             addNewBloodSugarRecordUseCase = addNewBloodSugarRecordUseCase,
             getBloodSugarStatusUseCase = getBloodSugarStatusUseCase,
-            getMonthDaysUseCase = getMonthDaysUseCase
+            getMonthDaysUseCase = getMonthDaysUseCase,
+            logoutFromLocalDatabaseUseCase = logoutFromLocalDatabaseUseCase
         )
 
     }//end provideRecordBloodSugarViewModel

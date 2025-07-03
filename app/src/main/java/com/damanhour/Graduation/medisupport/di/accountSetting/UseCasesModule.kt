@@ -4,11 +4,13 @@ import com.example.account.setting.domain.mapper.declarations.child.IUserEntityT
 import com.example.account.setting.domain.repository.declarations.IAccountSettingRepository
 import com.example.account.setting.domain.usecase.declarations.IDeleteAccountUseCase
 import com.example.account.setting.domain.usecase.declarations.IGetProfileInfoUseCase
+import com.example.account.setting.domain.usecase.declarations.ILogoutFromLocalDatabaseUseCase
 import com.example.account.setting.domain.usecase.declarations.ILogoutUseCase
 import com.example.account.setting.domain.usecase.declarations.ISendContactUsMessageUseCase
 import com.example.account.setting.domain.usecase.declarations.IUpdateProfileInfoUseCase
 import com.example.account.setting.domain.usecase.execution.DeleteAccountUseCase
 import com.example.account.setting.domain.usecase.execution.GetProfileInfoUseCase
+import com.example.account.setting.domain.usecase.execution.LogoutFromLocalDatabaseUseCase
 import com.example.account.setting.domain.usecase.execution.LogoutUseCase
 import com.example.account.setting.domain.usecase.execution.SendContactUsMessageUseCase
 import com.example.account.setting.domain.usecase.execution.UpdateProfileInfoUseCase
@@ -88,5 +90,18 @@ object UseCasesModule {
         )
 
     }//end provideLogoutUseCase
+
+
+    @Provides
+    @Singleton
+    fun provideLogoutFromLocalDatabaseUseCase(
+        accountSettingRepository: IAccountSettingRepository
+    ): ILogoutFromLocalDatabaseUseCase {
+
+        return LogoutFromLocalDatabaseUseCase(
+            accountSettingRepository = accountSettingRepository
+        )
+
+    }//end provideLogoutFromLocalDatabaseUseCase
 
 }//end UseCasesModule

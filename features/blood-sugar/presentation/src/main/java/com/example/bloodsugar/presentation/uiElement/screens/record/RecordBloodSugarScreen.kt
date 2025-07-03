@@ -57,7 +57,8 @@ import kotlin.reflect.KFunction1
 internal fun RecordBloodSugarScreen(
     viewModel: RecordBloodSugarViewModel = hiltViewModel(),
     navigateToStatisticsBloodSugarDestination: () -> Unit,
-    popRecordBloodSugarDestination: () -> Unit
+    popRecordBloodSugarDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //get screen state from view model here
     val state = viewModel.state.collectAsState()
@@ -122,6 +123,22 @@ internal fun RecordBloodSugarScreen(
         }//end if
 
     }//end LaunchedEffect
+
+
+    LaunchedEffect(
+        key1 = state.value.addBloodSugarRecordStatus.unAuthorized,
+        key2 = state.value.getBloodSugarStatusState.unAuthorized
+    ) {
+
+        if (
+            !state.value.startRunning &&
+            (state.value.addBloodSugarRecordStatus.unAuthorized || state.value.getBloodSugarStatusState.unAuthorized)
+        ) {
+            navigateToLoginNavGraphWithPopBottomDestination()
+        }//end if
+
+    }//end LaunchedEffect
+
 
     LaunchedEffect(
         key1 = state.value.addBloodSugarRecordStatus.statusNotSelected
@@ -514,7 +531,7 @@ private fun RecordBloodSugarContent(
 
     LaunchedEffect(key1 = true) {
 
-        daysColumnState.scrollToItem(uiState.currentDayNumber-1)
+        daysColumnState.scrollToItem(uiState.currentDayNumber - 1)
 
     }//end LaunchedEffect
 

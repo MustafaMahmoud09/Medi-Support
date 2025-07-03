@@ -12,6 +12,8 @@ interface IOfflineBookingEntity {
 
     val date: String
 
+    val doctorId: Long
+
     val clinicLocation: String
 
     val specialization: String

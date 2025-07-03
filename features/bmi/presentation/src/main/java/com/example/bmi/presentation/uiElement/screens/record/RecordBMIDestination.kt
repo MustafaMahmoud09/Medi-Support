@@ -39,7 +39,8 @@ fun NavHostController.popRecordBMIDestination() {
 //function for create record bmi destination and create screen in it
 fun NavGraphBuilder.recordBMIDestination(
     popRecordBMIDestination: () -> Unit,
-    navigateToDeterminationBMIDestination: () -> Unit
+    navigateToDeterminationBMIDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
 
     //create record bmi destination here
@@ -53,7 +54,8 @@ fun NavGraphBuilder.recordBMIDestination(
         //create record bmi screen here
         RecordBMIScreen(
             popRecordBMIDestination = popRecordBMIDestination,
-            navigateToDeterminationBMIDestination = navigateToDeterminationBMIDestination
+            navigateToDeterminationBMIDestination = navigateToDeterminationBMIDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
     }//end composable

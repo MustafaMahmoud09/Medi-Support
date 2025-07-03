@@ -244,7 +244,7 @@
     <string name="excellent">Excellent</string>
     <string name="smoking">Smoking</string>
     <string name="do_you_smoke">Do you smoke ?</string>
-    <string name="do_you_drink_alcohol">Do you drink alcohol</string>
+    <string name="do_you_drink_alcohol">Do you drink alcohol?</string>
     <string name="alcohol_drinking">Alcohol Drinking</string>
     <string name="stroke">Stroke</string>
     <string name="have_you_had_a_stroke">Have you had a stroke ?</string>
@@ -261,4 +261,25 @@
     <string name="data_is_incomplete">Data is incomplete</string>
     <string name="sorry">Sorry,</string>
     <string name="sorry_you_may_have_heart_disease">Sorry, You  May Have Heart Disease</string>
+    <string name="mobile_team">Mobile Team</string>
+    <string name="mustafa_mahmoud">Mustafa Mahmoud</string>
+    <string name="ai_team">AI Team</string>
+    <string name="alaa_ali">Alaa Ali</string>
+    <string name="nada_yakut">Nada Yakut</string>
+    <string name="hossam_ezzat">Hossam Ezzat</string>
+    <string name="back_end_team">Back-End Team</string>
+    <string name="asmaa_gamal">Asmaa Gamal</string>
+    <string name="nada_saied">Nada Saad</string>
+    <string name="front_end_team">Front-End Team</string>
+    <string name="nada_sobhy">Nada Sobhy</string>
+    <string name="rofayda_mohammed">Rofayda Mohammed</string>
+    <string name="ui_ux_team">UI/UX Team</string>
+    <string name="rokaia_shereet">Rokaia Shereet</string>
+    <string name="sara_elbadry">Sara Elbadry</string>
+    <string name="feature_one">Monitoring the health status of patients with hypertension and diabetes by entering some data about the disease and displaying the results in the form of diagrams. Additionally, determining the patient\'s BMI by entering their weight and height and providing medical advice to assist them.</string>
+    <string name="feature_two">Assess your heart health using PPG camera technology, where the patient places their finger on the rear camera to measure heartbeats. To benefit from this feature, download our dedicated app.</string>
+    <string name="feature_three">Reminder the patient of their medication schedule. However, this feature is available in our dedicated application. Please download it to benefit from this feature.</string>
+    <string name="feature_four">Providing specialized doctors where patients can book appointments online or visit the doctor by providing their address and phone number. Additionally, there is a private chat for communication between the doctor and the patient.</string>
+    <string name="feature_five">Providing medical articles for patients to read, helping them to become more aware and informed about their medical condition.</string>
+    <string name="feature_six">Predicting heart disease using artificial intelligence by inputting specific patient data.</string>
 </resources>

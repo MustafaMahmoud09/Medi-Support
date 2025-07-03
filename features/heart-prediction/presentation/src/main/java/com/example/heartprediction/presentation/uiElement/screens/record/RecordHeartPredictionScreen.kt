@@ -56,7 +56,8 @@ import kotlin.reflect.KFunction2
 internal fun RecordHeartPredictionScreen(
     viewModel: HeartPredictionViewModel = hiltViewModel(),
     popRecordHeartPredictionDestination: () -> Unit,
-    navigateToPredictionHeartPredictionDestination: KFunction1<Int, Unit>
+    navigateToPredictionHeartPredictionDestination: KFunction1<Int, Unit>,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     val state = viewModel.state.collectAsState()
     //create focus request array have focus request to fields here for control on field any time by code
@@ -181,6 +182,20 @@ internal fun RecordHeartPredictionScreen(
             snackbarHostState.showSnackbar(
                 message = incompleteError
             )
+        }//end if
+
+    }//end LaunchedEffect
+
+
+    LaunchedEffect(
+        key1 = state.value.predictHeartDiseaseStatus.unAuthorized
+    ) {
+
+        if (
+            !state.value.startRunning &&
+            state.value.predictHeartDiseaseStatus.unAuthorized
+        ) {
+            navigateToLoginNavGraphWithPopBottomDestination()
         }//end if
 
     }//end LaunchedEffect

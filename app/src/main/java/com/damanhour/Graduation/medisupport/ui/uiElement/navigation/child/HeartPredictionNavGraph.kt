@@ -43,7 +43,8 @@ internal fun NavGraphBuilder.heartPredictionNavGraph(
     navigateToRecordHeartPredictionDestination: () -> Unit,
     popRecordHeartPredictionDestination: () -> Unit,
     navigateToPredictionHeartPredictionDestination: KFunction1<Int, Unit>,
-    popPredictionHeartPredictionDestination: () -> Unit
+    popPredictionHeartPredictionDestination: () -> Unit,
+    navigateToLoginNavGraphWithPopBottomDestination: () -> Unit
 ) {
     //create heart prediction nav graph here
     navigation(
@@ -62,7 +63,8 @@ internal fun NavGraphBuilder.heartPredictionNavGraph(
 
         recordHeartPredictionDestination(
             popRecordHeartPredictionDestination = popRecordHeartPredictionDestination,
-            navigateToPredictionHeartPredictionDestination = navigateToPredictionHeartPredictionDestination
+            navigateToPredictionHeartPredictionDestination = navigateToPredictionHeartPredictionDestination,
+            navigateToLoginNavGraphWithPopBottomDestination = navigateToLoginNavGraphWithPopBottomDestination
         )
 
         predictionHeartPredictionDestination(
